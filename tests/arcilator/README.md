@@ -67,8 +67,11 @@ Each backend must print four `PASS` lines. `compare` must print four
 An oracle error, incomplete backend run, trace mismatch, or stale input manifest
 exits nonzero. Comparison checks both backend manifests against the **current**
 hashes of both DUT files, the shared driver, and this runner, then checks each
-trace against its completed-run hash. Starting a backend invalidates its previous
-success manifest, so an interrupted rebuild cannot validate old traces.
+trace against its completed-run hash. Starting a backend marks the aggregate
+`results.json` as `incomplete` and invalidates that backend's previous success
+manifest before checking tools or compiling. A failed or interrupted rebuild
+cannot leave an earlier comparison marked complete. Only a successful `compare`
+sets the aggregate result to `complete` again.
 
 `raw/` artifacts are gitignored. Retain them in authorized private storage and
 attach or link durable evidence through the Linear issue for review,

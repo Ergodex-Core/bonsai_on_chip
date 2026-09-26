@@ -87,6 +87,37 @@ and log capture both succeed, its **fresh** simulator log reports
 present. The runner retains the first process failure as its exit code; a failed
 evidence check produces exit `1`. A missing log or missing pass marker is a failure.
 
+## Preserved developer environment
+
+The configured developer instance has a reusable copy on root EBS, verified on
+2026-09-26. The pinned HDK source and LFS resources are at
+`/home/ubuntu/bonsai-erg102-f2-work/aws-fpga` (1.33 GiB). Setup exited `0`, all
+three Git pins matched, both LFS stores passed checks, and all 5,435 tracked-file
+hashes matched the original source. The verified Bazel 8.6.0 binary and LLVM 19
+aliases are preserved at `/home/ubuntu/bonsai-erg102-tools` (61.46 MiB).
+
+As `ubuntu`, activate the preserved tools and installed Vivado before running:
+
+```bash
+source /home/ubuntu/bonsai-erg102-tools/activate.sh
+source /opt/Xilinx/2025.2/Vivado/settings64.sh
+F2_WORK_ROOT=/home/ubuntu/bonsai-erg102-f2-work
+bash /home/ubuntu/bonsai-erg102-bootstrap-v2/fpga/aws_f2/setup.sh "$F2_WORK_ROOT"
+bash /home/ubuntu/bonsai-erg102-bootstrap-v2/fpga/aws_f2/validate.sh "$F2_WORK_ROOT"
+```
+
+Source Vivado's settings before enabling shell `nounset`. The source copy omits
+generated test output, compiled IP libraries and three generated headers because
+the old XSIM outputs contain absolute paths to instance-store storage. The first
+validation at this durable root rebuilds those files locally. **XSIM has not been
+rerun at the durable root**; the earlier 9/9 result remains separate evidence.
+Repository build caches were not copied.
+
+Detailed hashes, excluded paths and evidence locations are recorded in
+[`reports/ERG-102/f2-xsim.json`](../../reports/ERG-102/f2-xsim.json).
+The preserved tools directory contains `REUSE.md` with restart and activation
+instructions; setup logs remain under the durable work root's `logs/` directory.
+
 ## Evidence and report
 
 Each invocation prints its evidence directory under

@@ -2,7 +2,12 @@
 
 **Result: PASS in four configurations. This is a bounded RTL backend pilot, not an execution of the repository's test suite.**
 
-Run date: 2026-09-26. Re-run from the final repository paths on branch `codex/erg-102-simulation-setup`. Repository: `Ergodex-Core/bonsai_on_chip`, revision
+Run date: 2026-09-26. Rebuilt from repository paths on branch
+`codex/erg-102-simulation-setup`, with HEAD
+`9ab1dcc870dab7b33ef8a46c218bc40a2e54fdf2` and an updated,
+uncommitted runner. Its hash in the JSON identifies the exact tested bytes;
+`raw/arcilator-pilot/runner.patch` records the change against that HEAD. The driver
+and DUT contents are unchanged. The DUT originated at
 `5eff3822250fc52b2a0f83315969238805ece7c5`.
 
 The experiment compiles these repository files directly, without modifying or copying RTL:
@@ -23,14 +28,21 @@ traces to be byte-for-byte identical, including input phases and all output valu
 | 3 | 1 | 2,115 | 10,444 | 52,220 | PASS both | PASS |
 
 The final repository-path run passed all four configurations again. Both backends
-were rebuilt after the required C++ and shell formatting changes; the evidence
-hashes identify the final formatted driver and runner. Pilot-file clang-format,
+were rebuilt after the runner was changed to invalidate stale aggregate results;
+the evidence hashes identify the final driver and runner. Prior complete evidence
+is preserved separately in `raw/arcilator-pilot-before-result-invalidation-9ab1dcc8/`.
+Pilot-file clang-format,
 Markdown lint, and ShellCheck pass, and the repository macro-signature check
 passes. Evidence
 guards were also checked using temporary copies: both backend manifests reject
 stale hashes for each DUT file, the driver, and the runner; incomplete backend
-runs and altered traces are rejected. All 13 guard checks passed, including the
-untampered control. Details are retained in `raw/arcilator-pilot/guard-results.json`.
+runs and altered traces are rejected. All 15 guard checks passed, including the
+untampered control and two failed-rerun cases. Each new case begins with completed
+evidence, forces a backend dependency check to fail, and verifies that
+`results.json` becomes `incomplete` before the tool check, while the previous
+traces remain available without a valid aggregate PASS. These are evidence
+integrity checks, not additional DUT coverage. Details are retained in
+`raw/arcilator-pilot/guard-results.json`.
 
 Total: 41,716 observed samples and 208,580 output assertions per backend; four
 passed configurations, zero failed, zero skipped within this pilot. Counts and
@@ -105,8 +117,11 @@ bash tests/arcilator/run_parity.sh \
 Each backend must print four `PASS` lines. Comparison must print four
 `PASS full trace parity` lines and produce `results.json` with `status: complete`.
 The runner resolves repository, build, and driver paths absolutely before builds.
-It invalidates each backend's prior success manifest at the start of a run and
-only completes that manifest after all four oracle runs pass. Comparison requires
+At backend start it first marks aggregate `results.json` as `incomplete`, then
+invalidates that backend's prior success manifest before dependency checks or
+compilation. A failed or interrupted rerun cannot retain the earlier aggregate
+PASS. It completes the backend manifest only after all four oracle runs pass;
+only a successful comparison completes the aggregate result. Comparison requires
 both completed manifests to match the current DUT, driver, and runner hashes, and
 checks each trace against the hash in its completed manifest before comparing
 all bytes. An error produces a nonzero exit status.

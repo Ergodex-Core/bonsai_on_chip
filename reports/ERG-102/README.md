@@ -4,6 +4,9 @@ Status: **in progress; environment PR, not Week 0 sign-off**.
 Run date: 2026-09-26. Owner: Rachit Tibrewal. Technical acceptance: pending.
 Issue: [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
 Development repository: [bonsai_on_chip](https://github.com/Ergodex-Core/bonsai_on_chip).
+GitHub repository autolinks map `ERG-<number>` to the matching Linear issue.
+The Linear project and weekly issues link this repository; automatic PR-status
+synchronization has not been verified.
 Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Core/bonsai_on_chip/pull/1) (draft).
 
 ## Scope and results
@@ -11,7 +14,7 @@ Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Co
 | Evidence | Result | Coverage |
 | --- | --- | --- |
 | Arcilator / Verilator parity pilot | PASS: 4 configurations, 0 failures, 0 skips | One unchanged handshake-control RTL module; 41,716 samples and 208,580 output checks per backend |
-| Pilot evidence-integrity checks | PASS: 13 checks | Stale inputs, incomplete runs and altered traces rejected |
+| Pilot evidence-integrity checks | PASS: 15 checks | Stale inputs, incomplete runs and altered traces rejected |
 | Existing Arcilator testbench frontend probes | BLOCKED: 2/2 | Aligner and MultiFifo fail before simulation; no full-suite pass |
 | Core cocotb smoke | PASS with coverage limits | 26 exercised cases; 3 RVV early returns; final collector verified cached evidence |
 | Repository-default test baseline | Running | Verilator, Chisel and host backends; not an Arcilator suite result |
@@ -97,6 +100,9 @@ reports dropped constrained-random/coverage semantics. See the
 ## Artifacts and validation
 
 Readable report: linked from ERG-102, with a dated attachment provided for review.
+Pinned F2 source/IP and verified developer tools are preserved on root EBS, with
+restart instructions in the [AWS setup guide](../../fpga/aws_f2/README.md).
+Relocated setup passed; XSIM has not been rerun at the durable path.
 Raw XSIM evidence is preserved on persistent EBS; private S3 publication is
 pending explicit upload approval. The local Arcilator evidence archive is also
 preserved. The full repository baseline remains in progress.
@@ -112,6 +118,9 @@ hashes were verified. See [the XSIM result](f2-xsim.json). The pilot was rebuilt
 formatting changes, and its report contains the final driver/runner hashes.
 
 ## Next acceptance gates
+
+The [delivery-plan review](delivery-plan-review.md) records the proposed weekly
+sequence, schedule risks and next bounded Arcilator integration candidate.
 
 1. Complete and classify the repository baseline, retaining every failure and
    unsupported target. Define the first supported Arcilator integration boundary

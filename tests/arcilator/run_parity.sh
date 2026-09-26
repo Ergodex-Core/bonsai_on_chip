@@ -58,8 +58,10 @@ def read_manifest(name):
 try:
     path = build / f'{backend}-inputs.json'
     if operation == 'start':
-        # Invalidate previous success before invoking any compiler. An interrupted
-        # rerun must never leave a usable success manifest for old traces.
+        # Invalidate the aggregate result first, before source/tool checks. A
+        # failed or interrupted rerun cannot leave the previous comparison PASS.
+        save(build / 'results.json', {'status': 'incomplete', 'scope': 'handshake control pilot',
+             'reason': f'{backend} run started; a successful comparison is required'})
         save(path, {'schema_version': 1, 'status': 'running'})
         value = {'schema_version': 1, 'status': 'running', 'backend': backend,
                  'source_sha256': current_sources(), 'host_platform': platform.platform()}

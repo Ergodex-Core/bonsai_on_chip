@@ -1,12 +1,12 @@
 {
   "status": "complete",
   "scope": "handshake_multistage_ctrl parity pilot only; not the repository test suite",
-  "repository_revision": "5eff3822250fc52b2a0f83315969238805ece7c5",
+  "repository_revision": "9ab1dcc870dab7b33ef8a46c218bc40a2e54fdf2",
   "source_sha256": {
     "hdl/verilog/rvv/common/cdffr.sv": "f537eb36051570b8df2edfde25122b2df0a3c020808043a6e6ed9bf658b66d16",
     "hdl/verilog/rvv/common/handshake_multistage_ctrl.sv": "0f60609635ef0ca084340495be83ba39002b97f7a3514111b2246daffb2a4463",
     "tests/arcilator/handshake_parity.cpp": "c6216862f7e84f28560f7702e4cc7e8b8a9851a0ff6b9c616c838e4b427185a7",
-    "tests/arcilator/run_parity.sh": "1e492f5ea3e240f56ed5c4065d1e04f74b5924e5f881cf8a25c0adbd0815938e"
+    "tests/arcilator/run_parity.sh": "2d4a76428a2a0757f5f41af6a5a2304e9331c1aca873515b7957c05353c2cf2f"
   },
   "toolchain_sha256": {
     "bin/arcilator": "17726ec757c1de733934d79f05af4bd398e61ac7eb2db1814c2dfe1709277e91",
@@ -120,11 +120,6 @@
   "runtime_step": "arcRuntimeIR_simStepSettled for all four generated models",
   "warnings": "Each Arcilator link emits 21 warnings from bundled runtime headers concerning C linkage and C++ types; frontend and Arc compile logs are clean.",
   "container_image_id": "sha256:75ff5522c3b54b1c3802f8d8ea201198e14a5a22e7932e5d0d96b93b0a1061ac",
-  "artifact_integrity_checks": {
-    "passed": 13,
-    "failed": 0,
-    "evidence": "raw/arcilator-pilot/guard-results.json"
-  },
   "limitations": [
     "One handshake-control DUT only",
     "No four-state/X result",
@@ -139,6 +134,23 @@
     "formatted_sources_rebuilt": true,
     "integrity_guards_rerun": true
   },
-  "harness_commit": "875106727a73249699836e46a3e539fd83fb173d",
-  "harness_commit_note": "Committed driver and runner bytes match the captured run hashes; DUT revision remains repository_revision."
+  "artifact_integrity_checks": {
+    "passed": 15,
+    "failed": 0,
+    "evidence": "raw/arcilator-pilot/guard-results.json",
+    "added_cases": "For each backend, a forced dependency failure following a completed comparison leaves aggregate status incomplete and preserves previous traces only as stale evidence."
+  },
+  "harness_commit": null,
+  "harness_commit_note": "Rerun used an updated working-tree runner atop repository_revision; no commit containing that runner existed at report generation. Source hashes and the raw runner.patch identify the tested bytes.",
+  "dut_origin_revision": "5eff3822250fc52b2a0f83315969238805ece7c5",
+  "previous_raw_artifacts": "raw/arcilator-pilot-before-result-invalidation-9ab1dcc8",
+  "runner_patch_sha256": "e76b844bf131928ed945a5218c850371f869454616b6691ec01ef31f04669992",
+  "private_evidence_archive": {
+    "filename": "bonsai-arcilator-evidence-final.tar.gz",
+    "sha256": "84c44e6f4cda4ed1036537d8d7e8252c356f5402e10fa198b7907d276dab55e0",
+    "bytes": 315984,
+    "files": 46,
+    "contents": "Logs, traces, manifests, integrity guards, dirty runner patch and four public source snapshots; no compiler binaries, libraries or generated executables",
+    "upload": "pending explicit authorization"
+  }
 }

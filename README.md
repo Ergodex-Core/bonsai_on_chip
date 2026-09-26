@@ -67,7 +67,10 @@ bazel-bin/tests/verilator_sim/core_mini_axi_sim --binary bazel-out/k8-fastbuild-
 ## Bonsai development and simulation
 
 Development is tracked in [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
-Use a Linux x86_64 environment for the Bazel and FPGA toolchains.
+Use a Linux x86_64 environment for the Bazel and FPGA toolchains. Include the
+Linear issue identifier, such as `ERG-102`, in PR titles and relevant commits;
+repository autolinks point these references to the matching issue. Link the PR
+and validation report from Linear and follow the PR evidence template.
 
 ```bash
 # Capture every declared test target, including excluded simulator variants.
