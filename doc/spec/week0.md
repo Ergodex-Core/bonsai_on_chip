@@ -1,6 +1,7 @@
 # ERG-102 Week 0 interface and evidence baseline — v0
 
-Status: v0 candidate for final ERG-102 review. Issue owner: Rachit Tibrewal
+Status: v0 accepted through [automated technical review](../../reports/ERG-102/independent-review.md).
+Issue owner: Rachit Tibrewal
 (the existing Linear assignee). Architecture and FPGA execution: Codex in this
 task. Technical review: a separate Codex agent, recorded as automated review of
 the final source revision; this is not a human or GitHub APPROVED review.
