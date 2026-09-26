@@ -17,7 +17,7 @@ Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Co
 | Pilot evidence-integrity checks | PASS: 15 checks | Stale inputs, incomplete runs and altered traces rejected |
 | Existing Arcilator testbench frontend probes | BLOCKED: 2/2 | Aligner and MultiFifo fail before simulation; no full-suite pass |
 | Core cocotb smoke | PASS with coverage limits | 26 exercised cases; 3 RVV early returns; final collector verified cached evidence |
-| Repository-default test baseline | Running | Verilator, Chisel and host backends; not an Arcilator suite result |
+| Repository-default test baseline | PASS: 1,332 targets | 1,046 fresh and 286 cached; Verilator, Chisel and host backends; not an Arcilator suite result |
 | AWS HDK preparation | PASS | Pinned source/IP with Vivado 2025.2; Git LFS validation passed |
 | AWS AXI-Lite example XSIM tests | PASS: 9/9, 0 failures, 0 skips | AWS shell bus-functional model and example; final lint-clean scripts rerun |
 | Bonsai under an AWS F2 shell wrapper | NOT RUN | Wrapper and simulator integration remain to be implemented |
@@ -30,6 +30,10 @@ Its reference threshold is exact equality for every binary public output and
 byte-identical full traces. No performance or four-state/X result is claimed.
 The separate [core smoke report](smoke-baseline.md) records the Verilator run,
 seed 42, early-return cases and the later cached evidence replay.
+The [full native-baseline report](native-baseline.md) and
+[machine-readable evidence](native-baseline.json) record the 1,325 parallel and
+7 exclusive target results, nested test outcomes, source provenance and archive
+hashes. The final collector reports complete evidence for both groups.
 
 ## Source and reproduction
 
@@ -49,7 +53,7 @@ fix and runner, identified by the captured overlay/source hashes.
 Run in Linux x86_64 with the repository's Bazel 8.6.0 and CI build prerequisites:
 
 ```bash
-SIM_BUILD_JOBS=8 SIM_TEST_JOBS=2 utils/run_simulation_baseline.sh all
+SIM_BUILD_JOBS=16 SIM_TEST_JOBS=8 utils/run_simulation_baseline.sh all
 ```
 
 The runner has separate `inventory` and `smoke` modes. Its smoke target is
@@ -105,7 +109,7 @@ restart instructions in the [AWS setup guide](../../fpga/aws_f2/README.md).
 Relocated setup passed; XSIM has not been rerun at the durable path.
 Raw XSIM evidence is preserved on persistent EBS; private S3 publication is
 pending explicit upload approval. The local Arcilator evidence archive is also
-preserved. The full repository baseline remains in progress.
+preserved. The selected repository-default baseline completed successfully.
 Cloud account/instance inventory and private transfer URLs are excluded from
 public reports. Authorized reviewers receive environment details and artifact
 locations through the Linear attachment. Raw results are gitignored.
@@ -122,9 +126,9 @@ formatting changes, and its report contains the final driver/runner hashes.
 The [delivery-plan review](delivery-plan-review.md) records the proposed weekly
 sequence, schedule risks and next bounded Arcilator integration candidate.
 
-1. Complete and classify the repository baseline, retaining every failure and
-   unsupported target. Define the first supported Arcilator integration boundary
-   before expanding its coverage.
+1. Establish the first supported Arcilator integration boundary using the
+   unchanged original test and reference. Retain the existing backend baseline
+   and explicitly track unsupported targets as coverage expands.
 2. Freeze the model/fixture, precision and reference tolerances, interface/memory
    map, baseline cycle/bandwidth targets, and meanings of 2x/4x and eight-tile.
 3. Implement the Bonsai F2 Custom Logic wrapper and exercise command/status,

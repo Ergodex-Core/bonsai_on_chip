@@ -8,7 +8,10 @@ Run date: 2026-09-26. Rebuilt from repository paths on branch
 uncommitted runner. Its hash in the JSON identifies the exact tested bytes;
 `raw/arcilator-pilot/runner.patch` records the change against that HEAD. The driver
 and DUT contents are unchanged. The DUT originated at
-`5eff3822250fc52b2a0f83315969238805ece7c5`.
+`5eff3822250fc52b2a0f83315969238805ece7c5`. After the run, all four DUT/driver/runner
+source hashes were verified against commit
+`606696353c4077032619a5b32ba6d5b5bc5216d5`; the JSON records this as
+`harness_commit`.
 
 The experiment compiles these repository files directly, without modifying or copying RTL:
 

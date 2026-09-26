@@ -140,8 +140,8 @@
     "evidence": "raw/arcilator-pilot/guard-results.json",
     "added_cases": "For each backend, a forced dependency failure following a completed comparison leaves aggregate status incomplete and preserves previous traces only as stale evidence."
   },
-  "harness_commit": null,
-  "harness_commit_note": "Rerun used an updated working-tree runner atop repository_revision; no commit containing that runner existed at report generation. Source hashes and the raw runner.patch identify the tested bytes.",
+  "harness_commit": "606696353c4077032619a5b32ba6d5b5bc5216d5",
+  "harness_commit_note": "The run used repository_revision plus the captured runner patch. Afterward, every recorded DUT/driver/runner source hash was verified against this commit; report-only edits do not change those tested bytes.",
   "dut_origin_revision": "5eff3822250fc52b2a0f83315969238805ece7c5",
   "previous_raw_artifacts": "raw/arcilator-pilot-before-result-invalidation-9ab1dcc8",
   "runner_patch_sha256": "e76b844bf131928ed945a5218c850371f869454616b6691ec01ef31f04669992",
