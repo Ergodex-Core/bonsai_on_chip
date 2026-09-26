@@ -4,7 +4,7 @@ Status: **in progress; environment PR, not Week 0 sign-off**.
 Run date: 2026-09-26. Owner: Rachit Tibrewal. Technical acceptance: pending.
 Issue: [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
 Development repository: [bonsai_on_chip](https://github.com/Ergodex-Core/bonsai_on_chip).
-Branch: `codex/erg-102-simulation-setup`. PR: pending publication.
+Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Core/bonsai_on_chip/pull/1) (draft).
 
 ## Scope and results
 
@@ -89,12 +89,15 @@ strategy for SystemC/UVM. The bounded pilot does not establish those features.
 
 ## Artifacts and validation
 
-Readable report attachment and durable private raw-artifact links: pending.
+Readable report: linked from ERG-102, with a dated attachment provided for review.
+Raw XSIM evidence is preserved on persistent EBS; private S3 publication is
+pending explicit upload approval. The local Arcilator evidence archive is also
+preserved. The full repository baseline remains in progress.
 Cloud account/instance inventory and private transfer URLs are excluded from
 public reports. Authorized reviewers receive environment details and artifact
 locations through the Linear attachment. Raw results are gitignored.
 
-Repository linters and macro-signature checks pass. Seven synthetic baseline
+Repository linters, macro-signature checks and Bazel lockfile validation pass. Seven synthetic baseline
 evidence checks pass, covering complete data, missing outputs/result records,
 missing terminal events, unreceived announced events, malformed JSON and logging
 failure. Final AWS script setup and all nine XSIM tests pass; source and raw artifact
