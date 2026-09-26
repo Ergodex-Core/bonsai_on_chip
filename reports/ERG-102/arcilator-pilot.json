@@ -138,5 +138,7 @@
     "macro_signatures": "PASS",
     "formatted_sources_rebuilt": true,
     "integrity_guards_rerun": true
-  }
+  },
+  "harness_commit": "875106727a73249699836e46a3e539fd83fb173d",
+  "harness_commit_note": "Committed driver and runner bytes match the captured run hashes; DUT revision remains repository_revision."
 }

@@ -12,6 +12,8 @@ Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Co
 | --- | --- | --- |
 | Arcilator / Verilator parity pilot | PASS: 4 configurations, 0 failures, 0 skips | One unchanged handshake-control RTL module; 41,716 samples and 208,580 output checks per backend |
 | Pilot evidence-integrity checks | PASS: 13 checks | Stale inputs, incomplete runs and altered traces rejected |
+| Existing Arcilator testbench frontend probes | BLOCKED: 2/2 | Aligner and MultiFifo fail before simulation; no full-suite pass |
+| Core cocotb smoke | PASS with coverage limits | 26 exercised cases; 3 RVV early returns; final collector verified cached evidence |
 | Repository-default test baseline | Running | Verilator, Chisel and host backends; not an Arcilator suite result |
 | AWS HDK preparation | PASS | Pinned source/IP with Vivado 2025.2; Git LFS validation passed |
 | AWS AXI-Lite example XSIM tests | PASS: 9/9, 0 failures, 0 skips | AWS shell bus-functional model and example; final lint-clean scripts rerun |
@@ -23,6 +25,8 @@ The pilot's [detailed report](arcilator-pilot.md) and
 source/tool hashes, tool versions, independent oracle, seed and limitations.
 Its reference threshold is exact equality for every binary public output and
 byte-identical full traces. No performance or four-state/X result is claimed.
+The separate [core smoke report](smoke-baseline.md) records the Verilator run,
+seed 42, early-return cases and the later cached evidence replay.
 
 ## Source and reproduction
 
@@ -85,7 +89,10 @@ execution; unsupported, unbuilt, filtered and skipped targets do not pass.
 
 A full Arcilator port needs real callback/clock scheduling for cocotb, SRAM DPI
 loading and internal hierarchy access, a ChiselSim backend, and an explicit
-strategy for SystemC/UVM. The bounded pilot does not establish those features.
+strategy for SystemC/UVM. The bounded pilot does not establish those features. Two unchanged existing
+SystemVerilog benches were also probed: both fail at the frontend, and one
+reports dropped constrained-random/coverage semantics. See the
+[readiness findings](arcilator-suite-readiness.md) and their captured diagnostics.
 
 ## Artifacts and validation
 

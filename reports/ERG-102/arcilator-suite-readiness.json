@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "scope": "Two existing unchanged SystemVerilog testbench frontend probes; not a full-suite execution",
+  "repository_revision": "20a2f0f2518c6664f83504b922e94897a99931f0",
+  "rtl_and_testbench_changes": false,
+  "status": "blocked_at_frontend",
+  "probed": 2,
+  "compiled": 0,
+  "simulated": 0,
+  "toolchain": {
+    "location": "External Linux x86_64 package, supplied through BONSAI_ARC_TOOLCHAIN; no compiler source or binaries included",
+    "circt_verilog_version": "CIRCT e2f80d17f; LLVM 23.0.0git; slang 11.0.0+0",
+    "circt_verilog_sha256": "39b437d8e02f2fe776a9189672e75d33946fc9fdb9e887b26452283eafa0d625",
+    "arcilator_version": "CIRCT 272cba1b5; LLVM 23.0.0git",
+    "arcilator_sha256": "17726ec757c1de733934d79f05af4bd398e61ac7eb2db1814c2dfe1709277e91",
+    "arcilator_invoked_for_simulation": false
+  },
+  "execution_environment": {
+    "platform": "Linux x86_64",
+    "container_image_id": "sha256:75ff5522c3b54b1c3802f8d8ea201198e14a5a22e7932e5d0d96b93b0a1061ac",
+    "mounts": {
+      "/source": "repository, read-only",
+      "/toolchain": "external toolchain, read-only",
+      "/audit": "temporary audit output"
+    }
+  },
+  "probes": [
+    {
+      "target": "//hdl/verilog/rvv/design:aligner_tb",
+      "command": [
+        "/toolchain/bin/circt-verilog",
+        "--ir-hw",
+        "--single-unit",
+        "--timescale=1ns/1ps",
+        "--top=Aligner_tb",
+        "/source/hdl/verilog/rvv/design/Aligner.sv",
+        "/source/hdl/verilog/rvv/design/Aligner_tb.sv",
+        "-o",
+        "/audit/aligner.mlir"
+      ],
+      "frontend_exitcode": 1,
+      "simulation": "NOT RUN: frontend rejected unchanged source",
+      "source_sha256": {
+        "hdl/verilog/rvv/design/Aligner.sv": "1a3daeb8fc97f0a6552bd9ec32ad919caeb1012472af788168aacf536ea576d4",
+        "hdl/verilog/rvv/design/Aligner_tb.sv": "f76efb76bf8d99555440af807031f7055ef931db1defe302885457ceede0abec"
+      },
+      "log_sha256": "91f584a9d8dbfa5601310127e2d4ff92905255e2e367d10c791c0cf3e9e2243e",
+      "raw_log": "reports/ERG-102/raw/arcilator-suite-audit/aligner-frontend.log",
+      "blockers": [
+        {
+          "file": "hdl/verilog/rvv/design/Aligner_tb.sv",
+          "lines": [
+            32,
+            34
+          ],
+          "diagnostic": "Unpacked logic$[3:0] testbench signals cannot connect implicitly to packed logic[3:0] DUT ports."
+        },
+        {
+          "file": "hdl/verilog/rvv/design/Aligner_tb.sv",
+          "lines": [
+            52
+          ],
+          "diagnostic": "Cannot format unpacked logic$[3:0] without a specification string."
+        }
+      ]
+    },
+    {
+      "target": "//hdl/verilog/rvv/design:multififo_tb",
+      "command": [
+        "/toolchain/bin/circt-verilog",
+        "--ir-hw",
+        "--single-unit",
+        "--timescale=1ns/1ps",
+        "--top=MultiFifo_tb",
+        "/source/hdl/verilog/rvv/design/Aligner.sv",
+        "/source/hdl/verilog/rvv/design/MultiFifo.sv",
+        "/source/hdl/verilog/rvv/design/MultiFifo_tb.sv",
+        "-o",
+        "/audit/multififo.mlir"
+      ],
+      "frontend_exitcode": 1,
+      "simulation": "NOT RUN: frontend rejected unchanged source",
+      "source_sha256": {
+        "hdl/verilog/rvv/design/Aligner.sv": "1a3daeb8fc97f0a6552bd9ec32ad919caeb1012472af788168aacf536ea576d4",
+        "hdl/verilog/rvv/design/MultiFifo.sv": "fda0523dc8a41ffc0586736529f8db06e5d56695389e4bc47c43e375021e7835",
+        "hdl/verilog/rvv/design/MultiFifo_tb.sv": "16ee5d26ed8a2f436f920b168d8355820c259750c841ca5fae2aef6b0e3f0438"
+      },
+      "log_sha256": "1419b1da507a3fe8d75f55c3fa7e30a67d57eeae42333d082d31bdb53089411a",
+      "raw_log": "reports/ERG-102/raw/arcilator-suite-audit/multififo-frontend.log",
+      "blockers": [
+        {
+          "file": "hdl/verilog/rvv/design/MultiFifo_tb.sv",
+          "lines": [
+            56
+          ],
+          "diagnostic": "Unsupported clocking-block signal data_in type !moore.array<4 x l32>."
+        },
+        {
+          "file": "hdl/verilog/rvv/design/MultiFifo_tb.sv",
+          "lines": [
+            15
+          ],
+          "diagnostic": "Frontend states that class builtins needed for randomization, constraints and covergroups are unsupported and will be dropped during lowering. This is a semantic coverage blocker even if the clocking-block error is later resolved."
+        }
+      ]
+    }
+  ],
+  "coverage_limit": "No cocotb, Chisel, SystemC, UVM or remaining repository target compatibility/pass is established by these two probes. The external package contains UVM runtime support; its coverage is unverified here."
+}
