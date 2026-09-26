@@ -1,0 +1,156 @@
+{
+  "status": "complete",
+  "scope": "handshake_multistage_ctrl parity pilot only; not the repository test suite",
+  "repository_revision": "9ab1dcc870dab7b33ef8a46c218bc40a2e54fdf2",
+  "source_sha256": {
+    "hdl/verilog/rvv/common/cdffr.sv": "f537eb36051570b8df2edfde25122b2df0a3c020808043a6e6ed9bf658b66d16",
+    "hdl/verilog/rvv/common/handshake_multistage_ctrl.sv": "0f60609635ef0ca084340495be83ba39002b97f7a3514111b2246daffb2a4463",
+    "tests/arcilator/handshake_parity.cpp": "c6216862f7e84f28560f7702e4cc7e8b8a9851a0ff6b9c616c838e4b427185a7",
+    "tests/arcilator/run_parity.sh": "2d4a76428a2a0757f5f41af6a5a2304e9331c1aca873515b7957c05353c2cf2f"
+  },
+  "toolchain_sha256": {
+    "bin/arcilator": "17726ec757c1de733934d79f05af4bd398e61ac7eb2db1814c2dfe1709277e91",
+    "bin/circt-verilog": "39b437d8e02f2fe776a9189672e75d33946fc9fdb9e887b26452283eafa0d625",
+    "bin/opt": "0b5f9072f80589915a4e0843fbeb9ae8dda4ffc571c407fb955a9ed7519903f1",
+    "bin/llc": "5694c07509ebb6a3d32d831d03096b3be628a2270ca13bccbf01713a8021f0bd",
+    "runtime/arcilator-header-cpp.py": "92ee4769100ef4d49c85aa4a03ca92fb2c66c92a418e4c78dd928fb6eed6206d",
+    "runtime/arcilator-runtime.h": "3f92c222bed9c86ef0c615f54cbfed83cb1e9ed68c1ba35805c32972e05eefd1",
+    "runtime/arcilator-uvm-runtime.h": "44fdc112909cef3cdbd81486d3062dfa7e6597aebb03ffcaebbd701295f135ed",
+    "lib/libCIRCTArcRuntime.a": "c861393b8a009874774f89c7bc48f8dd3ce7e7ed9809870a35f976f943938234",
+    "lib/libCIRCTSupport.a": "70ab0b4d5f17c7f10a5be34019a697a57cc7b88f22a3c4844fcfec414b127a42",
+    "lib/libLLVMSupport.a": "c05d4e293d5edc99ccc8dc3dd3bf3e245e38086e7e1bd7f7d5ab251c2b532533",
+    "lib/libLLVMDemangle.a": "c953959509838601903dd0bc1d1963824dd937af4c05e8e500a487e33f720497"
+  },
+  "versions": {
+    "verilator": {
+      "verilator": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+      "c++": "Apple clang version 17.0.0 (clang-1700.6.4.2)\nTarget: x86_64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+    },
+    "arcilator": {
+      "arcilator": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\nCIRCT 272cba1b5",
+      "circt-verilog": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\nCIRCT e2f80d17f\nslang version 11.0.0+0",
+      "opt": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: westmere",
+      "llc": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: westmere\n\n  Registered Targets:\n    x86    - 32-bit X86: Pentium-Pro and above\n    x86-64 - 64-bit X86: EM64T and AMD64",
+      "clang++": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin"
+    }
+  },
+  "configurations": [
+    {
+      "stages": 1,
+      "remove_bubbles": 0,
+      "verilator": "PASS",
+      "arcilator": "PASS",
+      "trace_parity": "PASS",
+      "samples": 10414,
+      "rising_edges": 2105,
+      "checked_outputs_per_backend": 52070,
+      "occupied_masks_observed": [
+        0,
+        1
+      ],
+      "trace_sha256": "354a8f677b43dac3bbec5fe3c9e4221b6f008e38cefffd63e3c689992c63a58a"
+    },
+    {
+      "stages": 1,
+      "remove_bubbles": 1,
+      "verilator": "PASS",
+      "arcilator": "PASS",
+      "trace_parity": "PASS",
+      "samples": 10414,
+      "rising_edges": 2105,
+      "checked_outputs_per_backend": 52070,
+      "occupied_masks_observed": [
+        0,
+        1
+      ],
+      "trace_sha256": "4818aed6a14d05b2fcbd96e20c4a6e183fccd39e9b59634330e388c0f9697249"
+    },
+    {
+      "stages": 3,
+      "remove_bubbles": 0,
+      "verilator": "PASS",
+      "arcilator": "PASS",
+      "trace_parity": "PASS",
+      "samples": 10444,
+      "rising_edges": 2115,
+      "checked_outputs_per_backend": 52220,
+      "occupied_masks_observed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "trace_sha256": "5b017d90aaac2a6a3cb8f752946d6d62f998554da80c918106485599eabe40c5"
+    },
+    {
+      "stages": 3,
+      "remove_bubbles": 1,
+      "verilator": "PASS",
+      "arcilator": "PASS",
+      "trace_parity": "PASS",
+      "samples": 10444,
+      "rising_edges": 2115,
+      "checked_outputs_per_backend": 52220,
+      "occupied_masks_observed": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "trace_sha256": "4bad7dd446bdd64c5da1998c6ebcce26cac8d35111af793322920e6bf1741583"
+    }
+  ],
+  "passed": 4,
+  "failed": 0,
+  "skipped": 0,
+  "total_samples_per_backend": 41716,
+  "total_checked_outputs_per_backend": 208580,
+  "run_date": "2026-09-26",
+  "branch": "codex/erg-102-simulation-setup",
+  "dut_sources_modified": false,
+  "raw_artifacts": "raw/arcilator-pilot",
+  "runtime_step": "arcRuntimeIR_simStepSettled for all four generated models",
+  "warnings": "Each Arcilator link emits 21 warnings from bundled runtime headers concerning C linkage and C++ types; frontend and Arc compile logs are clean.",
+  "container_image_id": "sha256:75ff5522c3b54b1c3802f8d8ea201198e14a5a22e7932e5d0d96b93b0a1061ac",
+  "limitations": [
+    "One handshake-control DUT only",
+    "No four-state/X result",
+    "No cocotb, ChiselSim, SystemC, or UVM integration result",
+    "No full-repository or model-inference test result",
+    "No FPGA execution result",
+    "No performance measurement or PGO"
+  ],
+  "quality_checks": {
+    "pilot_file_linters": "PASS (clang-format-19, markdownlint, shellcheck -x)",
+    "macro_signatures": "PASS",
+    "formatted_sources_rebuilt": true,
+    "integrity_guards_rerun": true
+  },
+  "artifact_integrity_checks": {
+    "passed": 15,
+    "failed": 0,
+    "evidence": "raw/arcilator-pilot/guard-results.json",
+    "added_cases": "For each backend, a forced dependency failure following a completed comparison leaves aggregate status incomplete and preserves previous traces only as stale evidence."
+  },
+  "harness_commit": "606696353c4077032619a5b32ba6d5b5bc5216d5",
+  "harness_commit_note": "The run used repository_revision plus the captured runner patch. Afterward, every recorded DUT/driver/runner source hash was verified against this commit; report-only edits do not change those tested bytes.",
+  "dut_origin_revision": "5eff3822250fc52b2a0f83315969238805ece7c5",
+  "previous_raw_artifacts": "raw/arcilator-pilot-before-result-invalidation-9ab1dcc8",
+  "runner_patch_sha256": "e76b844bf131928ed945a5218c850371f869454616b6691ec01ef31f04669992",
+  "private_evidence_archive": {
+    "filename": "bonsai-arcilator-evidence-final.tar.gz",
+    "sha256": "84c44e6f4cda4ed1036537d8d7e8252c356f5402e10fa198b7907d276dab55e0",
+    "bytes": 315984,
+    "files": 46,
+    "contents": "Logs, traces, manifests, integrity guards, dirty runner patch and four public source snapshots; no compiler binaries, libraries or generated executables",
+    "upload": "pending explicit authorization"
+  }
+}

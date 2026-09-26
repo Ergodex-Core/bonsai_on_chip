@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-26T10:05:04.445948+00:00",
+  "backend": "Repository-default Verilator/Chisel/host baseline; CPU execution on F2 host",
+  "run_exit_code": 0,
+  "started_at_utc": "2026-09-26T09:21:20Z",
+  "ended_at_utc": "2026-09-26T10:00:46Z",
+  "inventory_total_test_rules": 2758,
+  "selected_target_counts": {
+    "parallel": 1325,
+    "exclusive": 7
+  },
+  "groups": {
+    "parallel": {
+      "expected_targets": 1325,
+      "reported_targets": 1325,
+      "status_counts": {
+        "PASSED": 1325
+      },
+      "cached_runs": 286,
+      "total_test_runs": 1325,
+      "targets_with_cached_runs": 286,
+      "fresh_target_summaries": 1039,
+      "bazel_exit_code": 0,
+      "logging_exit_code": 0,
+      "evidence_complete": true,
+      "terminal_event_received": true,
+      "missing_target_count": 0,
+      "unreceived_announced_event_count": 0,
+      "event_parse_error_count": 0,
+      "artifact_error_count": 0,
+      "aborted_event_count": 0,
+      "artifact_count": 6638,
+      "build_finished_event": {
+        "overallSuccess": true,
+        "finishTimeMillis": "1790415941188",
+        "exitCode": {
+          "name": "SUCCESS"
+        },
+        "finishTime": "2026-09-26T09:45:41.188Z"
+      }
+    },
+    "exclusive": {
+      "expected_targets": 7,
+      "reported_targets": 7,
+      "status_counts": {
+        "PASSED": 7
+      },
+      "cached_runs": 0,
+      "total_test_runs": 7,
+      "targets_with_cached_runs": 0,
+      "fresh_target_summaries": 7,
+      "bazel_exit_code": 0,
+      "logging_exit_code": 0,
+      "evidence_complete": true,
+      "terminal_event_received": true,
+      "missing_target_count": 0,
+      "unreceived_announced_event_count": 0,
+      "event_parse_error_count": 0,
+      "artifact_error_count": 0,
+      "aborted_event_count": 0,
+      "artifact_count": 14,
+      "build_finished_event": {
+        "overallSuccess": true,
+        "finishTimeMillis": "1790416843663",
+        "exitCode": {
+          "name": "SUCCESS"
+        },
+        "finishTime": "2026-09-26T10:00:43.663Z"
+      }
+    }
+  },
+  "artifact_count": 6652,
+  "artifact_reverification_mismatches": [],
+  "source_reverification_exit_code": 0,
+  "source_patch_unchanged": true,
+  "coverage_audit": {
+    "xml_files": 1332,
+    "xml_testcase_declarations": 1400,
+    "xml_skipped_testcases": 0,
+    "xml_failure_testcases": 0,
+    "xml_error_testcases": 0,
+    "xml_disabled_suite_declarations": 0,
+    "xml_parse_errors": [],
+    "log_notes": [
+      {
+        "target": "//fpga:check_pins_test",
+        "path": "test-artifacts/parallel/cdc9f8e9fe293f4c6e7a/test.log",
+        "line": 5,
+        "text": "PIN CHECKER: DDR pin check is DISABLED (no DDR4 mappings found in XDC or forced ignore)"
+      },
+      {
+        "target": "//tests/cocotb/dma:dma_core_cocotb_test_test_dma_cfg_error",
+        "path": "test-artifacts/parallel/1c23a2caa3b6218f4455/test.log",
+        "line": 15,
+        "text": "                                                            Unsupported LEN_FLAGS configurations set cfg_error."
+      },
+      {
+        "target": "//fpga:dma_sim_test",
+        "path": "test-artifacts/exclusive/e00eba3fcae095876f3d/test.log",
+        "line": 42,
+        "text": "WARNING:root:[LOADER_ERR] WARNING:root:LOADER: --csr_only set; skipping segment writes (segments expected to be backdoor-loaded)."
+      },
+      {
+        "target": "//fpga:trivial_pass_highmem_sim_test",
+        "path": "test-artifacts/exclusive/ec1096d9d440133cb9be/test.log",
+        "line": 42,
+        "text": "WARNING:root:[LOADER_ERR] WARNING:root:LOADER: --csr_only set; skipping segment writes (segments expected to be backdoor-loaded)."
+      },
+      {
+        "target": "//fpga:spi_flash_sim_test",
+        "path": "test-artifacts/exclusive/56c21105c5f8e501e4a4/test.log",
+        "line": 42,
+        "text": "WARNING:root:[LOADER_ERR] WARNING:root:LOADER: --csr_only set; skipping segment writes (segments expected to be backdoor-loaded)."
+      },
+      {
+        "target": "//fpga:clk_sim_test",
+        "path": "test-artifacts/exclusive/38d4f124fc35626337c8/test.log",
+        "line": 42,
+        "text": "WARNING:root:[LOADER_ERR] WARNING:root:LOADER: --csr_only set; skipping segment writes (segments expected to be backdoor-loaded)."
+      }
+    ],
+    "caveat": "XML entries and backend target statuses are not a proof that every nested test body executed. Skip/unsupported notes require contextual review. Manual aggregate smoke targets are outside this full-run selection."
+  },
+  "exclusive_contracts": [
+    {
+      "target": "//fpga:clk_sim_test",
+      "rule_class": "_sim_test",
+      "size_declared": "large",
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 30,
+      "loader": "backdoor"
+    },
+    {
+      "target": "//fpga:dma_sim_test",
+      "rule_class": "_sim_test",
+      "size_declared": "large",
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 120,
+      "loader": "backdoor"
+    },
+    {
+      "target": "//fpga:rom_boot_highmem_sim_test",
+      "rule_class": "py_test",
+      "size_declared": null,
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 600,
+      "loader": null
+    },
+    {
+      "target": "//fpga:rom_boot_sim_test",
+      "rule_class": "py_test",
+      "size_declared": null,
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 600,
+      "loader": null
+    },
+    {
+      "target": "//fpga:spi_flash_sim_test",
+      "rule_class": "_sim_test",
+      "size_declared": "large",
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 600,
+      "loader": "backdoor"
+    },
+    {
+      "target": "//fpga:trivial_pass_highmem_sim_test",
+      "rule_class": "_sim_test",
+      "size_declared": "large",
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 30,
+      "loader": "backdoor"
+    },
+    {
+      "target": "//fpga:trivial_pass_sim_test",
+      "rule_class": "_sim_test",
+      "size_declared": "large",
+      "bazel_timeout_label": "long",
+      "simulator_timeout_seconds": 30,
+      "loader": "spi"
+    }
+  ],
+  "hashes": {
+    "summary.json": "d96ebb626d43fd4e52e5b056bc9d8dbe2f3abb5ca0162060646477850b8e9ba8",
+    "test-inventory.xml": "59404702b1894b142e136711121454895dad9b6f668999dc9cf70c746998c949",
+    "source.patch": "2eabff2725e859c342cd589233963ef1fc9a83c42c8833f233355142f7862b4e",
+    "source-files.sha256": "343a26d77ffc79e49426003683725e4b6751e6d0798b0c62778c418a1ff943a3",
+    "runner.sh": "b10a2bbb462380cce7f0b1a41e07fb55635574cbfc6026d10d0abfb1a14e61ba",
+    "coverage-audit.json": "fbf378740c2f2ae22dd3afbb376d7a3a6b85fc228d12476d865a3460fc9eb67b",
+    "environment.txt": "6fe08beddb7542cd4d954166bde50d1dd061a8a75fd3a2171cfdce40228f6a85"
+  },
+  "archive": {
+    "path": "/home/ubuntu/bonsai-erg102-evidence/native-baseline-20260926T0920Z-all-16x8.tar.gz",
+    "bytes": 3707813,
+    "sha256": "c370de156107062c4f012a9b880c8cc6e666d10c74ed14282d16c4f41e121d5f",
+    "storage": "EC2 root EBS; no S3 upload performed"
+  },
+  "process_cleanup": {
+    "active_native_baseline_processes": [],
+    "bazel_shutdown_exit_code": 0
+  },
+  "report_type": "ERG-102 native simulator baseline",
+  "outcome": "PASS_WITH_COVERAGE_LIMITATIONS",
+  "scope": {
+    "backend": "Repository-default Verilator/Chisel/host tests, executed by the CPU on an AWS F2 host",
+    "arcilator_full_suite": false,
+    "physical_fpga_execution": false,
+    "model_inference_execution": false,
+    "excluded_tags": [
+      "manual",
+      "vcs",
+      "synthesis",
+      "power",
+      "spyglass"
+    ],
+    "discovered_rules": 2758,
+    "selected_targets": 1332,
+    "passed_targets": 1332,
+    "cached_targets": 286,
+    "fresh_targets": 1046,
+    "target_status_is_not_testcase_coverage": true
+  },
+  "execution": {
+    "host_os": "Ubuntu 24.04",
+    "cpu_vcpus": 24,
+    "memory_gib": 249,
+    "bazel_version": "8.6.0",
+    "clang_version": "19.1.1",
+    "repository_built_verilator_version": "5.052",
+    "java_major_version": 21,
+    "build_jobs": 16,
+    "local_test_jobs": 8,
+    "bazel_jvm_heap": "16g",
+    "elapsed_seconds": 2366
+  },
+  "source_provenance": {
+    "repository": "https://github.com/Ergodex-Core/bonsai_on_chip",
+    "checkout_base": "5eff3822250fc52b2a0f83315969238805ece7c5",
+    "working_tree_changes": [
+      ".gitignore",
+      "hdl/chisel/src/coralnpu/BUILD",
+      "rename hdl/chisel/src/coralnpu/Sram.scala to SramBlock.scala (byte-identical contents)",
+      "utils/run_simulation_baseline.sh"
+    ],
+    "overlay_sha256": "5ff405f14b773907313653bbc384007492266d6f358fddba3f5c83e59ec8e104",
+    "original_runner_sha256": "dc51927021f0b2fc25b0382819aab411dffbaf6d3ba1d5439dce2668b660ee0d",
+    "final_runner_sha256": "b10a2bbb462380cce7f0b1a41e07fb55635574cbfc6026d10d0abfb1a14e61ba",
+    "final_runner_source_commit": "bd81cb5198f729ac9325d0f886d46c902a4a9d65",
+    "published_pr": "https://github.com/Ergodex-Core/bonsai_on_chip/pull/1",
+    "note": "Tests used the recorded base-plus-patch working tree, not a checkout of the PR head. Native test inputs and final runner match the corresponding inputs published at bd81cb5198f729ac9325d0f886d46c902a4a9d65; source hashes and the patch were reverified unchanged after execution."
+  },
+  "coverage_limitations": [
+    {
+      "kind": "disabled_check",
+      "target": "//fpga:check_pins_test",
+      "detail": "DDR pin validation was disabled; the target passing does not validate DDR pin mappings."
+    },
+    {
+      "kind": "test_mode",
+      "targets": [
+        "//fpga:clk_sim_test",
+        "//fpga:dma_sim_test",
+        "//fpga:spi_flash_sim_test",
+        "//fpga:trivial_pass_highmem_sim_test"
+      ],
+      "detail": "Backdoor segment loading is intentional. Logs skip host segment writes in csr_only mode, so these cases do not establish host streaming of those segments."
+    },
+    {
+      "kind": "excluded_aggregate",
+      "detail": "Manual aggregate smoke targets are outside this full-run selection. The separate CoreMiniAxi smoke result includes three RVV early-return cases; that caveat belongs to the separate smoke report. This full run selects split scalar and RVV-enabled test targets."
+    },
+    {
+      "kind": "negative_test_description",
+      "target": "//tests/cocotb/dma:dma_core_cocotb_test_test_dma_cfg_error",
+      "detail": "The unsupported LEN_FLAGS log describes an exercised negative test, not a skipped case."
+    }
+  ],
+  "prior_attempt": {
+    "result": "INTERRUPTED_INCOMPLETE",
+    "started_at_utc_approximate": "2026-09-26T08:43:00Z",
+    "build_jobs": 8,
+    "local_test_jobs": 2,
+    "passed_target_summaries_at_interruption": 286,
+    "runner_sha256": "dc51927021f0b2fc25b0382819aab411dffbaf6d3ba1d5439dce2668b660ee0d",
+    "reason": "Cleanly interrupted after the other host workload finished; resumed with the same build cache at higher concurrency and the final evidence collector.",
+    "exclusive_group_started": false,
+    "archived_artifact_count": 575,
+    "missing_artifact_count": 0,
+    "archive": {
+      "path": "/home/ubuntu/bonsai-erg102-evidence/baseline-20260926T0843Z-interrupted.tar.gz",
+      "sha256": "1fccf9c0085dab82db17cf9c7883938fdf31ba822bada962aa7027ec824791be"
+    },
+    "note": "This attempt alone is not a suite pass. Its 286 completed target results were reused as cached results by the successful final run."
+  },
+  "preservation": {
+    "raw_evidence_uploaded": false,
+    "archive_gzip_integrity_verified": true,
+    "durable_tools": "/home/ubuntu/bonsai-erg102-tools",
+    "instance_stopped": false
+  },
+  "tool_hashes": {
+    "bazel_8_6_0_linux_x86_64_sha256": "9860da9c9386bbc023feed8f43af3105d338727d77b644fa6aeca45a4a11957c"
+  }
+}

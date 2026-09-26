@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "issue": "ERG-102",
+  "status": "PASS_WITH_COVERAGE_LIMITS",
+  "target": "//tests/cocotb:core_mini_axi_sim_cocotb",
+  "backend": "Verilator repository-default smoke; not Arcilator",
+  "environment": {
+    "host": "Darwin arm64",
+    "container": "Debian GNU/Linux 13.7 (trixie), Linux x86_64",
+    "execution": "local Docker Linux x86_64 emulation on ARM64 macOS",
+    "bazel": "8.6.0",
+    "verilator": "5.052",
+    "cocotb": "2.0.0"
+  },
+  "source": {
+    "base_revision": "5eff3822250fc52b2a0f83315969238805ece7c5",
+    "dirty": true,
+    "changes": [
+      ".gitignore",
+      "hdl/chisel/src/coralnpu/BUILD",
+      "hdl/chisel/src/coralnpu/Sram.scala renamed to SramBlock.scala",
+      "utils/run_simulation_baseline.sh"
+    ],
+    "final_replay_source_manifest": "raw/local-smoke/final-run/source-files.sha256",
+    "original_run_had_full_source_hash_manifest": false
+  },
+  "original_execution": {
+    "run_started_utc": "2026-09-26T08:17:33Z",
+    "test_started_utc": "2026-09-26T08:54:39.097Z",
+    "bazel_exit_code": 0,
+    "logging_exit_code": null,
+    "bazel_targets_passed": 1,
+    "cached_targets": 0,
+    "new_test_executions": 1,
+    "test_wall_seconds": 132.214,
+    "bazel_elapsed_seconds": 2355.248,
+    "runner_sha256": "dd3c0df5cfbaf9442192e848d4dfb42ef3266f4c1a3d3b6e6704746b6be3c709",
+    "final_collector_exit_code": 1,
+    "final_collector_complete": false,
+    "metadata_gap": "The older runner did not record tee exit status. The final collector fails on the missing smoke.logging-exitcode; no value has been invented.",
+    "raw_directory": "raw/local-smoke/original-run"
+  },
+  "final_runner_cached_replay": {
+    "run_started_utc": "2026-09-26T09:08:59Z",
+    "finished_utc": "2026-09-26T09:09:56.315Z",
+    "runner_sha256": "b10a2bbb462380cce7f0b1a41e07fb55635574cbfc6026d10d0abfb1a14e61ba",
+    "bazel_exit_code": 0,
+    "logging_exit_code": 0,
+    "collector_evidence_complete": true,
+    "bazel_targets_passed": 1,
+    "cached_targets": 1,
+    "new_test_executions": 0,
+    "bazel_elapsed_seconds": 27.26,
+    "terminal_bep_event_received": true,
+    "missing_test_summaries": 0,
+    "artifact_errors": [],
+    "test_log_and_xml_match_original_sha256": true,
+    "raw_directory": "raw/local-smoke/final-run"
+  },
+  "coverage": {
+    "inventory_rule_count": 2758,
+    "selected_bazel_targets": 1,
+    "bazel_xml_wrapper_testcase_count": 1,
+    "cocotb_reported": {
+      "total": 29,
+      "pass": 29,
+      "fail": 0,
+      "skip": 0
+    },
+    "exercised_passing_cocotb_cases": 26,
+    "not_applicable_early_return_cases": [
+      "rvv_exceptions_test",
+      "rvv_frm_hazard_test",
+      "rvv_misa_test"
+    ],
+    "exercised_case_names": [
+      "core_mini_axi_sim.core_mini_axi_basic_write_read_memory",
+      "core_mini_axi_sim.core_mini_axi_run_wfi_in_all_slots",
+      "core_mini_axi_sim.core_mini_axi_slow_bready",
+      "core_mini_axi_sim.core_mini_axi_write_read_memory_stress_test",
+      "core_mini_axi_sim.core_mini_axi_master_write_alignment",
+      "core_mini_axi_sim.core_mini_axi_finish_txn_before_halt_test",
+      "core_mini_axi_sim.core_mini_axi_riscv_tests",
+      "core_mini_axi_sim.core_mini_axi_riscv_dv",
+      "core_mini_axi_sim.core_mini_axi_csr_test",
+      "core_mini_axi_sim.core_mini_axi_exceptions_test",
+      "core_mini_axi_sim.core_mini_axi_coralnpu_isa_test",
+      "core_mini_axi_sim.core_mini_axi_rand_instr_test",
+      "core_mini_axi_sim.core_mini_axi_burst_types_test",
+      "core_mini_axi_sim.core_mini_axi_float_csr_test",
+      "core_mini_axi_sim.core_mini_axi_float_hazard_test",
+      "core_mini_axi_sim.unreachable_prefetch_fault",
+      "core_mini_axi_sim.core_mini_axi_frm_test",
+      "core_mini_axi_sim.core_mini_axi_backdoor_load_test",
+      "core_mini_axi_sim.core_mini_axi_minstret_test",
+      "core_mini_axi_sim.core_mini_axi_fcsr_frm_hazard_test",
+      "core_mini_axi_sim.fencei_test",
+      "core_mini_axi_sim.core_mini_axi_misa_test",
+      "core_mini_axi_sim.core_mini_axi_retire_buffer_full_illegal_inst_test",
+      "core_mini_axi_sim.core_mini_axi_cf_fault_retire_test",
+      "core_mini_axi_sim.core_mini_axi_wrap_burst_test",
+      "core_mini_axi_sim.core_mini_axi_csr_illegal_write_test"
+    ],
+    "interpretation": "Three RVV cases return early on the non-RVV core, so their reported PASS entries are not counted as exercised coverage. Cached replays add no coverage.",
+    "cocotb_random_seed": 42
+  },
+  "artifacts": {
+    "original_test_log_sha256": "8bb1879560ffe3ad4cff446997b5dd8a97759cb0a2e6497d3b2f9ca1c34260e1",
+    "original_test_xml_sha256": "460ae57a09e47b83ba52650837439dcc63ef777dcdd76c7a3aafea6c375b9f69",
+    "original_bep_sha256": "9ac764935114b4f73a78aabef0a4648b1d2e2c7d48cc2f7e169c83186c31715a",
+    "final_replay_bep_sha256": "516d5d205c39bb5897b7fbdf0d9554f5aec76fc5d9e0339098fd7475d3869c6c",
+    "file_hash_manifest": "raw/local-smoke/SHA256SUMS",
+    "file_hash_manifest_sha256": "adfb743f37fbcde620771b2b158126635a61cdd01bf62e5e26e343e3bea9af5b",
+    "storage": "Local gitignored raw evidence; no external upload claimed."
+  },
+  "limitations": [
+    "One explicit manual smoke target, not all 2758 inventoried test rules or the broader runnable baseline.",
+    "Verilator simulation only; no Arcilator, AWS F2 XSIM or physical FPGA result is implied by this report.",
+    "The source was a dirty working tree based on the recorded revision, not a clean final PR commit.",
+    "The initial execution lacks a separate logger exit record and full source-file hash manifest; a later cache replay records complete metadata but is not a new simulation.",
+    "The Bazel XML contains one wrapper testcase; individual cocotb coverage is taken from the simulator log and explicit early-return messages."
+  ]
+}

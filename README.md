@@ -63,3 +63,32 @@ bazel-bin/tests/verilator_sim/core_mini_axi_sim --binary bazel-out/k8-fastbuild-
 ```
 
 ![](doc/images/Coral_Logo_200px-2x.png)
+
+## Bonsai development and simulation
+
+Development is tracked in [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
+Use a Linux x86_64 environment for the Bazel and FPGA toolchains. Include the
+Linear issue identifier, such as `ERG-102`, in PR titles and relevant commits;
+repository autolinks point these references to the matching issue. Link the PR
+and validation report from Linear and follow the PR evidence template.
+
+```bash
+# Capture every declared test target, including excluded simulator variants.
+utils/run_simulation_baseline.sh inventory
+# Run the documented core cocotb smoke suite with the existing backend.
+utils/run_simulation_baseline.sh smoke
+# Run the repository-default test baseline in parallel/exclusive groups.
+utils/run_simulation_baseline.sh all
+```
+
+The baseline uses the repository's existing Verilator/Chisel/host backends. It
+records explicit exclusions, Bazel events, exit codes, source hashes, test logs
+and XML outputs under `reports/ERG-102/raw/`. Set `SIM_BUILD_JOBS` and `SIM_TEST_JOBS` to bound local
+resource use. The full repository does not yet have an Arcilator test backend.
+See the [Arcilator parity pilot](tests/arcilator/README.md) for the initial checked
+RTL boundary and its separate toolchain requirements.
+
+The existing Nexus-board instructions are in `fpga/README.md`. For an AWS FPGA
+Developer AMI, use the separate [AWS F2 simulation setup](fpga/aws_f2/README.md).
+AWS shell-model simulation and execution of a loaded FPGA image are distinct
+acceptance gates; a simulator pass is not a hardware execution result.

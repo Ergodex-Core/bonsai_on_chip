@@ -1,0 +1,127 @@
+{
+  "run_date": "2026-09-26",
+  "scope": "AWS cl_axil_reg_access example RTL under XSIM and shell bus-functional models; not Bonsai integration or physical FPGA execution",
+  "status": "PASS",
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "test_null",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_adder",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_arithmetic_operations",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_axil_registers",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_control_bits",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_error_handling",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_random",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_reset",
+      "status": "PASS",
+      "make_exit_code": 0
+    },
+    {
+      "name": "test_stress_axil",
+      "status": "PASS",
+      "make_exit_code": 0
+    }
+  ],
+  "environment": {
+    "os": "Ubuntu 24.04",
+    "architecture": "x86_64",
+    "instance_type": "f2.6xlarge",
+    "vivado": "2025.2",
+    "region": "us-east-1"
+  },
+  "aws_fpga_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "ip_revision": "6d32be972e6da854e61a8d3d6ec0466ab491c1b3",
+  "hlx_revision": "2383c2b64572c75163b1b60fbd0abea482c637e6",
+  "runner_sha256": {
+    "fpga/aws_f2/common.sh": "c568fc6d7e1ef028a6d26bcca202a0e2aec6c4999f6c0b6234c6ffc0e9725233",
+    "fpga/aws_f2/setup.sh": "40a70e8a6fb930cfa24f05fc4161729420a90471c0215de9f2e4800fbd1dc564",
+    "fpga/aws_f2/validate.sh": "9493a3cbaee4e0e751f0d373ea68fcbd2869dad48f3ab0d6d2ace46e64fc58f7"
+  },
+  "source_commit": "875106727a73249699836e46a3e539fd83fb173d",
+  "private_evidence_archive": {
+    "sha256": "fc7b9f278317cd067bc4b27dbc7542622768df40f7a022d9f10228c01838d23b",
+    "bytes": 3687865,
+    "contains": "initial and final run logs, traces and manifests",
+    "durable_upload": "pending authorization"
+  },
+  "bonsai_f2_cl": "NOT RUN",
+  "physical_fpga_execution": "NOT RUN",
+  "afi_created_or_loaded": false,
+  "durable_setup": {
+    "verified_date": "2026-09-26",
+    "status": "READY",
+    "storage": "root EBS",
+    "work_root": "/home/ubuntu/bonsai-erg102-f2-work",
+    "source_path": "/home/ubuntu/bonsai-erg102-f2-work/aws-fpga",
+    "source_and_setup_allocated_bytes": 1428983808,
+    "bootstrap_path": "/home/ubuntu/bonsai-erg102-bootstrap-v2/fpga/aws_f2",
+    "vivado_activation": "source /opt/Xilinx/2025.2/Vivado/settings64.sh",
+    "setup_exit_code": 0,
+    "all_three_git_pins_match": true,
+    "tracked_trees_clean": true,
+    "ip_and_hlx_lfs_fsck": "PASS",
+    "tracked_files_verified": 5435,
+    "source_and_copy_hash_manifests_match": true,
+    "tracked_file_manifest_sha256": "da086ab65e1cc7561d2397cb9767f45c3872ecfbe3eb585af135e000e2402bb3",
+    "stale_source_root_in_checked_configs_or_symlinks": false,
+    "excluded_generated_paths_relative_to_source": [
+      "hdk/cl/examples/cl_demo/cl_axil_reg_access/verif/sim/",
+      "hdk/common/verif/ip_simulation_libraries/",
+      "hdk/common/verif/models/fpga/fpga_ports.vh",
+      "hdk/common/verif/models/fpga/fpga_signals.vh",
+      "hdk/common/verif/models/sh_bfm/cl_ports_sh_bfm.vh"
+    ],
+    "xsim_validation_on_durable_root": "NOT RUN",
+    "first_validation": "Rebuilds the excluded headers and XSIM libraries at the durable path; earlier 9/9 XSIM results came from the original instance-store work root.",
+    "setup_log_path": "/home/ubuntu/bonsai-erg102-f2-work/logs/setup-20260926T092843Z-zO7IfN",
+    "preservation_evidence_path": "/home/ubuntu/bonsai-erg102-evidence/durable-f2-20260926T092837Z-saVePM",
+    "preservation_manifest_sha256": "7bdd94c5cd521b691e49b18f0038c8fa9ecad7e564854966490eeaed3a31bc0e",
+    "preservation_sha256sums_sha256": "568e6bbd99e592d6c1ea91e1a92262483d0e81bc60580a72ec89e89973f03599",
+    "original_xsim_archive_path": "/home/ubuntu/bonsai-erg102-evidence/f2-xsim-evidence-final.tar.gz",
+    "tools": {
+      "path": "/home/ubuntu/bonsai-erg102-tools",
+      "allocated_bytes": 64442368,
+      "activation": "source /home/ubuntu/bonsai-erg102-tools/activate.sh",
+      "bazel_version": "8.6.0",
+      "bazel_sha256": "9860da9c9386bbc023feed8f43af3105d338727d77b644fa6aeca45a4a11957c",
+      "bazel_symlink": "bin/bazel -> ../bazel-8.6.0-linux-x86_64",
+      "clang_and_lld_version": "19.1.1",
+      "compiler_aliases_resolve_to": "/usr/lib/llvm-19/bin on root EBS",
+      "version_checks": "PASS",
+      "build_cache_copied": false,
+      "reuse_instructions": "/home/ubuntu/bonsai-erg102-tools/REUSE.md",
+      "manifest_path": "/home/ubuntu/bonsai-erg102-tools/provenance/manifest.json",
+      "sha256sums_sha256": "775267cae8f8182be4be50fe8fb80567e700a13cc10c0916e082f184040373bf"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+COMMAND timeout 120 test_sum --slot 0 --a 10 --b 20
+===================================================
+Running test_sum
+===================================================
+slot_id = 0
+value_a = 10
+value_b = 20
+===================================================
+PASS: 10 + 20 = 30 (carry = 0)
+Result: sum = 30, carry = 0
+TEST PASSED
+EXIT_CODE 0
