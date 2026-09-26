@@ -29,3 +29,6 @@ toolchain/build_scripts/*.tar.*
 uvm_regression_*/
 uvm_regression_*.zip
 dispatch.log
+
+# Reproducible run logs and Bazel event streams are attached as artifacts.
+reports/**/raw/
