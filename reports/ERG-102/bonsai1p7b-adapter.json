@@ -1,0 +1,135 @@
+{
+  "status": "CPU_ADAPTER_VALIDATED_FPGA_RUN_PENDING",
+  "model": "prism-ml/Bonsai-1.7B-gguf",
+  "model_revision": "210a9e99f79cb184909d49595906526eb2b3dd9a",
+  "model_file": "Bonsai-1.7B-Q1_0.gguf",
+  "model_sha256": "3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3",
+  "model_bytes": 248302272,
+  "adapter_checks": {
+    "passed": true,
+    "gguf_sha256": "3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3",
+    "model_loader_sha256": "ac8b1252431707e3b551dcc58b142aa5e690b4b4609a29e6d1b2402fb6f80fbc",
+    "codec_blocks": 1615,
+    "codec_values": 206720,
+    "real_tensor_count": 197,
+    "real_blocks": 591,
+    "reference_library_sha256": "8ee5de3f2ae76384fcfa6e1ef6b272415c93962009474280fcbaf6987bc4a212",
+    "reference_tokenizer_sha256": "0b9c061a97ccbdefea69cef97b8bcf5350a78d026f194ae6cec8470e3ccac4d4",
+    "tokenizer_cases": [
+      {
+        "text": "<|im_start|>user\nwhat is capital of India?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "token_ids": [
+          151644,
+          872,
+          198,
+          12555,
+          374,
+          6722,
+          315,
+          6747,
+          30,
+          151645,
+          198,
+          151644,
+          77091,
+          198,
+          151667,
+          271,
+          151668,
+          271
+        ],
+        "roundtrip": true
+      },
+      {
+        "text": "what is capital of India?",
+        "token_ids": [
+          12555,
+          374,
+          6722,
+          315,
+          6747,
+          30
+        ],
+        "roundtrip": true
+      },
+      {
+        "text": " India\n\u092d\u093e\u0930\u0924: New Delhi 1234!",
+        "token_ids": [
+          6747,
+          198,
+          146101,
+          31411,
+          108,
+          79238,
+          25,
+          1532,
+          21996,
+          220,
+          16,
+          17,
+          18,
+          19,
+          0
+        ],
+        "roundtrip": true
+      }
+    ]
+  },
+  "failure_report_check": "PASS: failed generation after one completed mocked FPGA call retains fpga_executed=true and failed status; creates no logits artifact",
+  "cpu_smoke": {
+    "status": "complete",
+    "backend": "cpu",
+    "fpga_executed": false,
+    "scope": "CPU FP32 reference only; no FPGA execution",
+    "python": "3.14.5",
+    "torch": "2.14.0",
+    "transformers": "5.16.1",
+    "numpy": "2.5.3",
+    "threads": 4,
+    "source_sha256": {
+      "model.py": "ac8b1252431707e3b551dcc58b142aa5e690b4b4609a29e6d1b2402fb6f80fbc",
+      "run.py": "bb8b5244262a6f3b4c60efed49df2fe5d0ecb07f9eca76ed68c9afe9410c457f"
+    },
+    "prompt": "what is capital of India?",
+    "rendered_prompt": "<|im_start|>user\nwhat is capital of India?<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+    "prompt_token_ids": [
+      151644,
+      872,
+      198,
+      12555,
+      374,
+      6722,
+      315,
+      6747,
+      30,
+      151645,
+      198,
+      151644,
+      77091,
+      198,
+      151667,
+      271,
+      151668,
+      271
+    ],
+    "max_new_tokens": 8,
+    "generated_token_ids": [
+      785,
+      6722,
+      315,
+      6747,
+      374,
+      3070,
+      3564,
+      21996
+    ],
+    "response": "The capital of India is **New Delhi",
+    "stop_reason": "token_limit",
+    "generation_seconds_including_prefill_and_first_use_verification": 1.6547642080113292,
+    "logits_sha256": "a67298768581528e7b12a1a46e65fe593447ae0e883914e3e5170de057b451d9"
+  },
+  "physical_fpga_execution": "NOT RUN",
+  "fpga_tokens_generated": 0,
+  "blocker": "Explicit approval pending for transfer/execution of the private external host driver on the existing F2 instance",
+  "scope_limit": "Q1_0 weights expand exactly to FP32; planned hardware path is generic FP32 projection offload with host transformer operations, not native 1-bit RTL or Bonsai CL integration"
+}
