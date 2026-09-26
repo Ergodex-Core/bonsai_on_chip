@@ -21,6 +21,7 @@ Branch: `codex/erg-102-simulation-setup`. PR: [#1](https://github.com/Ergodex-Co
 | AWS HDK preparation | PASS | Pinned source/IP with Vivado 2025.2; Git LFS validation passed |
 | AWS AXI-Lite example XSIM tests | PASS: 9/9, 0 failures, 0 skips | AWS shell bus-functional model and example; final lint-clean scripts rerun |
 | Bonsai under an AWS F2 shell wrapper | NOT RUN | Wrapper and simulator integration remain to be implemented |
+| Requested Bonsai 1.7B prompt | CPU reference complete; FPGA NOT RUN | Exact Q1_0 checkpoint; hardware driver transfer approval pending |
 | Synthesis, routed timing and loaded AFI | NOT RUN | No area, timing or physical FPGA inference claim |
 
 The pilot's [detailed report](arcilator-pilot.md) and
@@ -34,6 +35,8 @@ The [full native-baseline report](native-baseline.md) and
 [machine-readable evidence](native-baseline.json) record the 1,325 parallel and
 7 exclusive target results, nested test outcomes, source provenance and archive
 hashes. The final collector reports complete evidence for both groups.
+The separate [model readiness report](model-inference-readiness.md) records the
+requested India-capital prompt, CPU-only output and remaining physical FPGA gate.
 
 ## Source and reproduction
 
@@ -111,8 +114,8 @@ Raw XSIM evidence is preserved on persistent EBS; private S3 publication is
 pending explicit upload approval. The local Arcilator evidence archive is also
 preserved. The selected repository-default baseline completed successfully.
 Cloud account/instance inventory and private transfer URLs are excluded from
-public reports. Authorized reviewers receive environment details and artifact
-locations through the Linear attachment. Raw results are gitignored.
+public reports. The Linear attachment contains the public report only; private
+environment inventory remains local. Raw results are gitignored.
 
 Repository linters, macro-signature checks and Bazel lockfile validation pass. Seven synthetic baseline
 evidence checks pass, covering complete data, missing outputs/result records,

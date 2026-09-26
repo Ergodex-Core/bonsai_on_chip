@@ -13,11 +13,13 @@ not promise bitwise equivalence to llama.cpp's quantized activation kernels.
 
 ## Current validation
 
-Local CPU generation passed at an eight-token limit, producing
-`The capital of India is **New Delhi`. Independent C-reference checks passed
-for 206,720 decoded FP32 values and all three tokenizer cases. The focused
-failed-run evidence test also passed. These results establish software
-readiness only.
+Local CPU generation passed at a 32-token limit, beginning
+`The capital of India is **New Delhi**.` and stopping at the token limit,
+not EOS. Independent C-reference checks passed for 206,720 decoded FP32 values
+and all three tokenizer cases. The focused failed-run evidence test also
+passed. These results establish software readiness only; the
+[model report](../../../reports/ERG-102/model-inference-readiness.md) records
+the complete output and hardware blocker.
 
 Physical FPGA generation and paired CPU/FPGA token/logit comparison remain
 pending approval to transfer the external reviewed driver. No physical FPGA
