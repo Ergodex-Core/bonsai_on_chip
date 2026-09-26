@@ -1,0 +1,6 @@
+COMMAND timeout 120 fpga-clear-local-image -S 0 -H
+Type  FpgaImageSlot  FpgaImageId             StatusName    StatusCode   ErrorName    ErrorCode   ShVersion
+AFI          0       No AFI                  cleared           1        ok               0       0x10212415
+Type  FpgaImageSlot  VendorId    DeviceId    DBDF
+AFIDEVICE    0       0x1d0f      0x9048      0000:34:00.0
+EXIT_CODE 0

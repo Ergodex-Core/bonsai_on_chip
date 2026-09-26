@@ -13,7 +13,7 @@ missing result keeps its gate pending or blocked; an installed tool or passing
 AWS example cannot close a Bonsai integration gate.
 
 Start with [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
-Its environment work is in [draft PR #1](https://github.com/Ergodex-Core/bonsai_on_chip/pull/1).
+Its environment and specification work is in [PR #1](https://github.com/Ergodex-Core/bonsai_on_chip/pull/1).
 Freeze the interface and reference baseline before dependent integration work;
 independent prototypes may proceed against explicitly versioned assumptions.
 
@@ -21,7 +21,7 @@ independent prototypes may proceed against explicitly versioned assumptions.
 
 | Issue | Concrete integration deliverable | Decision needed before acceptance |
 | --- | --- | --- |
-| ERG-102 / Week 0 | Interface specification, runnable smoke harness, F2 wrapper bring-up and evidence report | Model/fixture hashes, numerical format and tolerances, memory/register map, performance budget, owners/reviewers; define 2x/4x and eight-tile |
+| ERG-102 / Week 0 | Interface specification, runnable smoke harness, official F2 shell/MMIO bring-up and evidence report | Model/fixture hashes, numerical format and tolerances, memory/register map, performance budget, owners/reviewers; define 2x/4x and eight-tile |
 | ERG-103 / Week 1 | One actual-weight ternary operation through image tooling, driver and mailbox | Independent arithmetic comparison; identify every stub and the CPU/testbench execution boundary |
 | ERG-104 / Week 2 | Verified engine plus resource and bandwidth budget | Supported shapes, partial tiles and stalls; shell-inclusive fit decision and fallback configuration |
 | ERG-105 / Week 3 | Helper coverage matrix and integrated GDN/full-attention layer workloads | One owner and focused test per helper; multi-token state/KV checks; define attention work remaining for Week 5 |
@@ -29,8 +29,10 @@ independent prototypes may proceed against explicitly versioned assumptions.
 | ERG-107 / Week 5 | Known-good full-model inference candidate and declared eight-tile mapping | Concurrent versus time-multiplexed tiles, chosen platform, measured bandwidth, no undisclosed host fallback |
 | ERG-108 / Week 6 | Release/sign-off PR for the exact integrated candidate | Validate scheduling/clock changes before freeze; rerun affected tests; approve exact RTL, runtime, images and bitstream |
 
-The dates in Linear are unchanged. Week 0 was due 2026-09-25; its interface and
-hardware gates remain open on this review date. Only Weeks 0 and 1 currently have
+The dates in Linear are unchanged. Week 0 was due 2026-09-25. At the initial
+review its interface and hardware gates were open; the final
+[Week 0 specification](../../doc/spec/week0.md) and [report](README.md) supersede
+that initial status and define the v0 performance assumptions. Only Weeks 0 and 1 currently have
 an assignee. Treat later dates as targets until engineering owners, reviewer
 capacity and the measured build/test cycle support them. No new dependencies or
 reviewer assignments were imposed by this review.
@@ -87,6 +89,8 @@ original regression equivalent.
 ## Current evidence boundary
 
 The [environment report](README.md) is the authoritative current result summary.
-The AWS example verifies the vendor simulation environment. Bonsai under the F2
-shell, a loaded AFI, full-model execution and technical acceptance are still
-open gates. This review does not approve or close any weekly issue.
+The AWS example now has separate vendor simulation and actual loaded-AFI
+MMIO evidence. Bonsai under the F2 shell and full-model execution remain
+implementation gates for later milestones. The independent Week 0 review and
+merge record determine ERG-102 acceptance; this planning review alone does not
+approve or close any weekly issue.

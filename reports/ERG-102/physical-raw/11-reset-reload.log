@@ -1,0 +1,8 @@
+COMMAND timeout 120 mmio_probe reset
+reset address=0x00 value=0x00000000
+reset address=0x04 value=0x00000000
+reset address=0x08 value=0x00000000
+reset address=0x0c value=0x00000000
+reset address=0x10 value=0x00000000
+ERG102_PROBE_PASS mode=reset checks=8 additions=0 seed=0x10212415
+EXIT_CODE 0

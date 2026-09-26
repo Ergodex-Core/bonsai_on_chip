@@ -21,9 +21,11 @@ passed. These results establish software readiness only; the
 [model report](../../../reports/ERG-102/model-inference-readiness.md) records
 the complete output and hardware blocker.
 
-Physical FPGA generation and paired CPU/FPGA token/logit comparison remain
-pending approval to transfer the external reviewed driver. No physical FPGA
-inference result is claimed by this initial adapter validation.
+Physical FPGA generation and paired CPU/FPGA token/logit comparison are on hold
+after the user prioritized Week 0 closure. This separate demonstration still
+requires approval to transfer the external reviewed driver. The official
+AWS shell/MMIO bring-up has its own hardware evidence; no model FPGA inference
+result is claimed by this adapter validation.
 
 ## Checkpoint and execution contract
 

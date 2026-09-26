@@ -1,5 +1,5 @@
 {
-  "status": "CPU_ADAPTER_VALIDATED_FPGA_RUN_PENDING",
+  "status": "CPU_ADAPTER_VALIDATED_FPGA_MODEL_DEMO_ON_HOLD",
   "model": "prism-ml/Bonsai-1.7B-gguf",
   "model_revision": "210a9e99f79cb184909d49595906526eb2b3dd9a",
   "model_file": "Bonsai-1.7B-Q1_0.gguf",
@@ -130,7 +130,7 @@
   },
   "physical_fpga_execution": "NOT RUN",
   "fpga_tokens_generated": 0,
-  "blocker": "Explicit approval pending for private driver transfer/execution; F2 host is stopped after an instance-initiated shutdown",
+  "blocker": "Model demonstration deferred while Week 0 is completed; private driver transfer/execution still requires explicit authorization. Official vendor-shell hardware smoke is reported separately.",
   "scope_limit": "Q1_0 weights expand exactly to FP32; planned hardware path is generic FP32 projection offload with host transformer operations, not native 1-bit RTL or Bonsai CL integration",
   "cpu_reference_32_token_limit": {
     "status": "complete",

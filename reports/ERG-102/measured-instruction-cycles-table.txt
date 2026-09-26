@@ -1,0 +1,47 @@
+| Instruction | Category | Raw delta (cycles) | Raw delta normalized (cycles) | Cycles/instruction |
+|---|---|---:|---:|---:|
+| `nop` | baseline | 34 | 32 | 1.00 |
+| `add` | RV32I ALU | 34 | 32 | 1.00 |
+| `sub` | RV32I ALU | 34 | 32 | 1.00 |
+| `and` | RV32I ALU | 34 | 32 | 1.00 |
+| `or` | RV32I ALU | 34 | 32 | 1.00 |
+| `xor` | RV32I ALU | 34 | 32 | 1.00 |
+| `sll` | RV32I ALU | 34 | 32 | 1.00 |
+| `srl` | RV32I ALU | 34 | 32 | 1.00 |
+| `sra` | RV32I ALU | 34 | 32 | 1.00 |
+| `slt` | RV32I ALU | 34 | 32 | 1.00 |
+| `addi` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `slti` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `sltiu` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `andi` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `ori` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `xori` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `slli` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `srli` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `srai` | RV32I ALU immediate | 34 | 32 | 1.00 |
+| `lw` | Load/Store | 130 | 128 | 4.00 |
+| `sw` | Load/Store | 68 | 66 | 2.06 |
+| `lb` | Load/Store | 130 | 128 | 4.00 |
+| `sb` | Load/Store | 68 | 66 | 2.06 |
+| `beq (taken)` | Control flow | 162 | 160 | 5.00 |
+| `beq (not taken)` | Control flow | 34 | 32 | 1.00 |
+| `jal` | Control flow | 65 | 63 | 1.97 |
+| `mul` | M extension | 66 | 64 | 2.00 |
+| `mulh` | M extension | 66 | 64 | 2.00 |
+| `div` | M extension | 176 | 174 | 5.44 |
+| `divu` | M extension | 176 | 174 | 5.44 |
+| `rem` | M extension | 167 | 165 | 5.16 |
+| `fadd.s` | F extension | 65 | 63 | 1.97 |
+| `fmul.s` | F extension | 65 | 63 | 1.97 |
+| `fdiv.s` | F extension | 417 | 415 | 12.97 |
+| `fsqrt.s` | F extension | 532 | 530 | 16.56 |
+| `fmadd.s` | F extension | 65 | 63 | 1.97 |
+| `vadd.vv` | RVV integer (e32, vl=4) | 135 | 133 | 4.16 |
+| `vsub.vv` | RVV integer (e32, vl=4) | 135 | 133 | 4.16 |
+| `vand.vv` | RVV integer (e32, vl=4) | 103 | 101 | 3.16 |
+| `vmul.vv` | RVV integer (e32, vl=4) | 135 | 133 | 4.16 |
+| `vle32.v` | RVV integer (e32, vl=4) | 102 | 100 | 3.12 |
+| `vse32.v` | RVV integer (e32, vl=4) | 135 | 133 | 4.16 |
+| `vredsum.vs` | RVV integer (e32, vl=4) | 167 | 165 | 5.16 |
+| `vfadd.vv` | RVV float (e32, vl=4) | 231 | 229 | 7.16 |
+| `vfmul.vv` | RVV float (e32, vl=4) | 231 | 229 | 7.16 |

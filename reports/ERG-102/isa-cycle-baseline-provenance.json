@@ -1,0 +1,51 @@
+{
+  "source": "Existing completed native-baseline archive; read-only retrieval, no rerun",
+  "archive_name": "native-baseline-20260926T0920Z-all-16x8.tar.gz",
+  "test": {
+    "label": "//tests/cocotb:isa_cycle_bench_test_isa_cycle_bench_test",
+    "status": "PASSED",
+    "runs": 1,
+    "cached_runs": 1
+  },
+  "configuration_id": "761f75535f79e997761d3ddf3a60349bccd41127736d50b4d12f79ff0d70c665",
+  "configuration": "RvvCoreMiniAxi",
+  "verilator": "5.052",
+  "cocotb": "2.0.0",
+  "python": "3.11.9",
+  "seed": 42,
+  "workloads": 45,
+  "repetitions_per_workload": 32,
+  "counter_read_overhead_cycles": 2,
+  "artifacts": [
+    {
+      "path": "20260926T0920Z-all-16x8/test-artifacts/parallel/1c96c6811d5d09d0db0b/test.outputs_manifest__MANIFEST",
+      "bytes": 102,
+      "sha256": "86ba0e32067190dd2c82b02dc19d2bdb1cb511a85af487602023981267dfc783"
+    },
+    {
+      "path": "20260926T0920Z-all-16x8/test-artifacts/parallel/1c96c6811d5d09d0db0b/test.xml",
+      "bytes": 18392,
+      "sha256": "c919f1883b86af4c097f7f05306cefb1fe164117d5d670812026237e2615670e"
+    },
+    {
+      "path": "20260926T0920Z-all-16x8/test-artifacts/parallel/1c96c6811d5d09d0db0b/measured_instruction_cycles.md",
+      "bytes": 2245,
+      "sha256": "0272723b42a2990636b2fca9381e293e09f9eee92973769f9ae00e688189e729"
+    },
+    {
+      "path": "20260926T0920Z-all-16x8/test-artifacts/parallel/1c96c6811d5d09d0db0b/measured_instruction_cycles.json",
+      "bytes": 6109,
+      "sha256": "57e734f54529f369a510ceef9f564da26dc4359287888d2fef23e23a8c87c480"
+    },
+    {
+      "path": "20260926T0920Z-all-16x8/test-artifacts/parallel/1c96c6811d5d09d0db0b/test.log",
+      "bytes": 17915,
+      "sha256": "fea6d22c9092befc2d053fc507e7e2c77432f8286f953d5c39a1c6ebcf4eb24c"
+    }
+  ],
+  "limitations": [
+    "RTL workload-specific cycle costs, not general pipeline latencies",
+    "Cached in final full-suite attempt, not a new execution",
+    "No F2 clock, timing or model throughput measurement"
+  ]
+}

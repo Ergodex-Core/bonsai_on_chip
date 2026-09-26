@@ -1,6 +1,7 @@
 # Requested Bonsai 1.7B model demonstration
 
-Status: **CPU reference complete; physical FPGA execution pending**.
+Status: **CPU reference complete; FPGA model demonstration on hold after the
+user prioritized Week 0 closure**.
 Date: 2026-09-26. Issue: ERG-102.
 PR: [#1](https://github.com/Ergodex-Core/bonsai_on_chip/pull/1).
 Validated adapter revision: `22a362d5e013047079e51d08278ac0b9e6f38f5d`.
@@ -9,7 +10,8 @@ Validated adapter revision: `22a362d5e013047079e51d08278ac0b9e6f38f5d`.
 
 The previous F2 work ran on its host CPU: nine AWS AXI-Lite example XSIM tests
 and 1,332 repository-default targets passed (1,046 fresh and 286 cached).
-No AFI was loaded and no model token was produced by the FPGA. The separate
+The subsequent official AWS shell/MMIO test ran on the physical FPGA, as
+recorded in the Week 0 report. No model token was produced by the FPGA. The separate
 Arcilator/Verilator pilot passed four configurations locally; it is not a
 full Arcilator suite result. See the [baseline report](README.md).
 
@@ -66,17 +68,19 @@ Q1_0 weights expand exactly to FP32. This is a hybrid demonstration using a
 generic projection engine; native 1-bit RTL and Bonsai shell integration remain
 separate development work.
 
-Automatic approval review rejected the private external driver transfer and
-execution pending explicit authorization for that payload and F2 destination.
-The runtime bundle and eight-test hardware smoke procedure are prepared. The
-host subsequently entered the stopped state with an instance-initiated-shutdown
-reason. No restart, driver transfer, AFI load or hardware inference followed.
-The staged model, environment and earlier cloud evidence are on persistent EBS.
+The user prioritized Week 0 interface and environment completion before this
+model demonstration. The physical vendor-shell test satisfies that separate
+bring-up scope; this adapter remains follow-on work. Automatic approval review
+previously rejected the private external driver transfer and execution pending
+explicit authorization. No such transfer or model hardware run is claimed.
+The staged model, environment and earlier cloud evidence remain on persistent EBS.
 
-After approval, resume the F2 host, verify its slot and image, run the hardware
-smoke, then run CPU and FPGA generation in the same Linux environment and compare
-all token IDs and full-vocabulary logits at the predeclared `rtol=1e-3`,
-`atol=1e-3`. Hardware evidence must show all 197 projections invoked and verified,
-completed FPGA calls, unchanged image identity and zero AXI errors. No CPU
-fallback is permitted. The [adapter instructions](../../fpga/aws_f2/model_inference/README.md)
-provide exact run and compare commands. Keep the physical execution gate open.
+If this diagnostic is resumed, first obtain the outstanding private-driver
+transfer authorization and verify host/slot ownership and the matching image.
+Run the hardware smoke, then CPU and FPGA generation in the same Linux
+environment and compare all token IDs and full-vocabulary logits at the
+predeclared `rtol=1e-3`, `atol=1e-3`. Hardware evidence must show all 197
+projections invoked and verified, completed FPGA calls, unchanged image identity
+and zero AXI errors. No CPU fallback is permitted. The
+[adapter instructions](../../fpga/aws_f2/model_inference/README.md) provide exact
+run and compare commands. This pending model gate does not close with ERG-102.

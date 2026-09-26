@@ -1,0 +1,272 @@
+{
+  "nop": {
+    "category": "baseline",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "add": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "sub": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "and": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "or": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "xor": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "sll": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "srl": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "sra": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "slt": {
+    "category": "RV32I ALU",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "addi": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "slti": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "sltiu": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "andi": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "ori": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "xori": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "slli": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "srli": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "srai": {
+    "category": "RV32I ALU immediate",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "lw": {
+    "category": "Load/Store",
+    "raw_delta": 130,
+    "raw_delta_normalized": 128,
+    "cycles_per_instr": 4.0
+  },
+  "sw": {
+    "category": "Load/Store",
+    "raw_delta": 68,
+    "raw_delta_normalized": 66,
+    "cycles_per_instr": 2.0625
+  },
+  "lb": {
+    "category": "Load/Store",
+    "raw_delta": 130,
+    "raw_delta_normalized": 128,
+    "cycles_per_instr": 4.0
+  },
+  "sb": {
+    "category": "Load/Store",
+    "raw_delta": 68,
+    "raw_delta_normalized": 66,
+    "cycles_per_instr": 2.0625
+  },
+  "beq (taken)": {
+    "category": "Control flow",
+    "raw_delta": 162,
+    "raw_delta_normalized": 160,
+    "cycles_per_instr": 5.0
+  },
+  "beq (not taken)": {
+    "category": "Control flow",
+    "raw_delta": 34,
+    "raw_delta_normalized": 32,
+    "cycles_per_instr": 1.0
+  },
+  "jal": {
+    "category": "Control flow",
+    "raw_delta": 65,
+    "raw_delta_normalized": 63,
+    "cycles_per_instr": 1.96875
+  },
+  "mul": {
+    "category": "M extension",
+    "raw_delta": 66,
+    "raw_delta_normalized": 64,
+    "cycles_per_instr": 2.0
+  },
+  "mulh": {
+    "category": "M extension",
+    "raw_delta": 66,
+    "raw_delta_normalized": 64,
+    "cycles_per_instr": 2.0
+  },
+  "div": {
+    "category": "M extension",
+    "raw_delta": 176,
+    "raw_delta_normalized": 174,
+    "cycles_per_instr": 5.4375
+  },
+  "divu": {
+    "category": "M extension",
+    "raw_delta": 176,
+    "raw_delta_normalized": 174,
+    "cycles_per_instr": 5.4375
+  },
+  "rem": {
+    "category": "M extension",
+    "raw_delta": 167,
+    "raw_delta_normalized": 165,
+    "cycles_per_instr": 5.15625
+  },
+  "fadd.s": {
+    "category": "F extension",
+    "raw_delta": 65,
+    "raw_delta_normalized": 63,
+    "cycles_per_instr": 1.96875
+  },
+  "fmul.s": {
+    "category": "F extension",
+    "raw_delta": 65,
+    "raw_delta_normalized": 63,
+    "cycles_per_instr": 1.96875
+  },
+  "fdiv.s": {
+    "category": "F extension",
+    "raw_delta": 417,
+    "raw_delta_normalized": 415,
+    "cycles_per_instr": 12.96875
+  },
+  "fsqrt.s": {
+    "category": "F extension",
+    "raw_delta": 532,
+    "raw_delta_normalized": 530,
+    "cycles_per_instr": 16.5625
+  },
+  "fmadd.s": {
+    "category": "F extension",
+    "raw_delta": 65,
+    "raw_delta_normalized": 63,
+    "cycles_per_instr": 1.96875
+  },
+  "vadd.vv": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 135,
+    "raw_delta_normalized": 133,
+    "cycles_per_instr": 4.15625
+  },
+  "vsub.vv": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 135,
+    "raw_delta_normalized": 133,
+    "cycles_per_instr": 4.15625
+  },
+  "vand.vv": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 103,
+    "raw_delta_normalized": 101,
+    "cycles_per_instr": 3.15625
+  },
+  "vmul.vv": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 135,
+    "raw_delta_normalized": 133,
+    "cycles_per_instr": 4.15625
+  },
+  "vle32.v": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 102,
+    "raw_delta_normalized": 100,
+    "cycles_per_instr": 3.125
+  },
+  "vse32.v": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 135,
+    "raw_delta_normalized": 133,
+    "cycles_per_instr": 4.15625
+  },
+  "vredsum.vs": {
+    "category": "RVV integer (e32, vl=4)",
+    "raw_delta": 167,
+    "raw_delta_normalized": 165,
+    "cycles_per_instr": 5.15625
+  },
+  "vfadd.vv": {
+    "category": "RVV float (e32, vl=4)",
+    "raw_delta": 231,
+    "raw_delta_normalized": 229,
+    "cycles_per_instr": 7.15625
+  },
+  "vfmul.vv": {
+    "category": "RVV float (e32, vl=4)",
+    "raw_delta": 231,
+    "raw_delta_normalized": 229,
+    "cycles_per_instr": 7.15625
+  }
+}

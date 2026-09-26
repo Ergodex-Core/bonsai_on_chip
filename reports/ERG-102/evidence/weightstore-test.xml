@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="utils/weightstore/test_pack_image" tests="1" failures="0" errors="0">
+    <testcase name="utils/weightstore/test_pack_image" status="run" duration="1" time="1"></testcase>
+      <system-out>
+Generated test.log (if the file is not UTF-8, then this may be unreadable):
+<![CDATA[exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //utils/weightstore:test_pack_image
+-----------------------------------------------------------------------------
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.050s
+
+OK]]>
+      </system-out>
+    </testsuite>
+</testsuites>

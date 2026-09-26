@@ -1,0 +1,108 @@
+{
+  "schema": "coralnpu.weightstore.prototype-report.v1",
+  "status": "format_prototype_verified",
+  "scope": "Host-side native image packing and byte integrity only; not RTL, FPGA, ASIC ROM fit, or model execution.",
+  "source": {
+    "model": "prism-ml/Bonsai-1.7B-gguf",
+    "revision": "210a9e99f79cb184909d49595906526eb2b3dd9a",
+    "file": "Bonsai-1.7B-Q1_0.gguf",
+    "bytes": 248302272,
+    "sha256": "3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3"
+  },
+  "source_files": {
+    "utils/weightstore/pack_image.py": "1ac2c5bcd2abb55b51a252b742a6b7d921326208e94a6bd2b9bbb83371490421",
+    "utils/weightstore/test_pack_image.py": "39760b6162695f1f330353f6bc73ee5d17d2445453b6ace66824e1ebbd6dabfe"
+  },
+  "environment": {
+    "python": "3.14.5",
+    "gguf": "0.19.0",
+    "numpy": "2.5.3",
+    "gguf_source_revision": "bdc23b56b4458b9f1655aec5287f3ab56ee8daaa",
+    "gguf_source": "https://github.com/PrismML-Eng/llama.cpp/tree/bdc23b56b4458b9f1655aec5287f3ab56ee8daaa/gguf-py"
+  },
+  "image": {
+    "schema": "coralnpu.weightstore.native.v1",
+    "line_bytes": 64,
+    "byte_order": "little",
+    "tensor_order": "gguf",
+    "image_file": "weights.bin",
+    "image_bytes": 242357184,
+    "image_sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+    "payload_bytes": 242357152,
+    "padding_bytes": 32,
+    "tensor_count": 310,
+    "aliases": {
+      "lm_head.weight": "token_embd.weight"
+    }
+  },
+  "manifest": {
+    "file": "manifest.json",
+    "bytes": 153170,
+    "sha256": "21c664d0c029dc7f12440ad93a7fa6688c2b9e78b2143f6e9c179956793a7391"
+  },
+  "inventory": {
+    "Q1_0_matrices": 197,
+    "F32_vectors": 113,
+    "Q1_0_elements": 1719904256,
+    "Q1_0_groups": 13436752,
+    "sign_bytes": 214988032,
+    "FP16_scale_bytes": 26873504,
+    "F32_bytes": 495616,
+    "largest_tensor": {
+      "name": "token_embd.weight",
+      "shape": [
+        151669,
+        2048
+      ],
+      "offset": 8192,
+      "payload_bytes": 43680672,
+      "row_bytes": 288
+    }
+  },
+  "verification": {
+    "stdlib_unit_tests": 6,
+    "stdlib_unit_tests_passed": 6,
+    "format_check": "yapf3 --diff: clean",
+    "fresh_repack_matches_previous_image_and_manifest": true,
+    "independent_raw_file_scan": {
+      "tensors_checked": 310,
+      "every_payload_byte_equals_source": true,
+      "every_tensor_hash_matches": true,
+      "row_sizes_and_element_counts_checked": true,
+      "source_ranges_nonoverlapping": true,
+      "tensor_starts_and_final_size_64_aligned": true,
+      "all_padding_zero": true,
+      "no_trailing_image_data": true,
+      "all_alias_targets_present": true
+    }
+  },
+  "reproduce": [
+    "python3 -m unittest discover -s utils/weightstore -p test_pack_image.py -v",
+    "python3 utils/weightstore/pack_image.py --gguf \"$MODEL\" --out \"$FRESH_OUTPUT\"",
+    "shasum -a 256 \"$FRESH_OUTPUT/weights.bin\" \"$FRESH_OUTPUT/manifest.json\""
+  ],
+  "prerequisites": [
+    "Python >= 3.11 with a GGUF reader supporting Q1_0/type 41 (tested gguf 0.19.0).",
+    "MODEL points to the exact pinned GGUF above.",
+    "FRESH_OUTPUT is a nonexistent directory outside tracked source directories."
+  ],
+  "artifact_policy": "The GGUF, weights.bin and full generated manifest remain local. This report contains provenance, aggregate counts and hashes only.",
+  "bazel_validation": {
+    "target": "//utils/weightstore:test_pack_image",
+    "status": "PASSED",
+    "executed_targets": 1,
+    "unittest_cases": 6,
+    "failures": 0,
+    "artifacts": {
+      "reports/ERG-102/evidence/weightstore-test.log.txt": {
+        "bytes": 283,
+        "sha256": "44bdb7908a9b748cd683e33e00e9f8375beb2151a5e13c81153037b1136275f9"
+      },
+      "reports/ERG-102/evidence/weightstore-test.xml": {
+        "bytes": 684,
+        "sha256": "3339f6768e53e3ad2df5642a43d027a652acfb706a589ca5c671f22e07945299"
+      }
+    },
+    "environment_notes": "Initial attempts did not execute tests because of a stale Bazel process and an external fetch timeout. The successful run used the existing healthy Bazel server and previously verified repository cache."
+  }
+}
