@@ -14,7 +14,7 @@ Branch: `codex/erg-102-simulation-setup`. PR: pending publication.
 | Pilot evidence-integrity checks | PASS: 13 checks | Stale inputs, incomplete runs and altered traces rejected |
 | Repository-default test baseline | Running | Verilator, Chisel and host backends; not an Arcilator suite result |
 | AWS HDK preparation | PASS | Pinned source/IP with Vivado 2025.2; Git LFS validation passed |
-| AWS AXI-Lite example XSIM tests | Initial run PASS: 9/9 | AWS shell bus-functional model and example; final script validation pending |
+| AWS AXI-Lite example XSIM tests | PASS: 9/9, 0 failures, 0 skips | AWS shell bus-functional model and example; final lint-clean scripts rerun |
 | Bonsai under an AWS F2 shell wrapper | NOT RUN | Wrapper and simulator integration remain to be implemented |
 | Synthesis, routed timing and loaded AFI | NOT RUN | No area, timing or physical FPGA inference claim |
 
@@ -97,7 +97,8 @@ locations through the Linear attachment. Raw results are gitignored.
 Repository linters and macro-signature checks pass. Seven synthetic baseline
 evidence checks pass, covering complete data, missing outputs/result records,
 missing terminal events, unreceived announced events, malformed JSON and logging
-failure. Final AWS script validation is being collected. The pilot was rebuilt after required
+failure. Final AWS script setup and all nine XSIM tests pass; source and raw artifact
+hashes were verified. See [the XSIM result](f2-xsim.json). The pilot was rebuilt after required
 formatting changes, and its report contains the final driver/runner hashes.
 
 ## Next acceptance gates
