@@ -1,0 +1,4 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL OCL peek SDK status=-1

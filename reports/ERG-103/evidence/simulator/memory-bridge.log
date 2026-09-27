@@ -1,0 +1,194 @@
+PASS DDR ready exposed
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS locked burst rejected with no DDR write
+PASS gate closure waits for accepted burst
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS admitted burst drained after close
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS narrow write preserves adjacent bytes
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS size6 32-bit mmap write preserves lower lanes
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS size6 64-bit mmap write retains byte lanes
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS documented AWS byte-unaligned write
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS unaligned full burst uses aligned second beat
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS unaligned narrow burst aligns following transfer
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS last allocation line accepts unaligned size6 write
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS first-beat strobes before address rejected
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS unaligned burst cannot cross allocation/page end
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS host read beat identity
+PASS host error zero data
+PASS host R backpressure
+PASS host R backpressure
+PASS host read beat identity
+PASS host error zero data
+PASS host R backpressure
+PASS host R backpressure
+PASS unaligned 4KiB crossing denied inside allocation
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS out-of-range, crossing and invalid strobe denial
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS host read beat identity
+PASS host error zero data
+PASS host R backpressure
+PASS host R backpressure
+PASS host read beat identity
+PASS host error zero data
+PASS host R backpressure
+PASS host R backpressure
+PASS invalid reads never touch DDR
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS 65-bit allocation overflow rejected
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS host read beat identity
+PASS host read DDR data
+PASS host R backpressure
+PASS host R backpressure
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS nonzero RRESP fails closed even for zero payload
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS RRESP fault prevents DDR ID reuse
+PASS coordinated reset restores backend readiness
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS nonzero BRESP fails closed despite matching zero bytes
+PASS host write response
+PASS B backpressure stability
+PASS B backpressure stability
+PASS B backpressure stability
+PASS BRESP fault denies later DDR writes
+PASS coordinated reset restores backend readiness
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS unexpected RLAST fails closed after drain
+PASS engine read result
+PASS engine response backpressure
+PASS engine response backpressure
+PASS engine response backpressure
+PASS faulted DDR ID is not reused
+PASS f2_memory_bridge checks=189 DDR_writes=12 DDR_reads=15 denied_AW=7
+- $REPO/fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv:471: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.048 2026-04-26
+- Verilator: $finish at 2us; walltime 0.008 s; speed 242.349 us/s
+- Verilator: cpu 0.008 s on 1 threads; allocated 4 MB

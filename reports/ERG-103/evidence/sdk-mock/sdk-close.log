@@ -1,0 +1,5 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+CLEANUP_FAIL management close SDK status=-1
+TRANSPORT_FAIL transport cleanup failed

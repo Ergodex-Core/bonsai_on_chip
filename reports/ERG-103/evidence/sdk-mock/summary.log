@@ -1,0 +1,1 @@
+{"status": "PASS", "checks": 41, "fpga_executed": false, "scope": "Mock public SDK only; no physical FPGA or RTL execution"}

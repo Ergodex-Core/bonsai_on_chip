@@ -1,0 +1,19 @@
+{"ok":true,"backend":"aws_f2","agfi":"agfi-00000000000000103","slot":0,"shell_version":"0x10212415","sdk_revision":"b603a81f65666e0cf7a67ee5cf18b148eb6b08c3","pci_vendor":"1d0f","pci_device":"f010","pci_subsystem_vendor":"1d0f","pci_subsystem_device":"0103","clock_mhz":250,"clock_measured":false,"clock_source":"documented F2 shell clk_main_a0; not a timing measurement","axi_response_observable":false,"posted_write_drain":true,"whole_image_readback_required":true,"exclusive_advisory_lock":true,"load_chunk_bytes":64,"drain_each_load_chunk":true,"host_dot_computation":false,"loaded_bytes":0,"readback_bytes":0,"completed_dumps":0,"image_epoch":0,"shell_health_checked":true,"metrics_cleared":false,"shell_health":{"int_status":0,"dma_pcis_timeout_count":0,"ocl_slave_timeout_count":0,"pcim_axi_protocol_error_status":0,"pcim_axi_protocol_error_count":0,"pcim_range_error_count":0}}
+{"ok":true,"value":65536,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"axi_response_observable":false,"whole_image_readback_required":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"readback_bytes":8320,"completed_dumps":1,"axi_response_observable":false,"source":"uncached volatile BAR4 reads"}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"posted":true,"axi_response_observable":false,"rejection_counter_and_readback_required":true}
+{"ok":true,"value":50462976,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false}
+{"ok":true,"bytes":8320,"readback_bytes":16640,"completed_dumps":2,"axi_response_observable":false,"source":"uncached volatile BAR4 reads"}
+{"ok":true,"backend":"aws_f2","agfi":"agfi-00000000000000103","slot":0,"shell_version":"0x10212415","sdk_revision":"b603a81f65666e0cf7a67ee5cf18b148eb6b08c3","pci_vendor":"1d0f","pci_device":"f010","pci_subsystem_vendor":"1d0f","pci_subsystem_device":"0103","clock_mhz":250,"clock_measured":false,"clock_source":"documented F2 shell clk_main_a0; not a timing measurement","axi_response_observable":false,"posted_write_drain":true,"whole_image_readback_required":true,"exclusive_advisory_lock":true,"load_chunk_bytes":64,"drain_each_load_chunk":true,"host_dot_computation":false,"loaded_bytes":8320,"readback_bytes":16640,"completed_dumps":2,"image_epoch":1,"shell_health_checked":true,"metrics_cleared":false,"shell_health":{"int_status":0,"dma_pcis_timeout_count":0,"ocl_slave_timeout_count":0,"pcim_axi_protocol_error_status":0,"pcim_axi_protocol_error_count":0,"pcim_range_error_count":0}}
+{"ok":true}
+
+STDERR:
+LOAD_BYTES 64
+DUMP_BYTES 4096
+DUMP_BYTES 12416
+TRANSPORT_COMPLETE loaded_bytes=8320 readback_bytes=16640

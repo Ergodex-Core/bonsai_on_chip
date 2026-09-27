@@ -1,0 +1,392 @@
+{
+  "schema": "coralnpu.first_slice.published_evidence.v1",
+  "validated_source_revision": "edaba6235c06e6c3ae447b7479b2123e69369321",
+  "note": "Only local path prefixes were replaced. Numeric results, source/binary/model hashes and exit codes are unchanged. Hash references within original records refer to original_sha256; this index maps them to durable published bytes. No model binaries, private AWS identities or credentials are published.",
+  "artifacts": {
+    "simulator/build-dot128.log": {
+      "original_sha256": "624420e041b35a56868a3b9adff789cd7e194a7cf31e150a0ad4bfd8ca171e13",
+      "published_sha256": "6e112ccd312d2a7113e04b1fd88403a793b060c3a042fd673d6d601a7d4c6922",
+      "bytes": 4272
+    },
+    "simulator/build-f2_memory_bridge_tb.log": {
+      "original_sha256": "ae27e34ece7efcf28b5130b674888668ca86e478b1a0ab6280c06c11e5280cab",
+      "published_sha256": "ae27e34ece7efcf28b5130b674888668ca86e478b1a0ab6280c06c11e5280cab",
+      "bytes": 12222
+    },
+    "simulator/build-first_slice_sim_top.log": {
+      "original_sha256": "a54134e51143f81849664da201eec8943a2cef43cd5ccf63fda5304d5e4f6e3b",
+      "published_sha256": "d7d1ad4b9a6f18277ca7ff2ed6f3d133434d93b227def3ff250cbbfe2ef88b11",
+      "bytes": 11097
+    },
+    "simulator/build-first_slice_top.log": {
+      "original_sha256": "f9b602550e569eca052c8ad899d2d499f56c31260207bea997de587299fc3a99",
+      "published_sha256": "6739fd0e0947b4f92d51e3a9b0d91711b8d2c294590862c912f689967e987283",
+      "bytes": 11025
+    },
+    "simulator/build-weight_store.log": {
+      "original_sha256": "70e2e78e4a2b53ec2feba752748bb95000ea64bcc878a3997eb4e58168a4030f",
+      "published_sha256": "76f1da16f2e74a7089d4dda25fd13075be1815b981b55059acd4c3177d9018ca",
+      "bytes": 4362
+    },
+    "simulator/dot128.log": {
+      "original_sha256": "d7bca3f36c9d18ee0fca4db15d18d07be7494705a7f15c5e21bf8e7f6e1c1517",
+      "published_sha256": "d7bca3f36c9d18ee0fca4db15d18d07be7494705a7f15c5e21bf8e7f6e1c1517",
+      "bytes": 268
+    },
+    "simulator/fixture-unit.log": {
+      "original_sha256": "4ed557541f22e888bdc670a7224eb9d13d26c62223bd1a4878f1ff27268cd86e",
+      "published_sha256": "4ed557541f22e888bdc670a7224eb9d13d26c62223bd1a4878f1ff27268cd86e",
+      "bytes": 1693
+    },
+    "simulator/mailbox-faults.log": {
+      "original_sha256": "81d97f3aa587a4b344f5ad1003ffd8a07d70fca4659ac474cab9af382c042e71",
+      "published_sha256": "81d97f3aa587a4b344f5ad1003ffd8a07d70fca4659ac474cab9af382c042e71",
+      "bytes": 165
+    },
+    "simulator/mailbox.log": {
+      "original_sha256": "9510e32fd6b33b0079ed74c792f99cdef256dccd11ce36c7e96ecbdd253077ed",
+      "published_sha256": "9510e32fd6b33b0079ed74c792f99cdef256dccd11ce36c7e96ecbdd253077ed",
+      "bytes": 533
+    },
+    "simulator/memory-bridge.log": {
+      "original_sha256": "86963ded082afbc29abf64c1159a1181e032bed169a264cd23a6227fc766dcc6",
+      "published_sha256": "38c269b9b4a6d4ac5a3e2f36628b4b0594e6444280ec469c5a4c1ea9249e6c4f",
+      "bytes": 6108
+    },
+    "simulator/native.log": {
+      "original_sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974",
+      "published_sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974",
+      "bytes": 58
+    },
+    "simulator/prepare-fixture.log": {
+      "original_sha256": "51f582718d15dcd865a3622f7063bfbfa9e709a5e70a401cdb5bced7e2eba4f1",
+      "published_sha256": "51f582718d15dcd865a3622f7063bfbfa9e709a5e70a401cdb5bced7e2eba4f1",
+      "bytes": 269
+    },
+    "simulator/runner-failure-unit.log": {
+      "original_sha256": "13e8f6f91faa79f9f053bef8b4e0db50dafe4f40445264809d7ce20e3ff3b541",
+      "published_sha256": "13e8f6f91faa79f9f053bef8b4e0db50dafe4f40445264809d7ce20e3ff3b541",
+      "bytes": 2941
+    },
+    "simulator/synthetic.log": {
+      "original_sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945",
+      "published_sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945",
+      "bytes": 56
+    },
+    "simulator/transport-protocol.log": {
+      "original_sha256": "0b1f7c9f57e8c6f00e43436bb6cc91456d5dca6204d27ddd623bf02998dc4da6",
+      "published_sha256": "0b1f7c9f57e8c6f00e43436bb6cc91456d5dca6204d27ddd623bf02998dc4da6",
+      "bytes": 730
+    },
+    "simulator/weight-store.log": {
+      "original_sha256": "db197f8066bfcbadf28ac1d2fa33ba7a670a39c58f22a560fdc8ccb62f7eaeb6",
+      "published_sha256": "db197f8066bfcbadf28ac1d2fa33ba7a670a39c58f22a560fdc8ccb62f7eaeb6",
+      "bytes": 334
+    },
+    "simulator/validation.json": {
+      "original_sha256": "afac9201818e8f04e64bf8be330977d3eb49b9e675aaec8c62a7055f303997db",
+      "published_sha256": "c21840beb999080da15defdedffac4bcaae6bc65ce11f6f275ed441cef17b0d1",
+      "bytes": 12142
+    },
+    "simulator/native/report.json": {
+      "original_sha256": "08c9ca48efbbe074be3ac710565bcaa47c325e20ced72bd30ae381e192cf7a9e",
+      "published_sha256": "c5b801e704912ce1e99a934011ca360421cbfd5f549d9b8401d8f15cd95c4523",
+      "bytes": 155284
+    },
+    "simulator/native/transport.log": {
+      "original_sha256": "61362a47a7ec530634c38fc117d7d0c858c8f915ffe3287e8c64f7a639bcc096",
+      "published_sha256": "61362a47a7ec530634c38fc117d7d0c858c8f915ffe3287e8c64f7a639bcc096",
+      "bytes": 546
+    },
+    "simulator/synthetic/report.json": {
+      "original_sha256": "1ffdc369e9acf729dc0f5c48a86fc1f413160a56b78ee5f857ba1910f51a2e00",
+      "published_sha256": "b5091ba3e978111a72e4931b6d6529ffde3d71728036f2ccf6144b939b755e3c",
+      "bytes": 6342
+    },
+    "simulator/synthetic/transport.log": {
+      "original_sha256": "8820a90c9a0e9c00d486a0532eb888426b6d5d9352e6d848d78b7d66da0f4ce2",
+      "published_sha256": "8820a90c9a0e9c00d486a0532eb888426b6d5d9352e6d848d78b7d66da0f4ce2",
+      "bytes": 96
+    },
+    "simulator/manifests/Vdot128.manifest.json": {
+      "original_sha256": "daa5577b9306aa238de68d98d4f79381bbe1fbebad27953685a8d957eb937b64",
+      "published_sha256": "6d44e6f8a1078f7483cdfa9e17d08caa749cc94fde992527c068ab9a7a201f61",
+      "bytes": 785
+    },
+    "simulator/manifests/Vf2_memory_bridge_tb.manifest.json": {
+      "original_sha256": "2e395884b8d7a8155ccc762cf12b7149c9b3d97ed855ea1a60f952e40ecbade6",
+      "published_sha256": "71435b9223af17e17f190c9b2442b0f1320ee205f397f16297aa7a1ef26b1ce9",
+      "bytes": 844
+    },
+    "simulator/manifests/Vfirst_slice_sim_top.manifest.json": {
+      "original_sha256": "47d80e4fa0b6d31e7b869f6ef05abb61a5870c503fca5b43a5f6542648268ea7",
+      "published_sha256": "9cea5d1c847b534b0b9e971e1650d81308ecd11a3f1f40a397b7cdf210b8770b",
+      "bytes": 1505
+    },
+    "simulator/manifests/Vfirst_slice_top.manifest.json": {
+      "original_sha256": "9ea25379cb99edecd33457be3e4b8b3412978cce0a579675be2820e9a760e881",
+      "published_sha256": "9fcb5754403adc09fd5972cb72ed479d7ddea3f9682193976ebbb4b40119c32e",
+      "bytes": 1159
+    },
+    "simulator/manifests/Vweight_store.manifest.json": {
+      "original_sha256": "9f82df8eb2546e3203fafd1495eacc1142568382d59df37dcb42b87e4240b91a",
+      "published_sha256": "8eda7fa10b64d05b1148e1a63bcdf11299d71ae7bcbc24a4172faa90fe598e0a",
+      "bytes": 821
+    },
+    "review.json": {
+      "original_sha256": "9ab067336af2d650931eb93267b3cedb93d2ba189ce76bcfd53d6ab3ec7357a3",
+      "published_sha256": "4dc6a07cd0c175d9478281f122d2b6f3726d72b0783b690e28e4df4ab1b8e262",
+      "bytes": 14820
+    },
+    "f2-preparation.json": {
+      "original_sha256": "bdf9909b08d1a32572f739ccad9b0f24938e787c83aeb1b62cd3196891f76d92",
+      "published_sha256": "37c46693aae42148cc977ef2d3425ef14497da7d76acdecff3fcbde55d7d9e97",
+      "bytes": 6694
+    },
+    "sdk-static-link.log": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "sdk-mock/report.json": {
+      "original_sha256": "e2856228ed0818279daf246412d2bf3fa878e9872ab983ab0f9de3b55dad6360",
+      "published_sha256": "fc3e8c2267378fdf93b03a538fd79cbf27be09ab26a11c1bfee4ad92aaafb95e",
+      "bytes": 6591
+    },
+    "sdk-mock/summary.log": {
+      "original_sha256": "a4a3dc8a361d2938cd4379fe0a9ec0ba265cc96e2408b72572db1f733637dd3a",
+      "published_sha256": "a4a3dc8a361d2938cd4379fe0a9ec0ba265cc96e2408b72572db1f733637dd3a",
+      "bytes": 125
+    },
+    "bazel-tests.log": {
+      "original_sha256": "563661b26cdc5d6ea261f4b8b7ccbbce7bd054eb51c866053d219cf7e83d580f",
+      "published_sha256": "563661b26cdc5d6ea261f4b8b7ccbbce7bd054eb51c866053d219cf7e83d580f",
+      "bytes": 2415
+    },
+    "required-checks.log": {
+      "original_sha256": "78560413e2a78be77ee92e43200cc4267c74c7610023071c0ebcb562fbf2d02c",
+      "published_sha256": "78560413e2a78be77ee92e43200cc4267c74c7610023071c0ebcb562fbf2d02c",
+      "bytes": 453
+    },
+    "initial-environment-attempt/validation.json": {
+      "original_sha256": "99dc62449c89b863e4e0061866176151886d905d59ae7c2886c25a281e840d15",
+      "published_sha256": "b0574fc57e10b99db9abaeac72dc98c816345d163a176272f6ea5dfd7e5770ce",
+      "bytes": 6356
+    },
+    "initial-environment-attempt/prepare-fixture.log": {
+      "original_sha256": "3949170efa39631ac4ecbd4b28c18fb27e72d5e3e1bbb4724b18dbd4119d523a",
+      "published_sha256": "67840ebfd37b04e5c3dfd00d92f72a6cc209657f7eaa588d352a557deca4ebc0",
+      "bytes": 773
+    },
+    "sdk-mock/build.log": {
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "sdk-mock/dump-epoch-change.log": {
+      "original_sha256": "5dd70209f48c43ae357275b58020bf0b8ef2e79639db600531a230100c055468",
+      "published_sha256": "5dd70209f48c43ae357275b58020bf0b8ef2e79639db600531a230100c055468",
+      "bytes": 624
+    },
+    "sdk-mock/exclusive-output.log": {
+      "original_sha256": "4e8876d8d09bac903db801ec764355ed981520a624be993a808dd9de96d1dc88",
+      "published_sha256": "4e8876d8d09bac903db801ec764355ed981520a624be993a808dd9de96d1dc88",
+      "bytes": 597
+    },
+    "sdk-mock/extra-argument.log": {
+      "original_sha256": "d40846158531762e4469cdf9324face1a03c435e53415af0950affdd4077a4a3",
+      "published_sha256": "d40846158531762e4469cdf9324face1a03c435e53415af0950affdd4077a4a3",
+      "bytes": 110
+    },
+    "sdk-mock/load-before-loading.log": {
+      "original_sha256": "5d146a96962582b5eff4160d7a2939d78e1a0f7d6bd2d1110a34ec53e9e17c8b",
+      "published_sha256": "5d146a96962582b5eff4160d7a2939d78e1a0f7d6bd2d1110a34ec53e9e17c8b",
+      "bytes": 122
+    },
+    "sdk-mock/metrics-int-status.log": {
+      "original_sha256": "1860350f8c479882d05535b4e0839045570e8798e9d8edddfee189cf978535c8",
+      "published_sha256": "1860350f8c479882d05535b4e0839045570e8798e9d8edddfee189cf978535c8",
+      "bytes": 118
+    },
+    "sdk-mock/metrics-late-ocl-timeout.log": {
+      "original_sha256": "98309bba455c02fadbcb00490380b3b30a0c60778f98740bb5a3ed0cbabf4b6e",
+      "published_sha256": "98309bba455c02fadbcb00490380b3b30a0c60778f98740bb5a3ed0cbabf4b6e",
+      "bytes": 131
+    },
+    "sdk-mock/metrics-late-pcis-timeout.log": {
+      "original_sha256": "a3a3332e630dfcf09f2187f17229b36723551c29c6ebca2322002e6b4d7c889e",
+      "published_sha256": "a3a3332e630dfcf09f2187f17229b36723551c29c6ebca2322002e6b4d7c889e",
+      "bytes": 130
+    },
+    "sdk-mock/metrics-ocl-timeout.log": {
+      "original_sha256": "98309bba455c02fadbcb00490380b3b30a0c60778f98740bb5a3ed0cbabf4b6e",
+      "published_sha256": "98309bba455c02fadbcb00490380b3b30a0c60778f98740bb5a3ed0cbabf4b6e",
+      "bytes": 131
+    },
+    "sdk-mock/metrics-pcim-count.log": {
+      "original_sha256": "eceae2cb6042e8b38b92ccb3eebba008eced383001aef48a174e55f6c85ce945",
+      "published_sha256": "eceae2cb6042e8b38b92ccb3eebba008eced383001aef48a174e55f6c85ce945",
+      "bytes": 137
+    },
+    "sdk-mock/metrics-pcim-status.log": {
+      "original_sha256": "206221fef95f8ff79c08a773d710149da7292146436084798d92975299ee6f09",
+      "published_sha256": "206221fef95f8ff79c08a773d710149da7292146436084798d92975299ee6f09",
+      "bytes": 138
+    },
+    "sdk-mock/metrics-pcis-timeout.log": {
+      "original_sha256": "a3a3332e630dfcf09f2187f17229b36723551c29c6ebca2322002e6b4d7c889e",
+      "published_sha256": "a3a3332e630dfcf09f2187f17229b36723551c29c6ebca2322002e6b4d7c889e",
+      "bytes": 130
+    },
+    "sdk-mock/metrics-range-count.log": {
+      "original_sha256": "fe3d2c9d04b95e5df2bfd772f1e9eb281d7cf10d8a454ff26546855ff30b06e3",
+      "published_sha256": "fe3d2c9d04b95e5df2bfd772f1e9eb281d7cf10d8a454ff26546855ff30b06e3",
+      "bytes": 130
+    },
+    "sdk-mock/negative-address.log": {
+      "original_sha256": "fdc8866b382a26e0220e280fc00f1b61516127855b47ecd5f8b35b0dd62e431c",
+      "published_sha256": "fdc8866b382a26e0220e280fc00f1b61516127855b47ecd5f8b35b0dd62e431c",
+      "bytes": 109
+    },
+    "sdk-mock/oversized-value.log": {
+      "original_sha256": "e54f0be1a426292d75f6f44fc9252c0bc91c8d1a3f4bf319ad8ba340b5d85ac5",
+      "published_sha256": "e54f0be1a426292d75f6f44fc9252c0bc91c8d1a3f4bf319ad8ba340b5d85ac5",
+      "bytes": 102
+    },
+    "sdk-mock/peek-range.log": {
+      "original_sha256": "dfcd155bed96202c8afa0d870c3de9b35809d26de6ecc8c8dd5f35e1063a35a5",
+      "published_sha256": "dfcd155bed96202c8afa0d870c3de9b35809d26de6ecc8c8dd5f35e1063a35a5",
+      "bytes": 481
+    },
+    "sdk-mock/poke-before-seal.log": {
+      "original_sha256": "e1da680caba4dcc92760d4d215528932452d304c418d25b731f7b45f9ef4204e",
+      "published_sha256": "e1da680caba4dcc92760d4d215528932452d304c418d25b731f7b45f9ef4204e",
+      "bytes": 500
+    },
+    "sdk-mock/read-range.log": {
+      "original_sha256": "f795b3607b415e5e65fe84effda28b82596d7978e9189eeee6cb7d6ca58c1dd2",
+      "published_sha256": "f795b3607b415e5e65fe84effda28b82596d7978e9189eeee6cb7d6ca58c1dd2",
+      "bytes": 124
+    },
+    "sdk-mock/roundtrip.log": {
+      "original_sha256": "0517ed4bf0275c0a607e03f0094416da79cb9b931893f4d9a827cc0fc6d671f8",
+      "published_sha256": "0517ed4bf0275c0a607e03f0094416da79cb9b931893f4d9a827cc0fc6d671f8",
+      "bytes": 3132
+    },
+    "sdk-mock/sdk-abi.log": {
+      "original_sha256": "54cdc26a879f1de061dd995bbf3a24e23340be5609cf36094a92afaba7a39710",
+      "published_sha256": "54cdc26a879f1de061dd995bbf3a24e23340be5609cf36094a92afaba7a39710",
+      "bytes": 117
+    },
+    "sdk-mock/sdk-agfi.log": {
+      "original_sha256": "53049719fd5d1a76bea807f35c5de75b73521577af6e478bc6d7f302ad91155e",
+      "published_sha256": "53049719fd5d1a76bea807f35c5de75b73521577af6e478bc6d7f302ad91155e",
+      "bytes": 127
+    },
+    "sdk-mock/sdk-attach.log": {
+      "original_sha256": "0592b639c5fa27dcda4069cf8892e59e63e1214db5b6eaca34a1f4f072713cc2",
+      "published_sha256": "0592b639c5fa27dcda4069cf8892e59e63e1214db5b6eaca34a1f4f072713cc2",
+      "bytes": 110
+    },
+    "sdk-mock/sdk-burst.log": {
+      "original_sha256": "25c013d797e41e24aa70ebf59d18376a7afd6af0ff839237108a287ccca4e484",
+      "published_sha256": "25c013d797e41e24aa70ebf59d18376a7afd6af0ff839237108a287ccca4e484",
+      "bytes": 373
+    },
+    "sdk-mock/sdk-burst_partial.log": {
+      "original_sha256": "e8e7b3bb7f33551d01049049a71da2ff9873022e6a0c001df7972b4779f2121f",
+      "published_sha256": "e8e7b3bb7f33551d01049049a71da2ff9873022e6a0c001df7972b4779f2121f",
+      "bytes": 387
+    },
+    "sdk-mock/sdk-close.log": {
+      "original_sha256": "ed707d3f76e1720dc868edce647e998407042012435605d40710e68b1b62cdf0",
+      "published_sha256": "ed707d3f76e1720dc868edce647e998407042012435605d40710e68b1b62cdf0",
+      "bytes": 153
+    },
+    "sdk-mock/sdk-describe.log": {
+      "original_sha256": "6e59a3455bd94592e1d03ef99c6003bf204cbb19801afb99cbd3d697ee8ca458",
+      "published_sha256": "6e59a3455bd94592e1d03ef99c6003bf204cbb19801afb99cbd3d697ee8ca458",
+      "bytes": 142
+    },
+    "sdk-mock/sdk-detach.log": {
+      "original_sha256": "70af1001375a1c5a36d4287e25f1065b3c51eb3c4fa02fd8ca558fe51aa6b8e6",
+      "published_sha256": "70af1001375a1c5a36d4287e25f1065b3c51eb3c4fa02fd8ca558fe51aa6b8e6",
+      "bytes": 211
+    },
+    "sdk-mock/sdk-drain.log": {
+      "original_sha256": "07c696d3c762f53970250821b71d8a450de1aebf9faa6aacbf1c9eb90290356a",
+      "published_sha256": "07c696d3c762f53970250821b71d8a450de1aebf9faa6aacbf1c9eb90290356a",
+      "bytes": 424
+    },
+    "sdk-mock/sdk-final_identity.log": {
+      "original_sha256": "53049719fd5d1a76bea807f35c5de75b73521577af6e478bc6d7f302ad91155e",
+      "published_sha256": "53049719fd5d1a76bea807f35c5de75b73521577af6e478bc6d7f302ad91155e",
+      "bytes": 127
+    },
+    "sdk-mock/sdk-init.log": {
+      "original_sha256": "f9832595c6cc0b3d39211f7d893c903021bb741c8e4caed3d2339dcf4bc165c0",
+      "published_sha256": "f9832595c6cc0b3d39211f7d893c903021bb741c8e4caed3d2339dcf4bc165c0",
+      "bytes": 113
+    },
+    "sdk-mock/sdk-map.log": {
+      "original_sha256": "3a081a1d184d681e44158a62a9ff20f035b9886c758ec5456cb74256863de53f",
+      "published_sha256": "3a081a1d184d681e44158a62a9ff20f035b9886c758ec5456cb74256863de53f",
+      "bytes": 611
+    },
+    "sdk-mock/sdk-map_partial.log": {
+      "original_sha256": "bb93be9787aec12043d78b70ef952a9e2c689bcee4da28f0d6137f6ee2ad3f02",
+      "published_sha256": "bb93be9787aec12043d78b70ef952a9e2c689bcee4da28f0d6137f6ee2ad3f02",
+      "bytes": 627
+    },
+    "sdk-mock/sdk-not_cold.log": {
+      "original_sha256": "20cf353e3a8c7726772366857a280519bf3cd2f395b5f34513d5097d97bf897b",
+      "published_sha256": "20cf353e3a8c7726772366857a280519bf3cd2f395b5f34513d5097d97bf897b",
+      "bytes": 158
+    },
+    "sdk-mock/sdk-pci.log": {
+      "original_sha256": "977f9e527789d960fe87ab7feddcc1e8a4529729fd5e8d64a354e563ac8eb483",
+      "published_sha256": "977f9e527789d960fe87ab7feddcc1e8a4529729fd5e8d64a354e563ac8eb483",
+      "bytes": 141
+    },
+    "sdk-mock/sdk-peek.log": {
+      "original_sha256": "529e74fc9cfd602feb448be79b7c79caa9a525523bf335731ffb6ee57b7a00fb",
+      "published_sha256": "529e74fc9cfd602feb448be79b7c79caa9a525523bf335731ffb6ee57b7a00fb",
+      "bytes": 107
+    },
+    "sdk-mock/sdk-poke.log": {
+      "original_sha256": "f102f9e326b3af5d816eeb92a0414a779904f99e039e539b87d3022c4c9e4178",
+      "published_sha256": "f102f9e326b3af5d816eeb92a0414a779904f99e039e539b87d3022c4c9e4178",
+      "bytes": 107
+    },
+    "sdk-mock/second-load.log": {
+      "original_sha256": "628ca103fbd3ae091f3231e4a602ee371702324f9369414d3fd7c07d3fd707eb",
+      "published_sha256": "628ca103fbd3ae091f3231e4a602ee371702324f9369414d3fd7c07d3fd707eb",
+      "bytes": 504
+    },
+    "sdk-mock/second-verifying-dump.log": {
+      "original_sha256": "b3ad40b6b32f1cdba95b710ec21123e5d4f1af5c241eff00019541d6cd619c69",
+      "published_sha256": "b3ad40b6b32f1cdba95b710ec21123e5d4f1af5c241eff00019541d6cd619c69",
+      "bytes": 795
+    },
+    "sdk-mock/short-dump.log": {
+      "original_sha256": "5a2129320ec1212f36b4991b1df260c07e8c7898f1515bd094b92e55ed2ed089",
+      "published_sha256": "5a2129320ec1212f36b4991b1df260c07e8c7898f1515bd094b92e55ed2ed089",
+      "bytes": 662
+    },
+    "sdk-mock/third-dump.log": {
+      "original_sha256": "24ee41ed1289b590de950215937e8a3beb51b9cd04ee406832d5739db61a4dfa",
+      "published_sha256": "24ee41ed1289b590de950215937e8a3beb51b9cd04ee406832d5739db61a4dfa",
+      "bytes": 1103
+    },
+    "sdk-mock/unaligned-write.log": {
+      "original_sha256": "e54f0be1a426292d75f6f44fc9252c0bc91c8d1a3f4bf319ad8ba340b5d85ac5",
+      "published_sha256": "e54f0be1a426292d75f6f44fc9252c0bc91c8d1a3f4bf319ad8ba340b5d85ac5",
+      "bytes": 102
+    },
+    "sdk-mock/unquoted-path.log": {
+      "original_sha256": "9ae9dcd0cac286e9b48ebff9b66bc09149959083672174a6fcd5bba364aa35e6",
+      "published_sha256": "9ae9dcd0cac286e9b48ebff9b66bc09149959083672174a6fcd5bba364aa35e6",
+      "bytes": 104
+    }
+  }
+}

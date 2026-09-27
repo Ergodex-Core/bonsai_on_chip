@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "$REPO/utils/first_slice/prepare_fixture.py", line 397, in <module>
+    main()
+    ~~~~^^
+  File "$REPO/utils/first_slice/prepare_fixture.py", line 378, in main
+    fixture = prepare(args.gguf, args.native, args.out, args.verify)
+  File "$REPO/utils/first_slice/prepare_fixture.py", line 339, in prepare
+    records, manifest = load_native(source, native, create=not verify)
+                        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$REPO/utils/first_slice/prepare_fixture.py", line 132, in load_native
+    records = pack_image.inspect_checkpoint(source)
+  File "$REPO/utils/weightstore/pack_image.py", line 65, in inspect_checkpoint
+    from gguf import GGUFReader
+ModuleNotFoundError: No module named 'gguf'

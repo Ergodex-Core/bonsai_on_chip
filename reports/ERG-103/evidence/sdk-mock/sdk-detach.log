@@ -1,0 +1,7 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+CLEANUP_FAIL detach SDK status=-1
+CLEANUP_FAIL detach SDK status=-1
+CLEANUP_FAIL detach SDK status=-1
+TRANSPORT_FAIL transport cleanup failed

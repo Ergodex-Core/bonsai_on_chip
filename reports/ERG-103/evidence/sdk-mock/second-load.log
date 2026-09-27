@@ -1,0 +1,8 @@
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"axi_response_observable":false,"whole_image_readback_required":true}
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+LOAD_BYTES 64
+TRANSPORT_FAIL only one image LOAD is allowed per cold reset/process

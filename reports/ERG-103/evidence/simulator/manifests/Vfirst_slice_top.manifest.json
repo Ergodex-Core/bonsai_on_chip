@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "backend": "verilator",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "binary_sha256": "0d3dc48ffc4857f2438fb3f4904a39f172b8a2bc0511bd5badce4383adfd3a71",
+  "source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "tests/first_slice/mailbox_fault_tb.cpp": "935b2cf0813afda769b54d6423d42187575b40c93446ef6007d249f13b7ab53c"
+  },
+  "compile_command": [
+    "/usr/local/bin/verilator",
+    "--cc",
+    "--exe",
+    "--build",
+    "-Wall",
+    "-CFLAGS",
+    "-O3 -std=c++17",
+    "-j",
+    "4",
+    "--top-module",
+    "first_slice_top",
+    "--Mdir",
+    "$VALIDATION/first_slice_top-obj",
+    "$REPO/hdl/verilog/first_slice/weight_store.sv",
+    "$REPO/hdl/verilog/first_slice/dot128.sv",
+    "$REPO/hdl/verilog/first_slice/first_slice_top.sv",
+    "$REPO/tests/first_slice/mailbox_fault_tb.cpp"
+  ]
+}

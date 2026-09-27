@@ -1,0 +1,282 @@
+{
+  "schema": "coralnpu.first_slice.sdk_mock.v1",
+  "status": "PASS",
+  "scope": "Mock public SDK only; no physical FPGA or RTL execution",
+  "fpga_executed": false,
+  "checks": [
+    {
+      "name": "roundtrip",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-init",
+      "status": "PASS",
+      "injected_failure": "init",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-describe",
+      "status": "PASS",
+      "injected_failure": "describe",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-agfi",
+      "status": "PASS",
+      "injected_failure": "agfi",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-pci",
+      "status": "PASS",
+      "injected_failure": "pci",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-abi",
+      "status": "PASS",
+      "injected_failure": "abi",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-not_cold",
+      "status": "PASS",
+      "injected_failure": "not_cold",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-attach",
+      "status": "PASS",
+      "injected_failure": "attach",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-peek",
+      "status": "PASS",
+      "injected_failure": "peek",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-final_identity",
+      "status": "PASS",
+      "injected_failure": "final_identity",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-detach",
+      "status": "PASS",
+      "injected_failure": "detach",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-close",
+      "status": "PASS",
+      "injected_failure": "close",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-int-status",
+      "status": "PASS",
+      "injected_failure": "metrics-int-status",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-pcis-timeout",
+      "status": "PASS",
+      "injected_failure": "metrics-pcis-timeout",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-ocl-timeout",
+      "status": "PASS",
+      "injected_failure": "metrics-ocl-timeout",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-pcim-status",
+      "status": "PASS",
+      "injected_failure": "metrics-pcim-status",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-pcim-count",
+      "status": "PASS",
+      "injected_failure": "metrics-pcim-count",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-range-count",
+      "status": "PASS",
+      "injected_failure": "metrics-range-count",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-late-pcis-timeout",
+      "status": "PASS",
+      "injected_failure": "metrics-late-pcis-timeout",
+      "exit_code": 1
+    },
+    {
+      "name": "metrics-late-ocl-timeout",
+      "status": "PASS",
+      "injected_failure": "metrics-late-ocl-timeout",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-poke",
+      "status": "PASS",
+      "injected_failure": "poke",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-burst",
+      "status": "PASS",
+      "injected_failure": "burst",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-burst_partial",
+      "status": "PASS",
+      "injected_failure": "burst_partial",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-drain",
+      "status": "PASS",
+      "injected_failure": "drain",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-map",
+      "status": "PASS",
+      "injected_failure": "map",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-map_partial",
+      "status": "PASS",
+      "injected_failure": "map_partial",
+      "exit_code": 1
+    },
+    {
+      "name": "dump-epoch-change",
+      "status": "PASS",
+      "injected_failure": "epoch-change",
+      "exit_code": 1
+    },
+    {
+      "name": "second-verifying-dump",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "third-dump",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "negative-address",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "read-range",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "unaligned-write",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "oversized-value",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "extra-argument",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "unquoted-path",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "load-before-loading",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "second-load",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "peek-range",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "poke-before-seal",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "short-dump",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    },
+    {
+      "name": "exclusive-output",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 1
+    }
+  ],
+  "sdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "source_sha256": {
+    "fpga/aws_f2/first_slice/transport.cpp": "4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189",
+    "tests/first_slice/sdk_mock.cpp": "57e3a077ee18363e006779578c31270ee0af3525b5b013a7fedcfe3627f19c68",
+    "tests/first_slice/test_transport.py": "6ec0a1ef143de329392947bfded47e52420e7aae837a393dfc1a6dc82ac78637"
+  },
+  "sdk_header_sha256": {
+    "fpga_mgmt.h": "5d553a7f9ac8a035e5fac96027631e0619c67f9936b70e275fb5af960de913a4",
+    "fpga_pci.h": "81e9c168b10d1508c775b01ab5c369d90ea82eb5adb2a7c24b942432b4f1cc8d",
+    "hal/fpga_common.h": "026c8c9d095c8c270c2fd1570169576dd7941b15c772f8853fab9331f88010c3"
+  },
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "compile_command": [
+    "/usr/bin/c++",
+    "-std=c++17",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "$PINNED_SDK/sdk/userspace/include",
+    "$REPO/fpga/aws_f2/first_slice/transport.cpp",
+    "$REPO/tests/first_slice/sdk_mock.cpp",
+    "-o",
+    "$SDK_MOCK_OUTPUT/packaged-frozen/transport-mock"
+  ],
+  "binary_sha256": "79272fe04a0dd6b4b14aa0a02ceb7377f4880ab86813669da8e27e5765a416d9",
+  "passed": 41
+}
