@@ -1,0 +1,54 @@
+Computing main repo mapping: 
+Computing main repo mapping: 
+Loading: 
+Loading: 0 packages loaded
+Loading: 0 packages loaded
+Loading: 0 packages loaded
+Loading: 0 packages loaded
+Analyzing: 2 targets (1 packages loaded, 0 targets configured)
+Analyzing: 2 targets (1 packages loaded, 0 targets configured)
+
+Analyzing: 2 targets (13 packages loaded, 10 targets configured)
+
+Analyzing: 2 targets (65 packages loaded, 10 targets configured)
+
+Analyzing: 2 targets (75 packages loaded, 41 targets configured)
+
+Analyzing: 2 targets (85 packages loaded, 310 targets configured)
+
+Analyzing: 2 targets (94 packages loaded, 511 targets configured)
+
+Analyzing: 2 targets (100 packages loaded, 2870 targets configured)
+
+Analyzing: 2 targets (105 packages loaded, 3357 targets configured)
+
+INFO: Analyzed 2 targets (105 packages loaded, 3361 targets configured).
+[1 / 5] [Prepa] Writing repo mapping manifest for //utils/first_slice:test_prepare_fixture
+[9 / 11] [Prepa] Testing //utils/first_slice:test_prepare_fixture ... (2 actions, 0 running)
+[9 / 11] Testing //utils/first_slice:test_run; 1s processwrapper-sandbox ... (2 actions running)
+INFO: From Testing //utils/first_slice:test_prepare_fixture:
+==================== Test output for //utils/first_slice:test_prepare_fixture:
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.010s
+
+OK
+================================================================================
+[10 / 11] 1 / 2 tests; Testing //utils/first_slice:test_run; 2s processwrapper-sandbox
+INFO: From Testing //utils/first_slice:test_run:
+==================== Test output for //utils/first_slice:test_run:
+......................
+----------------------------------------------------------------------
+Ran 22 tests in 1.000s
+
+OK
+================================================================================
+INFO: Found 2 test targets...
+INFO: Elapsed time: 20.509s, Critical Path: 2.86s
+INFO: 11 processes: 7 internal, 4 processwrapper-sandbox.
+INFO: Build completed successfully, 11 total actions
+//utils/first_slice:test_prepare_fixture                                 PASSED in 0.9s
+//utils/first_slice:test_run                                             PASSED in 2.1s
+
+Executed 2 out of 2 tests: 2 tests pass.
+There were tests whose specified size is too big. Use the --test_verbose_timeout_warnings command line option to see which ones these are.
