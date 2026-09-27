@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <array>
 #include <cerrno>
+#include <cstddef>
 #include <cstdint>
 #include <fstream>
 #include <iomanip>
@@ -300,7 +301,7 @@ class Simulation {
       }
     require(accepted, "PCIS AR timeout");
     std::vector<uint8_t> result;
-    result.reserve(beats * (1u << size));
+    result.reserve(static_cast<std::size_t>(beats) * (std::size_t{1} << size));
     for (unsigned beat = 0; beat < beats; beat++) {
       idle(beat % 3);
       d.pcis_rready = 1;
