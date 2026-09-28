@@ -8,7 +8,7 @@
     "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
     "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
     "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
-    "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
+    "tests/first_slice/model_server.cpp": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
     "tests/first_slice/validate.py": "3ee09220dc3b9bfba1773b65c947d7c18b855000665b5a816a5ef999c5f9e9d0",
     "fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv": "42f010857e3bfb583f0c77b4e387579c4000d877951f592537756d7b9e9a7da5"
   },
@@ -151,12 +151,27 @@
       "scope": "synthetic image host transport safety/evidence preservation; no physical FPGA",
       "tested_source_sha256": "fbc8ecb118a70e95473e613e712d4d0563c46fa6fb2e5dc27cf8c24f8aaba454",
       "final_source_sha256": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667",
-      "note": "Root applied repository-style formatting after focused replay; full frozen-source replay is owned by the root workflow."
+      "note": "Focused replay originally used the earlier formatting hash. Root reran all four methods/six scenarios successfully in final-validation3 against the final repository-style test and CodeQL-adjusted model server."
     },
     "bridge_reported_by_hardware_agent": {
       "status": "PASS",
       "assertions": 189,
       "reviewer_reran": false
+    },
+    "final_frozen_workflow": {
+      "status": "PASS",
+      "executor": "root",
+      "source_revision": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+      "steps": 16,
+      "started_utc": "2026-09-27T20:20:36Z",
+      "finished_utc": "2026-09-27T20:21:51Z",
+      "source_files_verified": 44,
+      "report": "$VALIDATION/validation.json",
+      "report_sha256": "462c6fe7c142b66ac3c692120d83bfa21a28dbc1b6b40fc9715bdcb30636777d",
+      "native_cases": 396,
+      "synthetic_cases": 6,
+      "synthetic_expected_rejections": 2,
+      "fpga_executed": false
     }
   },
   "evidence_sha256": {
@@ -175,7 +190,6 @@
   },
   "mock_harness_root": "tests/first_slice/{sdk_mock.cpp,test_transport.py}",
   "remaining_gates": [
-    "Final full simulator suite on frozen complete source and source-hash record (root workflow).",
     "Actual custom RTL XSIM execution, including real model blocks and PCIS narrow transactions; mocks and Verilator are not XSIM evidence.",
     "Vivado implementation/DCP, audited resources, clock constraints and achieved timing for exact tested source.",
     "Generated AFI/AGFI identity, exact-source manifest, physical F2 whole-image readback, sealed-write rejection and actual returned DOT128 outputs using the public SDK.",
@@ -196,11 +210,26 @@
       "use": "Pinned interface constraints for unaligned addresses, posted completion interpretation, bounded traffic and error metrics."
     }
   ],
-  "updated_utc": "2026-09-27T20:07:01.398682+00:00",
+  "updated_utc": "2026-09-27T20:27:53.412894+00:00",
   "final_hash_changes": {
     "tests/first_slice/test_transport_protocol.py": {
       "previous_sha256": "fbc8ecb118a70e95473e613e712d4d0563c46fa6fb2e5dc27cf8c24f8aaba454",
       "current_sha256": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667"
     }
-  }
+  },
+  "followup_reviews": [
+    {
+      "reviewed_utc": "2026-09-27T20:21:45.058870+00:00",
+      "commit": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+      "scope": "CodeQL alert 12: size-type arithmetic for simulator read buffer reservation",
+      "file": "tests/first_slice/model_server.cpp",
+      "old_sha256": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
+      "new_sha256": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+      "diff_verified": "Exactly adds <cstddef> and changes reserve multiplication and left-shift operands to std::size_t. No other bytes changed in this file.",
+      "correctness": "The unchanged leading guard requires 1 <= beats <= 64 and size <= 6. For all accepted inputs the capacity is 1..4096 bytes, so the new expression preserves the mathematical result while evaluating in size_type-width arithmetic. No bus, numerical, protocol, control-flow, or interface behavior changes.",
+      "review_result": "PASS; no new blocking finding",
+      "validation": "Read-only diff and guard inspection, exact byte transformation verified. Prior test results remain attached to their original source hashes. Full frozen-source simulator rerun is owned by root and was not rerun by this reviewer.",
+      "review_type": "independent automated technical review; not human approval"
+    }
+  ]
 }

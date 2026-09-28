@@ -1,0 +1,52 @@
+{
+  "schema": "coralnpu.first_slice.ci_snapshot.v1",
+  "source_revision": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+  "observed_utc": "2026-09-27T20:26:33.645120+00:00",
+  "checks": [
+    {
+      "id": 108700287808,
+      "name": "CodeQL",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-27T20:21:40Z",
+      "completed_at": "2026-09-27T20:21:43Z",
+      "html_url": "https://github.com/Ergodex-Core/bonsai_on_chip/runs/108700287808"
+    },
+    {
+      "id": 108700167508,
+      "name": "Analyze (c-cpp)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-27T20:21:01Z",
+      "completed_at": "2026-09-27T20:22:14Z",
+      "html_url": "https://github.com/Ergodex-Core/bonsai_on_chip/actions/runs/36347695628/job/108700167508"
+    },
+    {
+      "id": 108700167493,
+      "name": "Analyze (python)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-27T20:21:03Z",
+      "completed_at": "2026-09-27T20:22:04Z",
+      "html_url": "https://github.com/Ergodex-Core/bonsai_on_chip/actions/runs/36347695628/job/108700167493"
+    },
+    {
+      "id": 108700167340,
+      "name": "Analyze (ruby)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-09-27T20:21:02Z",
+      "completed_at": "2026-09-27T20:21:50Z",
+      "html_url": "https://github.com/Ergodex-Core/bonsai_on_chip/actions/runs/36347695628/job/108700167340"
+    },
+    {
+      "id": 108700163622,
+      "name": "[code]smith",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-09-27T20:20:58Z",
+      "completed_at": "2026-09-27T20:20:58Z",
+      "html_url": "https://github.com/Ergodex-Core/bonsai_on_chip/runs/108700163622"
+    }
+  ]
+}

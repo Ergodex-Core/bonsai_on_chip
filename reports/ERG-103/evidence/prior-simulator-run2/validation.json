@@ -12,7 +12,7 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.094
+      "elapsed_seconds": 0.085
     },
     {
       "name": "runner-failure-unit",
@@ -23,7 +23,7 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 1.409
+      "elapsed_seconds": 1.115
     },
     {
       "name": "prepare-fixture",
@@ -33,13 +33,13 @@
         "--gguf",
         "$PINNED_GGUF",
         "--native",
-        "$VALIDATION/native",
+        "$TMP/erg103-final-validation2/native",
         "--out",
-        "$VALIDATION/fixture"
+        "$TMP/erg103-final-validation2/fixture"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 6.508
+      "elapsed_seconds": 6.192
     },
     {
       "name": "build-dot128",
@@ -56,26 +56,26 @@
         "--top-module",
         "dot128",
         "--Mdir",
-        "$VALIDATION/dot128-obj",
+        "$TMP/erg103-final-validation2/dot128-obj",
         "$REPO/hdl/verilog/first_slice/dot128.sv",
         "$REPO/tests/first_slice/dot128_tb.cpp"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 6.503
+      "elapsed_seconds": 6.402
     },
     {
       "name": "dot128",
       "command": [
-        "$VALIDATION/dot128-obj/Vdot128",
+        "$TMP/erg103-final-validation2/dot128-obj/Vdot128",
         "--q1-block",
-        "$VALIDATION/actual-q1-block.bin",
+        "$TMP/erg103-final-validation2/actual-q1-block.bin",
         "--offset",
         "4095"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.469
+      "elapsed_seconds": 0.525
     },
     {
       "name": "build-weight_store",
@@ -92,22 +92,22 @@
         "--top-module",
         "weight_store",
         "--Mdir",
-        "$VALIDATION/weight_store-obj",
+        "$TMP/erg103-final-validation2/weight_store-obj",
         "$REPO/hdl/verilog/first_slice/weight_store.sv",
         "$REPO/tests/first_slice/weight_store_tb.cpp"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 6.2
+      "elapsed_seconds": 6.059
     },
     {
       "name": "weight-store",
       "command": [
-        "$VALIDATION/weight_store-obj/Vweight_store"
+        "$TMP/erg103-final-validation2/weight_store-obj/Vweight_store"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.464
+      "elapsed_seconds": 0.511
     },
     {
       "name": "build-first_slice_top",
@@ -124,7 +124,7 @@
         "--top-module",
         "first_slice_top",
         "--Mdir",
-        "$VALIDATION/first_slice_top-obj",
+        "$TMP/erg103-final-validation2/first_slice_top-obj",
         "$REPO/hdl/verilog/first_slice/weight_store.sv",
         "$REPO/hdl/verilog/first_slice/dot128.sv",
         "$REPO/hdl/verilog/first_slice/first_slice_top.sv",
@@ -132,16 +132,16 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 6.729
+      "elapsed_seconds": 6.783
     },
     {
       "name": "mailbox-faults",
       "command": [
-        "$VALIDATION/first_slice_top-obj/Vfirst_slice_top"
+        "$TMP/erg103-final-validation2/first_slice_top-obj/Vfirst_slice_top"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.449
+      "elapsed_seconds": 0.496
     },
     {
       "name": "build-f2_memory_bridge_tb",
@@ -156,22 +156,22 @@
         "--top-module",
         "f2_memory_bridge_tb",
         "--Mdir",
-        "$VALIDATION/f2_memory_bridge_tb-obj",
+        "$TMP/erg103-final-validation2/f2_memory_bridge_tb-obj",
         "$REPO/hdl/verilog/first_slice/f2_memory_bridge.sv",
         "$REPO/fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 8.152
+      "elapsed_seconds": 8.089
     },
     {
       "name": "memory-bridge",
       "command": [
-        "$VALIDATION/f2_memory_bridge_tb-obj/Vf2_memory_bridge_tb"
+        "$TMP/erg103-final-validation2/f2_memory_bridge_tb-obj/Vf2_memory_bridge_tb"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.474
+      "elapsed_seconds": 0.481
     },
     {
       "name": "build-first_slice_sim_top",
@@ -188,7 +188,7 @@
         "--top-module",
         "first_slice_sim_top",
         "--Mdir",
-        "$VALIDATION/first_slice_sim_top-obj",
+        "$TMP/erg103-final-validation2/first_slice_sim_top-obj",
         "$REPO/hdl/verilog/first_slice/weight_store.sv",
         "$REPO/hdl/verilog/first_slice/dot128.sv",
         "$REPO/hdl/verilog/first_slice/first_slice_top.sv",
@@ -198,7 +198,7 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 7.342
+      "elapsed_seconds": 7.187
     },
     {
       "name": "mailbox",
@@ -209,7 +209,7 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.578
+      "elapsed_seconds": 1.025
     },
     {
       "name": "transport-protocol",
@@ -220,7 +220,7 @@
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.127
+      "elapsed_seconds": 0.125
     },
     {
       "name": "native",
@@ -228,19 +228,19 @@
         "$PYTHON_ENV/bin/python",
         "utils/first_slice/run.py",
         "--fixture",
-        "$VALIDATION/fixture/fixture.json",
+        "$TMP/erg103-final-validation2/fixture/fixture.json",
         "--image",
-        "$VALIDATION/native/weights.bin",
+        "$TMP/erg103-final-validation2/native/weights.bin",
         "--transport",
-        "$VALIDATION/first_slice_sim_top-obj/Vfirst_slice_sim_top",
+        "$TMP/erg103-final-validation2/first_slice_sim_top-obj/Vfirst_slice_sim_top",
         "--suite",
         "native",
         "--out",
-        "$VALIDATION/native-run"
+        "$TMP/erg103-final-validation2/native-run"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 29.017
+      "elapsed_seconds": 28.374
     },
     {
       "name": "synthetic",
@@ -248,25 +248,25 @@
         "$PYTHON_ENV/bin/python",
         "utils/first_slice/run.py",
         "--fixture",
-        "$VALIDATION/fixture/fixture.json",
+        "$TMP/erg103-final-validation2/fixture/fixture.json",
         "--image",
-        "$VALIDATION/fixture/synthetic-ternary2.bin",
+        "$TMP/erg103-final-validation2/fixture/synthetic-ternary2.bin",
         "--transport",
-        "$VALIDATION/first_slice_sim_top-obj/Vfirst_slice_sim_top",
+        "$TMP/erg103-final-validation2/first_slice_sim_top-obj/Vfirst_slice_sim_top",
         "--suite",
         "synthetic",
         "--out",
-        "$VALIDATION/synthetic-run"
+        "$TMP/erg103-final-validation2/synthetic-run"
       ],
       "status": "PASS",
       "exit_code": 0,
-      "elapsed_seconds": 0.095
+      "elapsed_seconds": 0.079
     }
   ],
-  "started_utc": "2026-09-27T20:20:36Z",
+  "started_utc": "2026-09-27T20:07:32Z",
   "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
   "python_version": "3.14.5 (v3.14.5:5607950ef23, May 10 2026, 07:38:09) [Clang 21.0.0 (clang-2100.0.123.102)]",
-  "git_base": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+  "git_base": "edaba6235c06e6c3ae447b7479b2123e69369321",
   "source_sha256": {
     "fpga/aws_f2/first_slice/LICENSE.Amazon": "1cb09d14bf68e96743ec5369b03f24d8f657969b440be6249f0941a0fca8e1bb",
     "fpga/aws_f2/first_slice/Makefile": "59f405fae2ecd901e700bdda41dca88c12e22587a5d53004a0556446c33a6214",
@@ -295,7 +295,7 @@
     "tests/first_slice/dot128_tb.cpp": "d37a9c459898645c4b2d1a3cacf59f9ff5c3491389cb0cde780154c0a60113b4",
     "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
     "tests/first_slice/mailbox_fault_tb.cpp": "935b2cf0813afda769b54d6423d42187575b40c93446ef6007d249f13b7ab53c",
-    "tests/first_slice/model_server.cpp": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+    "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
     "tests/first_slice/sdk_mock.cpp": "57e3a077ee18363e006779578c31270ee0af3525b5b013a7fedcfe3627f19c68",
     "tests/first_slice/test_mailbox.py": "26f457cdd9af58228f514d5b7d8835f80f6d98c8921e30a159299cb3a1ad9c89",
     "tests/first_slice/test_transport.py": "6ec0a1ef143de329392947bfded47e52420e7aae837a393dfc1a6dc82ac78637",
@@ -317,13 +317,13 @@
     "native": {
       "status": "PASS",
       "passed": 396,
-      "report_sha256": "f1781b4afb300c1a5210d49f07fe83514776acaada88aff7e8c402f3929c2c03"
+      "report_sha256": "08c9ca48efbbe074be3ac710565bcaa47c325e20ced72bd30ae381e192cf7a9e"
     },
     "synthetic": {
       "status": "PASS",
       "passed": 6,
-      "report_sha256": "33852b5d0ef687b8f6cd9068711da84ee8e335f63661d5d378e17c1f51da9279"
+      "report_sha256": "1ffdc369e9acf729dc0f5c48a86fc1f413160a56b78ee5f857ba1910f51a2e00"
     }
   },
-  "finished_utc": "2026-09-27T20:21:51Z"
+  "finished_utc": "2026-09-27T20:08:46Z"
 }

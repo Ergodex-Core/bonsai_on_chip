@@ -190,5 +190,5 @@ PASS faulted DDR ID is not reused
 PASS f2_memory_bridge checks=189 DDR_writes=12 DDR_reads=15 denied_AW=7
 - $REPO/fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv:471: Verilog $finish
 - S i m u l a t i o n   R e p o r t: Verilator 5.048 2026-04-26
-- Verilator: $finish at 2us; walltime 0.008 s; speed 242.349 us/s
+- Verilator: $finish at 2us; walltime 0.008 s; speed 239.951 us/s
 - Verilator: cpu 0.008 s on 1 threads; allocated 4 MB

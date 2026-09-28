@@ -22,6 +22,6 @@ test_wrong_case_count_fails_before_transport (__main__.RunFailureTests.test_wron
 test_wrong_line_read_count_prevents_pass (__main__.RunFailureTests.test_wrong_line_read_count_prevents_pass) ... ok
 
 ----------------------------------------------------------------------
-Ran 22 tests in 1.043s
+Ran 22 tests in 1.324s
 
 OK

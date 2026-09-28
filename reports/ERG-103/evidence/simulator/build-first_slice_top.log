@@ -14,4 +14,4 @@ c++ -L/usr/local/opt/openssl@3/lib  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time
 rm Vfirst_slice_top__ALL.verilator_deplist.tmp
 - V e r i l a t i o n   R e p o r t: Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426
 - Verilator: Built from 0.123 MB sources in 4 modules, into 0.998 MB in 7 C++ files needing 0.001 MB
-- Verilator: Walltime 6.577 s (elab=0.007, cvt=0.111, bld=6.429); cpu 0.161 s on 4 threads; allocated 27.699 MB
+- Verilator: Walltime 6.526 s (elab=0.007, cvt=0.108, bld=6.382); cpu 0.159 s on 4 threads; allocated 27.645 MB

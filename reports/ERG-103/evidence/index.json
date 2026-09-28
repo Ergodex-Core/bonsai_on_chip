@@ -1,31 +1,33 @@
 {
   "schema": "coralnpu.first_slice.published_evidence.v1",
-  "validated_source_revision": "edaba6235c06e6c3ae447b7479b2123e69369321",
-  "note": "Only local path prefixes were replaced. Numeric results, source/binary/model hashes and exit codes are unchanged. Hash references within original records refer to original_sha256; this index maps them to durable published bytes. No model binaries, private AWS identities or credentials are published.",
+  "validated_source_revision": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+  "prior_validated_source_revision": "edaba6235c06e6c3ae447b7479b2123e69369321",
+  "prior_report_revision": "f5425b4d70d4a2b01796f52b88d01db2753fb235",
+  "note": "Only local path prefixes were replaced. Numeric results, source/binary/model hashes and exit codes are unchanged. Hash references within original records refer to original_sha256; this index maps them to durable published bytes. The prior successful workflow and initial environment failure are retained separately. No model binaries, private AWS identities or credentials are published.",
   "artifacts": {
     "simulator/build-dot128.log": {
-      "original_sha256": "624420e041b35a56868a3b9adff789cd7e194a7cf31e150a0ad4bfd8ca171e13",
-      "published_sha256": "6e112ccd312d2a7113e04b1fd88403a793b060c3a042fd673d6d601a7d4c6922",
+      "original_sha256": "34e132829a2c656c24188431e0bce7b2c14c5b346cd170b5d4decb78a956ab65",
+      "published_sha256": "42281642594b5f387c2414b00110b2f8c391762a82e6dbbc645fe4ceca597bdb",
       "bytes": 4272
     },
     "simulator/build-f2_memory_bridge_tb.log": {
-      "original_sha256": "ae27e34ece7efcf28b5130b674888668ca86e478b1a0ab6280c06c11e5280cab",
-      "published_sha256": "ae27e34ece7efcf28b5130b674888668ca86e478b1a0ab6280c06c11e5280cab",
+      "original_sha256": "38d348707e17a6780a1e07f14970a4252b02e46fb03c3f6e74051bd43ee69679",
+      "published_sha256": "38d348707e17a6780a1e07f14970a4252b02e46fb03c3f6e74051bd43ee69679",
       "bytes": 12222
     },
     "simulator/build-first_slice_sim_top.log": {
-      "original_sha256": "a54134e51143f81849664da201eec8943a2cef43cd5ccf63fda5304d5e4f6e3b",
-      "published_sha256": "d7d1ad4b9a6f18277ca7ff2ed6f3d133434d93b227def3ff250cbbfe2ef88b11",
+      "original_sha256": "65d2be8d8b08c256349fba5b1f1a53a5af239ae1567095497dd2e89d2e271379",
+      "published_sha256": "000fd96d7044c2e25e2e592bfdbc702b330245bd01eea3910942a4b8ccdf4f28",
       "bytes": 11097
     },
     "simulator/build-first_slice_top.log": {
-      "original_sha256": "f9b602550e569eca052c8ad899d2d499f56c31260207bea997de587299fc3a99",
-      "published_sha256": "6739fd0e0947b4f92d51e3a9b0d91711b8d2c294590862c912f689967e987283",
+      "original_sha256": "affe02de22d13812f2d585af02d7ebb55a7cc112d5b57258a27895706d4488ef",
+      "published_sha256": "7c30ab06039f6c081f971b0892c9bb3c083ba821586af100f1271e2ec7c159ef",
       "bytes": 11025
     },
     "simulator/build-weight_store.log": {
-      "original_sha256": "70e2e78e4a2b53ec2feba752748bb95000ea64bcc878a3997eb4e58168a4030f",
-      "published_sha256": "76f1da16f2e74a7089d4dda25fd13075be1815b981b55059acd4c3177d9018ca",
+      "original_sha256": "c1f36c0508f2ec433c763069f6849aae2535a91c9778fbd2dc8bd919ba51d76e",
+      "published_sha256": "10232dba374ae1c859e15b885f12a5ad17cb1b707bc6df6f1872a7dd29ec0459",
       "bytes": 4362
     },
     "simulator/dot128.log": {
@@ -34,8 +36,8 @@
       "bytes": 268
     },
     "simulator/fixture-unit.log": {
-      "original_sha256": "4ed557541f22e888bdc670a7224eb9d13d26c62223bd1a4878f1ff27268cd86e",
-      "published_sha256": "4ed557541f22e888bdc670a7224eb9d13d26c62223bd1a4878f1ff27268cd86e",
+      "original_sha256": "cd18a968d728bc89e1ad22453434c4ee5f4bee518205fc630dfbf51943f96c41",
+      "published_sha256": "cd18a968d728bc89e1ad22453434c4ee5f4bee518205fc630dfbf51943f96c41",
       "bytes": 1693
     },
     "simulator/mailbox-faults.log": {
@@ -44,13 +46,13 @@
       "bytes": 165
     },
     "simulator/mailbox.log": {
-      "original_sha256": "9510e32fd6b33b0079ed74c792f99cdef256dccd11ce36c7e96ecbdd253077ed",
-      "published_sha256": "9510e32fd6b33b0079ed74c792f99cdef256dccd11ce36c7e96ecbdd253077ed",
+      "original_sha256": "ce1153c4d1377c3389b8af61b94acc902b2011ceae4c06e36749e14913f4f9a7",
+      "published_sha256": "ce1153c4d1377c3389b8af61b94acc902b2011ceae4c06e36749e14913f4f9a7",
       "bytes": 533
     },
     "simulator/memory-bridge.log": {
-      "original_sha256": "86963ded082afbc29abf64c1159a1181e032bed169a264cd23a6227fc766dcc6",
-      "published_sha256": "38c269b9b4a6d4ac5a3e2f36628b4b0594e6444280ec469c5a4c1ea9249e6c4f",
+      "original_sha256": "9d4154653bebf05f9dd442cbe8e617972fd308a33522dc1bcbd2f02bcd905830",
+      "published_sha256": "2b6fbd6783d0e1ef3287273cce230987e79bba9d5646e5574b4e07c3bdedd6cf",
       "bytes": 6108
     },
     "simulator/native.log": {
@@ -64,8 +66,8 @@
       "bytes": 269
     },
     "simulator/runner-failure-unit.log": {
-      "original_sha256": "13e8f6f91faa79f9f053bef8b4e0db50dafe4f40445264809d7ce20e3ff3b541",
-      "published_sha256": "13e8f6f91faa79f9f053bef8b4e0db50dafe4f40445264809d7ce20e3ff3b541",
+      "original_sha256": "5b8bf44d734f0a798cab9bb96729af25a269cd48160b904af668f7bbce98391e",
+      "published_sha256": "5b8bf44d734f0a798cab9bb96729af25a269cd48160b904af668f7bbce98391e",
       "bytes": 2941
     },
     "simulator/synthetic.log": {
@@ -84,13 +86,13 @@
       "bytes": 334
     },
     "simulator/validation.json": {
-      "original_sha256": "afac9201818e8f04e64bf8be330977d3eb49b9e675aaec8c62a7055f303997db",
-      "published_sha256": "c21840beb999080da15defdedffac4bcaae6bc65ce11f6f275ed441cef17b0d1",
-      "bytes": 12142
+      "original_sha256": "462c6fe7c142b66ac3c692120d83bfa21a28dbc1b6b40fc9715bdcb30636777d",
+      "published_sha256": "247ec14fe455437000e80b6d20856b553f0df4cfb91ab48386730eb980479c9d",
+      "bytes": 12140
     },
     "simulator/native/report.json": {
-      "original_sha256": "08c9ca48efbbe074be3ac710565bcaa47c325e20ced72bd30ae381e192cf7a9e",
-      "published_sha256": "c5b801e704912ce1e99a934011ca360421cbfd5f549d9b8401d8f15cd95c4523",
+      "original_sha256": "f1781b4afb300c1a5210d49f07fe83514776acaada88aff7e8c402f3929c2c03",
+      "published_sha256": "285c64ee257c915e5beab6591e36340963ce056d2aa5665124ce3a7d1d3461e1",
       "bytes": 155284
     },
     "simulator/native/transport.log": {
@@ -99,8 +101,8 @@
       "bytes": 546
     },
     "simulator/synthetic/report.json": {
-      "original_sha256": "1ffdc369e9acf729dc0f5c48a86fc1f413160a56b78ee5f857ba1910f51a2e00",
-      "published_sha256": "b5091ba3e978111a72e4931b6d6529ffde3d71728036f2ccf6144b939b755e3c",
+      "original_sha256": "33852b5d0ef687b8f6cd9068711da84ee8e335f63661d5d378e17c1f51da9279",
+      "published_sha256": "abd0fbbc7439c89192c25d0fee14c6b1e931c523ccad5270f01273f20913ff62",
       "bytes": 6342
     },
     "simulator/synthetic/transport.log": {
@@ -109,34 +111,84 @@
       "bytes": 96
     },
     "simulator/manifests/Vdot128.manifest.json": {
-      "original_sha256": "daa5577b9306aa238de68d98d4f79381bbe1fbebad27953685a8d957eb937b64",
+      "original_sha256": "94d9d158dfc4388b753209c186aaad63d66b694d40a6564230614d68928243c4",
       "published_sha256": "6d44e6f8a1078f7483cdfa9e17d08caa749cc94fde992527c068ab9a7a201f61",
       "bytes": 785
     },
     "simulator/manifests/Vf2_memory_bridge_tb.manifest.json": {
-      "original_sha256": "2e395884b8d7a8155ccc762cf12b7149c9b3d97ed855ea1a60f952e40ecbade6",
+      "original_sha256": "a05c17241fa365ab7373c4e72c050a4def99271c670ca60b78ae8fe80a90022c",
       "published_sha256": "71435b9223af17e17f190c9b2442b0f1320ee205f397f16297aa7a1ef26b1ce9",
       "bytes": 844
     },
     "simulator/manifests/Vfirst_slice_sim_top.manifest.json": {
-      "original_sha256": "47d80e4fa0b6d31e7b869f6ef05abb61a5870c503fca5b43a5f6542648268ea7",
-      "published_sha256": "9cea5d1c847b534b0b9e971e1650d81308ecd11a3f1f40a397b7cdf210b8770b",
+      "original_sha256": "7ca78f7709dca3dbf7ae9b2fd1269c623fb2f60a6e888e47325a1eeeea55453a",
+      "published_sha256": "3db84c20eb2dfe19c5974e084d6a10fa4ba32f623d1636dd68cb52bcc4dc4542",
       "bytes": 1505
     },
     "simulator/manifests/Vfirst_slice_top.manifest.json": {
-      "original_sha256": "9ea25379cb99edecd33457be3e4b8b3412978cce0a579675be2820e9a760e881",
+      "original_sha256": "524bbba37219bd78fc3a83e4ef15e1beefa08b3b31e91636c5014f7305f3fefd",
       "published_sha256": "9fcb5754403adc09fd5972cb72ed479d7ddea3f9682193976ebbb4b40119c32e",
       "bytes": 1159
     },
     "simulator/manifests/Vweight_store.manifest.json": {
-      "original_sha256": "9f82df8eb2546e3203fafd1495eacc1142568382d59df37dcb42b87e4240b91a",
+      "original_sha256": "b59c786f4a1d53b7de021812318d0a5b7679d3a42afa604fdcb3687057dc4a58",
       "published_sha256": "8eda7fa10b64d05b1148e1a63bcdf11299d71ae7bcbc24a4172faa90fe598e0a",
       "bytes": 821
     },
+    "prior-simulator-run2/validation.json": {
+      "original_sha256": "afac9201818e8f04e64bf8be330977d3eb49b9e675aaec8c62a7055f303997db",
+      "published_sha256": "33c55dcfd233bbe13e308d41a238e73f5432aa58fc4231db0f69294f8d72879a",
+      "bytes": 12502
+    },
+    "prior-simulator-run2/native/report.json": {
+      "original_sha256": "08c9ca48efbbe074be3ac710565bcaa47c325e20ced72bd30ae381e192cf7a9e",
+      "published_sha256": "e1396f9d28757587b3926fa93c3517ca8a0653f4ce0c5484967b8af6e55c1bbd",
+      "bytes": 155302
+    },
+    "prior-simulator-run2/native/transport.log": {
+      "original_sha256": "61362a47a7ec530634c38fc117d7d0c858c8f915ffe3287e8c64f7a639bcc096",
+      "published_sha256": "61362a47a7ec530634c38fc117d7d0c858c8f915ffe3287e8c64f7a639bcc096",
+      "bytes": 546
+    },
+    "prior-simulator-run2/synthetic/report.json": {
+      "original_sha256": "1ffdc369e9acf729dc0f5c48a86fc1f413160a56b78ee5f857ba1910f51a2e00",
+      "published_sha256": "84bb429b973c2b22b1c2b580567c1fa85a5526ff37efd1af1502af2646a14abd",
+      "bytes": 6360
+    },
+    "prior-simulator-run2/synthetic/transport.log": {
+      "original_sha256": "8820a90c9a0e9c00d486a0532eb888426b6d5d9352e6d848d78b7d66da0f4ce2",
+      "published_sha256": "8820a90c9a0e9c00d486a0532eb888426b6d5d9352e6d848d78b7d66da0f4ce2",
+      "bytes": 96
+    },
+    "prior-simulator-run2/manifests/Vdot128.manifest.json": {
+      "original_sha256": "daa5577b9306aa238de68d98d4f79381bbe1fbebad27953685a8d957eb937b64",
+      "published_sha256": "3efecad2fcff3a71b447ed8808efa265cdf902c5cfe8ffdc147363291d3250c0",
+      "bytes": 803
+    },
+    "prior-simulator-run2/manifests/Vf2_memory_bridge_tb.manifest.json": {
+      "original_sha256": "2e395884b8d7a8155ccc762cf12b7149c9b3d97ed855ea1a60f952e40ecbade6",
+      "published_sha256": "6856e342c5c95a316f0998a3d7dac89b1a06a27ec833d8771569770b3699f687",
+      "bytes": 862
+    },
+    "prior-simulator-run2/manifests/Vfirst_slice_sim_top.manifest.json": {
+      "original_sha256": "47d80e4fa0b6d31e7b869f6ef05abb61a5870c503fca5b43a5f6542648268ea7",
+      "published_sha256": "21455a97fc0940a6a8238c8f481baf9b5f2b15072c41968def0363f68527a9ba",
+      "bytes": 1523
+    },
+    "prior-simulator-run2/manifests/Vfirst_slice_top.manifest.json": {
+      "original_sha256": "9ea25379cb99edecd33457be3e4b8b3412978cce0a579675be2820e9a760e881",
+      "published_sha256": "f1e956fa453f3c5d6b980b151e0f71ebfae7a74aea2f84f991c208176944af8b",
+      "bytes": 1177
+    },
+    "prior-simulator-run2/manifests/Vweight_store.manifest.json": {
+      "original_sha256": "9f82df8eb2546e3203fafd1495eacc1142568382d59df37dcb42b87e4240b91a",
+      "published_sha256": "5abac1623d26619d2cebb90ec1c10aa812a48b062550517f0410feb58167ac0d",
+      "bytes": 839
+    },
     "review.json": {
-      "original_sha256": "9ab067336af2d650931eb93267b3cedb93d2ba189ce76bcfd53d6ab3ec7357a3",
-      "published_sha256": "4dc6a07cd0c175d9478281f122d2b6f3726d72b0783b690e28e4df4ab1b8e262",
-      "bytes": 14820
+      "original_sha256": "60a8bc89d1c32a96d81549743be3eb1c8a55f3ac70eaa677d101bb94093e1609",
+      "published_sha256": "441c287446c158800342d9141ed0aadfa2b19b26ad5a4ce8a42f12d6ebbdbbf1",
+      "bytes": 16734
     },
     "f2-preparation.json": {
       "original_sha256": "bdf9909b08d1a32572f739ccad9b0f24938e787c83aeb1b62cd3196891f76d92",
@@ -164,9 +216,14 @@
       "bytes": 2415
     },
     "required-checks.log": {
-      "original_sha256": "78560413e2a78be77ee92e43200cc4267c74c7610023071c0ebcb562fbf2d02c",
-      "published_sha256": "78560413e2a78be77ee92e43200cc4267c74c7610023071c0ebcb562fbf2d02c",
+      "original_sha256": "9b39136f6845db4eef2a7a44f477dbe2ebfa3669f489a339be00d5959e712a7c",
+      "published_sha256": "9b39136f6845db4eef2a7a44f477dbe2ebfa3669f489a339be00d5959e712a7c",
       "bytes": 453
+    },
+    "ci-source3ee.json": {
+      "original_sha256": "2c772bf4f41a13a47480ba43a7286c65b26568b9382328bc49510ca7b1312020",
+      "published_sha256": "2c772bf4f41a13a47480ba43a7286c65b26568b9382328bc49510ca7b1312020",
+      "bytes": 1785
     },
     "initial-environment-attempt/validation.json": {
       "original_sha256": "99dc62449c89b863e4e0061866176151886d905d59ae7c2886c25a281e840d15",

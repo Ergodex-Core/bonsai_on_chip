@@ -3,6 +3,6 @@ test_not_ready_and_invalid_descriptors_complete_without_reads (__main__.MailboxT
 test_read_errors_and_sealed_descriptor_rejection (__main__.MailboxTests.test_read_errors_and_sealed_descriptor_rejection) ... ok
 
 ----------------------------------------------------------------------
-Ran 3 tests in 0.960s
+Ran 3 tests in 0.512s
 
 OK

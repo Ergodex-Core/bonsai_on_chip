@@ -93,19 +93,19 @@
       "read_requests": 1
     }
   ],
-  "started_utc": "2026-09-27T20:21:51Z",
+  "started_utc": "2026-09-27T20:08:46Z",
   "build_manifest": {
     "schema": 1,
     "backend": "verilator",
     "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
-    "binary_sha256": "2d6f01b0ef3a81322f6475f4271d306138fac1d795dae602f77f9d75263d1ed1",
+    "binary_sha256": "ca96477b333a433508c6c95a1f91461dd2d0f87d6ecc9dce5930ed6416a54bc1",
     "source_sha256": {
       "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
       "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
       "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
       "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
       "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
-      "tests/first_slice/model_server.cpp": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596"
+      "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861"
     },
     "compile_command": [
       "/usr/local/bin/verilator",
@@ -120,7 +120,7 @@
       "--top-module",
       "first_slice_sim_top",
       "--Mdir",
-      "$VALIDATION/first_slice_sim_top-obj",
+      "$TMP/erg103-final-validation2/first_slice_sim_top-obj",
       "$REPO/hdl/verilog/first_slice/weight_store.sv",
       "$REPO/hdl/verilog/first_slice/dot128.sv",
       "$REPO/hdl/verilog/first_slice/first_slice_top.sv",
@@ -138,11 +138,11 @@
     "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
     "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
     "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
-    "tests/first_slice/model_server.cpp": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+    "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
     "utils/first_slice/prepare_fixture.py": "d2711843bd9d4b110b3b2a844632b9d2a1c52a1f63b1b91e5ddd07db79d511bc",
     "utils/first_slice/run.py": "e29a0925af6af20c0bd4fa00dd8f901328fd0a1093495072fbacbbdc1478ffd7"
   },
-  "transport_sha256": "2d6f01b0ef3a81322f6475f4271d306138fac1d795dae602f77f9d75263d1ed1",
+  "transport_sha256": "ca96477b333a433508c6c95a1f91461dd2d0f87d6ecc9dce5930ed6416a54bc1",
   "transport": {
     "ok": true,
     "backend": "verilator",
@@ -181,5 +181,5 @@
   },
   "fpga_scale_stage": false,
   "scope": "DOT128 group arithmetic and sealed DDR image; host scales result; no full model or CoralNPU firmware execution",
-  "finished_utc": "2026-09-27T20:21:51Z"
+  "finished_utc": "2026-09-27T20:08:46Z"
 }

@@ -6,7 +6,7 @@ weight-store/DOT128/mailbox slice. It does not close ERG-103.
 
 Issue: [Week 1: Start core RTL and tooling work](https://linear.app/ergodex-ai/issue/ERG-103/week-1-start-core-rtl-and-tooling-work).
 Draft PR: [#2 — sealed DDR weight-store and DOT128](https://github.com/Ergodex-Core/bonsai_on_chip/pull/2).
-Validated implementation revision: `edaba6235c06e6c3ae447b7479b2123e69369321`.
+Validated implementation revision: `3ee0f99eb7216fe41ba55e719584c662313d3b10`.
 Subsequent report commits change evidence only; source hashes bind each run.
 Development repository: [bonsai_on_chip](https://github.com/Ergodex-Core/bonsai_on_chip).
 Implementation owner: Rachit Tibrewal (Linear assignee); implementation and
@@ -78,7 +78,8 @@ committed into this report.
 ## Final local evidence
 
 The complete workflow **passed** from the frozen implementation revision on
-2026-09-27, 20:07:32–20:08:46 UTC. See the [workflow record](evidence/simulator/validation.json),
+2026-09-27, 20:20:36–20:21:51 UTC (75-second timestamp window; 74.610 seconds
+summed across subprocesses). See the [workflow record](evidence/simulator/validation.json),
 [native per-command results](evidence/simulator/native/report.json),
 [synthetic results](evidence/simulator/synthetic/report.json), and
 [durable evidence index](evidence/index.json). All 16 workflow steps passed.
@@ -98,6 +99,7 @@ The complete workflow **passed** from the frozen implementation revision on
 | Physical transport software tests | 41/41 mock-SDK checks pass under Python `-O`; no hardware access |
 | Real public SDK static link | Pass against the pinned SDK with `-Wall -Wextra -Werror` |
 | Required repository checks | Linters, macro signatures and unchanged Bzlmod lockfile pass |
+| Source-commit GitHub CI | CodeQL summary and C/C++, Python, Ruby analyses pass; optional [code]smith skipped |
 
 Native job latency was **138–157 simulated core cycles** per 128-lane dot,
 56,695 cycles summed across the 396 jobs. This excludes image loading, host
@@ -109,7 +111,7 @@ No measured FPGA resource use, achieved clock, bandwidth or tokens/s exists yet.
 The frozen fixture JSON SHA256 is
 `1fa4d0b6a9a8ea1baf43e9aad5fb60cbba407dcb6f33adc69d8a613d41f9b066`.
 The built local transport SHA256 is
-`ca96477b333a433508c6c95a1f91461dd2d0f87d6ecc9dce5930ed6416a54bc1`.
+`2d6f01b0ef3a81322f6475f4271d306138fac1d795dae602f77f9d75263d1ed1`.
 Build manifests include every compiled RTL/C++ input hash. Generated fixture,
 image and readback binaries are reproduced by the command and not published.
 
@@ -120,6 +122,22 @@ The workflow used the existing Python environment containing `gguf==0.19.0`;
 an initial attempt with system Python failed preparation because GGUF was
 missing, before RTL execution. That failure is retained in
 [initial environment evidence](evidence/initial-environment-attempt/validation.json).
+
+CodeQL alert 12 identified unsigned-width arithmetic in the simulator's read
+buffer reservation. Commit `3ee0f99e` adds `<cstddef>` and evaluates the reserve
+expression in `std::size_t`; the existing bounds still limit it to 1–4,096 bytes.
+Independent review found no numerical or interface change. The entire workflow
+was then rebuilt and rerun: native execution took 29.017 seconds and synthetic
+execution 0.095 seconds. All 44 validation source hashes match the checkout.
+The [CodeQL snapshot](evidence/ci-source3ee.json) records successful checks for
+this exact source commit as observed on 2026-09-27 at 20:26:33 UTC.
+
+The [previous successful workflow](evidence/prior-simulator-run2/validation.json),
+its command reports and build manifests remain in a separate evidence directory.
+They describe the earlier `edaba6235c06e6c3ae447b7479b2123e69369321` source;
+the original [published report](https://github.com/Ergodex-Core/bonsai_on_chip/blob/f5425b4d70d4a2b01796f52b88d01db2753fb235/reports/ERG-103/README.md)
+also remains available. Earlier successes and failures are not relabeled as the
+new run.
 
 Published logs/JSON replace local path prefixes with placeholders. Numeric
 results, source/model/binary digests and exit codes are unchanged. The evidence
