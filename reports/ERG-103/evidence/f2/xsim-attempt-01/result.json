@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "exit_code": 2,
+  "started_utc": "2026-09-30T15:44:54Z",
+  "finished_utc": "2026-09-30T15:44:58Z",
+  "source_revision": "c05d541599fc568f1b03b48b7abe582c5c57f1d7",
+  "hdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "vivado": "2025.2",
+  "execution_scope": "AWS IP prerequisite compilation; custom RTL simulation was not reached",
+  "failure": "Pinned compile_cl_ips.py discovers Git root from caller directory, but prepared CL is outside the HDK checkout",
+  "correction_revision": "c491c4e4b80533b6d01409e26b8082b981ca99ad",
+  "original_console_sha256": "b96a441bc1c8ba9115d56db557c717224139b4585b610adf6c61df28ae26a87e",
+  "published_console_sha256": "e8a79edf52f172a1114d47fb1302f739dc7b6612e5f8e931caeea6f6aa44eaee",
+  "publication_transform": "Replace only remote work and HDK path prefixes; retain errors, counts, status and timestamps"
+}

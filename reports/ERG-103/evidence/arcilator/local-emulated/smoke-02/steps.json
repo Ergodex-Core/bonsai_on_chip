@@ -1,0 +1,41 @@
+[
+  {
+    "name": "mailbox",
+    "command": [
+      "python3",
+      "tests/first_slice/test_mailbox.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.38725337499636225
+  },
+  {
+    "name": "transport-protocol",
+    "command": [
+      "python3",
+      "tests/first_slice/test_transport_protocol.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.40026258400757797
+  },
+  {
+    "name": "synthetic",
+    "command": [
+      "python3",
+      "utils/first_slice/run.py",
+      "--fixture",
+      "/fixtures/first-slice-final/fixture.json",
+      "--image",
+      "/fixtures/first-slice-final/synthetic-ternary2.bin",
+      "--suite",
+      "synthetic",
+      "--transport",
+      "/output/build-02/model_server",
+      "--out",
+      "/output/synthetic-02"
+    ],
+    "exit_code": 0,
+    "elapsed_seconds": 0.28466329199727625
+  }
+]

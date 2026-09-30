@@ -1,0 +1,6 @@
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL BAR4 burst write SDK status=-1

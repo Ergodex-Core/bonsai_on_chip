@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "backend": "verilator",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "binary_sha256": "92a3273d4ab16ede0d251260c6e17bab08f6186cb81bd0cb0dcadfed972e44f2",
+  "source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "tests/first_slice/weight_store_tb.cpp": "2b73d02006095e6beaccfe41644d685ae8a98e4dd7338c1951ca137f3a6fe06b"
+  },
+  "compile_command": [
+    "/usr/local/bin/verilator",
+    "--cc",
+    "--exe",
+    "--build",
+    "-Wall",
+    "-CFLAGS",
+    "-O3 -std=c++17",
+    "-j",
+    "4",
+    "--top-module",
+    "weight_store",
+    "--Mdir",
+    "$TMP/erg103-final-validation2/weight_store-obj",
+    "$REPO/hdl/verilog/first_slice/weight_store.sv",
+    "$REPO/tests/first_slice/weight_store_tb.cpp"
+  ]
+}

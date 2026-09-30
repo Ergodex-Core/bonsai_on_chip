@@ -1,0 +1,4 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL physical PCI identity is not the expected F2 first slice

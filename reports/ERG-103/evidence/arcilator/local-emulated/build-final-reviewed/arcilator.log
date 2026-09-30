@@ -1,0 +1,32 @@
+/output/build-final-reviewed/design.mlir:1541:22: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %expected_hash = seq.firreg %1428 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<8xi32>
+                     ^
+/output/build-final-reviewed/design.mlir:1541:22: note: see current operation: %expected_hash = seq.firreg %1428 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<8xi32>
+/output/build-final-reviewed/design.mlir:1543:22: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %readback_hash = seq.firreg %1429 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<8xi32>
+                     ^
+/output/build-final-reviewed/design.mlir:1543:22: note: see current operation: %readback_hash = seq.firreg %1429 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<8xi32>
+/output/build-final-reviewed/design.mlir:1545:19: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_state = seq.firreg %1430 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi3>
+                  ^
+/output/build-final-reviewed/design.mlir:1545:19: note: see current operation: %slot_state = seq.firreg %1430 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi3>
+/output/build-final-reviewed/design.mlir:1547:20: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_status = seq.firreg %1431 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi3>
+                   ^
+/output/build-final-reviewed/design.mlir:1547:20: note: see current operation: %slot_status = seq.firreg %1431 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi3>
+/output/build-final-reviewed/design.mlir:1549:20: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_offset = seq.firreg %1432 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi48>
+                   ^
+/output/build-final-reviewed/design.mlir:1549:20: note: see current operation: %slot_offset = seq.firreg %1432 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi48>
+/output/build-final-reviewed/design.mlir:1551:17: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_tag = seq.firreg %1433 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi8>
+                ^
+/output/build-final-reviewed/design.mlir:1551:17: note: see current operation: %slot_tag = seq.firreg %1433 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi8>
+/output/build-final-reviewed/design.mlir:1553:19: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_epoch = seq.firreg %1434 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi32>
+                  ^
+/output/build-final-reviewed/design.mlir:1553:19: note: see current operation: %slot_epoch = seq.firreg %1434 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi32>
+/output/build-final-reviewed/design.mlir:1555:18: remark: array register not converted to a memory: next-value is not a linear mux/array_inject chain rooted at the register
+    %slot_data = seq.firreg %1435 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi512>
+                 ^
+/output/build-final-reviewed/design.mlir:1555:18: note: see current operation: %slot_data = seq.firreg %1435 clock %1390 {llhd.nba, llhd.source_nba} : !hw.array<16xi512>

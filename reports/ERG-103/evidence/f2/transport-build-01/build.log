@@ -1,0 +1,57 @@
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/utils
+rm -f *.o *.a ../lib/libutils.a
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../include -I/usr/include   -c -o io.o io.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../include -I/usr/include   -c -o log.o log.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../include -I/usr/include   -c -o logger-kmsg.o logger-kmsg.c
+mkdir -p ../lib
+ar rcs ../lib/libutils.a io.o log.o logger-kmsg.o
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_libs/fpga_pci
+rm -f *.o ../../lib/libfpga_pci.a
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_pci.o fpga_pci.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_pci_sysfs.o fpga_pci_sysfs.c
+mkdir -p ../../lib
+ar rcs ../../lib/libfpga_pci.a fpga_pci.o fpga_pci_sysfs.o
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_libs/fpga_dma
+rm -f *.o ../../lib/libfpga_dma.a
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_dma_mem.o fpga_dma_mem.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_dma_utils.o fpga_dma_utils.c
+mkdir -p ../../lib
+ar rcs ../../lib/libfpga_dma.a fpga_dma_mem.o fpga_dma_utils.o
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_libs/fpga_clkgen
+rm -f *.o ../../lib/libfpga_clkgen.a
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_clkgen_mmcm.o fpga_clkgen_mmcm.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_clkgen_utils.o fpga_clkgen_utils.c
+mkdir -p ../../lib
+ar rcs ../../lib/libfpga_clkgen.a fpga_clkgen_mmcm.o fpga_clkgen_utils.o
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_libs/fpga_mgmt
+rm -f *.o ../../lib/libfpga_mgmt.a ../../lib/so/libfpga_mgmt.so.1.0.0
+cc  -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_hal_mbox.o fpga_hal_mbox.c
+cc  -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_mgmt.o fpga_mgmt.c
+cc  -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -std=gnu99 -fPIC -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I. -I../../include -I/usr/include   -c -o fpga_mgmt_cmd.o fpga_mgmt_cmd.c
+mkdir -p ../../lib
+for library in ../../lib/libfpga_pci.a ../../lib/libutils.a ../../lib/libfpga_dma.a ../../lib/libfpga_clkgen.a; do ar -x $library; done
+ar rcs ../../lib/libfpga_mgmt.a *.o
+mkdir -p ../../lib/so
+cc -o ../../lib/so/libfpga_mgmt.so.1.0.0 -shared fpga_hal_mbox.o fpga_mgmt.o fpga_mgmt_cmd.o -Wl,-soname,libfpga_mgmt.so.1 -Wl,--whole-archive ../../lib/libfpga_pci.a ../../lib/libutils.a ../../lib/libfpga_dma.a ../../lib/libfpga_clkgen.a -Wl,--no-whole-archive -lrt -lpthread
+ln -sf libfpga_mgmt.so.1.0.0 ../../lib/so/libfpga_mgmt.so
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_mgmt_tools/src
+rm -f *.o *.a fpga-local-cmd static-fpga-local-cmd
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g  -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.   -c -o fpga_local_cmd.o fpga_local_cmd.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g  -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.   -c -o fpga_local_cmd_parse.o fpga_local_cmd_parse.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g  -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.   -c -o virtual_jtag_pcie.o virtual_jtag_pcie.c
+cc -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g  -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.   -c -o virtual_jtag_server.o virtual_jtag_server.c
+cc -o fpga-local-cmd fpga_local_cmd.o fpga_local_cmd_parse.o virtual_jtag_pcie.o virtual_jtag_server.o -L../../lib/so -lfpga_mgmt
+cc -o static-fpga-local-cmd fpga_local_cmd.o fpga_local_cmd_parse.o virtual_jtag_pcie.o virtual_jtag_server.o -L../../lib -lfpga_mgmt -lrt -lpthread
+Entering ${F2_WORK_ROOT}/transport-01/source/sdk/userspace/fpga_mgmt_examples/src
+rm -f *.o *.a clear_single_fpga clear_multiple_fpga load_single_fpga load_multiple_fpga prefetch_multiple_afi static_clear_single_fpga static_clear_multiple_fpga static_load_single_fpga static_load_multiple_fpga static_prefetch_multiple_afi
+cc -o clear_single_fpga clear_single_fpga.c -L../../lib/so -lfpga_mgmt -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o clear_multiple_fpga clear_multiple_fpga.c -L../../lib/so -lfpga_mgmt -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o load_single_fpga load_single_fpga.c -L../../lib/so -lfpga_mgmt -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o load_multiple_fpga load_multiple_fpga.c -L../../lib/so -lfpga_mgmt -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o prefetch_multiple_afi prefetch_multiple_afi.c -L../../lib/so -lfpga_mgmt -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o static_clear_single_fpga clear_single_fpga.c -L../../lib -lfpga_mgmt -lrt -lpthread -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o static_clear_multiple_fpga clear_multiple_fpga.c -L../../lib -lfpga_mgmt -lrt -lpthread -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o static_load_single_fpga load_single_fpga.c -L../../lib -lfpga_mgmt -lrt -lpthread -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o static_load_multiple_fpga load_multiple_fpga.c -L../../lib -lfpga_mgmt -lrt -lpthread -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+cc -o static_prefetch_multiple_afi prefetch_multiple_afi.c -L../../lib -lfpga_mgmt -lrt -lpthread -DCONFIG_LOGLEVEL=0 -DFPGA_PCI_BARS_MAX=64 -DCLI_VERSION='"2.3.4"' -g -Wall -Werror -W -Wno-parentheses -Wstrict-prototypes -Wmissing-prototypes -I../../include/hal -I../../include -I../. -I.
+TRANSPORT_BUILD_PASS

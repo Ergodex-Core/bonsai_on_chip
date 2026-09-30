@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "review_scope": "Independent documentation-only review of 27B capacity/addressability clarification; no implementation, physical fit, timing or inference validation.",
+  "reviewed_repo_head": "55f5995a3cb7afee55b21937010c1da9715fa3a2",
+  "patch": "27b-capacity-addressability.patch",
+  "patch_sha256": "00ebaf90725e2fcc6c20049e820dc609e8db073e26b4546259607200bed4ba85",
+  "files": {
+    "doc/microarch/weightstore.md": {
+      "source_sha256": "f9116ca77681006aa594a15778fcf1568f26c98fe7ee6e01b52b12456369f552",
+      "candidate_sha256": "8bdd57b579b1ddeaca83c9b163eb45dfb2df2e90e0072dcfadb26431c7010d48"
+    },
+    "doc/microarch/ternary-systolic-array.md": {
+      "source_sha256": "34089ce077bf2fb3873e399ec5380c51db1ac2e4890c971ab3db0341dc2598a1",
+      "candidate_sha256": "99d7afaac8f9d52868d7f1585fa19bc8afb3372ffea02fa92672d8cd21fc6fde"
+    }
+  },
+  "checks": {
+    "patch_applies_to_current_docs": true,
+    "patch_exactly_reproduces_candidates": true,
+    "source_and_candidate_hashes_match_review_manifest": true,
+    "changes_only_two_design_documents": true,
+    "actual_256_MiB_limit_confirmed_in_RTL_and_transport": true,
+    "illustrative_27B_two_bit_codes_bytes": 6750000000,
+    "illustrative_27B_two_bit_codes_GiB": 6.28642737865448,
+    "new_ABI_and_memory_budget_are_future_acceptance_gates": true,
+    "no_new_CSR_or_address_allocated": true,
+    "no_fit_or_inference_claim": true,
+    "native_Q1_fixture_and_27B_product_remain_distinct": true,
+    "whole_image_hash_epoch_seal_and_writer_protection_retained": true,
+    "sealed_physical_mapping_not_authorized_to_change": true
+  },
+  "source_evidence": [
+    "hdl/verilog/first_slice/weight_store.sv:117-120: image_bytes <= 0x10000000; physical range checked independently",
+    "fpga/aws_f2/first_slice/transport.cpp:30: kMaxImageBytes = 0x10000000",
+    "Candidate weightstore.md: 27B gate requires full logical identity, no window changes with live requests/cache/staging, and preserves whole-image seal; channel mapping is latched and sealed; address-map configuration remains locked while sealed"
+  ],
+  "findings": [],
+  "limitations": [
+    "Future window/bank selector semantics and invalidation must be frozen in the new ABI; this patch grants no permission to rebind a sealed physical image.",
+    "6.75 billion bytes is code-only hypothetical arithmetic, not a checkpoint/runtime budget or capacity proof.",
+    "No repository files, RTL, software, tests, build or AWS state were changed or executed; only this local review JSON was written."
+  ]
+}

@@ -1,0 +1,68 @@
+In file included from /repo/tests/first_slice/model_server.cpp:21:
+In file included from /output/build-final-reviewed/arcilator_adapter.h:8:
+In file included from /output/build-final-reviewed/first_slice_sim_top.h:8:
+In file included from /toolchain/runtime/arcilator-runtime.h:16:
+/toolchain/runtime/arcilator-uvm-runtime.h:1046:20: warning: 'renderScalarI64' has C-linkage specified, but returns user-defined type 'std::string' (aka 'basic_string<char>') which is incompatible with C [-Wreturn-type-c-linkage]
+ 1046 | inline std::string renderScalarI64(int64_t v) {
+      |                    ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1058:20: warning: 'configDbJoinPath' has C-linkage specified, but returns user-defined type 'std::string' (aka 'basic_string<char>') which is incompatible with C [-Wreturn-type-c-linkage]
+ 1058 | inline std::string configDbJoinPath(const char *cntxtPath, const char *inst) {
+      |                    ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1346:28: warning: 'makeI32' has C-linkage specified, but returns user-defined type 'circt_uvm_rt::Value' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1346 | inline circt_uvm_rt::Value makeI32(int32_t v) {
+      |                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1352:28: warning: 'makeI64' has C-linkage specified, but returns user-defined type 'circt_uvm_rt::Value' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1352 | inline circt_uvm_rt::Value makeI64(int64_t v) {
+      |                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1358:28: warning: 'makeStr' has C-linkage specified, but returns user-defined type 'circt_uvm_rt::Value' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1358 | inline circt_uvm_rt::Value makeStr(const char *v) {
+      |                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1364:28: warning: 'makePtr' has C-linkage specified, but returns user-defined type 'circt_uvm_rt::Value' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1364 | inline circt_uvm_rt::Value makePtr(int64_t v) {
+      |                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1797:28: warning: 'mailboxTake' has C-linkage specified, but returns user-defined type 'circt_uvm_rt::Value' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1797 | inline circt_uvm_rt::Value mailboxTake(void *mbx, bool pop, bool blocking,
+      |                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1921:34: warning: 'objRngs' has C-linkage specified, but returns user-defined type 'std::map<void *, ObjRng> &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1921 | inline std::map<void *, ObjRng> &objRngs() {
+      |                                  ^
+/toolchain/runtime/arcilator-uvm-runtime.h:1931:16: warning: 'objRng' has C-linkage specified, but returns user-defined type 'ObjRng &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 1931 | inline ObjRng &objRng(void *obj) {
+      |                ^
+/toolchain/runtime/arcilator-uvm-runtime.h:2029:58: warning: 'randcStates' has C-linkage specified, but returns user-defined type 'std::map<std::pair<void *, int32_t>, RandCState> &' (aka 'map<pair<void *, int>, circt_uvm_rt::RandCState> &') which is incompatible with C [-Wreturn-type-c-linkage]
+ 2029 | inline std::map<std::pair<void *, int32_t>, RandCState> &randcStates() {
+      |                                                          ^
+/toolchain/runtime/arcilator-uvm-runtime.h:2939:41: warning: 'randModeStates' has C-linkage specified, but returns user-defined type 'std::map<void *, RandModeState> &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 2939 | inline std::map<void *, RandModeState> &randModeStates() {
+      |                                         ^
+/toolchain/runtime/arcilator-uvm-runtime.h:3593:1: warning: 'signedBegin' has C-linkage specified, but returns user-defined type 'std::map<std::string, std::string>::iterator' (aka '_Rb_tree_iterator<std::pair<const std::basic_string<char>, std::basic_string<char>>>') which is incompatible with C [-Wreturn-type-c-linkage]
+ 3593 | signedBegin(std::map<std::string, std::string> &items) {
+      | ^
+/toolchain/runtime/arcilator-uvm-runtime.h:3708:21: warning: 'currentSvScope' has C-linkage specified, but returns user-defined type 'const char *&' which is incompatible with C [-Wreturn-type-c-linkage]
+ 3708 | inline const char *&currentSvScope() {
+      |                     ^
+/toolchain/runtime/arcilator-uvm-runtime.h:3854:36: warning: 'covTypes' has C-linkage specified, but returns user-defined type 'std::map<int32_t, CovType> &' (aka 'map<int, circt_uvm_rt::CovType> &') which is incompatible with C [-Wreturn-type-c-linkage]
+ 3854 | inline std::map<int32_t, CovType> &covTypes() {
+      |                                    ^
+/toolchain/runtime/arcilator-uvm-runtime.h:3862:17: warning: 'covTypeFor' has C-linkage specified, but returns user-defined type 'CovType &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 3862 | inline CovType &covTypeFor(int32_t id, const char *desc) {
+      |                 ^
+/toolchain/runtime/arcilator-uvm-runtime.h:4976:15: warning: 'state' has C-linkage specified, but returns user-defined type 'State &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 4976 | inline State &state() {
+      |               ^
+/toolchain/runtime/arcilator-uvm-runtime.h:5099:15: warning: 'deferredState' has C-linkage specified, but returns user-defined type 'State &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 5099 | inline State &deferredState() {
+      |               ^
+/toolchain/runtime/arcilator-uvm-runtime.h:5195:13: warning: 'assertFailCount' has C-linkage specified, but returns user-defined type 'int &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 5195 | inline int &assertFailCount() {
+      |             ^
+/toolchain/runtime/arcilator-uvm-runtime.h:5919:37: warning: 'freadMemStash' has C-linkage specified, but returns user-defined type 'std::map<int64_t, uint64_t> &' (aka 'map<long, unsigned long> &') which is incompatible with C [-Wreturn-type-c-linkage]
+ 5919 | inline std::map<int64_t, uint64_t> &freadMemStash() {
+      |                                     ^
+/toolchain/runtime/arcilator-uvm-runtime.h:6004:44: warning: 'stochasticQueues' has C-linkage specified, but returns user-defined type 'std::map<int32_t, StochasticQueue> &' (aka 'map<int, circt_uvm_rt::StochasticQueue> &') which is incompatible with C [-Wreturn-type-c-linkage]
+ 6004 | inline std::map<int32_t, StochasticQueue> &stochasticQueues() {
+      |                                            ^
+/toolchain/runtime/arcilator-uvm-runtime.h:6553:20: warning: 'schedStats' has C-linkage specified, but returns user-defined type 'SchedStats &' which is incompatible with C [-Wreturn-type-c-linkage]
+ 6553 | inline SchedStats &schedStats() {
+      |                    ^
+21 warnings generated.

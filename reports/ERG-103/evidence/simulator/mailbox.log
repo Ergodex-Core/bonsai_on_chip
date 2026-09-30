@@ -1,0 +1,8 @@
+test_busy_mutation_and_unacknowledged_resubmit_preserve_job (__main__.MailboxTests.test_busy_mutation_and_unacknowledged_resubmit_preserve_job) ... ok
+test_not_ready_and_invalid_descriptors_complete_without_reads (__main__.MailboxTests.test_not_ready_and_invalid_descriptors_complete_without_reads) ... ok
+test_read_errors_and_sealed_descriptor_rejection (__main__.MailboxTests.test_read_errors_and_sealed_descriptor_rejection) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.512s
+
+OK

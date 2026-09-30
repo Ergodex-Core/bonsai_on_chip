@@ -1,0 +1,18 @@
+test_bad_source_publishes_nothing (__main__.FirstSliceTests.test_bad_source_publishes_nothing) ... ok
+test_changed_attribution_fails_bundle_verification (__main__.FirstSliceTests.test_changed_attribution_fails_bundle_verification) ... ok
+test_existing_fixture_tamper_fails_verification (__main__.FirstSliceTests.test_existing_fixture_tamper_fails_verification) ... ok
+test_existing_output_is_preserved (__main__.FirstSliceTests.test_existing_output_is_preserved) ... ok
+test_host_scale_has_one_fp32_rounding (__main__.FirstSliceTests.test_host_scale_has_one_fp32_rounding) ... ok
+test_input_stream_is_stable_and_includes_extremes (__main__.FirstSliceTests.test_input_stream_is_stable_and_includes_extremes) ... ok
+test_integer_extremes_and_zeros (__main__.FirstSliceTests.test_integer_extremes_and_zeros) ... ok
+test_invalid_codes_fail_even_with_zero_inputs (__main__.FirstSliceTests.test_invalid_codes_fail_even_with_zero_inputs) ... ok
+test_native_corruption_and_metadata_mismatch_fail (__main__.FirstSliceTests.test_native_corruption_and_metadata_mismatch_fail) ... ok
+test_native_lsb_order_and_negative_int8_extreme (__main__.FirstSliceTests.test_native_lsb_order_and_negative_int8_extreme) ... ok
+test_nonfinite_scale_and_wrong_lengths_fail (__main__.FirstSliceTests.test_nonfinite_scale_and_wrong_lengths_fail) ... ok
+test_source_and_native_block_mismatch_fails (__main__.FirstSliceTests.test_source_and_native_block_mismatch_fails) ... ok
+test_synthetic_image_is_distinct_and_has_invalid_oracles (__main__.FirstSliceTests.test_synthetic_image_is_distinct_and_has_invalid_oracles) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.005s
+
+OK

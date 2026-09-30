@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "backend": "verilator",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "binary_sha256": "ca96477b333a433508c6c95a1f91461dd2d0f87d6ecc9dce5930ed6416a54bc1",
+  "source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
+    "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861"
+  },
+  "compile_command": [
+    "/usr/local/bin/verilator",
+    "--cc",
+    "--exe",
+    "--build",
+    "-Wall",
+    "-CFLAGS",
+    "-O3 -std=c++17",
+    "-j",
+    "4",
+    "--top-module",
+    "first_slice_sim_top",
+    "--Mdir",
+    "$TMP/erg103-final-validation2/first_slice_sim_top-obj",
+    "$REPO/hdl/verilog/first_slice/weight_store.sv",
+    "$REPO/hdl/verilog/first_slice/dot128.sv",
+    "$REPO/hdl/verilog/first_slice/first_slice_top.sv",
+    "$REPO/hdl/verilog/first_slice/f2_memory_bridge.sv",
+    "$REPO/tests/first_slice/first_slice_sim_top.sv",
+    "$REPO/tests/first_slice/model_server.cpp"
+  ]
+}

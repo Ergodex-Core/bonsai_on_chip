@@ -1,0 +1,24 @@
+hdl/verilog/first_slice/weight_store.sv:70:26: error: identifier 'image_base' used before its declaration
+  assign image_base_o  = image_base;
+                         ^~~~~~~~~~
+hdl/verilog/first_slice/weight_store.sv:70:26: error: identifier 'image_base' used before its declaration
+  assign image_base_o  = image_base;
+                         ^
+hdl/verilog/first_slice/weight_store.sv:72:16: note: declared here
+  logic [63:0] image_base, image_bytes;
+               ^
+hdl/verilog/first_slice/weight_store.sv:72:16: remark: declared here
+  logic [63:0] image_base, image_bytes;
+               ^
+hdl/verilog/first_slice/weight_store.sv:71:26: error: identifier 'image_bytes' used before its declaration
+  assign image_bytes_o = image_bytes;
+                         ^~~~~~~~~~~
+hdl/verilog/first_slice/weight_store.sv:71:26: error: identifier 'image_bytes' used before its declaration
+  assign image_bytes_o = image_bytes;
+                         ^
+hdl/verilog/first_slice/weight_store.sv:72:28: note: declared here
+  logic [63:0] image_base, image_bytes;
+                           ^
+hdl/verilog/first_slice/weight_store.sv:72:28: remark: declared here
+  logic [63:0] image_base, image_bytes;
+                           ^

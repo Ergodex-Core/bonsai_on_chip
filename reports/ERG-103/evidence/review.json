@@ -1,0 +1,235 @@
+{
+  "schema": "coralnpu.first_slice.independent_review.v1",
+  "reviewer": "Codex subagent /root/review_deliverable_gates",
+  "review_type": "automated technical review; not human approval",
+  "created_utc": "2026-09-27T20:02:26.748075+00:00",
+  "scope": "Store, AXI-Lite mailbox, F2 DDR/PCIS bridge, simulator evidence path; numerical consumer and physical transport are separately disclosed authored work.",
+  "reviewed_files": {
+    "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "tests/first_slice/model_server.cpp": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+    "tests/first_slice/validate.py": "3ee09220dc3b9bfba1773b65c947d7c18b855000665b5a816a5ef999c5f9e9d0",
+    "fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv": "42f010857e3bfb583f0c77b4e387579c4000d877951f592537756d7b9e9a7da5"
+  },
+  "authored_or_modified_files": {
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "tests/first_slice/dot128_tb.cpp": "d37a9c459898645c4b2d1a3cacf59f9ff5c3491389cb0cde780154c0a60113b4",
+    "fpga/aws_f2/first_slice/transport.cpp": "4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189",
+    "tests/first_slice/mailbox_fault_tb.cpp": "935b2cf0813afda769b54d6423d42187575b40c93446ef6007d249f13b7ab53c",
+    "tests/first_slice/test_mailbox.py": "26f457cdd9af58228f514d5b7d8835f80f6d98c8921e30a159299cb3a1ad9c89",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "tests/first_slice/test_transport_protocol.py": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667"
+  },
+  "independence_limit": "Initial mailbox implementation was independently reviewed. This reviewer subsequently authored the mailbox abort fix and its regression, so that fix is self-verified here; root separately inspected its abort priority and drain semantics with no additional finding. The dot consumer and physical transport were also authored by this reviewer, not independently approved here. Hardware agent independently reviewed and linked transport against the actual pinned public SDK.",
+  "findings": [
+    {
+      "id": "R1",
+      "priority": "P1",
+      "file": "hdl/verilog/first_slice/f2_memory_bridge.sv",
+      "finding": "Nonzero DDR BRESP/RRESP were only transient AXI response errors. Physical SDK does not expose AXI status; zero-valued/padding data can hash correctly after a failed transaction.",
+      "resolution": "Nonzero DDR BRESP or RRESP now latches protocol_fault and deasserts backend_ready until reset; deliberate sealed-write admission rejection stays nonfatal.",
+      "verification": "Reviewed final RTL. Hardware agent reports 189 bridge assertions passed, including persistent zero-data DDR error and unaligned PCIS cases; not executed by this reviewer.",
+      "status": "resolved_in_reviewed_source"
+    },
+    {
+      "id": "R2",
+      "priority": "P1",
+      "file": "hdl/verilog/first_slice/first_slice_top.sv",
+      "finding": "Backend failure after START but before a logical line admission could leave dot ISSUE waiting forever while mailbox busy only cleared on dot completion.",
+      "resolution": "Sticky job_fault status bit5 completes the mailbox with BACKEND, same cookie, zero result/scale/counters; new STARTs rejected until coordinated reset. Original memory owner retains held/outstanding requests and late dot result drains without replacing failed completion.",
+      "verification": "Reviewer authored fix. Warning-free Verilator5.048 build and four deterministic fault scenarios passed, each with prior successful operation and coordinated-reset recovery.",
+      "status": "resolved_self_verified"
+    },
+    {
+      "id": "R3",
+      "priority": "P2",
+      "file": "tests/first_slice/model_server.cpp",
+      "finding": "DUMP existence check raced file creation and unchecked buffered close could report success after a late write error; a second LOAD could resize simulated sealed DDR before bus rejection.",
+      "resolution": "DUMP now uses O_CREAT|O_EXCL, checked writes/fsync/close. One-LOAD guard executes before file open/memory.resize. PCIS BID/RID/RLAST checks are also present.",
+      "verification": "Reviewed final source; full integrated validation owned by root.",
+      "status": "resolved_in_reviewed_source"
+    },
+    {
+      "id": "R4",
+      "priority": "P2",
+      "file": "tests/first_slice/model_server.cpp",
+      "finding": "Unaligned POKE/PEEK at byte63 could index outside the fixed16-word bus-packing arrays.",
+      "resolution": "RPCs require aligned32-bit in-image addresses; synthetic PCIS helpers enforce supported size and natural alignment before lane access. Real unaligned PCIS traffic is tested at RTL instead.",
+      "verification": "Four protocol regression methods /six fresh-process scenarios PASS, including POKE/PEEK63 and64, second LOAD rejection and preservation of existing DUMP file.",
+      "status": "resolved_in_reviewed_source"
+    },
+    {
+      "id": "R5",
+      "priority": "P1",
+      "file": "hdl/verilog/first_slice/f2_memory_bridge.sv",
+      "finding": "Native host MMIO can reach PCIS as AxSIZE6 with unaligned byte addresses and partial WSTRB; requiring natural alignment rejects valid SDK access.",
+      "resolution": "Burst end and page envelope use aligned initial address; first-beat strobe mask begins at requested byte; later addresses use aligned progression. Read lanes preserved; logical engine still requires64-byte alignment.",
+      "verification": "Independently inspected staged final implementation and directed test cases against pinned shell documentation. Hardware agent reports189 assertions PASS.",
+      "status": "resolved_in_reviewed_source"
+    },
+    {
+      "id": "R6",
+      "priority": "P1",
+      "file": "fpga/aws_f2/first_slice/transport.cpp",
+      "finding": "Large posted-write batches can queue behind the serialized DDR bridge; matching returned bytes alone do not establish absence of shell timeouts/errors.",
+      "resolution": "64-byte loader writes each followed by same-BAR4 drain. Every fresh identity check retrieves non-clearing hardware metrics and requires6 relevant error/status counters to be zero.",
+      "verification": "Final transport source 4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189 passed 41 packaged SDK mock checks executed by the independent fixture/test agent and static-linked against the real pinned public SDK with -Wall -Wextra -Werror by the hardware agent. No physical API execution.",
+      "status": "resolved_test_verified_with_independent_replay"
+    },
+    {
+      "id": "R7",
+      "priority": "P1",
+      "file": "fpga/aws_f2/first_slice/transport.cpp",
+      "finding": "The shared runner requires a second whole-image readback after STOP, but original transport allowed only the initial VERIFYING dump.",
+      "resolution": "Exactly two fresh-file whole-image dumps: initial drained VERIFYING, then drained SEALED+READY+LOCKED. Preserve configured base/size/epoch before and after both; return per-dump and cumulative byte counts.",
+      "verification": "Final transport source 4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189 passed 41 packaged SDK mock checks executed by the independent fixture/test agent and static-linked against the real pinned public SDK with -Wall -Wextra -Werror by the hardware agent. No physical API execution.",
+      "status": "resolved_test_verified_with_independent_replay"
+    }
+  ],
+  "test_evidence": {
+    "dot": {
+      "status": "PASS",
+      "native_unit_cases": 135,
+      "ternary_unit_cases": 259,
+      "expected_error_cases": 29,
+      "coordinated_reset_cases": 4,
+      "external_native_block_cases": 8,
+      "completed_commands": 431,
+      "line_requests": 687,
+      "memory_wait_cycles": 5593,
+      "testbench_cycles": 63111,
+      "seed": "0x103beef"
+    },
+    "mailbox_abort": {
+      "status": "PASS",
+      "fault_scenarios": 4,
+      "successful_baselines": 4,
+      "coordinated_reset_recoveries": 4,
+      "scope": "integrated mailbox/store/dot with synthetic line responder"
+    },
+    "transport_mock": {
+      "status": "PASS",
+      "checks": 41,
+      "executor": "independent fixture/test agent",
+      "scope": "Mock public SDK only; no physical FPGA or RTL execution",
+      "fpga_executed": false,
+      "python_optimized_mode": true,
+      "sdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+      "source_sha256": {
+        "fpga/aws_f2/first_slice/transport.cpp": "4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189",
+        "tests/first_slice/sdk_mock.cpp": "57e3a077ee18363e006779578c31270ee0af3525b5b013a7fedcfe3627f19c68",
+        "tests/first_slice/test_transport.py": "6ec0a1ef143de329392947bfded47e52420e7aae837a393dfc1a6dc82ac78637"
+      },
+      "sdk_header_sha256": {
+        "fpga_mgmt.h": "5d553a7f9ac8a035e5fac96027631e0619c67f9936b70e275fb5af960de913a4",
+        "fpga_pci.h": "81e9c168b10d1508c775b01ab5c369d90ea82eb5adb2a7c24b942432b4f1cc8d",
+        "hal/fpga_common.h": "026c8c9d095c8c270c2fd1570169576dd7941b15c772f8853fab9331f88010c3"
+      },
+      "binary_sha256": "79272fe04a0dd6b4b14aa0a02ceb7377f4880ab86813669da8e27e5765a416d9",
+      "report": "$TMP/erg103-transport-check/packaged-frozen/report.json",
+      "log": "$TMP/erg103-transport-frozen.log",
+      "coverage": "Same-line drain after every 64-byte posted write; all six initial metric fields and late PCIS/OCL failures; two complete image dumps, second VERIFYING/third dump/changed epoch rejection; SDK errors and cleanup, ranges, exclusive output."
+    },
+    "full_sdk_link": {
+      "status": "PASS",
+      "executor": "independent hardware agent",
+      "sdk_pin": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+      "compiler": "g++14.2 Linux amd64",
+      "flags": "-std=c++17 -O2 -Wall -Wextra -Werror",
+      "library": "actual pinned public SDK static library; no mock",
+      "linkage": "static",
+      "source_sha256": "4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189",
+      "binary_sha256": "a19841c5cedc21addbb23d1a1cceee28c5cefe1970bcd02db0fd01aec48ca01c",
+      "log": "$TMP/erg103-sdk-link/static-link.log",
+      "executed_hardware": false
+    },
+    "simulator_protocol": {
+      "status": "PASS",
+      "test_methods": 4,
+      "fresh_process_scenarios": 6,
+      "scope": "synthetic image host transport safety/evidence preservation; no physical FPGA",
+      "tested_source_sha256": "fbc8ecb118a70e95473e613e712d4d0563c46fa6fb2e5dc27cf8c24f8aaba454",
+      "final_source_sha256": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667",
+      "note": "Focused replay originally used the earlier formatting hash. Root reran all four methods/six scenarios successfully in final-validation3 against the final repository-style test and CodeQL-adjusted model server."
+    },
+    "bridge_reported_by_hardware_agent": {
+      "status": "PASS",
+      "assertions": 189,
+      "reviewer_reran": false
+    },
+    "final_frozen_workflow": {
+      "status": "PASS",
+      "executor": "root",
+      "source_revision": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+      "steps": 16,
+      "started_utc": "2026-09-27T20:20:36Z",
+      "finished_utc": "2026-09-27T20:21:51Z",
+      "source_files_verified": 44,
+      "report": "$VALIDATION/validation.json",
+      "report_sha256": "462c6fe7c142b66ac3c692120d83bfa21a28dbc1b6b40fc9715bdcb30636777d",
+      "native_cases": 396,
+      "synthetic_cases": 6,
+      "synthetic_expected_rejections": 2,
+      "fpga_executed": false
+    }
+  },
+  "evidence_sha256": {
+    "$TMP/erg103-dot128-build.log": "4fe8191ed7f4a625652e8a24e1066aae662ee8884f1b41f0e286e8aa6aa61464",
+    "$TMP/erg103-dot128-actual-block.json": "d7bca3f36c9d18ee0fca4db15d18d07be7494705a7f15c5e21bf8e7f6e1c1517",
+    "$TMP/erg103-mailbox-fault-build.log": "ccaf15049326df22b13a075e977199a6c4e23e5e77928e75bc8bbfa0452680ee",
+    "$TMP/erg103-mailbox-fault-result.json": "81d97f3aa587a4b344f5ad1003ffd8a07d70fca4659ac474cab9af382c042e71",
+    "$TMP/erg103-transport-mock.log": "139c89a2c7e60d056d49a122b73a45318b8f84851fcb74a67a8eec370319cd14",
+    "$TMP/erg103-sdk-link/full-link.log": "6935cedced8d8cad1322f217cf5e98d9d1c66461665bce3636746fd43651c59d",
+    "$TMP/erg103-protocol-build.log": "6f0dbd7b93f3bff394c2fa61c15c6519491f5e61c102af0d32a1fdfea8be17a9",
+    "$TMP/erg103-protocol-test.log": "2c362ac7582837497673f39e6e14d39b0de1276aa702c40b8de22eb98e67cec0",
+    "$TMP/erg103-transport-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "$TMP/erg103-sdk-link/static-link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "$TMP/erg103-transport-check/packaged-frozen/report.json": "e2856228ed0818279daf246412d2bf3fa878e9872ab983ab0f9de3b55dad6360",
+    "$TMP/erg103-transport-frozen.log": "a4a3dc8a361d2938cd4379fe0a9ec0ba265cc96e2408b72572db1f733637dd3a"
+  },
+  "mock_harness_root": "tests/first_slice/{sdk_mock.cpp,test_transport.py}",
+  "remaining_gates": [
+    "Actual custom RTL XSIM execution, including real model blocks and PCIS narrow transactions; mocks and Verilator are not XSIM evidence.",
+    "Vivado implementation/DCP, audited resources, clock constraints and achieved timing for exact tested source.",
+    "Generated AFI/AGFI identity, exact-source manifest, physical F2 whole-image readback, sealed-write rejection and actual returned DOT128 outputs using the public SDK.",
+    "No full-model inference or CoralNPU firmware execution is established by this slice."
+  ],
+  "hardware_operations_performed_by_reviewer": false,
+  "current_blocking_code_findings": [],
+  "validate_py_review": "Reviewed tests/first_slice/validate.py: warning-sensitive builds, compile source snapshots, binary manifests, child-suite completion/case identities and final source stability are checked; no blocking finding.",
+  "independent_followup": "Root independently inspected dot extraction/range/scale/signed negation and mailbox abort priority/draining after this reviewer implemented them; root reported no additional finding. Hardware agent independently reviewed transport APIs and linked actual SDK, and the final updated-source static link passed.",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/aws/aws-fpga/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/docs/AWS_Shell_Interface_Specification.md",
+      "sections": [
+        "PCIS Interface Timeout Details",
+        "CL AXI Completer Error Reporting",
+        "Accessing Aligned or Unaligned Addresses from PCIe"
+      ],
+      "use": "Pinned interface constraints for unaligned addresses, posted completion interpretation, bounded traffic and error metrics."
+    }
+  ],
+  "updated_utc": "2026-09-27T20:27:53.412894+00:00",
+  "final_hash_changes": {
+    "tests/first_slice/test_transport_protocol.py": {
+      "previous_sha256": "fbc8ecb118a70e95473e613e712d4d0563c46fa6fb2e5dc27cf8c24f8aaba454",
+      "current_sha256": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667"
+    }
+  },
+  "followup_reviews": [
+    {
+      "reviewed_utc": "2026-09-27T20:21:45.058870+00:00",
+      "commit": "3ee0f99eb7216fe41ba55e719584c662313d3b10",
+      "scope": "CodeQL alert 12: size-type arithmetic for simulator read buffer reservation",
+      "file": "tests/first_slice/model_server.cpp",
+      "old_sha256": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
+      "new_sha256": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+      "diff_verified": "Exactly adds <cstddef> and changes reserve multiplication and left-shift operands to std::size_t. No other bytes changed in this file.",
+      "correctness": "The unchanged leading guard requires 1 <= beats <= 64 and size <= 6. For all accepted inputs the capacity is 1..4096 bytes, so the new expression preserves the mathematical result while evaluating in size_type-width arithmetic. No bus, numerical, protocol, control-flow, or interface behavior changes.",
+      "review_result": "PASS; no new blocking finding",
+      "validation": "Read-only diff and guard inspection, exact byte transformation verified. Prior test results remain attached to their original source hashes. Full frozen-source simulator rerun is owned by root and was not rerun by this reviewer.",
+      "review_type": "independent automated technical review; not human approval"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "coralnpu.first_slice.validation.v1",
+  "status": "FAIL",
+  "fpga_executed": false,
+  "steps": [
+    {
+      "name": "fixture-unit",
+      "command": [
+        "/usr/local/bin/python3",
+        "utils/first_slice/test_prepare_fixture.py",
+        "-v"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.105
+    },
+    {
+      "name": "runner-failure-unit",
+      "command": [
+        "/usr/local/bin/python3",
+        "utils/first_slice/test_run.py",
+        "-v"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 1.4
+    },
+    {
+      "name": "prepare-fixture",
+      "command": [
+        "/usr/local/bin/python3",
+        "utils/first_slice/prepare_fixture.py",
+        "--gguf",
+        "$PINNED_GGUF",
+        "--native",
+        "$TMP/erg103-final-validation/native",
+        "--out",
+        "$TMP/erg103-final-validation/fixture"
+      ],
+      "status": "FAIL",
+      "exit_code": 1,
+      "elapsed_seconds": 0.176
+    }
+  ],
+  "started_utc": "2026-09-27T20:05:50Z",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "python_version": "3.14.5 (v3.14.5:5607950ef23, May 10 2026, 07:38:09) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "git_base": "edaba6235c06e6c3ae447b7479b2123e69369321",
+  "source_sha256": {
+    "fpga/aws_f2/first_slice/LICENSE.Amazon": "1cb09d14bf68e96743ec5369b03f24d8f657969b440be6249f0941a0fca8e1bb",
+    "fpga/aws_f2/first_slice/Makefile": "59f405fae2ecd901e700bdda41dca88c12e22587a5d53004a0556446c33a6214",
+    "fpga/aws_f2/first_slice/README.md": "5802734dd1979b45be2deaf393dd5aa0de8c0bed199127c935375e1b2f4a85c6",
+    "fpga/aws_f2/first_slice/audit_dcp.tcl": "0a044b1c97810d7c80c8d1007647689c2543ef63a8e298543b3b33b0dedb5f97",
+    "fpga/aws_f2/first_slice/bind_manifest.py": "d17ff7f705c343fdd51e105ebaef9d35743637fc3a4dca5cd8081c6bc41ed0b6",
+    "fpga/aws_f2/first_slice/build_transport.sh": "895ba9908d768dfc57281862af34bf6ad986e41cd86819bcf8aee1d26b7e5506",
+    "fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv": "447407bea72db443156057fb8d3190de6eaddfd66888dd81be8388ac7a1732ca",
+    "fpga/aws_f2/first_slice/cl_id_defines.vh": "00b46b0033b5352f9404be4ef87fa16c96dded867563bcb08c6aaf76d4fe68aa",
+    "fpga/aws_f2/first_slice/cl_synth_user.xdc": "b3ec4e608085cec3869a3fa412a336e40a58393d7d638455b70115ee362bd3f6",
+    "fpga/aws_f2/first_slice/cl_timing_user.xdc": "808e6dbded92e78a23fb2d648a5d8a3041956c7272ddac80d576eba8e9126708",
+    "fpga/aws_f2/first_slice/encrypt.tcl": "da05bbdfba432bf57f1d138c2b334072366ea93bde42afaa89318abb2183e2c5",
+    "fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv": "42f010857e3bfb583f0c77b4e387579c4000d877951f592537756d7b9e9a7da5",
+    "fpga/aws_f2/first_slice/prepare.py": "cde8a3d3d6d2fe7e261134eb52f41394d8ff7edd223af018d021eb412c11ff13",
+    "fpga/aws_f2/first_slice/run.sh": "5908022a617001b9cce90effa8e9cb08f0502cd2e471b87f952fc0ab4f266611",
+    "fpga/aws_f2/first_slice/stage_fixture.py": "1cf24db6b315c1d49cf26adb3da5c7d9b96eee9810c6fe1e891ba6b2c45d8928",
+    "fpga/aws_f2/first_slice/synth_cl_bonsai_first_slice.tcl": "bb3f085cb07ed757e7aa6795deceb93d376a49cb854205226777be13805c45b3",
+    "fpga/aws_f2/first_slice/test_first_slice.sv": "03ba908b2432dbfbd14b0f4a812558c6f6d3b17c147b665bbf84332345308000",
+    "fpga/aws_f2/first_slice/top.xsim.f": "e5af8feb2bd24341ff21abdf72366d4b608e0dd5f47cf7050a911ec7f7d0169b",
+    "fpga/aws_f2/first_slice/transport.cpp": "4a9bbbed498bf1f87d5ace9a7d9b29b37cbadd224d616a5eecc4f5d030e97189",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "hdl/verilog/first_slice/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "tests/first_slice/README.md": "e3c418ec99505d4dceeea15158b3bd6e2c52c1fb70fcf6c45b561cce16b738aa",
+    "tests/first_slice/dot128_tb.cpp": "d37a9c459898645c4b2d1a3cacf59f9ff5c3491389cb0cde780154c0a60113b4",
+    "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
+    "tests/first_slice/mailbox_fault_tb.cpp": "935b2cf0813afda769b54d6423d42187575b40c93446ef6007d249f13b7ab53c",
+    "tests/first_slice/model_server.cpp": "decea1027805c33d299ef1e6c820597191c8365e49af247884d44e0efe2e2861",
+    "tests/first_slice/sdk_mock.cpp": "57e3a077ee18363e006779578c31270ee0af3525b5b013a7fedcfe3627f19c68",
+    "tests/first_slice/test_mailbox.py": "26f457cdd9af58228f514d5b7d8835f80f6d98c8921e30a159299cb3a1ad9c89",
+    "tests/first_slice/test_transport.py": "6ec0a1ef143de329392947bfded47e52420e7aae837a393dfc1a6dc82ac78637",
+    "tests/first_slice/test_transport_protocol.py": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667",
+    "tests/first_slice/validate.py": "3ee09220dc3b9bfba1773b65c947d7c18b855000665b5a816a5ef999c5f9e9d0",
+    "tests/first_slice/weight_store_tb.cpp": "2b73d02006095e6beaccfe41644d685ae8a98e4dd7338c1951ca137f3a6fe06b",
+    "utils/first_slice/BUILD": "c0eb30aab3d4973287882bc4fdc0c15430c7ca9d271fea3ad9e34ef293cb3723",
+    "utils/first_slice/README.md": "c1b02373732699cbff6c13071056aa621264295b7ad4c3ce7c8931218bacfe96",
+    "utils/first_slice/prepare_fixture.py": "d2711843bd9d4b110b3b2a844632b9d2a1c52a1f63b1b91e5ddd07db79d511bc",
+    "utils/first_slice/run.py": "e29a0925af6af20c0bd4fa00dd8f901328fd0a1093495072fbacbbdc1478ffd7",
+    "utils/first_slice/test_prepare_fixture.py": "a10f3d0bcda5fd60b4c0d5c95b760352b38e0107bb37c45ea0fa7b0c663fe45c",
+    "utils/first_slice/test_run.py": "a1b84cee8878cc51336f3f50b1cfbe78d277e0750f36d2c718263b845b1a1f00",
+    "utils/weightstore/BUILD": "cb587e69737da65d557567a2a14a852bd7f573f054d6f84d05c3e078fb623b71",
+    "utils/weightstore/README.md": "07a2bfdeebcab420e5acc34a9569e28a5f3701d72f7f6afecc9298611906c931",
+    "utils/weightstore/pack_image.py": "1ac2c5bcd2abb55b51a252b742a6b7d921326208e94a6bd2b9bbb83371490421",
+    "utils/weightstore/test_pack_image.py": "39760b6162695f1f330353f6bc73ee5d17d2445453b6ace66824e1ebbd6dabfe"
+  },
+  "error": "RuntimeError: prepare-fixture failed; inspect its log",
+  "finished_utc": "2026-09-27T20:05:52Z"
+}

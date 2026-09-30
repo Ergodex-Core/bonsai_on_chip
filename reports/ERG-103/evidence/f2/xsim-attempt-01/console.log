@@ -1,0 +1,48 @@
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice/verif/scripts
+#
+#- CREATE CL_PORTS ----------
+#
+#
+#- CREATE CL_PORTS ----------
+#
+#
+#- CREATE SIM_ROOT ----------
+#
+Copying XSIM hbm model config files
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+cp /opt/Xilinx/2025.2/Vivado/data/xsim/xsim.ini ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+" WARNING: XSIM does not require simulation library compilation "
+rm -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+make copy_xsim_ini
+make[1]: Entering directory '${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice/verif/scripts'
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice/verif/scripts
+make[1]: Nothing to be done for 'copy_xsim_ini'.
+make[1]: Leaving directory '${F2_WORK_ROOT}/build-01/cl_bonsai_first_slice/verif/scripts'
+${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py --simulator xsim --complib_dir ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib --compile_cl_ip_dir ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips --in_progress_file ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress;
+fatal: not a git repository (or any of the parent directories): .git
+Using Python 3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0] from '/usr/bin/env python3'
+Traceback (most recent call last):
+  File "${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py", line 262, in <module>
+    compiler.compile_cl_ips()
+  File "${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py", line 93, in compile_cl_ips
+    xilinx_ip_compile_scripts: list[str] = self.get_all_cl_ip_compilation_script_paths()
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py", line 160, in get_all_cl_ip_compilation_script_paths
+    for ip_name in [ip.name for ip in os.scandir(self.cl_ip_sim_scripts_dir) if ip.is_dir()]:
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py", line 266, in <module>
+    raise Exception("The Python script experienced a failure. Please review and make sure Python 3.8+ is installed\n") from e
+Exception: The Python script experienced a failure. Please review and make sure Python 3.8+ is installed
+
+make: *** [${AWS_HDK}/hdk/common/verif/tb/scripts/Makefile.common.inc:221: ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips] Error 1

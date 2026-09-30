@@ -1,0 +1,24 @@
+{
+  "status": "FAIL",
+  "exit_code": 1,
+  "started_utc": "2026-09-30T16:01:50Z",
+  "finished_utc": "2026-09-30T16:05:05Z",
+  "source_revision": "3d849975bc0e39197a7964125273ee3189a6662c",
+  "execution_scope": "Custom wrapper compiled/elaborated and vendor DDR model ran; no DOT jobs executed",
+  "failure": "DDR readiness timeout at 1006 simulated microseconds: shell DDR statistics initialization pulse was missing",
+  "correction_revision": "839e5fc1729c36903843ccc03ea6742bd4a265f9",
+  "artifacts": {
+    "console.log": {
+      "original_sha256": "b0c925719b009060d050a4fcf68abf55462e54141fb42a95fe0809ac81cf50b8",
+      "published_sha256": "a8dd8cfa4bf0813c827ebd765d9ade6f43df7995ebbed3c292fd8833dd593c01",
+      "bytes": 67806
+    },
+    "source-manifest.json": {
+      "original_sha256": "d82756f48ef8cb4b93eb374efbc481c432aab2ee957b7cd1af7fb46be28a459a",
+      "published_sha256": "d1ab048ecc95fde00c93430f60c1265565ad6eceb46765ef862c759cd168c042",
+      "bytes": 7584
+    }
+  },
+  "publication_transform": "Replace only remote work and HDK path prefixes; retain errors, counts, status and timestamps",
+  "manifest_note": "execution_boundary describes the configured target; it is not evidence of physical FPGA execution"
+}

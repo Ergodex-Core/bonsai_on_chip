@@ -1,0 +1,1 @@
+FIRST_SLICE_TEST_PASS assertions=87 real_q1_cases=3 synthetic_ternary_cases=1 compact_bytes=4160 canonical_full_image=0

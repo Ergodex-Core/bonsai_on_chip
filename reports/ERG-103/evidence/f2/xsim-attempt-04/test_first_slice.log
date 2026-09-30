@@ -1,0 +1,612 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Sep 30 16:10:25 2026
+# Process ID         : 9721
+# Current directory  : ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv
+# Command line       : xsim -log test_first_slice.log -mode tcl -source {xsim.dir/tb/xsim_script.tcl}
+# Log file           : ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv/test_first_slice.log
+# Journal file       : ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv/xsim.jou
+# Running On         : ip-172-31-44-15
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 24.04.1 LTS
+# Processor Detail   : AMD EPYC 7R13 Processor
+# CPU Frequency      : 2649.998 MHz
+# CPU Physical cores : 12
+# CPU Logical cores  : 24
+# Host memory        : 268107 MB
+# Swap memory        : 10737 MB
+# Total Virtual      : 278844 MB
+# Available Virtual  : 277908 MB
+#-----------------------------------------------------------
+source xsim.dir/tb/xsim_script.tcl
+# xsim {tb} -autoloadwcfg -tclbatch {${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/waves.tcl}
+Time resolution is 1 ps
+source ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/waves.tcl
+## run all
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[3].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[4].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[5].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[6].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[7].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[8].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[9].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[10].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[11].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+DDR_READY_CHECK time=33344.000 ns leds=0003
+PASS DDR calibrated and bridge ready
+PASS custom DOT1 ABI
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=0 opcode=1 offset=0 signed_dot=899
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=0 raw_fp16=26f0
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=1 opcode=1 offset=118 signed_dot=938
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=1 raw_fp16=2710
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=2 opcode=1 offset=4082 signed_dot=713
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=2 raw_fp16=28a0
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=3 opcode=2 offset=256 signed_dot=-999
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=3 raw_fp16=3c00
+PASS completion cookie
+PASS actual weight reads counted
+FIRST_SLICE_TEST_PASS assertions=87 real_q1_cases=3 synthetic_ternary_cases=1 compact_bytes=4160 canonical_full_image=0
+$finish called at time : 64224 ns : File "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/tests/test_first_slice.sv" Line 97
+run: Time (s): cpu = 00:00:00.15 ; elapsed = 00:01:59 . Memory (MB): peak = 1444.973 ; gain = 0.000 ; free physical = 252176 ; free virtual = 264557
+## quit
+INFO: xsimkernel Simulation Memory Usage: 855404 KB (Peak: 855404 KB), Simulation CPU Usage: 119760 ms
+INFO: [Common 17-206] Exiting xsim at Wed Sep 30 16:12:26 2026...

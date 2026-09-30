@@ -1,0 +1,22 @@
+{
+  "status": "FAIL",
+  "exit_code": 2,
+  "started_utc": "2026-09-30T15:55:20Z",
+  "finished_utc": "2026-09-30T15:56:47Z",
+  "source_revision": "c491c4e4b80533b6d01409e26b8082b981ca99ad",
+  "execution_scope": "Vendor IP compilation completed; shell C/DPI compilation failed before custom RTL simulation",
+  "failure": "Custom Makefile omitted C_FILES/C_INCLUDE_DIRS, so xsc received no C input files",
+  "correction_revision": "3d849975bc0e39197a7964125273ee3189a6662c",
+  "artifacts": {
+    "console.log": {
+      "original_sha256": "a4c54c293eb2391323a88c6017a50f341d0b87917776474aa9b81b4aec915b2c",
+      "published_sha256": "33022b69ba2a9bebefcffeaa4b4ad54a642bd5d1c58bbe0eed15b25bc9d89e07"
+    },
+    "source-manifest.json": {
+      "original_sha256": "f18323ea9b36ea18d43894921e112a460ebf683237cbcc95b16519ad36a3ba84",
+      "published_sha256": "96f346727341f698c33751b46b751745b06158827fad130d9a1b7e22384d826d"
+    }
+  },
+  "publication_transform": "Replace only remote work and HDK path prefixes; retain errors, counts, status and timestamps",
+  "manifest_note": "execution_boundary describes the configured target; it is not evidence of physical FPGA execution"
+}

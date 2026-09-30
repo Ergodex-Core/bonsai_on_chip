@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "backend": "verilator",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "binary_sha256": "392e75e3a007a707b6a1d785d1862f811097ccb124cd04f1fb0cfaa3ff1c3c7c",
+  "source_sha256": {
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "tests/first_slice/dot128_tb.cpp": "d37a9c459898645c4b2d1a3cacf59f9ff5c3491389cb0cde780154c0a60113b4"
+  },
+  "compile_command": [
+    "/usr/local/bin/verilator",
+    "--cc",
+    "--exe",
+    "--build",
+    "-Wall",
+    "-CFLAGS",
+    "-O3 -std=c++17",
+    "-j",
+    "4",
+    "--top-module",
+    "dot128",
+    "--Mdir",
+    "$TMP/erg103-final-validation2/dot128-obj",
+    "$REPO/hdl/verilog/first_slice/dot128.sv",
+    "$REPO/tests/first_slice/dot128_tb.cpp"
+  ]
+}

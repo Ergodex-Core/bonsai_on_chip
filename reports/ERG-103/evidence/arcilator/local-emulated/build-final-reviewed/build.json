@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "backend": "arcilator",
+  "status": "PASS",
+  "host": "Linux-6.10.14-linuxkit-x86_64-with-glibc2.39",
+  "steps": [
+    {
+      "name": "frontend",
+      "command": [
+        "/toolchain/bin/circt-verilog",
+        "--ir-hw",
+        "--single-unit",
+        "--timescale=1ns/1ps",
+        "--top=first_slice_sim_top",
+        "/repo/hdl/verilog/first_slice/weight_store.sv",
+        "/repo/hdl/verilog/first_slice/dot128.sv",
+        "/repo/hdl/verilog/first_slice/first_slice_top.sv",
+        "/repo/hdl/verilog/first_slice/f2_memory_bridge.sv",
+        "/repo/tests/first_slice/first_slice_sim_top.sv",
+        "-o",
+        "/output/build-final-reviewed/design.mlir"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.854788
+    },
+    {
+      "name": "arcilator",
+      "command": [
+        "/toolchain/bin/arcilator",
+        "--emit-llvm",
+        "--state-file=/output/build-final-reviewed/state.json",
+        "/output/build-final-reviewed/design.mlir",
+        "-o",
+        "/output/build-final-reviewed/model.ll"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.855381
+    },
+    {
+      "name": "opt",
+      "command": [
+        "/toolchain/bin/opt",
+        "--strip-debug",
+        "-O2",
+        "-S",
+        "/output/build-final-reviewed/model.ll",
+        "-o",
+        "/output/build-final-reviewed/optimized.ll"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.872982
+    },
+    {
+      "name": "llc",
+      "command": [
+        "/toolchain/bin/llc",
+        "-O2",
+        "-filetype=obj",
+        "/output/build-final-reviewed/optimized.ll",
+        "-o",
+        "/output/build-final-reviewed/model.o"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.757617
+    },
+    {
+      "name": "header",
+      "command": [
+        "/usr/bin/python3",
+        "/toolchain/runtime/arcilator-header-cpp.py",
+        "/output/build-final-reviewed/state.json"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.235746
+    },
+    {
+      "name": "adapter",
+      "command": [
+        "/usr/bin/python3",
+        "/repo/tests/first_slice/generate_arcilator_adapter.py",
+        "/output/build-final-reviewed/state.json",
+        "/output/build-final-reviewed/arcilator_adapter.h"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.178637
+    },
+    {
+      "name": "link",
+      "command": [
+        "/usr/bin/clang++",
+        "-O2",
+        "-std=c++17",
+        "-DUSE_ARC",
+        "-no-pie",
+        "-I/output/build-final-reviewed",
+        "-I/toolchain/runtime",
+        "-I/toolchain/include",
+        "/repo/tests/first_slice/model_server.cpp",
+        "/output/build-final-reviewed/model.o",
+        "/toolchain/lib/libCIRCTArcRuntime.a",
+        "/toolchain/lib/libCIRCTSupport.a",
+        "/toolchain/lib/libLLVMSupport.a",
+        "/toolchain/lib/libLLVMDemangle.a",
+        "-lpthread",
+        "-latomic",
+        "-lz",
+        "-ltinfo",
+        "-lm",
+        "-ldl",
+        "-o",
+        "/output/build-final-reviewed/model_server"
+      ],
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 9.157971
+    }
+  ],
+  "fpga_executed": false,
+  "source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "1904ac1f3698c0728fb9df5bf26aedf80b5927758b66bf754b8a2284bab02a9a",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
+    "tests/first_slice/model_server.cpp": "c3f9a3cfb759330797e8dcbd4dd8b2edcbbcec664a73992732d126a7af4d14d6",
+    "tests/first_slice/generate_arcilator_adapter.py": "34644f9cf0db7c30d831711736c662b34087f962c1584c432c8e3cf77d84fedb",
+    "tests/first_slice/build_arcilator.py": "328d52a2aaa9ad210fec33040ce64b781463b2357371af74b1c9875165ea2f3d"
+  },
+  "toolchain_sha256": {
+    "bin/circt-verilog": "39b437d8e02f2fe776a9189672e75d33946fc9fdb9e887b26452283eafa0d625",
+    "bin/arcilator": "17726ec757c1de733934d79f05af4bd398e61ac7eb2db1814c2dfe1709277e91",
+    "bin/opt": "0b5f9072f80589915a4e0843fbeb9ae8dda4ffc571c407fb955a9ed7519903f1",
+    "bin/llc": "5694c07509ebb6a3d32d831d03096b3be628a2270ca13bccbf01713a8021f0bd",
+    "runtime/arcilator-header-cpp.py": "92ee4769100ef4d49c85aa4a03ca92fb2c66c92a418e4c78dd928fb6eed6206d",
+    "runtime/arcilator-runtime.h": "3f92c222bed9c86ef0c615f54cbfed83cb1e9ed68c1ba35805c32972e05eefd1",
+    "runtime/arcilator-uvm-runtime.h": "44fdc112909cef3cdbd81486d3062dfa7e6597aebb03ffcaebbd701295f135ed",
+    "include/circt/Dialect/Arc/Runtime/ArcRuntime.h": "0e994787990ed2e1283f54fab2af3a6db9abf59ea77ba427fd1a32044a977fc3",
+    "include/circt/Dialect/Arc/Runtime/Common.h": "e7a61cb05a01a8b12c411e9dd5a5e16c013ed911840a645cfbead739fd0ee6ae",
+    "lib/libCIRCTArcRuntime.a": "c861393b8a009874774f89c7bc48f8dd3ce7e7ed9809870a35f976f943938234",
+    "lib/libCIRCTSupport.a": "70ab0b4d5f17c7f10a5be34019a697a57cc7b88f22a3c4844fcfec414b127a42",
+    "lib/libLLVMSupport.a": "c05d4e293d5edc99ccc8dc3dd3bf3e245e38086e7e1bd7f7d5ab251c2b532533",
+    "lib/libLLVMDemangle.a": "c953959509838601903dd0bc1d1963824dd937af4c05e8e500a487e33f720497"
+  },
+  "cxx_sha256": "8ef402d453d1ba4902e4ee0f0f847f6cfa01400c95aa43c24e97818b9c0e3f45",
+  "tool_version": {
+    "circt-verilog": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\nCIRCT e2f80d17f\nslang version 11.0.0+0",
+    "arcilator": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\nCIRCT 272cba1b5",
+    "clang++": "Ubuntu clang version 18.1.3 (1ubuntu1)\nTarget: x86_64-pc-linux-gnu\nThread model: posix\nInstalledDir: /usr/bin",
+    "opt": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: westmere",
+    "llc": "LLVM (http://llvm.org/):\n  LLVM version 23.0.0git\n  Optimized build.\n  Default target: x86_64-unknown-linux-gnu\n  Host CPU: westmere\n\n  Registered Targets:\n    x86    - 32-bit X86: Pentium-Pro and above\n    x86-64 - 64-bit X86: EM64T and AMD64"
+  },
+  "binary_sha256": "cef9bbf2ac991716e20d3b9ea89080a5951980b358b29b37819c99d634c99d44",
+  "artifact_sha256": {
+    "arcilator_adapter.h": "7d11c6b38d527f7416da346741e860804d1c1d6837a1fbd7c8bf7e7f27748696",
+    "state.json": "ebc7c3bc53c4472d6e83f43c1f1412f27d11d75cb36aa1902b061231c1bceda5",
+    "frontend.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "opt.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "header.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "adapter.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model_server": "cef9bbf2ac991716e20d3b9ea89080a5951980b358b29b37819c99d634c99d44",
+    "first_slice_sim_top.h": "79082669fe7e202ad0f8b0b68b0ca3cc97a47c7aebf75dedb2040e3535025c84",
+    "optimized.ll": "8f445a607baba353dc8140d5bca9b514ee3769a371c99224e968bc1fa91ebb0e",
+    "model.o": "557f550ea74919a9fc7f37666a9a6bca0ca8746f41ff05255ca6f88d5ff7e368",
+    "llc.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "model.ll": "5b733bcb2a34b0b88510cc8af8f562ccd1ce932bf5a51255df1ba5fcd66397bf",
+    "arcilator.log": "fec5e5a49b4d3deeac297a3026a3129586f6b4f665a6c5c6e9eea481a5e42185",
+    "link.log": "2037657ed02f2bfbe1c378be4b3355b6758ec6057b1f71d045bca09e48c91939",
+    "design.mlir": "42de881647b06124115878f671ed048cf2cbefa98c3aaa77b823f93c3d843139"
+  }
+}

@@ -1,0 +1,14 @@
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"axi_response_observable":false,"whole_image_readback_required":true}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"readback_bytes":8320,"completed_dumps":1,"axi_response_observable":false,"source":"uncached volatile BAR4 reads"}
+{"ok":true,"resp":0,"resp_source":"sdk_completion_not_axi_response","axi_response_observable":false,"posted_write_drained":true}
+{"ok":true,"bytes":8320,"readback_bytes":16640,"completed_dumps":2,"axi_response_observable":false,"source":"uncached volatile BAR4 reads"}
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+LOAD_BYTES 64
+DUMP_BYTES 4096
+DUMP_BYTES 12416
+TRANSPORT_FAIL DUMP requires one complete LOAD, whole-image byte count, and at most two readbacks

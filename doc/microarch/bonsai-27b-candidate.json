@@ -1,0 +1,273 @@
+{
+  "observed_utc": "2026-09-30T17:26:20.393700+00:00",
+  "status": "public_candidate_identified_not_selected_or_execution_validated",
+  "repo": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+  "revision": "b072e1d3b35a0a630cece372c2127528e0994386",
+  "release_source": "https://prismml.com/news/prismml-launches-bonsai-2-27b",
+  "model_card_source": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/blob/b072e1d3b35a0a630cece372c2127528e0994386/README.md",
+  "model_files": [
+    {
+      "filename": "Ternary-Bonsai-2-27B-F16.gguf",
+      "bytes": 53808408928,
+      "publisher_lfs_sha256": "f6f3b2c9b41956c34b379ec7c301dc936bc38d79b3c24c83388dd7d76000c180",
+      "full_file_sha256_locally_verified": false,
+      "metadata_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/raw/b072e1d3b35a0a630cece372c2127528e0994386/Ternary-Bonsai-2-27B-F16.gguf"
+    },
+    {
+      "filename": "Ternary-Bonsai-2-27B-PQ2_0.gguf",
+      "bytes": 7206168928,
+      "publisher_lfs_sha256": "3907dc1658db1f78a9826bf8d5bcb8dc65db0d466388937af57f2294fae62ec1",
+      "full_file_sha256_locally_verified": false,
+      "metadata_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/raw/b072e1d3b35a0a630cece372c2127528e0994386/Ternary-Bonsai-2-27B-PQ2_0.gguf"
+    },
+    {
+      "filename": "Ternary-Bonsai-2-27B-PTQ1_0.gguf",
+      "bytes": 5946648928,
+      "publisher_lfs_sha256": "53107f530aa52eb00912263ab1ee29bd199261c87cd7b4ad4ca1318c1fe33ee3",
+      "full_file_sha256_locally_verified": false,
+      "metadata_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/raw/b072e1d3b35a0a630cece372c2127528e0994386/Ternary-Bonsai-2-27B-PTQ1_0.gguf"
+    },
+    {
+      "filename": "Ternary-Bonsai-2-27B-mmproj-BF16.gguf",
+      "bytes": 931145856,
+      "publisher_lfs_sha256": "e287342d92332fa3577ed1d42e921dac9370c08da58ba9337fa450f6cc76cfd7",
+      "full_file_sha256_locally_verified": false,
+      "metadata_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/raw/b072e1d3b35a0a630cece372c2127528e0994386/Ternary-Bonsai-2-27B-mmproj-BF16.gguf"
+    },
+    {
+      "filename": "Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf",
+      "bytes": 629246976,
+      "publisher_lfs_sha256": "6807ede61d570bb86ba34b756a0fa109edc33668604de867c6ea6d8f1d631903",
+      "full_file_sha256_locally_verified": false,
+      "metadata_url": "https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf/raw/b072e1d3b35a0a630cece372c2127528e0994386/Ternary-Bonsai-2-27B-mmproj-Q8_0.gguf"
+    }
+  ],
+  "header_inspection": [
+    {
+      "repo": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+      "revision": "b072e1d3b35a0a630cece372c2127528e0994386",
+      "filename": "Ternary-Bonsai-2-27B-PTQ1_0.gguf",
+      "gguf_version": 3,
+      "metadata_pairs": 49,
+      "tensor_count": 851,
+      "header_bytes_read": 11120982,
+      "header_sha256": "9a9ab9cea29523734dd531c77676db9ec17048ce05c45c7dafc79b9ce7d1d584",
+      "tensor_payload_bytes_read": 0,
+      "tensor_types_count": {
+        "143": 402,
+        "0": 353,
+        "30": 96
+      },
+      "tensor_types_elements": {
+        "143": 26869760000,
+        "0": 2645504,
+        "30": 23592960
+      },
+      "tensor_storage_bytes_by_type": {
+        "143": 5877760000,
+        "0": 10582016,
+        "30": 47185920
+      },
+      "data_start": 11120992,
+      "derived_file_bytes": 5946648928
+    },
+    {
+      "repo": "prism-ml/Ternary-Bonsai-2-27B-gguf",
+      "revision": "b072e1d3b35a0a630cece372c2127528e0994386",
+      "filename": "Ternary-Bonsai-2-27B-PQ2_0.gguf",
+      "gguf_version": 3,
+      "metadata_pairs": 49,
+      "tensor_count": 851,
+      "header_bytes_read": 11120982,
+      "header_sha256": "6b85aa273e82f6a587993f3ffe34845ee0db9d1ae84514c74049c8ecff603daf",
+      "tensor_payload_bytes_read": 0,
+      "tensor_types_count": {
+        "142": 402,
+        "0": 353,
+        "30": 96
+      },
+      "tensor_types_elements": {
+        "142": 26869760000,
+        "0": 2645504,
+        "30": 23592960
+      },
+      "tensor_storage_bytes_by_type": {
+        "142": 7137280000,
+        "0": 10582016,
+        "30": 47185920
+      },
+      "data_start": 11120992,
+      "derived_file_bytes": 7206168928
+    }
+  ],
+  "architecture": {
+    "gguf": "qwen35",
+    "language_parameter_elements": 26895998464,
+    "layers": 64,
+    "linear_attention_layers": 48,
+    "full_attention_layers": 16,
+    "hidden_size": 5120,
+    "intermediate_size": 17408,
+    "attention_heads": 24,
+    "kv_heads": 4,
+    "key_head_dim": 256,
+    "value_head_dim": 256,
+    "context_length": 262144,
+    "vocab_size": 248320,
+    "ssm_state_size": 128,
+    "ssm_group_count": 16,
+    "ssm_time_step_rank": 48,
+    "ssm_inner_size": 6144,
+    "ssm_conv_kernel": 4
+  },
+  "packing": {
+    "PQ2_0": {
+      "tensor_type": 142,
+      "group_elements": 128,
+      "block_bytes": 34,
+      "layout": "FP16 scale followed by 32 packed bytes; 4 sequential 2-bit fields per byte, low field first",
+      "decoded_integer": "code - 1; 00=-1, 01=0, 10=+1, 11=+2",
+      "strict_ternary_payload_codes_checked": false
+    },
+    "PTQ1_0": {
+      "tensor_type": 143,
+      "group_elements": 128,
+      "block_bytes": 28,
+      "layout": "24-byte qs (120 trits), 2-byte qh (8 trits), trailing FP16 scale; official decoder defines interleaved trit order"
+    }
+  },
+  "higher_precision": {
+    "F32": {
+      "tensors": 353,
+      "elements": 2645504,
+      "bytes": 10582016,
+      "families": [
+        "normalizations",
+        "ssm_a",
+        "ssm_conv1d.weight",
+        "ssm_dt.bias"
+      ]
+    },
+    "BF16": {
+      "tensors": 96,
+      "elements": 23592960,
+      "bytes": 47185920,
+      "families": [
+        "ssm_alpha.weight",
+        "ssm_beta.weight"
+      ]
+    }
+  },
+  "activation_transform": {
+    "version": 1,
+    "name": "normalized-sylvester-walsh-hadamard",
+    "block_size": 1024,
+    "axis": "input-last-dimension",
+    "sign_mode": "explicit",
+    "sign_values": 28672,
+    "forward_weight_names": 401,
+    "inverse_weight_names": 1,
+    "gdn_v_grouped": true
+  },
+  "official_runtime": {
+    "repo": "https://github.com/PrismML-Eng/llama.cpp",
+    "demo_documented_release": "prism-b10743-adfffbe",
+    "release_commit": "adfffbe41b2cabcd51fff326ab045662265062bb",
+    "validated_with_candidate_by_us": false,
+    "format_structs": "https://github.com/PrismML-Eng/llama.cpp/blob/adfffbe41b2cabcd51fff326ab045662265062bb/ggml/src/ggml-common.h#L199-L220",
+    "pq2_decoder": "https://github.com/PrismML-Eng/llama.cpp/blob/adfffbe41b2cabcd51fff326ab045662265062bb/ggml/src/ggml-quants.c#L494-L512",
+    "ptq1_decoder": "https://github.com/PrismML-Eng/llama.cpp/blob/adfffbe41b2cabcd51fff326ab045662265062bb/ggml/src/ggml-quants.c#L2255-L2285",
+    "type_enum": "https://github.com/PrismML-Eng/llama.cpp/blob/adfffbe41b2cabcd51fff326ab045662265062bb/ggml/include/ggml.h#L390-L436"
+  },
+  "conditional_memory_arithmetic": {
+    "assumptions": "batch1, all16 full-attention layers, separate dense F16 K and V, no sharing or quantization; excludes linear-attention state, all activations, scratch, weights, padding, vision and runtime allocations",
+    "kv_bytes_per_token": 65536,
+    "kv_bytes_at_8192_tokens": 536870912,
+    "kv_bytes_at_262144_tokens": 17179869184,
+    "measured": false
+  },
+  "limitations": [
+    "No full weights downloaded, hashed locally or numerically checked. Publisher SHA256 identities only.",
+    "Exact tensor metadata was read, ending before alignment padding and tensor payloads.",
+    "No runtime, model inference, FPGA or throughput validation performed.",
+    "Existing selected 1.7B fixture unchanged; no 27B importer, image layout, large aperture or executor implemented.",
+    "Container file sizes are not final ASIC/FPGA repacked weight image size or runtime peak memory."
+  ],
+  "local_evidence": [
+    {
+      "file": "PQ2_0-header.bin",
+      "bytes": 11120982,
+      "sha256": "6b85aa273e82f6a587993f3ffe34845ee0db9d1ae84514c74049c8ecff603daf"
+    },
+    {
+      "file": "PQ2_0-header.json",
+      "bytes": 194299,
+      "sha256": "c71fa7901c0a85eda259b75c5c0e81921fcccf6999ed22282437b0740c977218"
+    },
+    {
+      "file": "PTQ1_0-header.bin",
+      "bytes": 11120982,
+      "sha256": "9a9ab9cea29523734dd531c77676db9ec17048ce05c45c7dafc79b9ce7d1d584"
+    },
+    {
+      "file": "PTQ1_0-header.json",
+      "bytes": 194276,
+      "sha256": "a973e077c52a235c7c4ef98049ec43ec3aefa0fcdeb4859a9b4ee58396677119"
+    },
+    {
+      "file": "ggml-common.h",
+      "bytes": 136535,
+      "sha256": "96539c9bd8e4544692bf242951180edaa2fd5775864fbc3e833f44111b96b934"
+    },
+    {
+      "file": "ggml-quants.c",
+      "bytes": 234514,
+      "sha256": "46dd353f30e7f1c42c7d82d88d91fad64dbe5d6e680b234de25355d9fb482d13"
+    },
+    {
+      "file": "ggml.h",
+      "bytes": 114514,
+      "sha256": "9a865c28b0fea8d0adaa3218ac3514bfcef3eb2f35f8e7c67bc7fac90586f5e6"
+    },
+    {
+      "file": "gguf-api.json",
+      "bytes": 11557,
+      "sha256": "f938a8a3150ba9a511e72cee5e4128ecef9588b705e04a30c7f3a790c35bede8"
+    },
+    {
+      "file": "gguf-tree.json",
+      "bytes": 2185,
+      "sha256": "04d66e53f2916459cdc8fb8a92c222d4a0438b43c3d3951c410b4611d7c158ce"
+    },
+    {
+      "file": "mlx-api.json",
+      "bytes": 20834,
+      "sha256": "718a53d199f93c3018c0dc7ae514cfaf17ad7c09e604589c21e2ce5f6313fd41"
+    },
+    {
+      "file": "mlx-config.json",
+      "bytes": 58145,
+      "sha256": "238de7c512cc56a733421e3fd011d88f8260739e3d00e32c5d65b7943cc9f837"
+    },
+    {
+      "file": "model-card.md",
+      "bytes": 23273,
+      "sha256": "98f4a6c74b5e88a4039cad9a343269bc458b303accd21ed95bbdac42b387d2c9"
+    },
+    {
+      "file": "qwen35.cpp",
+      "bytes": 35345,
+      "sha256": "26447568ccb9eb1d5fc25382cc55087553af38f9c5506b213c95da2146a51705"
+    },
+    {
+      "file": "read_header.py",
+      "bytes": 4322,
+      "sha256": "b0a858f61a23c6279ec23b89b35dccc59b90691f970c8e6c1adae1fa154fc411"
+    },
+    {
+      "file": "runtime-commit.json",
+      "bytes": 38819,
+      "sha256": "cac82f0ed1d2521109a4dd056f1bd4ca565b12d516e2ea0abfd365ec9085758f"
+    }
+  ]
+}

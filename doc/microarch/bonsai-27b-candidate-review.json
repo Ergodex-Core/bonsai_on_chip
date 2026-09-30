@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Automated independent design-only review; not human approval or model validation",
+  "reviewer": "Codex separate agent /root/link_development_repo",
+  "date": "2026-09-30",
+  "source_sha256": {
+    "bonsai-27b-candidate.md": "bbe550efb928050cbe064668c34d1297659280d0791b710aac4eeb3f7882fb0c",
+    "bonsai-27b-candidate.json": "b00012d370cf3e783a0bad3937a57febdb054ed624dfd7a8e138b221300a8699",
+    "weightstore.md": "b5bd7fcf3999fe883b3fb79e15c34183a9608f08f599d9ac280a2f94b92b8f99",
+    "ternary-systolic-array.md": "9f2c6ede5cb5f51a9890656d56befbcb84122d99538027057d7a49d5ad38a5f5"
+  },
+  "checks": [
+    "All15 local research evidence hashes and byte counts matched manifest",
+    "Independently recomputed851tensors and26895998464elements",
+    "PTQ1/PQ2 container byte ends match header accounting",
+    "Pinned official structs/decoders match format sizes and code semantics",
+    "Header transform mapping/sign metadata matched note",
+    "Conditional KV arithmetic independently recomputed",
+    "Candidate not selected/payload-verified, no implementation/inference/HBM-fit claim"
+  ],
+  "findings": []
+}

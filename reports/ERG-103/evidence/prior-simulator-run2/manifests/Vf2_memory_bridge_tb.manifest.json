@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "backend": "verilator",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260426",
+  "binary_sha256": "a078360f86cd75e19e723826c537a661482db7fc65449d3aa3b3e431fc5a601e",
+  "source_sha256": {
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv": "42f010857e3bfb583f0c77b4e387579c4000d877951f592537756d7b9e9a7da5"
+  },
+  "compile_command": [
+    "/usr/local/bin/verilator",
+    "--binary",
+    "--timing",
+    "--assert",
+    "-Wno-TIMESCALEMOD",
+    "-j",
+    "4",
+    "--top-module",
+    "f2_memory_bridge_tb",
+    "--Mdir",
+    "$TMP/erg103-final-validation2/f2_memory_bridge_tb-obj",
+    "$REPO/hdl/verilog/first_slice/f2_memory_bridge.sv",
+    "$REPO/fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv"
+  ]
+}

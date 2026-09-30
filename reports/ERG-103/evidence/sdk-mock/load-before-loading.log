@@ -1,0 +1,4 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL LOAD requires the LOADING store state

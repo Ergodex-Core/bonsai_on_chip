@@ -1,0 +1,4 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL shell hardware error dma_pcis_timeout_count=1

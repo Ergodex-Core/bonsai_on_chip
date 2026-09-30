@@ -1,0 +1,4 @@
+{"ok":false,"error":"transport failed; inspect stderr log"}
+
+STDERR:
+TRANSPORT_FAIL attach BAR0 SDK status=-1

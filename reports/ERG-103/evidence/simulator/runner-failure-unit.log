@@ -1,0 +1,27 @@
+test_build_binding_rejects_changed_binary (__main__.BuildManifestTests.test_build_binding_rejects_changed_binary) ... ok
+test_build_binding_rejects_changed_rtl (__main__.BuildManifestTests.test_build_binding_rejects_changed_rtl) ... ok
+test_build_binding_requires_transport_and_wrapper_sources (__main__.BuildManifestTests.test_build_binding_requires_transport_and_wrapper_sources) ... ok
+test_partial_json_response_honors_request_timeout (__main__.BusResponseTests.test_partial_json_response_honors_request_timeout) ... ok
+test_register_reads_require_explicit_integer_response (__main__.BusResponseTests.test_register_reads_require_explicit_integer_response) ... ok
+test_register_write_requires_explicit_response (__main__.BusResponseTests.test_register_write_requires_explicit_response) ... ok
+test_cleanup_failure_after_all_cases_cannot_return_pass (__main__.RunFailureTests.test_cleanup_failure_after_all_cases_cannot_return_pass) ... ok
+test_cleanup_failure_cannot_erase_failure_report (__main__.RunFailureTests.test_cleanup_failure_cannot_erase_failure_report) ... ok
+test_corrupt_image_fails_before_transport (__main__.RunFailureTests.test_corrupt_image_fails_before_transport) ... ok
+test_counter_failure_retains_observed_completion (__main__.RunFailureTests.test_counter_failure_retains_observed_completion) ... ok
+test_duplicate_case_ids_fail_before_transport (__main__.RunFailureTests.test_duplicate_case_ids_fail_before_transport) ... ok
+test_error_completion_with_nonzero_payload_fails (__main__.RunFailureTests.test_error_completion_with_nonzero_payload_fails) ... ok
+test_final_backend_change_prevents_pass (__main__.RunFailureTests.test_final_backend_change_prevents_pass) ... ok
+test_final_epoch_change_prevents_pass (__main__.RunFailureTests.test_final_epoch_change_prevents_pass) ... ok
+test_final_image_mutation_prevents_pass (__main__.RunFailureTests.test_final_image_mutation_prevents_pass) ... ok
+test_final_seal_loss_prevents_pass (__main__.RunFailureTests.test_final_seal_loss_prevents_pass) ... ok
+test_interruption_retains_completed_case_without_pass (__main__.RunFailureTests.test_interruption_retains_completed_case_without_pass) ... ok
+test_invalid_case_nonnull_oracle_fails_before_transport (__main__.RunFailureTests.test_invalid_case_nonnull_oracle_fails_before_transport) ... ok
+test_relabelled_valid_case_fails_before_transport (__main__.RunFailureTests.test_relabelled_valid_case_fails_before_transport) ... ok
+test_repeated_payload_with_unique_ids_fails_before_transport (__main__.RunFailureTests.test_repeated_payload_with_unique_ids_fails_before_transport) ... ok
+test_wrong_case_count_fails_before_transport (__main__.RunFailureTests.test_wrong_case_count_fails_before_transport) ... ok
+test_wrong_line_read_count_prevents_pass (__main__.RunFailureTests.test_wrong_line_read_count_prevents_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 1.324s
+
+OK
