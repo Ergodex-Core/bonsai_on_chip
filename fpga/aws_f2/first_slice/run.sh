@@ -47,7 +47,7 @@ record_exit() {
 trap record_exit EXIT
 command -v vivado > /dev/null
 vivado -version > "${log}/vivado-version.txt"
-grep -Eq '^Vivado v2025\.2([[:space:]]|$)' "${log}/vivado-version.txt"
+grep -Eiq '^vivado v2025\.2([[:space:]]|$)' "${log}/vivado-version.txt"
 cp "${cl}/source-manifest.json" "${log}/source-manifest.json"
 sha256sum "$0" > "${log}/runner-sha256.txt"
 export CL_DIR=${cl}
