@@ -1,0 +1,2 @@
+test_first_slice: TEST=test_first_slice
+test_first_slice: all
