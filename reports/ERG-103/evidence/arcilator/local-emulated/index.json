@@ -1,0 +1,204 @@
+{
+  "schema": "coralnpu.first_slice.arcilator_evidence.v1",
+  "status": "PASS",
+  "execution_class": "Linux amd64 emulation on arm64 macOS; CPU simulation only",
+  "scope": "Integrated first_slice_sim_top; not standalone RTL suites, full CoralNPU or FPGA execution",
+  "base_revision": "2537a48665a13063e733713d855647df2f325c04",
+  "final_runner_revision": "00dd6b41b488aabcf580b3bb53acd37829e09b3f",
+  "final_runner_full_ec2_replay": "PENDING",
+  "source_boundary": "Full native/synthetic runs bind the included initial tested-source snapshots and build-02 manifest. Final build helper changes were separately compiled; the full workflow is not relabeled as final-source EC2 validation. Latest final weight_store formatting only removes one extra space.",
+  "counts": {
+    "native": 396,
+    "synthetic": 6,
+    "expected_synthetic_rejections": 2,
+    "mailbox": 3,
+    "protocol": 4
+  },
+  "fpga_executed": false,
+  "native_cycles": 99098552,
+  "native_workflow_wall_seconds": 456.571922,
+  "native_cycles_per_workflow_second": 217049.15967215347,
+  "rate_scope": "Full load, two readbacks, hashes and commands, under CPU emulation; not directly comparable to native-Mac Verilator or native EC2.",
+  "functional_parity": "All396+6 case objects, image hashes and transport counters match historical Verilator; backend label differs.",
+  "first_frontend_attempt": "FAIL, declaration order; failure log retained",
+  "artifacts": {
+    "native-02/report.json": {
+      "bytes": 161117,
+      "sha256": "3f92f99e96b14690bd24974e5c03eafd01a1402f4d6c1e8a84649e62ca18c8b9"
+    },
+    "native-02/transport.log": {
+      "bytes": 546,
+      "sha256": "61362a47a7ec530634c38fc117d7d0c858c8f915ffe3287e8c64f7a639bcc096"
+    },
+    "native-02-driver/execution.json": {
+      "bytes": 394,
+      "sha256": "32aeda7fd202abfc18de034e1f8b1b3effc4da7a8ef274e37f463301b9028254"
+    },
+    "native-02-driver/run.log": {
+      "bytes": 58,
+      "sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974"
+    },
+    "synthetic-02/report.json": {
+      "bytes": 12175,
+      "sha256": "cf7542b08f94867f7228b805aee352967741b425ba7a7caa2e2549a9e732fa40"
+    },
+    "synthetic-02/transport.log": {
+      "bytes": 96,
+      "sha256": "8820a90c9a0e9c00d486a0532eb888426b6d5d9352e6d848d78b7d66da0f4ce2"
+    },
+    "smoke-02/steps.json": {
+      "bytes": 863,
+      "sha256": "37ef86d19c9cf6ac4289aee229bde0eff5f06463adbd2b06252919ef67ccacfa"
+    },
+    "smoke-02/mailbox.log": {
+      "bytes": 533,
+      "sha256": "9e92c0b675f664511f37b5f1bc5ffbfa4a766972f152e6bb02adf24038e5ea45"
+    },
+    "smoke-02/transport-protocol.log": {
+      "bytes": 730,
+      "sha256": "cc365e2c0816c374577145b891ebfd50e813aa51b6a6c09564d1903ad98ed251"
+    },
+    "smoke-02/synthetic.log": {
+      "bytes": 56,
+      "sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945"
+    },
+    "historical-functional-parity.json": {
+      "bytes": 2273,
+      "sha256": "1d3bb2e1421694739d9d980a3231c6560b4392db67e98eff18a8ff07de58b691"
+    },
+    "declaration-order.patch": {
+      "bytes": 511,
+      "sha256": "db8b71a87acd35a96b47ffc8bc16c41c688e9cdf401cc3f6480867f5973778cf"
+    },
+    "build/frontend-attempt1-declaration-order.log": {
+      "bytes": 1227,
+      "sha256": "0d8566fea334dc7cd82b9ac3747849dd0ed002809f5a7a50aff49f8c4fbd9c24"
+    },
+    "candidate-patch-manifest.json": {
+      "bytes": 3207,
+      "sha256": "da869f5c1a8ea1082b4f96ad88789804aa7ba8932994400196adb01ef78669dd"
+    },
+    "build-02/model_server.manifest.json": {
+      "bytes": 7064,
+      "sha256": "5bf465eb7c86b1de2c8a17120aed7dad0714a0f128d99c4d6e931afe3b0006c2"
+    },
+    "build-02/frontend.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-02/opt.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-02/header.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-02/adapter.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-02/llc.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-02/arcilator.log": {
+      "bytes": 3479,
+      "sha256": "dd70ef2081fb6b02af26046f5c50b21f9e81d52776f73c6a2b9802ee8f46903a"
+    },
+    "build-02/build.json": {
+      "bytes": 7064,
+      "sha256": "5bf465eb7c86b1de2c8a17120aed7dad0714a0f128d99c4d6e931afe3b0006c2"
+    },
+    "build-02/link.log": {
+      "bytes": 6935,
+      "sha256": "5a972c6b9ca91ce5ad1dac5b3954051568a1a69260ad3a6830acd9c1929f697d"
+    },
+    "build-final-reviewed/model_server.manifest.json": {
+      "bytes": 7890,
+      "sha256": "42bbb83010025ec598bdb4f50ddb47da579983bfbf867306526ff5c11fb7839b"
+    },
+    "build-final-reviewed/frontend.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final-reviewed/opt.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final-reviewed/header.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final-reviewed/adapter.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final-reviewed/llc.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "build-final-reviewed/arcilator.log": {
+      "bytes": 3671,
+      "sha256": "fec5e5a49b4d3deeac297a3026a3129586f6b4f665a6c5c6e9eea481a5e42185"
+    },
+    "build-final-reviewed/build.json": {
+      "bytes": 7890,
+      "sha256": "42bbb83010025ec598bdb4f50ddb47da579983bfbf867306526ff5c11fb7839b"
+    },
+    "build-final-reviewed/link.log": {
+      "bytes": 6959,
+      "sha256": "2037657ed02f2bfbe1c378be4b3355b6758ec6057b1f71d045bca09e48c91939"
+    },
+    "tested-source/hdl/verilog/first_slice/weight_store.sv.txt": {
+      "bytes": 14159,
+      "sha256": "1904ac1f3698c0728fb9df5bf26aedf80b5927758b66bf754b8a2284bab02a9a",
+      "original_repo_path": "hdl/verilog/first_slice/weight_store.sv"
+    },
+    "tested-source/hdl/verilog/first_slice/dot128.sv.txt": {
+      "bytes": 8646,
+      "sha256": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+      "original_repo_path": "hdl/verilog/first_slice/dot128.sv"
+    },
+    "tested-source/hdl/verilog/first_slice/first_slice_top.sv.txt": {
+      "bytes": 10988,
+      "sha256": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+      "original_repo_path": "hdl/verilog/first_slice/first_slice_top.sv"
+    },
+    "tested-source/hdl/verilog/first_slice/f2_memory_bridge.sv.txt": {
+      "bytes": 12092,
+      "sha256": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+      "original_repo_path": "hdl/verilog/first_slice/f2_memory_bridge.sv"
+    },
+    "tested-source/tests/first_slice/first_slice_sim_top.sv.txt": {
+      "bytes": 6644,
+      "sha256": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
+      "original_repo_path": "tests/first_slice/first_slice_sim_top.sv"
+    },
+    "tested-source/tests/first_slice/model_server.cpp.txt": {
+      "bytes": 16463,
+      "sha256": "5df4f7d46b8d49efe2841f9fbe4f554cdf85cd28c5721029c8c9c06e64baad25",
+      "original_repo_path": "tests/first_slice/model_server.cpp"
+    },
+    "tested-source/tests/first_slice/generate_arcilator_adapter.py.txt": {
+      "bytes": 3753,
+      "sha256": "c5ea83aa072bfea9d36246074fbe530685bb508a38f38baaf198abee25e52a3b",
+      "original_repo_path": "tests/first_slice/generate_arcilator_adapter.py"
+    },
+    "tested-source/tests/first_slice/build_arcilator.py.txt": {
+      "bytes": 6085,
+      "sha256": "4a5393a9ac06e538f448638c6cc66c7ab2c9ecb8bf9eb990f8b09b23b251d7cf",
+      "original_repo_path": "tests/first_slice/build_arcilator.py"
+    },
+    "tested-source/utils/first_slice/prepare_fixture.py.txt": {
+      "bytes": 15444,
+      "sha256": "d2711843bd9d4b110b3b2a844632b9d2a1c52a1f63b1b91e5ddd07db79d511bc",
+      "original_repo_path": "utils/first_slice/prepare_fixture.py"
+    },
+    "tested-source/utils/first_slice/run.py.txt": {
+      "bytes": 27322,
+      "sha256": "1b8590fcfd4b7f7b2bc4fdbe2b66616a3767974094651aa8c1a79537724f73dc",
+      "original_repo_path": "utils/first_slice/run.py"
+    }
+  }
+}

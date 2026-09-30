@@ -1,8 +1,11 @@
 # ERG-103 first-slice implementation and validation report
 
-Status: **In progress; custom F2-target XSIM passed; synthesis/routed build is underway.**
-As of 2026-09-30, the authorized F2 instance is running and source/fixture
-checks passed; custom FPGA validation remains incomplete. This report covers the first executable weight-store/DOT128/mailbox
+Status: **In progress; Verilator and integrated Arcilator simulation passed; custom FPGA execution remains pending.**
+As of 2026-09-30 17:55 UTC, EC2 reports the designated F2 instance stopped with
+`Client.InstanceInitiatedShutdown`. The last retrieved routing status was active
+at 17:40 UTC. Final routed artifacts must be inspected after coordinated recovery;
+a stale SSM InProgress status is not proof of completion. Custom FPGA validation
+remains incomplete. This report covers the first executable weight-store/DOT128/mailbox
 slice and does not close ERG-103.
 
 Issue: [Week 1: Start core RTL and tooling work](https://linear.app/ergodex-ai/issue/ERG-103/week-1-start-core-rtl-and-tooling-work).
@@ -279,3 +282,52 @@ write-gate coverage, and outstanding-read requirements. These are design-only
 deliverables, not HBM or array implementation/simulation claims. Full CoralNPU
 Arcilator execution and its cycles/second remain unmeasured; the earlier
 [Arcilator pilot](../ERG-102/arcilator-pilot.md) covers a small controller only.
+
+
+## Arcilator first-slice execution and EC2 replay — 2026-09-30
+
+The [Arcilator evidence index](evidence/arcilator/local-emulated/index.json)
+records an actual integrated first-slice run: **396 native cases, six synthetic
+cases (two expected rejections), three mailbox tests and four protocol tests
+passed**. The full 242,357,184-byte image was loaded and both full readback hashes
+matched the canonical image. Every native and synthetic case object, image hash
+and cycle/DDR counter matches the historical Verilator report, with the backend
+label identified separately. The initial frontend declaration-order failure is
+retained; moving the declaration before its assignments fixes portability without
+changing logic.
+
+The native run took 456.572 seconds for 99,098,552 simulated cycles, about
+0.217 million cycles per workflow second, **inside emulated Linux/amd64 on an
+arm64 Mac**. This includes host load/readback, hashing and commands. It is not a
+native EC2 measurement or a speed comparison against the earlier native-Mac
+Verilator result (29.017 seconds, about 3.42 million workflow cycles/second).
+Neither simulator rate is the modeled 250 MHz XSIM clock or the 250 MHz FPGA
+implementation target. FPGA timing closure remains unverified.
+
+The full run is bound to its included exact tested-source snapshots and initial
+build manifest. The final reusable [one-command workflow](../../tests/first_slice/README.md#arcilator-integrated-first-slice-workflow)
+is committed in `00dd6b41b488aabcf580b3bb53acd37829e09b3f`; later helper/provenance
+changes passed short compile checks, and the shared runner's 22 failure tests
+passed. Do not relabel historical runs as a complete final-source replay.
+
+This follows Wispr-on-chip's explicit compiler stages and retained failure logs,
+with public-port metadata and settled runtime evaluation. The final runner records
+source/tool/binary hashes and requires complete suite reports. No internal state
+or clock-history patching is used. Standalone DOT/store/mailbox-fault/bridge unit
+benches, full CoralNPU and full-model inference were not run under this Arcilator
+workflow.
+
+Per the requested direction, native EC2 Arcilator and Verilator comparison is
+prepared. The external toolchain was transferred privately, verified on F2's
+native x86 CPU, and its prerequisites passed. The instance then shut down from
+inside the guest before the simulator replay started. No EC2 simulator result,
+custom AFI, physical operation, HBM execution or generated token is claimed.
+Resume choice and guest shutdown/build evidence inspection remain open.
+
+The [five-slide meeting deck](../project/decks/Bonsai-on-chip-progress-2026-09-30.pptx)
+and [blank weekly template](../project/decks/Bonsai-on-chip-weekly-template.pptx)
+are editable and preserved. The deck is a **17:40 UTC snapshot**, preceding the
+shutdown; it is also attached to ERG-103. Newer status is recorded in this report.
+The [27B candidate design note](../../doc/microarch/bonsai-27b-candidate.md)
+identifies native formats, the Hadamard transform, hybrid-attention helpers and
+conditional memory limits without selecting or claiming to run that model.

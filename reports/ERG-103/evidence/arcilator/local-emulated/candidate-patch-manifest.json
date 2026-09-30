@@ -1,0 +1,64 @@
+{
+  "base_head": "87417766f966d6c8c50bb51b054578af9c398762",
+  "patch_sha256": "b9026ad8531fa06be70cdce2e73343e1641e782bd7e6da1827a699e0ee642f2b",
+  "files": [
+    {
+      "path": "hdl/verilog/first_slice/weight_store.sv",
+      "base_sha256": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+      "candidate_sha256": "1904ac1f3698c0728fb9df5bf26aedf80b5927758b66bf754b8a2284bab02a9a"
+    },
+    {
+      "path": "tests/first_slice/model_server.cpp",
+      "base_sha256": "23f1b5a723493ee7a310fd600d92f1bcb77dda4bddd7011801adff95d9e08596",
+      "candidate_sha256": "c3f9a3cfb759330797e8dcbd4dd8b2edcbbcec664a73992732d126a7af4d14d6"
+    },
+    {
+      "path": "utils/first_slice/run.py",
+      "base_sha256": "e29a0925af6af20c0bd4fa00dd8f901328fd0a1093495072fbacbbdc1478ffd7",
+      "candidate_sha256": "ef54cd1835a6c1b328d221e337837bbf8b89ab73063195b8cb13a08234d5bb38"
+    },
+    {
+      "path": "tests/first_slice/test_mailbox.py",
+      "base_sha256": "26f457cdd9af58228f514d5b7d8835f80f6d98c8921e30a159299cb3a1ad9c89",
+      "candidate_sha256": "f027806942af53cd7fb954d112dca1976d8b8bf4366648f30dbf655692b91ec6"
+    },
+    {
+      "path": "tests/first_slice/test_transport_protocol.py",
+      "base_sha256": "edbc1c2dd0f7fe975c06fb514440a08c85aec27f4ede1492c671c644b0820667",
+      "candidate_sha256": "4962e0786430ac67ab4b945bd25f719e3cf68ddf4d69a5fd901042233c3266d0"
+    },
+    {
+      "path": "tests/first_slice/generate_arcilator_adapter.py",
+      "base_sha256": null,
+      "candidate_sha256": "34644f9cf0db7c30d831711736c662b34087f962c1584c432c8e3cf77d84fedb"
+    },
+    {
+      "path": "tests/first_slice/build_arcilator.py",
+      "base_sha256": null,
+      "candidate_sha256": "328d52a2aaa9ad210fec33040ce64b781463b2357371af74b1c9875165ea2f3d"
+    },
+    {
+      "path": "tests/first_slice/run_arcilator.py",
+      "base_sha256": null,
+      "candidate_sha256": "0a8d68cb6d2fae5f04327e19cf314309bf48a473a9b3e0813fc7be736c4ac53f"
+    },
+    {
+      "path": "tests/first_slice/README.md",
+      "base_sha256": "e3c418ec99505d4dceeea15158b3bd6e2c52c1fb70fcf6c45b561cce16b738aa",
+      "candidate_sha256": "1535cb8825ba045af46a4a8afe525cc8d5781338ed22108fc149437a3312d8f8"
+    }
+  ],
+  "local_status": "final frozen source compile PASS in build-final-reviewed; prior final-model-source shortsmoke mailbox3/protocol4/synthetic6 PASS; historical initial fullnative396/synthetic6 PASS with exact historical Verilator numerical/cycle parity; finalfullrun delegated to root on nativeEC2",
+  "external_toolchain": "/Users/rachittibrewal/ergodex-02/toolchain",
+  "wispr_reference": {
+    "repo": "https://github.com/rachit-ergodex/wispr-on-chip.git",
+    "head": "42847240bad0d496b47093e0a4f7f1a706d447b8",
+    "harness_tracked_at_head": false,
+    "files": {
+      "tests/arcilator/run.sh": "21a08493cbefb88a014be51f291856c42bbf1747b80d43d4408b0172760376fa",
+      "tests/arcilator/README.md": "7bf6d2c0e5eb0a4de340674b3de5cb70122ab18b535d462aa684e107fb640303",
+      "tests/arcilator/prepare_rtl.py": "73a0cc66746c01290a30879577dfb26537c8429675c8cebdedc2e43dd204f2ff"
+    }
+  },
+  "final_compile_manifest_sha256": "42bbb83010025ec598bdb4f50ddb47da579983bfbf867306526ff5c11fb7839b"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "utils/first_slice/run.py",
+    "--fixture",
+    "/fixtures/first-slice-final/fixture.json",
+    "--image",
+    "/fixtures/native/weights.bin",
+    "--suite",
+    "native",
+    "--transport",
+    "/output/build-02/model_server",
+    "--out",
+    "/output/native-02",
+    "--timeout",
+    "600"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 456.5719215820136
+}

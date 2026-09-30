@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "scope": "functional and cycle-counter parity against historical macOS Verilator report; not same-host performance comparison",
+  "reports": [
+    {
+      "suite": "native",
+      "arcilator_report_sha256": "3f92f99e96b14690bd24974e5c03eafd01a1402f4d6c1e8a84649e62ca18c8b9",
+      "verilator_report_sha256": "285c64ee257c915e5beab6591e36340963ce056d2aa5665124ce3a7d1d3461e1",
+      "compared_fields": [
+        "schema",
+        "status",
+        "suite",
+        "cases",
+        "epoch",
+        "failed",
+        "passed",
+        "rejected_cases",
+        "fixture_sha256",
+        "fpga_executed",
+        "fpga_scale_stage",
+        "image_bytes",
+        "image_sha256",
+        "readback_sha256",
+        "final_readback_sha256",
+        "load",
+        "readback",
+        "sealed_write_rejected",
+        "transactions",
+        "transport_except_backend",
+        "final_transport_except_backend"
+      ],
+      "cases_compared": 396,
+      "mismatches": [],
+      "final_cycles": 99098552,
+      "expected_source_differences": [
+        "weight_store declaration order",
+        "model_server backend adapter",
+        "runner backend allowlist/manifest requirements"
+      ]
+    },
+    {
+      "suite": "synthetic",
+      "arcilator_report_sha256": "cf7542b08f94867f7228b805aee352967741b425ba7a7caa2e2549a9e732fa40",
+      "verilator_report_sha256": "abd0fbbc7439c89192c25d0fee14c6b1e931c523ccad5270f01273f20913ff62",
+      "compared_fields": [
+        "schema",
+        "status",
+        "suite",
+        "cases",
+        "epoch",
+        "failed",
+        "passed",
+        "rejected_cases",
+        "fixture_sha256",
+        "fpga_executed",
+        "fpga_scale_stage",
+        "image_bytes",
+        "image_sha256",
+        "readback_sha256",
+        "final_readback_sha256",
+        "load",
+        "readback",
+        "sealed_write_rejected",
+        "transactions",
+        "transport_except_backend",
+        "final_transport_except_backend"
+      ],
+      "cases_compared": 6,
+      "mismatches": [],
+      "final_cycles": 3348,
+      "expected_source_differences": [
+        "weight_store declaration order",
+        "model_server backend adapter",
+        "runner backend allowlist/manifest requirements"
+      ]
+    }
+  ]
+}
