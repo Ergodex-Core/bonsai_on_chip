@@ -93,6 +93,12 @@ alias are fixed by `doc/microarch/weightstore.md:47` and the packer manifest.
 A Q1_0 address is `tensor_offset + row*(K/128)*18 + group*18`; use widened range
 checks. The largest tensor has 151,669 rows of 288 bytes; output tails matter.
 
+The 27B target also needs the weight store's separate
+[capacity and addressability gate](weightstore.md#27b-capacity-and-addressability-gate).
+Physical HBM size and tile replication do not expand the current 256 MiB image
+limit. Freeze the larger-image ABI and a checkpoint-derived budget for all tensor
+formats/scales plus peak KV/activation/workspace residency before a 27B fit claim.
+
 ## 4. Dataflow and utilization
 
 **Prefill mode:** PE(r,c) owns one `(output row r, token c)` group accumulator.
@@ -421,7 +427,8 @@ not silently skipped or reported as a full-suite pass.
 2. Freeze array-local window sizes, descriptor layout, major ABI ID and actual
    SoC/BAR address allocation; preserve DOT1 compatibility.
 3. Assign an authoritative ternary checkpoint/format separately from the binary
-   fixture. Choose model activation precision/quantization and the scale executor.
+   fixture. For 27B, approve the full residency budget and versioned large-image
+   addressing/bank map. Choose model activation precision/quantization and the scale executor.
 4. Freeze the preferred HBM backend's channel allocation/striping, outstanding
    reads, prefetch/reorder capacity, clock/CDC/reset/error policy and all-writer
    seal. Keep DDR as the independently reported baseline; allocate no new address

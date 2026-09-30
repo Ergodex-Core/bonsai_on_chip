@@ -339,6 +339,45 @@ policy on every port after routing. The example converter discards upper address
 bits and forces downstream IDs to zero; validate full input bounds before any
 width reduction rather than inheriting an alias or promising ID concurrency.
 
+### 27B capacity and addressability gate
+
+The planned 27B product is a separate model target. The 256 MiB v0 aperture and
+current first-slice image limit cover the pinned 1.7B fixture; they do not expose
+all 16 GiB of physical HBM. A 48-bit request offset or 64-bit length register alone
+is not an implemented large-image capability. More HBM channels or physical
+striping cannot enlarge that logical limit.
+
+Before a full 27B image is supported, freeze a versioned capacity/addressing ABI:
+an expanded aperture or wider global streaming/descriptor path with a reviewed
+CoralNPU access scheme, or an explicit banked/window interface. Every operation
+must resolve to an unambiguous full-image logical offset. Bank identity must be
+part of an accepted request or immutable sealed mapping; changing a global
+window while requests, cached lines or staged operands are live is not allowed.
+Retain whole-image hash/epoch/seal semantics across all banks, checked bounds and
+no writable aliases. This document allocates no larger address range or new CSR.
+
+No exact 27B checkpoint, packed image or runtime memory budget is established
+here. If exactly 27 billion values each used two bits, their codes alone would
+occupy 6,750,000,000 bytes (about 6.29 GiB). That illustrative subtotal is neither
+the checkpoint size nor a claim that the model and runtime fit in HBM. Before a
+fit claim, publish a budget extracted from the selected immutable checkpoint and
+validated packed image, with the declared workload limits:
+
+| Budget component | Required accounting |
+| --- | --- |
+| Quantized weights | Actual tensor shapes/formats and stored code bytes, group scales, zero points or other format metadata; no assumed two-bit format |
+| Other tensors | All non-ternary/higher-precision tensors, including normalization and any embeddings/output heads retained in another format; count a tied alias once only when verified |
+| Layout and placement | Image padding, physical allocation slack and reserved channel/controller capacity; exact per-channel occupied ranges and placement of host-only metadata |
+| Writable runtime | KV-cache format and allocation at maximum supported context, batch/concurrent sequences, activation/result buffers, scratch, staging and peak kernel workspace; state which bytes reside in HBM, DDR or on-chip memory |
+
+Keep KV/cache and other writable allocations outside the sealed weight image.
+Sum peak simultaneous residency without double counting, declare safety margin,
+and compare against the HBM capacity actually reserved for this workload rather
+than assuming all 16 GiB is free. Prove accesses above the v0 limit, every bank's
+highest valid line, overflow/alias rejection, and full logical readback/hash on
+the new ABI before reporting full-image support. Capacity, bandwidth and actual
+model inference remain separate acceptance claims.
+
 ### Channel mapping and concurrency proposal
 
 Start with one declared channel/allocation to prove equivalence, then measure
@@ -360,8 +399,9 @@ per channel, S and map version before loading and seal them with the image.
 All loader writes, logical readback/hash, consumer reads and final readback must
 use the same mapping. Hash the exact canonical image in logical byte order;
 physical allocation slack is not appended to `weights.bin`. Protect that slack
-and all aliases as part of the reserved allocation. Firmware tensor addresses
-and the 256 MiB logical aperture do not change when channels change.
+and all aliases as part of the reserved allocation. Within the v0 image limit, firmware tensor addresses
+and the 256 MiB logical aperture do not change when channels change. Larger-model
+addressability requires the separate versioned change above.
 
 HBM bandwidth is usable only if prefetch, reorder storage, CDC and the consumers
 support enough concurrent transactions. Sixteen 64-byte logical credits expose
@@ -447,7 +487,8 @@ and actual FPGA results for its scope.
 
 | Gate | Required evidence |
 | --- | --- |
-| Image contract | All 310 tensor payloads and padding independently verified; exact model/image hashes; shared head alias |
+| Initial 1.7B image contract | All 310 tensor payloads and padding independently verified; exact model/image hashes; shared head alias |
+| 27B capacity/addressability | Pinned checkpoint and complete residency budget; reviewed versioned addressing/bank map; above-v0/bank-limit/alias tests and whole-image hash; no inference or throughput implied |
 | Read protocol | Random stalls, response reordering, tag exhaustion/reuse, boundary/alignment errors and no lost/duplicate responses |
 | Q1_0 addressing | First/last rows and groups, groups crossing lines/4 KiB, FP16 scale/sign order and F32 norm reads |
 | ROM/DDR/HBM equivalence | Identical logical request streams and bytes/status against one independent image oracle; channel/stripe boundaries, reordering and different latency |
