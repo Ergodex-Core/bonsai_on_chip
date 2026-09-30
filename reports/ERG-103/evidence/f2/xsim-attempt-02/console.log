@@ -1,0 +1,166 @@
+c491c4e4b80533b6d01409e26b8082b981ca99ad
+Git LFS fsck OK
+Git LFS fsck OK
+${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/scripts
+#
+#- CREATE CL_PORTS ----------
+#
+#
+#- CREATE SIM_ROOT ----------
+#
+Copying XSIM hbm model config files
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+cp /opt/Xilinx/2025.2/Vivado/data/xsim/xsim.ini ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+" WARNING: XSIM does not require simulation library compilation "
+rm -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+make copy_xsim_ini
+make[1]: Entering directory '${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/scripts'
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/scripts
+make[1]: Nothing to be done for 'copy_xsim_ini'.
+make[1]: Leaving directory '${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/scripts'
+${AWS_HDK}/hdk/common/verif/scripts/compile_cl_ips.py --simulator xsim --complib_dir ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib --compile_cl_ip_dir ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips --in_progress_file ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress;
+Using Python 3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0] from '/usr/bin/env python3'
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi3_256b_reg_slice/xsim/cl_axi3_256b_reg_slice.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi3_256b_reg_slice/xsim/cl_axi3_256b_reg_slice.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_register_slice_light/xsim/axi_register_slice_light.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_register_slice_light/xsim/axi_register_slice_light.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice_light/xsim/cl_axi_register_slice_light.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice_light/xsim/cl_axi_register_slice_light.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_64g_ap/xsim/cl_ddr4_64g_ap.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_64g_ap/xsim/cl_ddr4_64g_ap.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_b/xsim/clk_mmcm_b.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_b/xsim/clk_mmcm_b.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_32g/xsim/cl_ddr4_32g.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_32g/xsim/cl_ddr4_32g.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_c/xsim/clk_mmcm_c.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_c/xsim/clk_mmcm_c.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_axil/xsim/ila_axil.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_axil/xsim/ila_axil.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/vio_0/xsim/vio_0.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/vio_0/xsim/vio_0.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_sc_2x2/xsim/cl_axi_sc_2x2.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_sc_2x2/xsim/cl_axi_sc_2x2.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_hbm/xsim/clk_mmcm_hbm.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_hbm/xsim/clk_mmcm_hbm.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_clock_converter_0/xsim/axi_clock_converter_0.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_clock_converter_0/xsim/axi_clock_converter_0.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_sc_1x1/xsim/cl_axi_sc_1x1.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_sc_1x1/xsim/cl_axi_sc_1x1.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_vio_counter/xsim/ila_vio_counter.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_vio_counter/xsim/ila_vio_counter.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_1/xsim/ila_1.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_1/xsim/ila_1.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter_light/xsim/cl_axi_clock_converter_light.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter_light/xsim/cl_axi_clock_converter_light.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_hbm_mmcm/xsim/cl_hbm_mmcm.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_hbm_mmcm/xsim/cl_hbm_mmcm.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_width_cnv_512_to_256/xsim/cl_axi_width_cnv_512_to_256.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_width_cnv_512_to_256/xsim/cl_axi_width_cnv_512_to_256.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_interconnect_64G_ddr/xsim/cl_axi_interconnect_64G_ddr.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_interconnect_64G_ddr/xsim/cl_axi_interconnect_64G_ddr.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_debug_bridge/xsim/cl_debug_bridge.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_debug_bridge/xsim/cl_debug_bridge.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi4_to_axi3_conv/xsim/cl_axi4_to_axi3_conv.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi4_to_axi3_conv/xsim/cl_axi4_to_axi3_conv.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_interconnect/xsim/cl_axi_interconnect.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_interconnect/xsim/cl_axi_interconnect.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_a/xsim/clk_mmcm_a.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/clk_mmcm_a/xsim/clk_mmcm_a.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_hbm/xsim/cl_hbm.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_hbm/xsim/cl_hbm.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4/xsim/cl_ddr4.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4/xsim/cl_ddr4.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_register_slice/xsim/axi_register_slice.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/axi_register_slice/xsim/axi_register_slice.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/src_register_slice/xsim/src_register_slice.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/src_register_slice/xsim/src_register_slice.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_32g_ap/xsim/cl_ddr4_32g_ap.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_ddr4_32g_ap/xsim/cl_ddr4_32g_ap.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice/xsim/cl_axi_register_slice.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice/xsim/cl_axi_register_slice.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_axi4/xsim/ila_axi4.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/ila_axi4/xsim/ila_axi4.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice_256/xsim/cl_axi_register_slice_256.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_register_slice_256/xsim/cl_axi_register_slice_256.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter/xsim/cl_axi_clock_converter.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter/xsim/cl_axi_clock_converter.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter_256b/xsim/cl_axi_clock_converter_256b.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_axi_clock_converter_256b/xsim/cl_axi_clock_converter_256b.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_sda_axil_xbar/xsim/cl_sda_axil_xbar.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_sda_axil_xbar/xsim/cl_sda_axil_xbar.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/dest_register_slice/xsim/dest_register_slice.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/dest_register_slice/xsim/dest_register_slice.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+Compiling this cl_ip ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_clk_axil_xbar/xsim/cl_clk_axil_xbar.sh
+Doing ${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.ip_user_files/sim_scripts/cl_clk_axil_xbar/xsim/cl_clk_axil_xbar.sh -lib_map_path ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib
+__PYTHON_INFO__: Moving ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/scripts/xsim_cl_ip_compilation.log to ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips/done
+rm -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+${AWS_HDK}/hdk/common/verif/scripts/generate_sim_file_list.py --cl_dir ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice --simulator xsim
+cd ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && ln -s -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib/xsim.ini
+cd ${F2_WORK_ROOT}/build-02/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && xsc   --gcc_compile_options "-DVIVADO_SIM" --gcc_compile_options "-DSV_TEST" --gcc_compile_options "-DDMA_TEST"
+Multi-threading is on. Using 22 slave threads.
+ERROR: [XSIM 43-4272] No C files specified.
+Usage: xsc [options] file...
+(Switches with double dash '--' can also be used with a single dash '-')
+
+Vivado Simulator xsc options:
+  --gcc_compile_options arg Supply an additional option to the compiler. 
+                            Multiple -gcc_compile_options switches can be used.
+  --gcc_link_options arg    Supply an additional option to the linker. Multiple
+                            -gcc_link_options switches can be used.
+  -c [ --compile ]          Generate the object files only from the source C 
+                            files. The link stage is not run.
+  -f [ --file ] arg         Read additional options from the specified file
+  -h [ --help ]             Print this help message
+  -i [ --input_file ] arg   List of input files (one file per switch) for 
+                            compiling or linking
+  --shared                  Run only the linking stage to generate the shared 
+                            library (.so) from the object files.
+  --shared_systemc          Run only the linking stage to generate the shared 
+                            library (.dll) for SystemC from the object files.
+  --static                  Run only the linking stage to generate a static 
+                            library (.a) for SystemC from the object files.
+  --exe                     Create executable for standalone SystemC.
+  --version                 Print version of the Vivado Simulator xsc being 
+                            used 
+  --print_gcc_version       Print version of the C compiler used internally
+  --debug                   Debug SystemC modules. This option is relevant only
+                            when used together with -exe option, otherwise is 
+                            ignored
+  --gcc_path                Print path of the C compiler used internally
+  --mt arg (=auto)          Specifies the number of sub-compilation jobs which 
+                            can be run in parallel. Choices are:
+                              auto: automatic
+                              n: where n is an integer greater than 1
+                              off: turn off multi-threading
+                            (Default:auto)
+  -o [ --output ] arg       Specify the name of output binary. Works with 
+                            --shared, --shared_systemc, --exe options only. 
+                            Default for shared library is 
+                            <current_directory>/xsim.dir/work/xsc/dpi.so
+  --work arg                Specify the work directory where the outputs 
+                            (object files) shall be placed . Default is 
+                            <current_directory>/xsim.dir/work/xsc
+  --lib arg                 Specify the logical library directories that will 
+                            be read. Default is <current_directory>/xsim.dir/wo
+                            rk/xsc
+  --cppversion arg          Set the CPP version; currently CPP 11 and 14 
+                            supported. Default is 11 
+  -v [ --verbose ] arg      Specify verbosity level for printing messages. 
+                            Allowed values are: 0, 1, 2 (Default:0)
+  --sv_stub_dir arg         Specify the Directory for SystemC stub Files 
+                            created from SystemVerilog Modules
+
+SystemC-to-SystemVerilog Stub Generation Options:
+  --sc_stub_gen             Automate SC-to-SV stub and stub library generation 
+                            for SystemC files.
+  --output_stub_file arg    Specify the output stub path and filename.
+
+Examples:
+make: *** [${AWS_HDK}/hdk/common/verif/tb/scripts/Makefile.xsim.inc:50: compile] Error 1

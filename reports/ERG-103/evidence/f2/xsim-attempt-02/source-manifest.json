@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "hdk": "${AWS_HDK}",
+  "hdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "resource_pins": {
+    "hdk/common/ip": "6d32be972e6da854e61a8d3d6ec0466ab491c1b3",
+    "hdk/common/shell_stable/hlx": "2383c2b64572c75163b1b60fbd0abea482c637e6"
+  },
+  "repo_head": "c491c4e4b80533b6d01409e26b8082b981ca99ad",
+  "repo_dirty": false,
+  "source_sha256": {
+    "build/constraints/cl_synth_user.xdc": "b3ec4e608085cec3869a3fa412a336e40a58393d7d638455b70115ee362bd3f6",
+    "build/constraints/cl_timing_user.xdc": "808e6dbded92e78a23fb2d648a5d8a3041956c7272ddac80d576eba8e9126708",
+    "build/constraints/small_shell_cl_pnr_user.xdc": "7babbb415bfffb0c549431f5bcc510d4098fd2089a021c423c04a8c8db02acbd",
+    "build/scripts/audit_dcp.tcl": "0a044b1c97810d7c80c8d1007647689c2543ef63a8e298543b3b33b0dedb5f97",
+    "build/scripts/aws_build_dcp_from_cl.py": "b3cf2eb1698b5001eff9619c9419747d83c7a840af7e32d9b2b8c5e7258d617e",
+    "build/scripts/aws_clock_properties.tcl": "409265a6a1b8680170706287536f4373aa189040947b43ad0f7a6669fe964134",
+    "build/scripts/aws_gen_clk_constraints.tcl": "109fdc208cc16cea00c0d55bcbf2b36c9e662907a329c45a41fc8c61e4a7c8d7",
+    "build/scripts/build_all.tcl": "caace2b6e275cf3a0644f8696807d628fc3fd461c1fe4af1b76ee88de45b702a",
+    "build/scripts/build_level_1_cl.tcl": "e8a4252064cedb97cde15ea9bf64b64acac152151c5a394bda775fea23c504a5",
+    "build/scripts/check_ddr_bram.tcl": "4487dac9a0e46abefabc4b4af6655fbe5ccd4ee4c6ed5bd3a82755327b1615c2",
+    "build/scripts/ddr_io_train.tcl": "091767387c3b0ca1b7a260b357c955f02b894625c3a7071915cad1d85148a70e",
+    "build/scripts/encrypt.tcl": "da05bbdfba432bf57f1d138c2b334072366ea93bde42afaa89318abb2183e2c5",
+    "build/scripts/placement_fix_v22_1.tcl": "5cfc690c29b4aaca606138b30e90dfe5a872bab95fa5ddcac40f4c45c42bab37",
+    "build/scripts/synth_cl_bonsai_first_slice.tcl": "bb3f085cb07ed757e7aa6795deceb93d376a49cb854205226777be13805c45b3",
+    "build/scripts/synth_cl_footer.tcl": "ed5a3240b681ff2c4e717e06e3b431c7213d2cb61a08483916e712ee254a9f77",
+    "build/scripts/synth_cl_header.tcl": "ff60f2c056c87a34b96b2c06b17a04ffcffc5396b3debf13e48c2cd91b7b2029",
+    "build/scripts/vivado_keyfile.txt": "ffdf12be947bf77730ace900d18697cd7f583af4fc0e74d4ecb5b52a2377a708",
+    "build/scripts/vivado_keyfile_2024_1.txt": "ffdf12be947bf77730ace900d18697cd7f583af4fc0e74d4ecb5b52a2377a708",
+    "build/scripts/vivado_vhdl_keyfile.txt": "b51aed48d1df19145cc0065ed57cf0c450d0e229a9ad2b03379022089c4bd801",
+    "build/scripts/vivado_vhdl_keyfile_2024_1.txt": "b51aed48d1df19145cc0065ed57cf0c450d0e229a9ad2b03379022089c4bd801",
+    "design/cl_bonsai_first_slice.sv": "447407bea72db443156057fb8d3190de6eaddfd66888dd81be8388ac7a1732ca",
+    "design/cl_id_defines.vh": "00b46b0033b5352f9404be4ef87fa16c96dded867563bcb08c6aaf76d4fe68aa",
+    "design/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "design/f2_memory_bridge.sv": "63933b8988549953a72d59269c2e88436a5bc1de2d418fe9969572a3e7db6270",
+    "design/first_slice_top.sv": "8bc59dad7ceb47aa70a8b56ef29452c2013d2f1515713e242c6d85206d117457",
+    "design/weight_store.sv": "5a07d0142c7daf8a14eea420830d59b05dcb09bc57ca2e76b041f0f68bef7fe8",
+    "verif/scripts/Makefile": "59f405fae2ecd901e700bdda41dca88c12e22587a5d53004a0556446c33a6214",
+    "verif/scripts/Makefile.tests": "0245b606d712bc71a6a3ce0f0dc76cb7e25e97b53480c9d5faaeae3ae57fb97c",
+    "verif/scripts/top.xsim.f": "e5af8feb2bd24341ff21abdf72366d4b608e0dd5f47cf7050a911ec7f7d0169b",
+    "verif/tests/compact_fixture.bin": "70f6acf418beb54d1561c81248a49ec49c69a1eaa076689a2ea57ada11f506ee",
+    "verif/tests/compact_fixture.json": "e1994953d38130ce6f5bc3334424ae831a9d39c287f354e64297ca0384a1bc57",
+    "verif/tests/first_slice_fixture.svh": "f0e0fb1d4f7962f0f631bbdbe9d77895f6385e157531f0be5191227d4a67505f",
+    "verif/tests/test_first_slice.sv": "03ba908b2432dbfbd14b0f4a812558c6f6d3b17c147b665bbf84332345308000"
+  },
+  "compact_fixture": {
+    "schema": "coralnpu.f2.compact_fixture.v1",
+    "scope": "3 actual Q1_0 blocks relocated to exercise aligned/line-crossing/page-crossing DDR reads; 1 separate synthetic ternary case. Not a full canonical image load or inference.",
+    "canonical_image": {
+      "sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+      "bytes": 242357184,
+      "line_bytes": 64,
+      "manifest_sha256": "21c664d0c029dc7f12440ad93a7fa6688c2b9e78b2143f6e9c179956793a7391"
+    },
+    "source_fixture_sha256": "1fa4d0b6a9a8ea1baf43e9aad5fb60cbba407dcb6f33adc69d8a613d41f9b066",
+    "compact_image_bytes": 4160,
+    "compact_image_sha256": "70f6acf418beb54d1561c81248a49ec49c69a1eaa076689a2ea57ada11f506ee",
+    "independent_integer_oracles_verified": true,
+    "cases": [
+      {
+        "id": "q1_000",
+        "kind": "real_q1_0_signs",
+        "opcode": 1,
+        "tensor": "token_embd.weight",
+        "canonical_offset": 8192,
+        "relocated_offset": 0,
+        "block_sha256": "7392e2e4021b17d0d4670f79a0bc0d01f53316ba102076b11004958baedda38a",
+        "inputs_int8_hex": "807fff0098b01c9d102c108302faf465f32e3a7016681620b46ee7cbd501fdaa62db8bb0144c051310a3f4b4305313d0aef5fb96e63616be5ae7a51ee6e43fe0d598789685fb115698a2d665836ae240c576d0bb0d798fd6ca6bd86243bb329c699e84d1ab1c64a557bba8087f0b62b6cfb3fbf919c234844b87aaf2109a1c59",
+        "expected_dot_i32": 899,
+        "expected_raw_scale_u16": 9968
+      },
+      {
+        "id": "q1_394",
+        "kind": "real_q1_0_signs",
+        "opcode": 1,
+        "tensor": "blk.0.attn_q.weight",
+        "canonical_offset": 44582390,
+        "relocated_offset": 118,
+        "block_sha256": "9837fa0fa8c5d28e14c34afa14ee7c63817355ffdce29e3a8da4019f5fa257d6",
+        "inputs_int8_hex": "807fff00a0a05829392b4970e49ee14643a23670d6f4f5563ddc54f2c924d2367be4899cca9a08721928c2eb9a0c7ec2f2554dbb485e23c68671e77143ea9eacb637d9b71ee05fae4eb67900d3a235899c5d7b96a0a8e447975eae856e81553f47a0af86ab4c4002fd5a6939ed88ef0bd3667d332086c42ed55f8c2bb6159659",
+        "expected_dot_i32": 938,
+        "expected_raw_scale_u16": 10000
+      },
+      {
+        "id": "q1_395",
+        "kind": "real_q1_0_signs",
+        "opcode": 1,
+        "tensor": "blk.0.attn_q.weight",
+        "canonical_offset": 44584946,
+        "relocated_offset": 4082,
+        "block_sha256": "53a078c278e3c5550322bd2bc64211e24f5d3b616fb8ee97db72b7f01cc1fc27",
+        "inputs_int8_hex": "807fff00c6414e04eb4dca2398239c7ecb23edc833d3bdf0ddbf0c3878a33b38bd0074590e569a7999bd5b6c446f6bfaefb5fda4c8375d0bc495a8a29cfffeb0b6e83a459d589887dab6119037921f3e961b80d45a486fc11d5523831deb5a112d3b8ccb76bcae1dc16098db9c93cccc0571958b7f8d3f7d7c25039ee252b5c2",
+        "expected_dot_i32": 713,
+        "expected_raw_scale_u16": 10400
+      },
+      {
+        "id": "synthetic_mixed",
+        "kind": "synthetic_generic_ternary2",
+        "opcode": 2,
+        "canonical_offset": null,
+        "relocated_offset": 256,
+        "block_sha256": "78322c469fe4d794cb9038f3fbc19ff67d3bc170fdcc37d2baf3218d188360b0",
+        "inputs_int8_hex": "807fff006510bee9acd4c6d020dd6416cd3c43e2f8f22821c3be9563728856f0d80dd96136c16471b89ca8680971472257b3bbf6c44b8e3892356078cf1e4bfa7debad2616fe327bc87e5f6016d52ce9fdc6c0a87d3faa1846b2560fe4cc16e268f928292dc9187e9a4e16d0ee0f8a8f696b38992f76dccc54aaebd758a1ed4c",
+        "expected_dot_i32": -999,
+        "expected_raw_scale_u16": 15360
+      }
+    ]
+  },
+  "clock_hz": 250000000,
+  "execution_boundary": "custom RTL plus physical DDR via sh_ddr; no BRAM image backend"
+}

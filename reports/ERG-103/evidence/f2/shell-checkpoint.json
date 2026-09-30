@@ -1,0 +1,7 @@
+{
+  "source_url": "https://aws-fpga-hdk-resources.s3.amazonaws.com/hdk/shell_v10212415/cl_bb_routed.small_shell.dcp",
+  "bytes": 9721380,
+  "sha256": "04a5331321e86cffc7ef740fb6132b29f179e68e2d58ccae5031c989403ecca6",
+  "hdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "status": "verified shell checkpoint prerequisite; not a custom DCP build"
+}

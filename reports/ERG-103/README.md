@@ -1,13 +1,17 @@
 # ERG-103 first-slice implementation and validation report
 
-Status: **In progress; physical FPGA gate blocked pending authorization to
-restart the designated F2 instance.** This report covers the first executable
-weight-store/DOT128/mailbox slice. It does not close ERG-103.
+Status: **In progress; custom XSIM has compiled and is running the vendor DDR model.**
+As of 2026-09-30, the authorized F2 instance is running and source/fixture
+checks passed; custom FPGA validation remains incomplete. This report covers the first executable weight-store/DOT128/mailbox
+slice and does not close ERG-103.
 
 Issue: [Week 1: Start core RTL and tooling work](https://linear.app/ergodex-ai/issue/ERG-103/week-1-start-core-rtl-and-tooling-work).
 Draft PR: [#2 — sealed DDR weight-store and DOT128](https://github.com/Ergodex-Core/bonsai_on_chip/pull/2).
-Validated implementation revision: `3ee0f99eb7216fe41ba55e719584c662313d3b10`.
-Subsequent report commits change evidence only; source hashes bind each run.
+Locally validated source revision: `3ee0f99eb7216fe41ba55e719584c662313d3b10`.
+Current F2 harness revision: `3d849975bc0e39197a7964125273ee3189a6662c`.
+Each run is bound to its recorded source hashes. Later commits include harness
+fixes as well as reports; the local results below are not validation of those
+new harness changes or physical FPGA execution.
 Development repository: [bonsai_on_chip](https://github.com/Ergodex-Core/bonsai_on_chip).
 Implementation owner: Rachit Tibrewal (Linear assignee); implementation and
 execution: Codex. Separate Codex agents reviewed RTL, host runtime and F2
@@ -128,7 +132,8 @@ buffer reservation. Commit `3ee0f99e` adds `<cstddef>` and evaluates the reserve
 expression in `std::size_t`; the existing bounds still limit it to 1–4,096 bytes.
 Independent review found no numerical or interface change. The entire workflow
 was then rebuilt and rerun: native execution took 29.017 seconds and synthetic
-execution 0.095 seconds. All 44 validation source hashes match the checkout.
+execution 0.095 seconds. All 44 validation source hashes match that run's
+`3ee0f99e` source snapshot; the later F2 harness changes are outside that run.
 The [CodeQL snapshot](evidence/ci-source3ee.json) records successful checks for
 this exact source commit as observed on 2026-09-27 at 20:26:33 UTC.
 
@@ -154,6 +159,32 @@ path. The wrapper uses `sh_ddr`; HBM and other write masters are disabled. PCI
 identity is `1d0f:f010`, subsystem `1d0f:0103`. The shell clock target is 250 MHz;
 this is a target, not measured timing closure or throughput.
 
+F2 harness revision `c05d541599fc568f1b03b48b7abe582c5c57f1d7` adds the test
+Makefile and required Small Shell place-and-route XDC, and fixes Vivado version
+banner casing checks. The locally validated compute/store/bridge RTL is unchanged
+from `3ee0f99e`. All four transferred inputs passed SHA256 checks and preparation passed on F2.
+The [first attempt](evidence/f2/xsim-attempt-01/result.json) ran at
+15:44:54-15:44:58 UTC and failed before custom RTL compilation: the pinned
+AWS IP helper could not discover its Git root from the external CL directory.
+The [retained console log](evidence/f2/xsim-attempt-01/console.log) records exit 2.
+A separate management-channel failure obscured command status until recovery;
+rebooting the dedicated instance restored access without losing EBS evidence.
+
+Commit `c491c4e4` binds Git discovery to the pinned HDK for the simulation
+invocation, without changing vendor files. A local reproduction against the
+actual pinned helper confirms that correction; it is not an RTL test. The fresh
+remote rerun began at 15:55:20 UTC and completed vendor IP compilation, then
+failed at 15:56:47 UTC because the custom Makefile omitted the shell C/DPI
+support inputs. Its [result and source binding](evidence/f2/xsim-attempt-02/result.json)
+and [full log](evidence/f2/xsim-attempt-02/console.log) retain that failed attempt.
+
+Commit `3d849975` adds the pinned shell DPI inputs and stages a minimal XSIM
+run script. The third fresh attempt has passed compilation/elaboration and is
+running the custom wrapper against the vendor DDR model. No final XSIM pass,
+custom DCP or physical result is claimed while that run remains incomplete.
+The [AWS shell checkpoint](evidence/f2/shell-checkpoint.json) is independently
+downloaded and checksum-verified for the later build; it is not our custom DCP.
+
 The prepared XSIM fixture contains three actual native cases from the same
 fixture inventory, explicitly relocated to exercise aligned, line-crossing
 and page-crossing reads, plus a separate synthetic ternary case. Its compact
@@ -164,10 +195,11 @@ and all 396 actual-weight commands through the same host runtime.
 
 | Gate | Status |
 | --- | --- |
-| AWS shell/DDR XSIM | Not run |
-| Custom DCP synthesis, routed timing/resources/DRC | Not run |
-| Custom AFI/AGFI creation and load | Not run |
-| Physical full-image load, seal, DOT128 and counters | Blocked; F2 stopped |
+| F2 execution preparation | PASS: authorized instance running; source/model hashes and fresh preparation verified |
+| AWS shell/DDR XSIM | Two startup failures retained; third fresh run compiled/elaborated and running |
+| Custom DCP synthesis, routed timing/resources/DRC | Pending; not run |
+| Custom AFI/AGFI creation and load | Pending; slot 0 cleared, no AFI loaded |
+| Physical full-image load, seal, DOT128 and counters | Pending custom build/image; not run |
 | Arcilator execution of this new slice | Not run; Verilator is the current local backend |
 | Reviewed and merged integration PR | Pending |
 
@@ -177,14 +209,18 @@ slice's FPGA result. Physical `resp:0` means SDK call completion because PCIe
 mmap does not expose AXI response codes; persistent RTL errors and independent
 readback provide the hardware evidence.
 
-Blocker owner: Rachit Tibrewal for billable instance restart authorization;
-Codex for the subsequent execution. Automatic approval review rejected starting
-the stopped F2 without explicit confirmation, and the instance remains stopped.
-After approval: run fresh preflight, pinned XSIM, custom DCP build, review timing
-and DRC, create/load the new AFI, run the canonical and synthetic suites after
-separate coordinated reloads, and attach actual results. No hardware fallback
-has been substituted. Keep the issue In Progress until these gates and review/
-merge are complete.
+The earlier authorization/authentication block is cleared: the user explicitly
+authorized F2 execution and AWS login succeeded on 2026-09-30. The designated
+F2.6xlarge is running with healthy instance checks and SSM online; slot 0 has been
+cleared and has no AFI loaded. This is host/slot readiness, not accelerator
+validation. Remote source and fixture staging passed. The first remote startup
+failure and current rerun are recorded above.
+
+Accountable owner: Rachit Tibrewal; execution owner: Codex. Next: complete the
+pinned custom XSIM rerun and DCP build, review timing and DRC, create/load the
+new AFI, run the canonical and synthetic suites after separate coordinated
+reloads, and attach the actual results. No hardware fallback has been substituted.
+Keep the issue In Progress until these gates and review/merge are complete.
 
 ## Review and remaining scope
 
