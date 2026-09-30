@@ -1,0 +1,24 @@
+{
+  "status": "PASS with scope limits",
+  "review_type": "independent automated technical review, not human approval",
+  "source_revision": "839e5fc1729c36903843ccc03ea6742bd4a265f9",
+  "verified_manifest_files": 34,
+  "verified_repository_inputs": 17,
+  "verified_pinned_vendor_scripts": 14,
+  "verified_generated_fixture_files": 3,
+  "check_breakdown": {
+    "setup": 2,
+    "compact_line_comparisons": 65,
+    "four_jobs": 20
+  },
+  "all_log_results_match_independent_decode": true,
+  "real_blocks_traced": "GGUF -> canonical image -> compact fixture",
+  "limitations": [
+    "Three real blocks from two tensors and one valid synthetic case only",
+    "No complete canonical-image or 396-case execution in XSIM",
+    "No post-seal rejection, final readback, reset/fault injection or exact read-count checks in this XSIM smoke",
+    "Two vendor assertions ignored by XSIM; FIFO models omit CDC synchronization delays",
+    "Synthetic scale0x3c00 is defined unit scale, not stored payload",
+    "No physical FPGA, HBM, Arcilator, full-model inference or routed-timing claim"
+  ]
+}

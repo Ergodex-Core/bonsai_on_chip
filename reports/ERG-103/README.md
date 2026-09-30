@@ -196,6 +196,11 @@ microseconds; this is not Arcilator speed, board throughput or model latency.
 XSIM warns that two vendor-IP assertions are ignored and FIFO models omit
 synchronization delays. The 87 explicit custom checks passed; this functional
 smoke is not CDC verification or proof that every vendor assertion was evaluated.
+Coverage is three real blocks from two tensors plus one valid synthetic case.
+This smoke does not test post-seal write rejection, a second full readback,
+reset/fault recovery, or exact line-read counts; those remain separate local
+regressions and physical-suite gates. The synthetic scale 0x3c00 is its defined
+unit-scale convention; the three native scales are read from the payload.
 
 The [physical host transport build](evidence/f2/transport-build-01/result.json)
 also passed on the F2 Linux host against the pinned SDK, without opening the
