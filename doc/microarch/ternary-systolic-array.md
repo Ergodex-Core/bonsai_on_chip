@@ -80,10 +80,12 @@ Keep these formats distinct:
 - **Generic ternary2 fixture:** 128 two-bit operations, 32 bytes, codes
   `00=0`, `01=+1`, `10=-1`, `11=invalid`. The current fixture has implicit scale
   FP16 1.0. It exercises three-valued arithmetic, not a native ternary model.
-- **Future trained ternary checkpoint:** unresolved model identity, packing,
-  group size, scale/zero-point semantics and activation precision. Require a new
-  format descriptor and independent decoder. Do not relabel Bonsai Q1_0 or
-  append scales to the synthetic format under its existing format ID.
+- **27B ternary candidate:** an immutable official checkpoint and its native
+  packing metadata are identified in the [candidate design note](bonsai-27b-candidate.md).
+  Selection, full-payload validation, activation precision and model equivalence
+  remain open. PQ2_0/PTQ1_0 need separate descriptors and independent decoders;
+  neither may reuse the current Q1_0 or generic ternary2 format ID. The candidate
+  also requires a specified Hadamard transform and hybrid-attention helpers.
 
 The pinned fixture is Bonsai-1.7B Q1_0, not the planned 27B ternary product.
 Its canonical image is 242,357,184 bytes (32 padding bytes), image SHA256

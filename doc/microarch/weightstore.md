@@ -356,8 +356,10 @@ window while requests, cached lines or staged operands are live is not allowed.
 Retain whole-image hash/epoch/seal semantics across all banks, checked bounds and
 no writable aliases. This document allocates no larger address range or new CSR.
 
-No exact 27B checkpoint, packed image or runtime memory budget is established
-here. If exactly 27 billion values each used two bits, their codes alone would
+An immutable public 27B candidate has now been identified in the
+[candidate design note](bonsai-27b-candidate.md); it has not been selected, fully
+hashed, numerically validated or converted into a hardware image. No validated
+packed image or peak runtime memory budget is established here. If exactly 27 billion values each used two bits, their codes alone would
 occupy 6,750,000,000 bytes (about 6.29 GiB). That illustrative subtotal is neither
 the checkpoint size nor a claim that the model and runtime fit in HBM. Before a
 fit claim, publish a budget extracted from the selected immutable checkpoint and
