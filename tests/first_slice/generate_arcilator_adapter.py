@@ -1,0 +1,105 @@
+"""Generate a public-port-only adapter from Arcilator's emitted state metadata."""
+import argparse
+import json
+from pathlib import Path
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('state', type=Path)
+    parser.add_argument('output', type=Path)
+    args = parser.parse_args()
+    models = json.loads(args.state.read_text())
+    if len(models) != 1 or models[0]['name'] != 'first_slice_sim_top':
+        raise ValueError('expected exactly first_slice_sim_top')
+    ports = [
+        p for p in models[0]['states'] if p['type'] in ('input', 'output')
+    ]
+    names = [p['name'] for p in ports]
+    if len(names) != len(set(names)) or not all(n.isidentifier()
+                                                for n in names):
+        raise ValueError('invalid public port names')
+    decls, inits = [], []
+    for p in ports:
+        bits = p['numBits']
+        if bits == 512:
+            typ = 'ArcWords'
+        elif 0 < bits <= 64:
+            width = next(w for w in (8, 16, 32, 64) if bits <= w)
+            typ = f'ArcPort<uint{width}_t>'
+        else:
+            raise ValueError('unsupported public port width')
+        direction = 'Input' if p['type'] == 'input' else 'Output'
+        decls.append(f'  {typ} {p["name"]};')
+        inits.append(
+            f'      {p["name"]}(port("{p["name"]}", {bits}, Signal::{direction}), {bits})'
+        )
+    code = r'''// Generated from public IO metadata; no internal state or clock-history access.
+#pragma once
+#include <array>
+#include <cstdint>
+#include <cstring>
+#include <stdexcept>
+#include <string>
+#include "first_slice_sim_top.h"
+extern "C" void arcRuntimeIR_simStepOnce(uint8_t *, uint64_t, void (*)(uint8_t *));
+extern "C" void arcRuntimeIR_simStepSettled(uint8_t *, uint64_t, void (*)(uint8_t *));
+
+template <typename T> class ArcPort {
+  uint8_t *data;
+  unsigned bits;
+ public:
+  ArcPort(uint8_t *p, unsigned b) : data(p), bits(b) {}
+  operator T() const {
+    T value = 0;
+    std::memcpy(&value, data, (bits + 7) / 8);
+    return bits == 64 ? value : T(uint64_t(value) & ((uint64_t(1) << bits) - 1));
+  }
+  ArcPort &operator=(const ArcPort &other) { return *this = T(other); }
+  ArcPort &operator|=(T value) { return *this = T(T(*this) | value); }
+  ArcPort &operator=(T value) {
+    if (bits < 64) value = T(uint64_t(value) & ((uint64_t(1) << bits) - 1));
+    std::memcpy(data, &value, (bits + 7) / 8);
+    return *this;
+  }
+};
+class ArcWords {
+  uint8_t *data;
+ public:
+  ArcWords(uint8_t *p, unsigned bits) : data(p) {
+    if (bits != 512) throw std::runtime_error("expected 512-bit public port");
+  }
+  ArcPort<uint32_t> operator[](unsigned i) {
+    if (i >= 16) throw std::runtime_error("public port word index overflow");
+    return ArcPort<uint32_t>(data + 4 * i, 32);
+  }
+};
+class ArcFirstSlice {
+  first_slice_sim_top model;
+  uint8_t *port(const char *name, unsigned bits, Signal::Type direction) {
+    for (const auto &p : first_slice_sim_topLayout::io)
+      if (std::string(p.name) == name) {
+        if (p.numBits != bits || p.type != direction ||
+            p.offset + (bits + 7) / 8 > model.storage.size())
+          throw std::runtime_error("invalid generated IO metadata");
+        return model.storage.data() + p.offset;
+      }
+    throw std::runtime_error(std::string("missing public port: ") + name);
+  }
+ public:
+'''
+    code += '\n'.join(decls) + '\n  ArcFirstSlice() :\n'
+    code += ',\n'.join(inits) + ' {}\n'
+    code += r'''  void eval() {
+    auto step = first_slice_sim_top::settlesInOneEval()
+        ? arcRuntimeIR_simStepOnce : arcRuntimeIR_simStepSettled;
+    step(model.storage.data(), first_slice_sim_topLayout::numStateBytes,
+         +[](uint8_t *state) { first_slice_sim_top_eval(state); });
+  }
+};
+'''
+    args.output.write_text(code)
+
+
+if __name__ == '__main__':
+    main()

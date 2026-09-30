@@ -48,7 +48,9 @@ class TransportProtocolTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1, result.stderr)
         replies = [json.loads(line) for line in result.stdout.splitlines()]
         self.assertEqual(len(replies), len(commands), result.stdout)
-        self.assertEqual(replies[0]['backend'], 'verilator')
+        expected = os.environ.get('FIRST_SLICE_EXPECTED_BACKEND', 'verilator')
+        self.assertIn(expected, ('verilator', 'arcilator'))
+        self.assertEqual(replies[0]['backend'], expected)
         for reply in replies[:-1]:
             self.assertIs(reply.get('ok'), True, reply)
             if 'resp' in reply:

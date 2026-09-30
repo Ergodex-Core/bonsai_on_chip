@@ -20,6 +20,6 @@ measurements explicitly. Each issue delivers a PR, runnable simulation, actual
 FPGA evidence for its scope and an attached report. Design-only proposals stay
 separate from implemented features.
 
-Both decks contain five16:9 slides, editable text and native tables. Package,
+Both decks contain five 16:9 slides, editable text and native tables. Package,
 layout, font-policy and first-party import checks passed; all rendered slides
 were visually inspected. Native PowerPoint execution was not tested.

@@ -52,3 +52,59 @@ The harness verifies header hashes, refuses existing output directories and
 retains per-case stdout/stderr plus `report.json`. It remains effective under
 `python3 -O`. The mock result is separate from the actual SDK link check and
 from all RTL, XSIM and hardware evidence.
+
+## Arcilator integrated first-slice workflow
+
+The Arcilator path compiles the same store, DOT128, mailbox and F2 memory bridge
+through `first_slice_sim_top`. It keeps the existing seed-103 C++ AXI/DDR model,
+Python commands, canonical image checks and arithmetic oracle. A generated
+adapter resolves only public ports from compiler metadata. It uses the runtime's
+settled evaluation API when required; it does not patch internal state or clock
+history. The declaration of `image_base`/`image_bytes` precedes their assignments
+for compatibility with the CIRCT frontend.
+
+This follows the source emission, explicit compiler stages and retained failure
+logs used in [Wispr-on-chip](https://github.com/rachit-ergodex/wispr-on-chip), and
+the metadata/settling approach of the existing
+[Arcilator parity pilot](../arcilator/README.md). Wispr's model data and generated
+RTL are not dependencies of this test.
+
+On a Linux x86-64 host, provide an authorized external toolchain matching the
+pilot's documented hashes, Python 3 with Jinja2, Clang/C++17, and the runtime
+libraries pthread, atomic, zlib, tinfo, libm and libdl. The toolchain must include
+`bin/{circt-verilog,arcilator,opt,llc}`, generated-header/runtime support and the
+four static libraries named in `build_arcilator.py`. No tools are downloaded or
+installed by these scripts. The recorded external package uses CIRCT frontend
+`e2f80d17f` and Arcilator `272cba1b5`.
+
+Prepare the existing pinned 1.7B fixture using `prepare_fixture.py` as documented
+above, or use byte-identical previously generated fixtures. The native image must
+retain its adjacent canonical `manifest.json`. Then run from a clean checkout:
+
+```bash
+python3 tests/first_slice/run_arcilator.py \
+  --toolchain /absolute/path/to/toolchain \
+  --fixture /absolute/path/to/fixture/fixture.json \
+  --native-image /absolute/path/to/native/weights.bin \
+  --synthetic-image /absolute/path/to/fixture/synthetic-ternary2.bin \
+  --out /absolute/path/to/new-evidence-directory
+```
+
+The output directory must be new. Every compiler stage has a timeout; timed-out
+process groups are terminated and retained evidence remains failed. The runner
+requires the mailbox 3 tests, protocol 4 tests, synthetic 6 cases and native 396
+cases, complete subreports, matching binary/build identities and unchanged input
+hashes. Native execution includes the full 242,357,184-byte PCIS load and both
+full readback hashes. Two synthetic invalid-format cases must be rejected as
+expected. No failed or unported test is skipped to obtain a passing report.
+
+`validation.json` and the individual build/suite logs preserve the source and
+tool hashes, commands, statuses, cycle counters and wall times. Rates cover the
+whole host workflow, including load/readback, hashes and command exchange. Record
+whether the host is native x86-64 or an emulated Linux/amd64 container; compare
+simulators only with the same host, fixture, bus driver and scheduling conditions.
+
+This command covers the integrated first slice. It does not run the separate
+DOT128, store, mailbox-fault or bridge unit benches, the complete repository
+suite, full CoralNPU, model token generation, FPGA hardware or the systolic-array
+proposal. Those results must remain separately identified.

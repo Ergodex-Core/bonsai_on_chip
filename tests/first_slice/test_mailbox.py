@@ -30,7 +30,9 @@ class MailboxTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.log = (self.root / 'transport.log').open('w')
         self.bus = RUNTIME.Bus(Path(executable), self.log, 10)
-        self.assertEqual(self.bus.request('INFO')['backend'], 'verilator')
+        expected = os.environ.get('FIRST_SLICE_EXPECTED_BACKEND', 'verilator')
+        self.assertIn(expected, ('verilator', 'arcilator'))
+        self.assertEqual(self.bus.request('INFO')['backend'], expected)
 
     def tearDown(self):
         self.bus.close()

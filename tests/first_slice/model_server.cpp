@@ -17,8 +17,16 @@
 #include <string>
 #include <vector>
 
+#ifdef USE_ARC
+#include "arcilator_adapter.h"
+using FirstSliceModel                 = ArcFirstSlice;
+static constexpr const char *kBackend = "arcilator";
+#else
 #include "Vfirst_slice_sim_top.h"
 #include "verilated.h"
+using FirstSliceModel                 = Vfirst_slice_sim_top;
+static constexpr const char *kBackend = "verilator";
+#endif
 
 struct Sample {
   bool oa, ow, ob, oar, orr, pa, pw, pb, par, pr;
@@ -30,7 +38,7 @@ struct Sample {
 
 class Simulation {
  public:
-  Vfirst_slice_sim_top d;
+  FirstSliceModel d;
   uint64_t cycles = 0, reads = 0, writes = 0, requests = 0;
   uint32_t random_state = 103;
   std::vector<uint8_t> memory;
@@ -376,7 +384,12 @@ class Simulation {
 };
 
 int main(int argc, char **argv) {
+#ifndef USE_ARC
   Verilated::commandArgs(argc, argv);
+#else
+  (void)argc;
+  (void)argv;
+#endif
   try {
     Simulation sim;
     std::string line;
@@ -387,8 +400,9 @@ int main(int argc, char **argv) {
       if (op == "QUIT")
         break;
       if (op == "INFO")
-        std::cout << "{\"ok\":true,\"backend\":\"verilator\",\"seed\":103,\"cycles\":" << sim.cycles
-                  << ",\"ddr_reads\":" << sim.reads << ",\"ddr_writes\":" << sim.writes
+        std::cout << "{\"ok\":true,\"backend\":\"" << kBackend
+                  << "\",\"seed\":103,\"cycles\":" << sim.cycles << ",\"ddr_reads\":" << sim.reads
+                  << ",\"ddr_writes\":" << sim.writes
                   << ",\"memory_model\":\"AXI512 variable latency 1-11 cycles with "
                      "independent channel stalls\"}";
       else if (op == "READ") {

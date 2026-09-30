@@ -264,7 +264,7 @@ def validate_cases(fixture, image, native):
 def verify_build_manifest(executable, manifest_path, repo):
     manifest = json.loads(manifest_path.read_text())
     if manifest.get('schema') != 1 or manifest.get('backend') not in (
-            'verilator', 'aws_f2'):
+            'verilator', 'arcilator', 'aws_f2'):
         raise ValueError('unsupported transport build manifest')
     if manifest.get('binary_sha256') != sha256(executable):
         raise ValueError('transport binary differs from build manifest')
@@ -273,11 +273,16 @@ def verify_build_manifest(executable, manifest_path, repo):
         for name in
         ('weight_store', 'first_slice_top', 'dot128', 'f2_memory_bridge')
     }
-    if manifest['backend'] == 'verilator':
+    if manifest['backend'] in ('verilator', 'arcilator'):
         required.update((
             'tests/first_slice/model_server.cpp',
             'tests/first_slice/first_slice_sim_top.sv'
         ))
+        if manifest['backend'] == 'arcilator':
+            required.update((
+                'tests/first_slice/generate_arcilator_adapter.py',
+                'tests/first_slice/build_arcilator.py'
+            ))
     else:
         required.update((
             'fpga/aws_f2/first_slice/transport.cpp',
@@ -358,7 +363,7 @@ def run(args):
         log = (out / 'transport.log').open('w')
         bus = Bus(args.transport.resolve(), log, args.timeout)
         info = bus.request('INFO')
-        if info.get('backend') not in ('verilator', 'aws_f2'):
+        if info.get('backend') not in ('verilator', 'arcilator', 'aws_f2'):
             raise ValueError('unsupported or undisclosed execution backend')
         if info['backend'] == 'aws_f2' and not info.get('agfi'):
             raise ValueError(
@@ -417,7 +422,8 @@ def run(args):
         with readback.open('rb') as first_bytes:
             first_word = int.from_bytes(first_bytes.read(4), 'little')
         poke = bus.request(f'POKE 0 {first_word ^ 0xffffffff}')
-        if info['backend'] == 'verilator' and poke.get('resp') not in (2, 3):
+        if info['backend'] in ('verilator',
+                               'arcilator') and poke.get('resp') not in (2, 3):
             raise RuntimeError(
                 'simulated sealed write did not return an AXI error'
             )
