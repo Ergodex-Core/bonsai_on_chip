@@ -283,7 +283,6 @@ deliverables, not HBM or array implementation/simulation claims. Full CoralNPU
 Arcilator execution and its cycles/second remain unmeasured; the earlier
 [Arcilator pilot](../ERG-102/arcilator-pilot.md) covers a small controller only.
 
-
 ## Arcilator first-slice execution and EC2 replay — 2026-09-30
 
 The [Arcilator evidence index](evidence/arcilator/local-emulated/index.json)
