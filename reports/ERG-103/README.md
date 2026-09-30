@@ -1,6 +1,6 @@
 # ERG-103 first-slice implementation and validation report
 
-Status: **In progress; custom XSIM has compiled and is running the vendor DDR model.**
+Status: **In progress; custom F2-target XSIM passed; synthesis/routed build is underway.**
 As of 2026-09-30, the authorized F2 instance is running and source/fixture
 checks passed; custom FPGA validation remains incomplete. This report covers the first executable weight-store/DOT128/mailbox
 slice and does not close ERG-103.
@@ -8,7 +8,7 @@ slice and does not close ERG-103.
 Issue: [Week 1: Start core RTL and tooling work](https://linear.app/ergodex-ai/issue/ERG-103/week-1-start-core-rtl-and-tooling-work).
 Draft PR: [#2 — sealed DDR weight-store and DOT128](https://github.com/Ergodex-Core/bonsai_on_chip/pull/2).
 Locally validated source revision: `3ee0f99eb7216fe41ba55e719584c662313d3b10`.
-Current F2 harness revision: `3d849975bc0e39197a7964125273ee3189a6662c`.
+Validated F2-target XSIM source: `839e5fc1729c36903843ccc03ea6742bd4a265f9`.
 Each run is bound to its recorded source hashes. Later commits include harness
 fixes as well as reports; the local results below are not validation of those
 new harness changes or physical FPGA execution.
@@ -179,11 +179,33 @@ support inputs. Its [result and source binding](evidence/f2/xsim-attempt-02/resu
 and [full log](evidence/f2/xsim-attempt-02/console.log) retain that failed attempt.
 
 Commit `3d849975` adds the pinned shell DPI inputs and stages a minimal XSIM
-run script. The third fresh attempt has passed compilation/elaboration and is
-running the custom wrapper against the vendor DDR model. No final XSIM pass,
-custom DCP or physical result is claimed while that run remains incomplete.
-The [AWS shell checkpoint](evidence/f2/shell-checkpoint.json) is independently
-downloaded and checksum-verified for the later build; it is not our custom DCP.
+run script. The [third attempt](evidence/f2/xsim-attempt-03/result.json) compiled
+and elaborated, then failed the DDR-ready check before any DOT job. Commit
+`839e5fc1` adds the pinned shell's DDR statistics initialization pulse and the
+required calibration wait to the testbench. Compute/store/bridge RTL is unchanged.
+
+The [fourth fresh attempt passed](evidence/f2/xsim-attempt-04/result.json) at
+16:09:47–16:12:26 UTC on 2026-09-30, with **87 assertions**, three actual Q1_0
+cases and one separate synthetic ternary case. All 4,160 compact-fixture bytes
+matched readback. Signed dot results were **899, 938, 713 and -999**; raw FP16
+scale bits were **0x26f0, 0x2710, 0x28a0 and 0x3c00** and matched exactly.
+The [complete test log](evidence/f2/xsim-attempt-04/test_first_slice.log),
+[source manifest](evidence/f2/xsim-attempt-04/source-manifest.json), runner hash,
+exit code and unchanged HDK pin are retained. The test ended at 64.224 simulated
+microseconds; this is not Arcilator speed, board throughput or model latency.
+XSIM warns that two vendor-IP assertions are ignored and FIFO models omit
+synchronization delays. The 87 explicit custom checks passed; this functional
+smoke is not CDC verification or proof that every vendor assertion was evaluated.
+
+The [physical host transport build](evidence/f2/transport-build-01/result.json)
+also passed on the F2 Linux host against the pinned SDK, without opening the
+FPGA. Its binary SHA256 is
+`2164ca15edd84b8f7ce059ea805a9d69b35650d9d05500ad67a59e4b2f16038f`.
+
+Synthesis/routed build started at 16:14:48 UTC on the same prepared source.
+Final timing, utilization and DRC are pending. The
+[AWS shell checkpoint](evidence/f2/shell-checkpoint.json) was independently
+downloaded and checksum-verified; it is not our custom DCP.
 
 The prepared XSIM fixture contains three actual native cases from the same
 fixture inventory, explicitly relocated to exercise aligned, line-crossing
@@ -196,8 +218,9 @@ and all 396 actual-weight commands through the same host runtime.
 | Gate | Status |
 | --- | --- |
 | F2 execution preparation | PASS: authorized instance running; source/model hashes and fresh preparation verified |
-| AWS shell/DDR XSIM | Two startup failures retained; third fresh run compiled/elaborated and running |
-| Custom DCP synthesis, routed timing/resources/DRC | Pending; not run |
+| AWS shell/DDR XSIM | PASS: 87 assertions, three actual Q1_0 cases, one synthetic case, complete 4,160-byte readback; three prior failures retained |
+| Custom DCP synthesis, routed timing/resources/DRC | In progress; started 2026-09-30 16:14:48 UTC; final reports pending |
+| Linux physical host transport build | PASS against pinned SDK; compile/link evidence only |
 | Custom AFI/AGFI creation and load | Pending; slot 0 cleared, no AFI loaded |
 | Physical full-image load, seal, DOT128 and counters | Pending custom build/image; not run |
 | Arcilator execution of this new slice | Not run; Verilator is the current local backend |
@@ -213,11 +236,11 @@ The earlier authorization/authentication block is cleared: the user explicitly
 authorized F2 execution and AWS login succeeded on 2026-09-30. The designated
 F2.6xlarge is running with healthy instance checks and SSM online; slot 0 has been
 cleared and has no AFI loaded. This is host/slot readiness, not accelerator
-validation. Remote source and fixture staging passed. The first remote startup
-failure and current rerun are recorded above.
+validation. Remote source and fixture staging passed. Three failed attempts and the
+subsequent custom XSIM pass are recorded above.
 
 Accountable owner: Rachit Tibrewal; execution owner: Codex. Next: complete the
-pinned custom XSIM rerun and DCP build, review timing and DRC, create/load the
+DCP build, review timing and DRC, create/load the
 new AFI, run the canonical and synthetic suites after separate coordinated
 reloads, and attach the actual results. No hardware fallback has been substituted.
 Keep the issue In Progress until these gates and review/merge are complete.
@@ -235,3 +258,19 @@ lists CoralNPU/RVV wiring, native operator numerics, scale/dequantization,
 attention/KV-cache and scheduling cases still required in Week 3. Current cycle
 counts describe serial DOT128 and simulated memory; they are not model tokens/s,
 FPGA bandwidth or ASIC power/area estimates.
+
+## HBM ROM-equivalent and ternary-array design
+
+The [weight-store architecture](../../doc/microarch/weightstore.md) now prefers
+HBM for the later FPGA backend. Host loading, full-image verification, draining
+admitted writes, and sealing every writer must precede inference. Backend reset
+invalidates the loaded image and outstanding epochs; HBM is volatile and requires
+reload/verify/reseal. The current implementation still uses DDR.
+
+The [ternary-array integration design](../../doc/microarch/ternary-systolic-array.md)
+and [independent HBM review](../../doc/microarch/hbm-rom-equivalent-review.md)
+cover the common logical interface, candidate HBM channel mapping, reset and
+write-gate coverage, and outstanding-read requirements. These are design-only
+deliverables, not HBM or array implementation/simulation claims. Full CoralNPU
+Arcilator execution and its cycles/second remain unmeasured; the earlier
+[Arcilator pilot](../ERG-102/arcilator-pilot.md) covers a small controller only.

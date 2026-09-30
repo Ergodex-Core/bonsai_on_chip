@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "started_utc": "2026-09-30T16:09:47Z",
+  "finished_utc": "2026-09-30T16:12:26Z",
+  "source_revision": "839e5fc1729c36903843ccc03ea6742bd4a265f9",
+  "execution_scope": "XSIM vendor DDR model on an F2 host CPU; not physical FPGA execution or full canonical-image loading",
+  "assertions": 87,
+  "real_q1_cases": 3,
+  "synthetic_ternary_cases": 1,
+  "compact_bytes_read_back": 4160,
+  "canonical_full_image": false,
+  "simulated_final_time_ns": 64224,
+  "dot_results_i32": [
+    899,
+    938,
+    713,
+    -999
+  ],
+  "raw_scale_results_u16": [
+    9968,
+    10000,
+    10400,
+    15360
+  ],
+  "pass_marker": "FIRST_SLICE_TEST_PASS assertions=87 real_q1_cases=3 synthetic_ternary_cases=1 compact_bytes=4160 canonical_full_image=0",
+  "artifacts": {
+    "console.log": {
+      "original_sha256": "266aae85b8ac81a63805033721f90ba46ff815afd8bc8139167945a8922aa09f",
+      "published_sha256": "d5e2bef0ba1e4f84f417c0d7f5823affb6cb6429cb8dd425423b7c20906a6293",
+      "bytes": 80443
+    },
+    "exit-code.txt": {
+      "original_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "published_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "hdk-setup.log": {
+      "original_sha256": "e470e8468564f05418bde270a1e7fca01941dbac741fd55e621284ad5e8934ee",
+      "published_sha256": "361b15f4bb675f6f885f141f14ce034d3ee5764a9e003c58a02472b53b522b67",
+      "bytes": 596
+    },
+    "pass-marker.txt": {
+      "original_sha256": "419cdce20d03a8ef8bd1152b9b511de07a8b6bce2deebaa9f489839cfd31d2dd",
+      "published_sha256": "419cdce20d03a8ef8bd1152b9b511de07a8b6bce2deebaa9f489839cfd31d2dd",
+      "bytes": 120
+    },
+    "post-run-hdk.txt": {
+      "original_sha256": "0bcf2a4d5eb8cc8ead010fb41e44a7c76cd061d318962f40c9c3a6b307444fca",
+      "published_sha256": "bf6dc6a308a1c612731735f224b3ab2de23be2ad3ffdf24a4b87d73e4253e5ce",
+      "bytes": 11
+    },
+    "runner-sha256.txt": {
+      "original_sha256": "ad605175f85aaf28d2f67be703c4b48f885b01601eeb09bd8480ee50b0136329",
+      "published_sha256": "cad6862e8af98691ae4aab74e2b6426be39312a91c50f35704ba1c3865d04217",
+      "bytes": 118
+    },
+    "source-manifest.json": {
+      "original_sha256": "5441cf7aff17dcd012c84b576c1367d9788fefe92ee5e31643176f066be81200",
+      "published_sha256": "98677e09490432fbf52226f5856a1ce0cf1a53deb7b37c0d8bce13746ec456af",
+      "bytes": 7584
+    },
+    "test_first_slice.log": {
+      "original_sha256": "a7a6ca2abd7bf2ead38deea90b8e623d853cc033ec328abee60a65304c1c25d1",
+      "published_sha256": "46623b9f815bd5ebebca144537fa55de16f02e024a02887e1df20dd07005874b",
+      "bytes": 43287
+    },
+    "vivado-version.txt": {
+      "original_sha256": "2521e7d680ff26073152c1666270e075c62e9b4e09a3495bff76f6ef184ac269",
+      "published_sha256": "2521e7d680ff26073152c1666270e075c62e9b4e09a3495bff76f6ef184ac269",
+      "bytes": 331
+    }
+  },
+  "publication_transform": "Replace only remote work and HDK path prefixes; retain errors, counts, status and timestamps",
+  "manifest_note": "execution_boundary describes the configured target; it is not evidence of physical FPGA execution"
+}

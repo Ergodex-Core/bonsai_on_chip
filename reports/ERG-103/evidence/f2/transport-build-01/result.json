@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "execution_scope": "Linux host transport compilation/static link against pinned AWS SDK; no FPGA access",
+  "source_revision": "839e5fc1729c36903843ccc03ea6742bd4a265f9",
+  "hdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "transport_sha256": "2164ca15edd84b8f7ce059ea805a9d69b35650d9d05500ad67a59e4b2f16038f",
+  "artifacts": {
+    "build-exitcode.txt": {
+      "original_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "published_sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "bytes": 2
+    },
+    "build-sha256.txt": {
+      "original_sha256": "9830b34f4d1f20ba10a49acf5034da91e4771d7b17fafc5a5f8b04274c719e41",
+      "published_sha256": "9830b34f4d1f20ba10a49acf5034da91e4771d7b17fafc5a5f8b04274c719e41",
+      "bytes": 262
+    },
+    "build.log": {
+      "original_sha256": "4f207fdb46735bc84391342de486021fbaf90dca0b3e15fbbfaed1bfe06edcbd",
+      "published_sha256": "370c7f1c6381263804f30bb7c5decfa52b8a9e382a01752e22e991d3432d1d57",
+      "bytes": 8762
+    },
+    "linked-libraries.txt": {
+      "original_sha256": "098b23e506ad23c5405b97dc97c9a38db72886c290616dab7f28fee18101dd58",
+      "published_sha256": "098b23e506ad23c5405b97dc97c9a38db72886c290616dab7f28fee18101dd58",
+      "bytes": 374
+    },
+    "sdk-revision.txt": {
+      "original_sha256": "64672459d8e7a65347c870c0531ff44c1e9eed8c64afa96d04402ce70286276d",
+      "published_sha256": "64672459d8e7a65347c870c0531ff44c1e9eed8c64afa96d04402ce70286276d",
+      "bytes": 41
+    },
+    "tool-version.txt": {
+      "original_sha256": "59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8",
+      "published_sha256": "59d1cbef41d4ae78d5063d525b7aa13d18dc0493ea00537efc19b2ee398cb5a8",
+      "bytes": 246
+    }
+  },
+  "publication_transform": "Replace only remote work and HDK path prefixes; retain errors, counts, status and timestamps",
+  "manifest_note": "execution_boundary describes the configured target; it is not evidence of physical FPGA execution"
+}

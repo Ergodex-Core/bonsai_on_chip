@@ -1,0 +1,1025 @@
+839e5fc1729c36903843ccc03ea6742bd4a265f9
+Git LFS fsck OK
+Git LFS fsck OK
+${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts
+#
+#- CREATE CL_PORTS ----------
+#
+#
+#- CREATE SIM_ROOT ----------
+#
+Copying XSIM hbm model config files
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compiled_cl_ips && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+mkdir -p ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib && touch ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+" WARNING: XSIM does not require simulation library compilation "
+rm -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib_dir_in_progress
+make copy_xsim_ini
+make[1]: Entering directory '${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts'
+VIVADO_TOOL_VERSION = 2025.2
+CL_DIR = ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice
+Running from ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts
+make[1]: Nothing to be done for 'copy_xsim_ini'.
+make[1]: Leaving directory '${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts'
+rm -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_compile_cl_ips_dir_in_progress
+${AWS_HDK}/hdk/common/verif/scripts/generate_sim_file_list.py --cl_dir ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice --simulator xsim
+cd ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && ln -s -f ${AWS_HDK}/hdk/common/verif/ip_simulation_libraries/xsim_complib/xsim.ini
+cd ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && xsc ${AWS_HDK}/hdk/common/software/src/test_null.c ${AWS_HDK}/sdk/userspace/utils/sh_dpi_tasks.c ${AWS_HDK}/hdk/common/software/src/fpga_pci_sv.c --gcc_compile_options "-I${AWS_HDK}/sdk/userspace/include" --gcc_compile_options "-I${AWS_HDK}/sdk/userspace/utils" --gcc_compile_options "-I${AWS_HDK}/hdk/common/software/include" --gcc_compile_options "-I${AWS_HDK}/hdk/common/software/src" --gcc_compile_options "-DVIVADO_SIM" --gcc_compile_options "-DSV_TEST" --gcc_compile_options "-DDMA_TEST"
+Multi-threading is on. Using 22 slave threads.
+Running compilation flow/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/gcc  -fPIC -c -Wa,-W -fPIC -m64 -B/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.42/bin/ -I${AWS_HDK}/sdk/userspace/include -I${AWS_HDK}/sdk/userspace/utils -I${AWS_HDK}/hdk/common/software/include -I${AWS_HDK}/hdk/common/software/src -DVIVADO_SIM -DSV_TEST -DDMA_TEST    -I"/opt/Xilinx/2025.2/data/xsim/include" -I"/opt/Xilinx/2025.2/data/xsim/systemc" "${AWS_HDK}/hdk/common/software/src/fpga_pci_sv.c" -o "xsim.dir/work/xsc/fpga_pci_sv.lnx64.o" -DXILINX_SIMULATOR -Wno-deprecated-declarations 
+/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/gcc  -fPIC -c -Wa,-W -fPIC -m64 -B/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.42/bin/ -I${AWS_HDK}/sdk/userspace/include -I${AWS_HDK}/sdk/userspace/utils -I${AWS_HDK}/hdk/common/software/include -I${AWS_HDK}/hdk/common/software/src -DVIVADO_SIM -DSV_TEST -DDMA_TEST    -I"/opt/Xilinx/2025.2/data/xsim/include" -I"/opt/Xilinx/2025.2/data/xsim/systemc" "${AWS_HDK}/hdk/common/software/src/test_null.c" -o "xsim.dir/work/xsc/test_null.lnx64.o" -DXILINX_SIMULATOR -Wno-deprecated-declarations 
+/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/gcc  -fPIC -c -Wa,-W -fPIC -m64 -B/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.42/bin/ -I${AWS_HDK}/sdk/userspace/include -I${AWS_HDK}/sdk/userspace/utils -I${AWS_HDK}/hdk/common/software/include -I${AWS_HDK}/hdk/common/software/src -DVIVADO_SIM -DSV_TEST -DDMA_TEST    -I"/opt/Xilinx/2025.2/data/xsim/include" -I"/opt/Xilinx/2025.2/data/xsim/systemc" "${AWS_HDK}/sdk/userspace/utils/sh_dpi_tasks.c" -o "xsim.dir/work/xsc/sh_dpi_tasks.lnx64.o" -DXILINX_SIMULATOR -Wno-deprecated-declarations 
+Done compilation
+Linking with command:
+/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/g++ -Wa,-W  -O -fPIC  -m64  -shared  -o "xsim.dir/work/xsc/dpi.so" "xsim.dir/work/xsc/fpga_pci_sv.lnx64.o" "xsim.dir/work/xsc/test_null.lnx64.o" "xsim.dir/work/xsc/sh_dpi_tasks.lnx64.o"   -I${AWS_HDK}/sdk/userspace/include -I${AWS_HDK}/sdk/userspace/utils -I${AWS_HDK}/hdk/common/software/include -I${AWS_HDK}/hdk/common/software/src -DVIVADO_SIM -DSV_TEST -DDMA_TEST   -L/opt/Xilinx/2025.2/Vivado/lib/lnx64.o -lxv_simulator_kernel  -L/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -Wl,--disable-new-dtags -Wl,-rpath=/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../lib64 -lxv_xsim_systemc -L/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/Default  -B/opt/Xilinx/2025.2/Vivado/lib/lnx64.o/../../tps/lnx64/gcc-9.3.0/bin/../../binutils-2.42/bin/ 
+
+Done linking: "xsim.dir/work/xsc/dpi.so"
+cd ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && xvlog --sv -m64 --define DMA_TEST  --define plusarg_save  --define timeout=1ms --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --work xil_defaultlib --incr --relax -f ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/top.xsim.f
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "/opt/Xilinx/2025.2/data/verilog/src/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/aws_clk_gen.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aws_clk_gen
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/aws_clk_regs.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module aws_clk_regs
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/axil_to_cfg_cnv.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axil_to_cfg_cnv
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/axi_clock_conv.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_clock_conv
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/bram_1w1r.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_1w1r
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/cdc_sync.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cdc_sync
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/flop_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/ft_fifo.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ft_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/hbm_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hbm_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/lib_pipe.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module lib_pipe
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/ram_fifo_ft.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ram_fifo_ft
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/srl_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module srl_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/xpm_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module xpm_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/axis_flop_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axis_flop_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/bram_2rw.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_2rw
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/cdc_async_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cdc_async_fifo
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/flop_fifo_in.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_fifo_in
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/ft_fifo_p.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ft_fifo_p
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/interfaces.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/lib/rr_arb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rr_arb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sync.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/mgt_acc_axl.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mgt_acc_axl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/mgt_gen_axl.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mgt_gen_axl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/ccf_ctl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ccf_ctl
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/flop_ccf.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module flop_ccf
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sh_ddr
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi4_slave_bfm
+WARNING: [VRFC 10-3824] variable 'awready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:144]
+WARNING: [VRFC 10-3824] variable 'wready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:178]
+WARNING: [VRFC 10-3824] variable 'wready_nonzero_wait' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:179]
+WARNING: [VRFC 10-3824] variable 'arready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/axi4_slave_bfm.sv:242]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/xilinx_axi_pc/axi_protocol_checker_v1_1_vl_rfs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_axi4litepc_asr_inline
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_axi4pc_asr_inline
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_core
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_syn_fifo
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_reporter
+INFO: [VRFC 10-311] analyzing module axi_protocol_checker_v1_1_12_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_model/ddr4_sdram_model_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module StateTable
+INFO: [VRFC 10-311] analyzing module ddr4_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rcd_model.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rcd_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rdimm_wrapper.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rdimm_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_dimm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_dimm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_bi_delay.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bi_delay_ddr4
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_db_delay_model.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_db_delay_model
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_dir_detect.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dir_detect
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_db_dly_dir.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr_dly_dir_detect
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/ddr4_rdimm_wrapper/ddr4_rank.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ddr4_rank
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/packages/anp_base_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/fpga/fpga.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fpga
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/fpga/card.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module card
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/tb/sv/tb_type_defines_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/tb/sv/tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb
+WARNING: [VRFC 10-3824] variable 'debug' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/include/sh_dpi_tasks.svh:215]
+WARNING: [VRFC 10-3824] variable 'debug' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/include/sh_dpi_tasks.svh:257]
+INFO: [VRFC 10-311] analyzing module short
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/sh_bfm/axil_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axil_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/sh_bfm/axis_bfm_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/sh_bfm/axis_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module axis_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sh_bfm
+WARNING: [VRFC 10-3824] variable 'awready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:880]
+WARNING: [VRFC 10-3824] variable 'wready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:919]
+WARNING: [VRFC 10-3824] variable 'wready_nonzero_wait' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:920]
+WARNING: [VRFC 10-3824] variable 'arready_cnt' must explicitly be declared as automatic or static [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:982]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/bd/cl_axi_sc_1x1/hdl/cl_axi_sc_1x1_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cl_axi_sc_1x1_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/bd/cl_axi_sc_2x2/hdl/cl_axi_sc_2x2_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cl_axi_sc_2x2_wrapper
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/base/gen_buf_t.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/models/stream_bfm/stream_bfm.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module stream_bfm
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/verif/tb/sv/dma_classes.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_hbm/hdl/hbm_v1_0_vl_rfs.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module hbm_top
+INFO: [VRFC 10-311] analyzing module hbm_apb_mst
+INFO: [VRFC 10-311] analyzing module hbm_temp_rd
+INFO: [VRFC 10-311] analyzing module hbm_apb_arbiter
+INFO: [VRFC 10-311] analyzing module hbm_data_fetch
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/tests/test_first_slice.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module test_first_slice
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/dot128.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module dot128
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/weight_store.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module weight_store
+WARNING: [VRFC 10-3380] identifier 'image_base' is used before its declaration [${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/weight_store.sv:70]
+WARNING: [VRFC 10-3380] identifier 'image_bytes' is used before its declaration [${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/weight_store.sv:71]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/first_slice_top.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module first_slice_top
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/f2_memory_bridge.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module f2_memory_bridge
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/design/cl_bonsai_first_slice.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module cl_bonsai_first_slice
+cd ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && xelab -m64  --define plusarg_save  --define timeout=1ms --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --timescale 1ps/1ps --debug typical --relax --mt 8  -L unisims_ver -L unisim -L unifast_ver -L unifast -L unimacro_ver -L unimacro -L secureip -L xpm -L xil_defaultlib -L axi_dwidth_converter_v2_1_37 -L axi_protocol_converter_v2_1_37 -L axi_protocol_checker_v2_0_21 -L noc_hbm_v1_0_2 -L hbm_v1_0_18 -L axi_register_slice_v2_1_36 -L axi_infrastructure_v1_1_0 -L axis_infrastructure_v1_1_1 -L axi_crossbar_v2_1_38 -L axi_clock_converter_v2_1_35 -L fifo_generator_v13_2_14 -L axi_data_fifo_v2_1_36 -L generic_baseblocks_v2_1_2 -L proc_sys_reset_v5_0_17 -L lut_buffer_v2_0_1 -L xsdbm_v3_0_5 -L xdma_v4_2_2 -L xlconstant_v1_1_10 -L smartconnect_v1_0 -sv_lib dpi --snapshot tb xil_defaultlib.tb xil_defaultlib.glbl xil_defaultlib.test_first_slice
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /opt/Xilinx/2025.2/Vivado/bin/unwrapped/lnx64.o/xelab --define plusarg_save --define timeout=1ms --define AWS_SIM --define USE_64GB_DDR_DIMM=1 --timescale 1ps/1ps --debug typical --relax --mt 8 -L unisims_ver -L unisim -L unifast_ver -L unifast -L unimacro_ver -L unimacro -L secureip -L xpm -L xil_defaultlib -L axi_dwidth_converter_v2_1_37 -L axi_protocol_converter_v2_1_37 -L axi_protocol_checker_v2_0_21 -L noc_hbm_v1_0_2 -L hbm_v1_0_18 -L axi_register_slice_v2_1_36 -L axi_infrastructure_v1_1_0 -L axis_infrastructure_v1_1_1 -L axi_crossbar_v2_1_38 -L axi_clock_converter_v2_1_35 -L fifo_generator_v13_2_14 -L axi_data_fifo_v2_1_36 -L generic_baseblocks_v2_1_2 -L proc_sys_reset_v5_0_17 -L lut_buffer_v2_0_1 -L xsdbm_v3_0_5 -L xdma_v4_2_2 -L xlconstant_v1_1_10 -L smartconnect_v1_0 -sv_lib dpi --snapshot tb xil_defaultlib.tb xil_defaultlib.glbl xil_defaultlib.test_first_slice 
+Using 8 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+    LIBRARY_PATH
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-8809] cannot index into scalar type parameter/localparam 'DEBUG_MESSAGES' [${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g_ap/rtl/cal/ddr4_v2_2_cal_xsdb_bram.sv:234]
+WARNING: [VRFC 10-9543] actual bit length 2 differs from formal bit length 1 for port 'ddr4_ck_t' [${AWS_HDK}/hdk/common/verif/models/fpga/fpga_ddr.svh:117]
+WARNING: [VRFC 10-9543] actual bit length 2 differs from formal bit length 1 for port 'ddr4_ck_c' [${AWS_HDK}/hdk/common/verif/models/fpga/fpga_ddr.svh:118]
+WARNING: [VRFC 10-9543] actual bit length 1 differs from formal bit length 19 for port 'm_axi_awuser' [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:590]
+WARNING: [VRFC 10-9543] actual bit length 1 differs from formal bit length 19 for port 'm_axi_aruser' [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:612]
+WARNING: [VRFC 10-9543] actual bit length 64 differs from formal bit length 36 for port 'c0_ddr4_s_axi_awaddr' [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:990]
+WARNING: [VRFC 10-9543] actual bit length 64 differs from formal bit length 36 for port 'c0_ddr4_s_axi_araddr' [${AWS_HDK}/hdk/common/shell_stable/design/sh_ddr/sim/sh_ddr.sv:1010]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:1849]
+WARNING: [VRFC 10-8967] first argument of $fatal is invalid; expected 0, 1 or 2 [${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv:2007]
+WARNING: [VRFC 10-3705] select index 7 into 'dq_temp' is out of bounds [${AWS_HDK}/hdk/common/verif/models/ddr4_model/ddr4_model.sv:1615]
+WARNING: [VRFC 10-3705] select index 7 into 'dq_temp' is out of bounds [${AWS_HDK}/hdk/common/verif/models/ddr4_model/ddr4_model.sv:1617]
+WARNING: [VRFC 10-3705] select index 2 into 'rank' is out of bounds [${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g_ap/rtl/cal/ddr4_v2_2_cal_mc_odt.sv:148]
+Completed static elaboration
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 1849, File ${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv
+INFO: [XSIM 43-4329] Assuming default value 1 for the first arguement of $fatal at Line 2007, File ${AWS_HDK}/hdk/common/verif/models/sh_bfm/sh_bfm.sv
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4398] File "${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g_ap/rtl/cal/ddr4_v2_2_cal_cplx.sv" Line 856 : The System Verilog Assertion  will be ignored as it appears inside another process. This assertion is not yet supported.
+WARNING: [XSIM 43-4398] File "${AWS_HDK}/hdk/common/ip/cl_ip/cl_ip.gen/sources_1/ip/cl_ddr4_32g_ap/rtl/cal/ddr4_v2_2_cal_top.sv" Line 1813 : The System Verilog Assertion  will be ignored as it appears inside another process. This assertion is not yet supported.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package xil_defaultlib.tb_type_defines_pkg
+Compiling package xil_defaultlib.anp_base_pkg
+Compiling package xil_defaultlib.arch_package
+Compiling package xil_defaultlib.MemArray
+Compiling package xil_defaultlib.proj_package
+Compiling module xil_defaultlib.ddr4_rcd_model(tCK=938,MC_CA_MIR...
+Compiling module xil_defaultlib.short
+Compiling module xil_defaultlib.DDR4_if(CONFIGURED_DQ_BITS=4)
+Compiling module xil_defaultlib.ddr4_rank(MC_DQ_WIDTH=72,MC_DQS_...
+Compiling module xil_defaultlib.ddr4_dimm(MC_DQ_WIDTH=72,MC_DQS_...
+Compiling module xil_defaultlib.ddr4_rdimm_wrapper(MC_DQ_WIDTH=7...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_axi...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_cor...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_rep...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_top...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_rep...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_top...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_axi...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_axi...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_syn...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_cor...
+Compiling module xil_defaultlib.axi_protocol_checker_v1_1_12_top...
+Compiling module xil_defaultlib.axil_bfm
+Compiling module xil_defaultlib.sh_bfm
+Compiling module xil_defaultlib.weight_store
+Compiling module xil_defaultlib.dot128
+Compiling module xil_defaultlib.first_slice_top
+Compiling module xil_defaultlib.f2_memory_bridge
+Compiling module xpm.xpm_cdc_async_rst_default
+Compiling module xil_defaultlib.lib_pipe(WIDTH=42,STAGES=8)
+Compiling module xil_defaultlib.lib_pipe(WIDTH=41,STAGES=8)
+Compiling module xil_defaultlib.lib_pipe(WIDTH=1,STAGES=4)
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_sync_sta...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_CONV_VER...
+Compiling module fifo_generator_v13_2_14.fifo_generator_vlog_beh(C_DATA_C...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_CONV_VER...
+Compiling module fifo_generator_v13_2_14.fifo_generator_vlog_beh(C_DATA_C...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_CONV_VER...
+Compiling module fifo_generator_v13_2_14.fifo_generator_vlog_beh(C_DATA_C...
+Compiling module fifo_generator_v13_2_14.fifo_generator_vlog_beh(C_DATA_C...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_bhv_ver_...
+Compiling module fifo_generator_v13_2_14.fifo_generator_v13_2_14_CONV_VER...
+Compiling module fifo_generator_v13_2_14.fifo_generator_vlog_beh(C_DATA_C...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_axi_...
+Compiling module xil_defaultlib.cl_axi_clock_converter
+Compiling module unisims_ver.BUFG
+Compiling module unisims_ver.MMCME4_ADV(CLKFBOUT_MULT_F=16.0,...
+Compiling module xil_defaultlib.ddr4_v2_2_28_infrastructure(CLKI...
+Compiling module unisims_ver.OBUF
+Compiling module unisims_ver.IBUFDS(IBUF_LOW_PWR="FALSE")
+Compiling module unisims_ver.PLLE4_ADV(CLKFBOUT_MULT=4,CLKFBO...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_pll(BACKBONE_ROU...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_iob_byte(IOBTYPE...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_iob_byte(IOBTYPE...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_iob_byte(IOBTYPE...
+Compiling module unisims_ver.HPIO_VREF(VREF_CNTR="FABRIC_RANG...
+Compiling module unisims_ver.IOBUFDS
+Compiling module unisims_ver.IOBUFE3_default
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_iob_byte(IOBTYPE...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_iob(BYTES=12,IOB...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_fifo_sv(DEPTH=16...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_bitslice_behav(t...
+Compiling module xil_defaultlib.ddr4_phy_v2_2_9_xiphy_behav(tCK=...
+Compiling module xil_defaultlib.cl_ddr4_phy_ddr4_default
+Compiling module xil_defaultlib.cl_ddr4_phy
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_group(ALIAS_PAGE...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_act_rank(tFAW=16...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_act_timer(tFAW=1...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_arb_a
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_wtr(tWTR_L=8)
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_rd_wr(tWTR_L=8,t...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_arb_c_default
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_arb_p
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_cmd_mux_ap
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_arb_mux_p(ALIAS_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_mc_odt(ODTBITS=...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ctl(RANKS=2,RANK...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_cmd_mux_c
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ref(RANKS=2,RANK...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_periodic
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc_dec_fix(TCQ=...
+Compiling module unisims_ver.RAM32M
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc_buf(TCQ=0.1)
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc_merge_enc(TC...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc_fi_xor(TCQ=0...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc_gen_default
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc_ecc(TCQ=0.1,ADDR...
+Compiling module xil_defaultlib.ddr4_v2_2_28_mc(CKEBITS=2,CSBITS...
+Compiling module xil_defaultlib.ddr4_v2_2_28_ui_cmd(TCQ=100.0,BA...
+Compiling module xil_defaultlib.ddr4_v2_2_28_ui_wr_data(TCQ=100....
+Compiling module xil_defaultlib.ddr4_v2_2_28_ui_rd_data(TCQ=100....
+Compiling module xil_defaultlib.ddr4_v2_2_28_ui(TCQ=100.0,APP_DA...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_debug_microblaz...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_cplx_data(DBYTE...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_cplx(DBYTES=9,B...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_addr_decode(MEM...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_config_rom(MEM0...
+Compiling module xil_defaultlib.ddr4_v2_2_28_chipscope_xsdb_slav...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=1)
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=16)
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=9)
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_xsdb_arbiter
+Compiling module xil_defaultlib.ddr4_v2_2_28_bram_tdp(INIT=2304'...
+Compiling module xil_defaultlib.ddr4_v2_2_28_bram_tdp
+Compiling module xil_defaultlib.ddr4_v2_2_28_cfg_mem_mod(SIZE=73...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_xsdb_bram(DBYTE...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal(CKEBITS=2,CKBIT...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_rd_en(RANKS=2,R...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_read(DBYTES=9,R...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_wr_bit
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_wr_byte_default
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_write(DBYTES=9,...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_pi(DBYTES=9,DM_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_top(ABITS=18,CK...
+Compiling module unisims_ver.VCC
+Compiling module unisims_ver.GND
+Compiling module unisims_ver.FDRE_default
+Compiling module unisims_ver.FDR
+Compiling module unisims_ver.FDSE_default
+Compiling module unisims_ver.FDS
+Compiling module unisims_ver.FD
+Compiling module unisims_ver.FDRE(INIT=1'b1)
+Compiling module unisims_ver.FD(INIT=1'b1)
+Compiling module unisims_ver.RAM32X1D
+Compiling module unisims_ver.FDE
+Compiling module unisims_ver.LUT6_2
+Compiling module unisims_ver.MUXCY
+Compiling module unisims_ver.MUXCY_L
+Compiling module unisims_ver.XORCY
+Compiling module unisims_ver.x_lut2_mux4
+Compiling module unisims_ver.LUT2
+Compiling module unisims_ver.MULT_AND
+Compiling module unisims_ver.x_lut3_mux8
+Compiling module unisims_ver.LUT3
+Compiling module unisims_ver.LUT4
+Compiling module unisims_ver.LUT6
+Compiling module unisims_ver.MUXF5
+Compiling module unisims_ver.SRL16E_default
+Compiling module unisims_ver.LUT5
+Compiling module unisims_ver.FDSE(INIT=1'b0)
+Compiling module unisims_ver.x_lut1_mux2
+Compiling module unisims_ver.LUT1
+Compiling module unisims_ver.MUXF7
+Compiling module unisims_ver.INV
+Compiling module unisims_ver.RB36_INTERNAL_VLOG(READ_WIDTH_A=...
+Compiling module unisims_ver.RAMB36E1(READ_WIDTH_A=2,READ_WID...
+Compiling module unisims_ver.RAMB36(READ_WIDTH_A=2,READ_WIDTH...
+Compiling module xil_defaultlib.microblaze_mcs
+Compiling module xil_defaultlib.cl_ddr4_microblaze_mcs
+Compiling module xil_defaultlib.cl_ddr4_ddr4_cal_riu
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=1,TC...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=32,T...
+Compiling module xil_defaultlib.ddr4_v2_2_28_cal_sync(WIDTH=20,T...
+Compiling module xil_defaultlib.cl_ddr4_ddr4_mem_intfc(ROW_WIDTH...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axic_register_slice...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axic_register_slice...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axic_register_slice...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axic_register_slice...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_register_slice(...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_incr_cmd(C_AXI_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_wrap_cmd(C_AXI_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_cmd_translator(...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_wr_cmd_fsm
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_aw_channel(C_ID...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_w_channel(C_DAT...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_fifo(C_WIDTH=16...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_b_channel(C_ID_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_incr_cmd(C_AXI_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_wrap_cmd(C_AXI_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_cmd_translator(...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_cmd_fsm(C_MC_RD...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ar_channel(C_ID...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_fifo(C_WIDTH=51...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_fifo(C_WIDTH=19...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_r_channel(C_ID_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_cmd_arbiter(C_M...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi(C_S_AXI_ID_WIDT...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_addr_decod...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_write(C_NU...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_addr_decod...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_read(C_NUM...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_INIT...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_REG_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_REG_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_REG_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_MASK...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg(C_REG_...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_reg_bank(C...
+Compiling module xil_defaultlib.ddr4_v2_2_28_axi_ctrl_top(C_S_AX...
+Compiling module xil_defaultlib.cl_ddr4_ddr4_default
+Compiling module xil_defaultlib.cl_ddr4
+Compiling module xpm.xpm_cdc_single(DEST_SYNC_FF=2,SR...
+Compiling module axi_infrastructure_v1_1_0.axi_infrastructure_v1_1_0_axi2ve...
+Compiling module xpm.xpm_cdc_handshake(DEST_SYNC_FF=2...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_lite...
+Compiling module xpm.xpm_cdc_handshake(DEST_SYNC_FF=2...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_lite...
+Compiling module xpm.xpm_cdc_handshake(DEST_SYNC_FF=2...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_lite...
+Compiling module xpm.xpm_cdc_handshake(DEST_SYNC_FF=2...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_lite...
+Compiling module axi_infrastructure_v1_1_0.axi_infrastructure_v1_1_0_vector...
+Compiling module axi_clock_converter_v2_1_35.axi_clock_converter_v2_1_35_axi_...
+Compiling module xil_defaultlib.cl_axi_clock_converter_light
+Compiling module xil_defaultlib.cl_bonsai_first_slice
+Compiling module xil_defaultlib.fpga_default
+Compiling module xil_defaultlib.card_default
+Compiling module xil_defaultlib.tb
+Compiling module xil_defaultlib.glbl
+Compiling module xil_defaultlib.test_first_slice
+Built simulation snapshot tb
+cd ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/sim/xsim/test_first_slice_sv && xsim -log test_first_slice.log -tclbatch ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/waves.tcl tb | grep -v "\*\*\*Meta" | sed '/^$/d'
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Wed Sep 30 16:10:25 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+source xsim.dir/tb/xsim_script.tcl
+# xsim {tb} -autoloadwcfg -tclbatch {${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/waves.tcl}
+Time resolution is 1 ps
+source ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/scripts/waves.tcl
+## run all
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+Loading timesets for 'tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.LoadTiming' @0
+	Loaded timeset:TS_1875
+	Loaded timeset:TS_1500
+	Loaded timeset:TS_1250
+	Loaded timeset:TS_1072
+	Loaded timeset:TS_938
+	Loaded timeset:TS_833
+	Loaded timeset:TS_750
+	Loaded timeset:TS_682
+	Loaded timeset:TS_625
+Model based on DDR4 DDS version 0.999 6/06/2014 (build data 5/06/2016)
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model:Configured as x4 16G stack:1
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+WARNING: Behavioral models for independent clock FIFO configurations do not model synchronization delays. The behavioral models are functionally correct, and will represent the behavior of the configured FIFO. See the FIFO Generator User Guide for more information.
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[3].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[4].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[5].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[6].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[7].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[8].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[9].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[10].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+Info: [Unisim HPIO_VREF-1] Fabric Tune Value changed to 0100110. Instance: tb.card.fpga.CL.SH_DDR.genblk1.IS_DDR_PRESENT.DDR4_0.inst.u_ddr4_mem_intfc.u_mig_ddr4_phy.inst.u_ddr_iob.genByte[11].u_ddr_iob_byte.genblk1.genVref.u_hpio_vref
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @27961.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[0].even_ranks.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @28081.015 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[0].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[1].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[2].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[3].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[4].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[5].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[6].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[7].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[8].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29168.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[9].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[10].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[11].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[12].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[13].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[14].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[15].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[16].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+tb.card.u_ddr4_rdimm.rcd_enabled.NOT_LRDIMM.u_ddr4_dimm.rank_instances[1].mc_ca_mirroring_odd_rank.u_ddr4_rank.Micron_model.instance_of_sdram_devices[17].micron_mem_model.u_ddr4_model.always_diff_ck.if_diff_ck:Initialization complete @29288.515 ns
+DDR_READY_CHECK time=33344.000 ns leds=0003
+PASS DDR calibrated and bridge ready
+PASS custom DOT1 ABI
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS complete compact-fixture DDR readback
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=0 opcode=1 offset=0 signed_dot=899
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=0 raw_fp16=26f0
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=1 opcode=1 offset=118 signed_dot=938
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=1 raw_fp16=2710
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=2 opcode=1 offset=4082 signed_dot=713
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=2 raw_fp16=28a0
+PASS completion cookie
+PASS actual weight reads counted
+PASS dot completed without error
+PASS independent signed int8 dot oracle
+DOT_RESULT case=3 opcode=2 offset=256 signed_dot=-999
+PASS exact raw FP16 scale from DDR payload
+DOT_SCALE case=3 raw_fp16=3c00
+PASS completion cookie
+PASS actual weight reads counted
+FIRST_SLICE_TEST_PASS assertions=87 real_q1_cases=3 synthetic_ternary_cases=1 compact_bytes=4160 canonical_full_image=0
+$finish called at time : 64224 ns : File "${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/verif/tests/test_first_slice.sv" Line 97
+run: Time (s): cpu = 00:00:00.15 ; elapsed = 00:01:59 . Memory (MB): peak = 1444.973 ; gain = 0.000 ; free physical = 252176 ; free virtual = 264557
+## quit
+INFO: xsimkernel Simulation Memory Usage: 855404 KB (Peak: 855404 KB), Simulation CPU Usage: 119760 ms
+INFO: [Common 17-206] Exiting xsim at Wed Sep 30 16:12:26 2026...
+Evidence: ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice/logs/sim-eV2eXpB0

@@ -1,0 +1,1 @@
+3555fe8dfa8edb7f3f06e917bbedea536676d872a97777a6f0e04618442d58ac  ${F2_WORK_ROOT}/repo/fpga/aws_f2/first_slice/run.sh

@@ -1,0 +1,12 @@
+INFO: Setting up environment variables
+INFO: Using vivado v2025.2 (64-bit)
+INFO: VIVADO_TOOL_VERSION is 2025.2
+INFO: Skipping shell downloads and submodule setup (--skip_downloads specified)
+INFO: Setting up CL_IP for Vivado version 2025.2
+INFO: Skipping shell downloads and submodule setup (--skip_downloads specified)
+INFO: Setting up IP environment variables
+INFO: HDK shell is up-to-date
+INFO: CL_DIR is ${F2_WORK_ROOT}/build-04/cl_bonsai_first_slice
+INFO: Setting up HLx environment
+INFO: Skipping shell downloads and submodule setup (--skip_downloads specified)
+INFO: AWS HDK setup PASSED.
