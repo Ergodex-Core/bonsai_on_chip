@@ -134,7 +134,7 @@ def main():
     for name in ("cl_synth_user.xdc", "cl_timing_user.xdc",
                  "small_shell_cl_pnr_user.xdc"):
         shutil.copy2(source / name, cl / "build/constraints" / name)
-    for name in ("Makefile", "Makefile.tests", "top.xsim.f"):
+    for name in ("Makefile", "Makefile.tests", "top.xsim.f", "waves.tcl"):
         shutil.copy2(source / name, cl / "verif/scripts" / name)
     shutil.copy2(
         source / "test_first_slice.sv", cl / "verif/tests/test_first_slice.sv"
