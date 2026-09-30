@@ -65,7 +65,12 @@ if [[ ${mode} == sim ]]; then
     }
     cd "${cl}/verif/scripts"
     unset MAKEFLAGS MFLAGS TEST C_TEST VCS QUESTA IES SIMULATOR COMPLIB_DIR COMPILE_CL_IP_DIR PLUSARGS
-    make test_first_slice VCS=0 QUESTA=0 IES=0 SHELL=/bin/bash '.SHELLFLAGS=-o pipefail -c' 2>&1 | tee "${log}/console.log"
+    # AWS compile_cl_ips.py discovers IP inputs through Git from the caller's
+    # directory. Our fresh CL is external to that checkout; bind discovery only
+    # for this make invocation without modifying the pinned vendor scripts.
+    hdk_git_dir=$(git -C "${hdk}" rev-parse --absolute-git-dir)
+    GIT_DIR=${hdk_git_dir} GIT_WORK_TREE=${hdk} \
+        make test_first_slice VCS=0 QUESTA=0 IES=0 SHELL=/bin/bash '.SHELLFLAGS=-o pipefail -c' 2>&1 | tee "${log}/console.log"
     sim_log="${cl}/verif/sim/xsim/test_first_slice_sv/test_first_slice.log"
     [[ -f ${sim_log} ]]
     cp "${sim_log}" "${log}/test_first_slice.log"
