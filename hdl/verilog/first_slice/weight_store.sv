@@ -68,7 +68,7 @@ module weight_store (
   logic [ 2:0] incoming_status;
 
   logic [63:0] image_base, image_bytes;
-  assign image_base_o  = image_base;
+  assign image_base_o = image_base;
   assign image_bytes_o = image_bytes;
   assign loader_enable_o = state == LOADING;
   assign ready_o = ((state == SEALED) || (state == RUNNING)) && backend_ready_i && !stopping;
