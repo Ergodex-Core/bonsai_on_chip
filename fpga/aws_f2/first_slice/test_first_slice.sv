@@ -27,11 +27,18 @@ module test_first_slice;
   initial begin
     initialize_fixture();
     tb.power_up();
+    // Emulate the shell's AFI-load DDR initialization, as in the pinned AWS
+    // cl_dram_hbm_dma test. Do not invoke its out-of-allocation memory tests.
+    tb.poke_stat(.addr(8'h0c), .intf("ddr"), .data(32'h0));
+    tb.poke_stat(.addr(8'h0c), .intf("ddr"), .data(32'h1));
+    tb.poke_stat(.addr(8'h0c), .intf("ddr"), .data(32'h0));
+    #27000ns;
     for (int i = 0; i < 10000; i++) begin
       leds = tb.get_virtual_led();
       if (leds[1:0] == 3) break;
       #100ns;
     end
+    $display("DDR_READY_CHECK time=%0t leds=%04h", $time, leds);
     check(leds[1:0] == 3, "DDR calibrated and bridge ready");
     tb.peek_ocl(.addr('h1000), .data(value));
     check(value[31:0] == 'h444f5431, "custom DOT1 ABI");
