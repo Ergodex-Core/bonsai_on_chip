@@ -1,6 +1,10 @@
 # CoralNPU weight store: ASIC ROM and FPGA DDR/HBM
 
-Status: **architecture proposal and image-format prototype; RTL integration pending**.
+Status: **HBM is the preferred proposed FPGA ROM-equivalent backend; ASIC ROM
+and CoralNPU integration remain proposed.** The implemented ERG-103 first slice
+uses sealed DDR and DOT128; this document does not relabel it as HBM or claim a
+completed array, full layer or model run. See the [first-slice contract](../spec/first_slice.md)
+and its [current evidence report](../../reports/ERG-103/README.md) for that baseline.
 Owner: Rachit Tibrewal. Architect/RTL/FPGA reviewers: to be assigned.
 Tracking: [ERG-102](https://linear.app/ergodex-ai/issue/ERG-102/week-0-finalize-interface-spec-and-fpga-setup).
 
@@ -12,8 +16,11 @@ read-response contract apply to three selectable implementations:
 
 1. ASIC: banked ROM macros containing the model image.
 2. RTL simulation: initialized behavioral ROM with explicit latency.
-3. FPGA: a reserved DDR or HBM allocation, populated before execution and
-   protected against writes while the model is available to CoralNPU.
+3. FPGA: **prefer a reserved HBM allocation** as the logical ROM-equivalent,
+   populated before execution and protected against writes while the model is
+   available. Keep the existing sealed-DDR implementation as the correctness
+   baseline and an alternative backend; selecting HBM requires a new adapter,
+   build and validation. It is a design direction, not a change to ERG-103 RTL.
 
 Only the storage backend changes. Firmware, weight unpacking, arithmetic and
 model scheduling must be identical when comparing these implementations.
@@ -31,7 +38,7 @@ flowchart LR
   WS --> ROM[ASIC banked ROM]
   WS --> SIM[Behavioral ROM]
   WS --> EXT[FPGA read adapter]
-  EXT --> MEM[Reserved DDR or HBM]
+  EXT --> MEM[Preferred proposed HBM; existing DDR baseline]
   HOST[Host image loader] --> GUARD[Load-only write gate]
   GUARD --> MEM
   CTL[Verify, seal and execution control] --> GUARD
@@ -250,8 +257,12 @@ FPGA job-accounting controls, not prerequisites for reading ASIC ROM. A common
 quiescent/drained boundary snapshots counters on ASIC as well. STOP requires
 upstream clients to be quiesced first; returning to SEALED does not authorize
 ongoing clients to restart a stopped job.
-These are specified v0 encodings, not registers already implemented in RTL.
-Hardware comparisons require matching ABI, image digest, epoch and backend.
+These are specified v0 encodings. The first slice implements the DDR subset at
+its BAR0 interface; ASIC/HBM variants and the CoralNPU address-map integration
+remain proposed. HBM must report BACKEND=3 only in an actual HBM implementation;
+the current DDR implementation reports 2. Hardware comparisons require matching
+ABI, image digest, epoch and backend. A multi-channel physical mapping needs a
+versioned management descriptor; this design allocates no new CSR offsets.
 
 ## Loading, sealing and reset
 
@@ -296,27 +307,116 @@ the run to its AFI, image hash and seal status, and detect changes during the ru
 
 ## FPGA and ASIC backend mapping
 
-For the first FPGA implementation, use a read-only AXI adapter to a reserved DDR
-region. It accepts the common line requests, translates offsets with checked
-addition, and returns tagged responses after validating RRESP/RLAST. It may
-coalesce contiguous reads, but bursts must split at 4 KiB boundaries and obey the
-selected controller's beat width, burst limits and ID ordering. Error handling
-must drain the full physical transaction and mark every affected logical read.
+**Current DDR baseline:** the ERG-103 wrapper connects a 512-bit guarded DDR
+path to `sh_ddr`, with no HBM connection (`fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv:19`).
+Its store has 16 logical request slots but admits only one physical backend read
+at a time (`hdl/verilog/first_slice/weight_store.sv:55`, `:299`). Keep that baseline
+and its evidence unchanged. New HBM results require their own source-bound run.
 
-Add HBM behind the same interface after DDR correctness passes. A recorded,
-deterministic mapping distributes lines or tiles across channels. Channel clocks,
-reset readiness, CDC queues and AXI3/AXI4 translation stay inside that backend.
-No HBM-specific address arithmetic escapes into CoralNPU firmware or kernels.
+**Preferred proposed HBM backend:** adapt the unchanged logical line protocol to
+reserved HBM, retaining native packed bytes, tensor offsets, image digest and
+epoch. The pinned AWS [memory example](https://github.com/aws/aws-fpga/blob/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/cl/examples/cl_mem_perf/README.md#hbm)
+describes 16 GiB and 32 AXI3 ports, with 512 MiB channel address regions. The
+242,357,184-byte fixture fits even one such region if wholly available; this is
+capacity arithmetic, not a measured bandwidth, latency or 27B-model fit claim.
+Choose the reserved channel set and leave activations, KV cache and other clients
+in disjoint protected allocations.
 
-AWS F2 provides DDR and HBM paths in its
-[pinned memory example](https://github.com/aws/aws-fpga/blob/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/cl/examples/cl_mem_perf/README.md).
-That example exposes a 512-bit DDR AXI4 interface and demonstrates the HBM channel
-adapters. F2 has 16 GiB HBM and 64 GiB DDR4 per FPGA, so this model's packed image
-fits either memory; actual availability depends on other reserved allocations.
-The Small Shell has no built-in XDMA engine: use its supported BAR4/PCIS loader
-path or implement a CL transfer engine. See the
-[AWS HDK guide](https://github.com/aws/aws-fpga/blob/f2/User_Guide_AWS_EC2_FPGA_Development_Kit.md).
-These interfaces do not provide the proposed write seal automatically.
+The [pinned adapter RTL](https://github.com/aws/aws-fpga/blob/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/cl/examples/cl_mem_perf/design/cl_mem_hbm_axi4.sv#L73)
+has 256-bit AXI3 data, 34-bit addresses, 6-bit IDs and 4-bit burst lengths. A
+64-byte logical line is two aligned 32-byte beats on that interface. The actual
+wrapper forces SIZE=5 and allows at most 16 beats (512 bytes) per native burst;
+it must not receive a narrow access whose size is silently widened. Split physical
+bursts at stripe/channel, 4 KiB and controller limits; check every response ID,
+status and final beat before publishing the assembled line. The example converts
+512-bit AXI4 and crosses from the 250 MHz main domain to an HBM domain whose
+example target is 450 MHz. Neither clock is achieved timing for our new adapter
+or array. Its host path muxes **port 15** (`MAP_PORT=15`), despite README text
+saying channel 0; that ingress port must not be confused with a sealed allocation
+or assumed to provide 32 independently concurrent read streams. Port selection
+is an ingress choice, not access isolation: enforce the reserved physical address
+policy on every port after routing. The example converter discards upper address
+bits and forces downstream IDs to zero; validate full input bounds before any
+width reduction rather than inheriting an alias or promising ID concurrency.
+
+### Channel mapping and concurrency proposal
+
+Start with one declared channel/allocation to prove equivalence, then measure
+striping over a declared set C of P channels. Proposed stripe size S is a
+power-of-two multiple of 64 bytes; compare 64-byte and 4 KiB stripes using real
+row-stride request traces before freezing the choice. For logical byte offset x:
+
+```text
+q = floor(x / S)
+channel = C[q mod P]
+channel_local_offset = floor(q / P) * S + (x mod S)
+```
+
+Translate this local offset through the selected channel's reserved physical
+base using checked arithmetic and the controller's actual address routing.
+The formula is a candidate mapping, not existing RTL. Reject capacity/overflow
+violations; do not truncate upper address bits. Latch channel set, base/length
+per channel, S and map version before loading and seal them with the image.
+All loader writes, logical readback/hash, consumer reads and final readback must
+use the same mapping. Hash the exact canonical image in logical byte order;
+physical allocation slack is not appended to `weights.bin`. Protect that slack
+and all aliases as part of the reserved allocation. Firmware tensor addresses
+and the 256 MiB logical aperture do not change when channels change.
+
+HBM bandwidth is usable only if prefetch, reorder storage, CDC and the consumers
+support enough concurrent transactions. Sixteen 64-byte logical credits expose
+at most 1,024 bytes in flight; the existing single-physical-read adapter is
+stricter. Size credits from measured latency and required bandwidth, then prove
+per-channel ID ownership and late-response drain before increasing them. The
+vendor performance kernel's many outstanding accesses are not features of our
+store, and its benchmark is not an array result. Reordering must preserve each
+logical tag/epoch and complete 18-byte groups that cross lines or stripes.
+
+### Immutability, initialization and failure gates
+
+HBM is volatile DRAM, used here for read-only behavior after load; it is not
+nonvolatile ASIC ROM. Load the unchanged image, close admission, drain every
+accepted and posted write, read back the entire logical image, compare its hash,
+and then seal. Keep the trusted-host hash handshake explicit; no hardware hash
+engine is implied. After power loss, reconfiguration or HBM/controller reset,
+readiness and every cached/staged epoch are invalid: reload, verify and seal
+again even if some bytes appear retained. Core-only reset must not reopen writes.
+
+The seal must cover **every route to the physical allocation**, not only the
+loader API: PCIS/BAR aliases, any shell DMA enabled by the chosen shell, the
+secondary AXI master, test traffic generators/scrubbers, HBM performance engines,
+and any added CPU/DMA/debug writer. Reject upper-address aliases after checked
+translation. The pinned [PCIS decoder](https://github.com/aws/aws-fpga/blob/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/cl/examples/cl_mem_perf/design/cl_mem_pcis_dec.sv#L968)
+even routes a DDRB-named test/scrub path into HBM. Remove test writers from the
+production backend or place them behind the same hardware seal. Disabling just
+the scrubber or a software enable is insufficient. Read-only observation logic
+may remain; any future debug mutation/reset path needs the same guard.
+
+Lock or omit performance mux, address-map, clock/reset and destructive controller
+configuration while sealed. An unavoidable external reset or loss of readiness
+immediately fails the job and requires coordinated recovery; it must never
+quietly restart with an old epoch. Wait for required stack initialization,
+clock/CDC readiness and empty transaction queues before sealing. Use the pinned
+[wrapper RTL](https://github.com/aws/aws-fpga/blob/b603a81f65666e0cf7a67ee5cf18b148eb6b08c3/hdk/cl/examples/cl_mem_perf/design/cl_mem_hbm_wrapper.sv#L219)
+and its two stack-ready bits [2:1]; bit 3 is reserved zero despite an
+outdated comment asking for [3:1]=111. Polling, timeout and reset scope must come
+from the actual integrated wrapper, not copied example comments.
+
+On backend/protocol/integrity failure, stop admission, preserve held responses,
+return one failure for each unfinished accepted logical read and drain late
+physical beats across every selected channel before IDs are reused. Record
+first fault and controller/AXI error status; freeze any error-clear operation
+needed to preserve run evidence. Do not inherit the example performance
+checker, which tests RRESP only on RLAST: our adapter must check every beat.
+The wrapper leaves some parity, APB-functional-error and thermal outputs
+unconnected, so ECC configuration and required error/thermal telemetry are open
+review items, not established protection. A hardware-error or reset event invalidates
+the job and partial output; no host/DDR substitution can count as an HBM pass.
+
+No example PCIS address, HBM port number or reset CSR is allocated to CoralNPU by
+this document. The chosen shell's supported loader and all protection/CDC/AXI
+adapters must be reviewed together. The existing Small Shell has no built-in
+XDMA engine; a larger example's DMA path must not be assumed in this baseline.
 
 The ASIC backend maps the same logical lines onto banked ROM words, handles
 macro latency, and produces the same response protocol. Banking and physical
@@ -327,28 +427,31 @@ on-chip area fit. Larger model targets need separate capacity/layout estimates.
 
 ## Week 0 boundary
 
-ERG-102 freezes this initial contract and its packed-image fixture and brings up
-the FPGA shell. The behavioral-ROM frontend, DDR/HBM adapter, loader lock RTL,
-CoralNPU wiring and model inference are follow-on implementation deliverables.
+ERG-102 froze the initial contract and packed-image fixture and brought up the
+FPGA shell. The first-slice DDR/store/loader implementation followed in ERG-103;
+its current evidence remains separate. ASIC/behavioral-ROM backend equivalence,
+HBM, CoralNPU wiring and model inference are follow-on implementation deliverables.
 They are not new requirements to build a complete inference system in Week 0.
 Their gates below belong to the corresponding implementation PRs. Week 0 still
 requires actual physical shell/MMIO evidence and the reviewed interface baseline.
 
 ## Verification and follow-on deliverables
 
-The first implementation PR must deliver a synthesizable weight-store frontend,
-behavioral-ROM backend, external AXI read adapter, loader write gate, CoralNPU
-aperture wiring and a runnable test harness. A second performance-focused change
-can add HBM channel striping and prefetch. Every PR includes a committed report,
-simulator commands, source/image hashes and actual FPGA results for its scope.
+The HBM implementation PR must preserve the frontend/loader contract, add a
+source-bound HBM adapter and runnable equivalence/immutability harness, and
+report actual selected channels, mapping, clocks, outstanding reads and errors.
+CoralNPU wiring and ASIC backend work retain their own acceptance gates. Begin
+with HBM correctness and add striping/prefetch only with measured evidence.
+Every PR includes a committed report, simulator commands, source/image hashes
+and actual FPGA results for its scope.
 
 | Gate | Required evidence |
 | --- | --- |
 | Image contract | All 310 tensor payloads and padding independently verified; exact model/image hashes; shared head alias |
 | Read protocol | Random stalls, response reordering, tag exhaustion/reuse, boundary/alignment errors and no lost/duplicate responses |
 | Q1_0 addressing | First/last rows and groups, groups crossing lines/4 KiB, FP16 scale/sign order and F32 norm reads |
-| ROM/DRAM equivalence | Identical logical request streams and returned bytes/status against one independent image oracle, with different backend latency |
-| Immutability | Writes rejected from every master/alias after seal; writes racing seal drained; descriptor changes blocked |
+| ROM/DDR/HBM equivalence | Identical logical request streams and bytes/status against one independent image oracle; channel/stripe boundaries, reordering and different latency |
+| Immutability | Writes rejected from every master/alias/test writer after seal; writes racing seal drained on all channels; mapping/reset/performance bypasses blocked; full logical hash before/after |
 | Reset/fault behavior | Warm/cold reset, outstanding reads/writes, bad hashes, controller not ready, AXI errors and no stale response reuse |
 | CoralNPU integration | Real firmware loads weights; correct lane extraction; store and instruction-fetch faults; identical kernel outputs across backends |
 | FPGA execution | Named AFI, load/readback/seal logs, physical request counters, error counters, hash before/after and no host compute substitution |
@@ -357,11 +460,12 @@ simulator commands, source/image hashes and actual FPGA results for its scope.
 
 Run the new RTL protocol tests on Verilator and Arcilator where supported;
 record any frontend or harness gap instead of counting it as a pass. Use the
-AWS shell memory simulation for the DDR adapter before hardware. FPGA timing is
+AWS shell memory simulation for each DDR/HBM adapter before hardware. FPGA timing is
 measured as FPGA timing; a separate bank/latency model estimates ASIC behavior.
 HBM bandwidth cannot be cited as measured ROM bandwidth.
 
-Current evidence consists of the architecture and native image packer checks.
-The existing 1,332-target baseline, four-configuration Arcilator pilot and nine
-AWS XSIM example tests predate this new RTL and do not validate it. No physical
-ROM-equivalent FPGA result or CoralNPU-generated model tokens are claimed.
+Current DDR implementation evidence is tracked in the ERG-103 report, including
+its explicitly stated execution scope. The earlier 1,332-target baseline,
+four-configuration Arcilator pilot and AWS shell-example tests do not validate
+an HBM backend or array. No HBM execution, ASIC ROM fit, full-model inference or
+CoralNPU-generated token result is established by this design change.

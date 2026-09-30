@@ -13,12 +13,17 @@ Propose a small **16 output-row × 8 token-column, output-stationary mesh**
 token. Use one PE arithmetic definition in both modes: add, subtract or skip a
 signed int8 activation into an int32 group accumulator. Weights reach the array
 through the existing logical read-only weight-store contract, with local
-packing/line assembly and double-buffered operand staging.
+packing/line assembly and double-buffered operand staging. **HBM is the preferred
+proposed FPGA ROM-equivalent backend**, with the current sealed-DDR first slice
+retained as the implemented correctness baseline. ASIC banked ROM is the
+separate proposed silicon backend. This choice does not change native formats
+or establish HBM/array execution or full-model inference.
 
 These dimensions and the folded routing are engineering proposals, not a fit
 or timing commitment. The first implementation should prove one tile, both
-mappings, exact group results and a real CoralNPU submission path. Replication,
-HBM and model-level precision changes follow separate gates. Preserve DOT128
+mappings, exact group results and a real CoralNPU submission path. HBM correctness
+and immutability are a separate backend gate; replication and model-level
+precision changes follow their own gates. Preserve DOT128
 as a diagnostic reference; do not silently reinterpret its v1 mailbox.
 
 ## 2. Existing boundary and what changes
@@ -30,15 +35,14 @@ as a diagnostic reference; do not silently reinterpret its v1 mailbox.
 | Submission | `doc/spec/first_slice.md:36`: AXI-Lite mailbox, one job, inline 128-byte activations, held result until ACK | Separate array ABI and bounded tile descriptors; staging and completion ownership |
 | CoralNPU | `doc/spec/first_slice.md:6`: host/testbench stands at CPU-master boundary; no core/RVV integration in this slice | Wire external slave/control path and run firmware on the real core in simulation |
 | Scaling | `utils/first_slice/prepare_fixture.py:88` and `doc/spec/first_slice.md:27`: raw FP16 scale plus exact int32 result; host performs one FP32 rounding | First expose exact group results/scales to firmware; add a specified RVV/scalar or hardware scale/reduction stage |
-| FPGA | `fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv:19` and `:138`: shell clock, guarded DDR, no HBM path | Reuse logical store semantics; independently implement/measure an array wrapper and later HBM adapter |
+| FPGA | `fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv:19` and `:138`: shell clock, guarded DDR, no HBM path | Reuse logical store semantics; implement/validate the preferred HBM adapter separately from the array wrapper |
 
 The current ERG-103 report explicitly excludes CoralNPU firmware, RVV, full
 layers and inference (`reports/ERG-103/README.md:18`). Its simulator coverage
 is a regression baseline for the existing slice, not evidence for this array.
 Physical FPGA gate status must be taken from the current run report, separately
-from this design. The older weight-store proposal's blanket “RTL pending” text
-predates the implemented first slice; the source table above resolves that
-historical wording without implying the missing SoC integration exists.
+from this design. The companion weight-store contract distinguishes the
+implemented DDR slice from proposed HBM, ASIC ROM and SoC integration.
 
 ```mermaid
 flowchart LR
@@ -51,7 +55,7 @@ flowchart LR
   CLIENT -->|logical line requests and responses| STORE[Existing store contract; SoC attachment proposed]
   STORE --> ROM[Proposed ASIC banked ROM backend]
   STORE --> DDR[Current F2 slice: reserved sealed DDR]
-  STORE --> HBM[Future FPGA HBM backend]
+  STORE --> HBM[Preferred proposed FPGA HBM backend]
 ```
 
 The three memory boxes are alternative backends, not simultaneous copies. The
@@ -178,12 +182,25 @@ Analyze row-stride bank collisions, macro ports, capacity and floorplan before
 choosing B. A 512-bit response does not imply a 512-bit ROM macro. The 231.13 MiB
 image is a capacity requirement, not established on-chip area or power feasibility.
 
-**FPGA:** loader writes a disjoint DDR/HBM allocation, drains and reads it back,
-then seals every writable alias. Logical addresses and image bytes remain
-unchanged. HBM striping/channel scheduling is backend-private. The current
-wrapper is DDR-only; HBM and concurrent physical IDs are new implementations.
-One-at-a-time backend reads in the existing store can bottleneck even though
-16 logical slots exist; do not model it as 16 reads in flight.
+**FPGA:** prefer HBM as the ROM-equivalent weight allocation. The current
+wrapper remains DDR-only; HBM and concurrent physical IDs are new implementations.
+Loader writes, full logical readback/hash, draining and sealing must cover all
+selected channels and every alias/test/debug writer. Protect channel-map,
+performance mux and reset controls too; software-disabled traffic generators
+are not a write fence. HBM is volatile: controller reset, power loss or
+reconfiguration invalidates readiness, epochs and staging and requires reload,
+verification and reseal. Preserve warm core-reset immutability.
+
+The [HBM backend proposal](weightstore.md#fpga-and-asic-backend-mapping) fixes the
+same bytes, logical offsets and line protocol, and identifies the pinned AWS
+16 GiB/32-port reference, actual port-15 host ingress, 256-bit AXI3 interface and
+its example bypass/reset hazards. Start with a declared allocation and test
+single-channel correctness before deciding striped channel set and granularity.
+Channel allocation, stripe size, per-channel queues, prefetch depth, clock/CDC
+plan and error policy remain design decisions. None of the reference example's
+aggregate performance transfers automatically to the array. One-at-a-time
+backend reads in the existing store can bottleneck even though 16 logical slots
+exist; do not model it as 16 physical reads in flight.
 
 Proposed local storage for a 128-PE tile (logical byte counts, excluding ECC,
 ports, bus FIFOs and implementation padding):
@@ -382,7 +399,7 @@ FP32 scaling and routing still consume resources. No fit, power, tokens/s or
 | Contract freeze | Review array mode, descriptor/map allocation, numerical boundaries, format IDs, counter meanings and clock plan; resolve open decisions below |
 | One-tile arithmetic | Independent exact int32 oracle; Q1_0 raw scale bits; ternary zero/invalid codes; -128 extremes, all signs, tails and mode changes; selected actual blocks across all 197 matrices |
 | Dataflow/protocol | Cycle-by-cycle valid alignment under random stalls, all buffer/credit limits, reordered lines, 64-byte/4 KiB crossings, backend faults and resets; no lost or duplicated result |
-| Storage equivalence | Same descriptor/operation stream on behavioral ROM and DDR model; exact returned bytes, statuses and outputs; hash/epoch/seal invariants |
+| Storage equivalence | Same descriptor/operation stream on behavioral ROM, DDR and proposed HBM models; exact bytes/status/outputs, channel/stripe boundaries and all-writer hash/epoch/seal invariants |
 | CoralNPU integration | Actual simulated core firmware stages/submits/drains; unchanged RVV regressions plus real helper tests; DMA ownership/error tests if DMA is enabled |
 | Row/layer numerics | Approved activation quantization and scaling reference; exact reference reduction or approved frozen tolerance; complete shapes and adversarial values; no full-model inference shortcut |
 | FPGA | Source-bound build, shell simulation, routed timing and physical run on named image; whole-image readback, counters, actual outputs and failure retention; no host result substitution |
@@ -405,10 +422,13 @@ not silently skipped or reported as a full-suite pass.
    SoC/BAR address allocation; preserve DOT1 compatibility.
 3. Assign an authoritative ternary checkpoint/format separately from the binary
    fixture. Choose model activation precision/quantization and the scale executor.
-4. Select the first clock target and single-clock versus CDC boundary; determine
-   whether the existing serial DDR adapter suffices for correctness-only v0.
+4. Freeze the preferred HBM backend's channel allocation/striping, outstanding
+   reads, prefetch/reorder capacity, clock/CDC/reset/error policy and all-writer
+   seal. Keep DDR as the independently reported baseline; allocate no new address
+   or CSR until that integration review.
 5. Assign implementation/review owners and numerical/performance pass thresholds.
-   Agree when to add physical read concurrency, banked ROM macros, HBM and tiles.
+   Sequence HBM equivalence/sealing before its throughput claim, then physical
+   read concurrency, banked ROM macros and tile replication as separate gates.
 
 This draft is architecture work only. It authorizes no array implementation,
 bitstream load, hardware run or model-format change.

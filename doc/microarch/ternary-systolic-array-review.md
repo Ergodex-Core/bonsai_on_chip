@@ -11,3 +11,14 @@ Review result: no remaining actionable design findings. The final integration di
 Independent review snapshot SHA256: `f57f8b1172de9ff242e78f4d6febf47265316d4800d261b0cad032ffb1c996f5`. Final draft SHA256 after the diagram addition: `8e5be7a3050d01bcf3b1d4d9f7dcfd89ba493b71fe11b70a762f75948801361d`.
 
 Implementation remains gated on ABI/map allocation, activation quantization, ports and routing, clock/CDC decisions, timing/resource closure and source-bound simulator/FPGA evidence.
+
+## HBM preference update
+
+The subsequent design-only update makes HBM the preferred FPGA ROM-equivalent
+while retaining the implemented DDR first slice. A separate automated review
+checked all-writer sealing, reset/epoch behavior, pinned AWS interface details,
+capacity boundaries and the candidate stripe arithmetic. See the
+[HBM review and exact document hashes](hbm-rom-equivalent-review.md). No blocking
+findings remain for that proposal; HBM implementation and hardware evidence are
+still pending. The original draft hashes above identify the earlier review, not
+the updated documents.
