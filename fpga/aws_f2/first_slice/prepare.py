@@ -131,7 +131,8 @@ def main():
         if target.is_symlink():
             target.unlink()
         shutil.copy2(source / name, target)
-    for name in ("cl_synth_user.xdc", "cl_timing_user.xdc"):
+    for name in ("cl_synth_user.xdc", "cl_timing_user.xdc",
+                 "small_shell_cl_pnr_user.xdc"):
         shutil.copy2(source / name, cl / "build/constraints" / name)
     for name in ("Makefile", "Makefile.tests", "top.xsim.f"):
         shutil.copy2(source / name, cl / "verif/scripts" / name)
