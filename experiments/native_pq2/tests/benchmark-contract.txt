@@ -18,7 +18,10 @@ zero, finite extremes, subnormal, Inf, and NaN to check transport, not numeric
 evaluation. Every native code and INT8 extremes are explicitly exercised.
 Optional model fixtures require explicit absolute GGUF offset and pinned
 PQ2_0 GGML tensor type ID142; the parser verifies metadata ID, shape, native
-block boundary, and available range. The full model is hashed, not copied.
+block boundary, and available range. A model case takes the same K block from
+32 consecutive native rows with row stride derived from the tensor dimensions;
+native bytes are relocated into the test ROM with synthetic INT8 activations.
+The full model is hashed, not copied.
 Generated fixtures can contain sampled model bytes and MUST remain private.
 
 Storage model
@@ -37,8 +40,10 @@ Fault and reset contract
 The first engine response can fail while other requests remain outstanding.
 An engine must drain already accepted requests and any request it has already
 presented under backpressure before allowing a later command to consume replies.
-The test waits for terminal error and complete queue drainage, then reconfigures
-and verifies successful arithmetic, a CPU ROM error/recovery, and reset/restart.
+The test requires complete queue drainage at the first observed terminal error,
+immediately reuses CPU ROM, then reconfigures and verifies successful arithmetic,
+a CPU ROM error/recovery, and reset/restart. It never drains replies on the DUT's
+behalf after observing terminal error.
 Reset synchronously resets DUT and storage adapter and flushes pending replies.
 Reset-only-DUT with old external replies is not supported without an epoch tag.
 Out-of-range blocks, capacity boundaries, invalid unit counts, ROM writes,
@@ -77,3 +82,8 @@ private/ contains build products/logs and possibly model samples. Never publish
 private/, checkpoints, absolute local paths, AWS identifiers, or credentials.
 No full token, board result, post-route timing, or synthesis resource claim is
 made by this benchmark. Preserve the original baseline's source hash/provenance.
+
+The frozen tests/test_baseline.cpp is retained only for historical E1 diagnostic
+reproduction. Its optional hard-coded model slice is not the validated native-row
+sampler for this comparison. Use native_reference.py plus tests/test_engine.cpp,
+which validate the GGUF tensor type and sample the same K block across native rows.

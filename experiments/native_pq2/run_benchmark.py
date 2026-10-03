@@ -62,6 +62,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", action="append", help="LABEL=RTL_PATH (repeat)")
     parser.add_argument("--parameter", action="append", default=[], help="LABEL:PARAMETER=INTEGER (repeat)")
+    parser.add_argument("--check-cpu-overlap", action="append", default=[], help="Run pending-ROM/MMIO overlap regression for LABEL")
     parser.add_argument("--profile", action="append", type=parse_profile)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--allocation", required=True, help="Sanitized coordination label; no cloud IDs")
@@ -106,6 +107,8 @@ def main():
         if parameter in ("ROM_BYTES", "DATA_BITS", "ID_BITS", "ENGINE_ENABLE", "ROM_BASE", "MMIO_BASE"):
             parser.error("benchmark protocol parameters are fixed")
         variants[variant]["parameters"][parameter] = int(value, 0)
+    if any(name not in variants for name in args.check_cpu_overlap):
+        parser.error("--check-cpu-overlap must name a selected variant")
     profiles = args.profile or [parse_profile(value) for value in (
         "ideal:1:1:8:0", "lat20:20:1:8:20", "lat80:80:4:8:20", "limited:80:8:2:25")]
     if len({profile["name"] for profile in profiles}) != len(profiles):
@@ -138,6 +141,7 @@ def main():
                 "clock_constraint": "none; functional cycle simulation, no Fmax claim",
                 "reset_contract": "DUT and storage adapter reset together; pending replies are flushed",
                 "timing": {"latency_jitter": args.latency_jitter, "mmio_stall_max": args.mmio_stall_max},
+                "cpu_overlap_variants": args.check_cpu_overlap,
                 "limitations": ["No board measurement or synthesis utilization",
                                 "No full-model token or firmware CPU execution",
                                 "AXI testbench command latency uses a synthetic master, not compiled firmware",
@@ -164,6 +168,7 @@ def main():
                 command = [str(build_dir / "Vcoral_weight_axi"), "--fixtures", str(fixture_path),
                            "--seed", str(args.seed), "--latency-jitter", str(args.latency_jitter),
                            "--mmio-stall-max", str(args.mmio_stall_max)]
+                command += ["--cpu-overlap", str(int(name in args.check_cpu_overlap))]
                 for key in ("latency", "beat_ii", "capacity", "stall_percent"):
                     command += ["--" + key.replace("_", "-"), str(profile[key])]
                 checked_run(command, log, args.simulation_timeout)
