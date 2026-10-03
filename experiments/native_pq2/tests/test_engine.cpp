@@ -70,6 +70,7 @@ struct Options {
   std::string fixtures;
   unsigned latency = 20, beat_ii = 1, capacity = 8, stall_percent = 20;
   unsigned jitter = 3, seed = 7193, mmio_stall_max = 3;
+  bool cpu_overlap = false;
 };
 struct Counters {
   uint64_t requests = 0, responses = 0, bytes = 0, request_stalls = 0;
@@ -86,6 +87,7 @@ struct Sim {
   Counters counts;
   uint64_t ticks = 0, next_response = 0, fail_request = 0;
   bool request_held = false;
+  bool hold_requests_until_error = false, held_request_error_seen = false;
   uint32_t held_address = 0;
   static constexpr uint32_t M = 0x60000000, R = 0x40000000;
   Sim(const Options &options, uint32_t bytes) : opt(options), rom(bytes), rng(opt.seed) {
@@ -94,6 +96,7 @@ struct Sim {
   Signals step() {
     d.clk = 0;
     d.storage_ready = pending.size() < opt.capacity && rng() % 100 >= opt.stall_percent;
+    if (hold_requests_until_error && counts.requests >= fail_request) d.storage_ready = 0;
     d.storage_rsp_valid = !pending.empty() && ticks >= pending.front().ready_at && ticks >= next_response;
     d.storage_rsp_error = !pending.empty() && pending.front().error;
     for (unsigned word = 0; word < 4; ++word) {
@@ -110,6 +113,8 @@ struct Sim {
     Signals signals{bool(d.s_awvalid && d.s_awready), bool(d.s_wvalid && d.s_wready),
                     bool(d.s_arvalid && d.s_arready), bool(d.storage_valid && d.storage_ready),
                     bool(d.storage_rsp_valid && d.storage_rsp_ready), uint32_t(d.storage_addr)};
+    const bool consumed_error = signals.response && d.storage_rsp_error;
+    if (consumed_error && d.storage_valid && !d.storage_ready) held_request_error_seen = true;
     request_held = !d.reset && d.storage_valid && !d.storage_ready;
     held_address = d.storage_addr;
     if (!d.reset && d.storage_valid && !d.storage_ready) ++counts.request_stalls;
@@ -117,6 +122,7 @@ struct Sim {
     d.clk = 1; d.eval();
     if (signals.response && !d.reset) {
       pending.pop_front(); ++counts.responses; next_response = ticks + opt.beat_ii;
+      if (consumed_error) hold_requests_until_error = false;
     }
     if (signals.request && !d.reset) {
       check(signals.address % 16 == 0, "storage request must be 128-bit aligned");
@@ -134,6 +140,7 @@ struct Sim {
     // Reset covers both DUT and storage transaction domain. Outstanding replies
     // cannot survive a platform reset unless its adapter supplies an epoch.
     pending.clear(); request_held = false; next_response = 0; fail_request = 0;
+    hold_requests_until_error = false;
     d.s_arvalid = d.s_awvalid = d.s_wvalid = d.s_rready = d.s_bready = 0;
     d.reset = 1; for (int n = 0; n < 4; ++n) step(); d.reset = 0;
   }
@@ -224,6 +231,41 @@ struct Sim {
   }
 };
 
+static void cpu_overlap_test(Sim &s) {
+  const unsigned old_latency = s.opt.latency;
+  s.opt.latency = std::max(32U, old_latency);
+  s.d.s_araddr = Sim::R + 4096; s.d.s_arid = 11;
+  s.d.s_arlen = 0; s.d.s_arsize = 2; s.d.s_arvalid = 1; s.d.s_rready = 0;
+  for (unsigned n = 0;; ++n) { check(n < 100000, "CPU overlap first AR timeout"); if (s.step().ar) break; }
+  s.d.s_araddr = Sim::M; s.d.s_arid = 47;
+  for (unsigned n = 0; !s.d.s_rvalid; ++n) {
+    check(n < 100000, "CPU overlap first R timeout");
+    check(!s.step().ar, "MMIO AR accepted during pending CPU ROM read");
+  }
+  std::array<uint32_t, 4> original;
+  for (unsigned word = 0; word < 4; ++word) {
+    uint32_t expected = 0;
+    for (unsigned byte = 0; byte < 4; ++byte) expected |= uint32_t(s.rom[4096 + 4 * word + byte]) << (8 * byte);
+    original[word] = s.d.s_rdata[word];
+    check(original[word] == expected, "overlapped CPU ROM payload corrupted");
+  }
+  for (unsigned n = 0; n < 5; ++n) {
+    check(s.d.s_rvalid && s.d.s_rid == 11 && s.d.s_rresp == 0 && s.d.s_rlast,
+          "CPU ROM ID/control corrupted by held MMIO AR");
+    for (unsigned word = 0; word < 4; ++word) check(s.d.s_rdata[word] == original[word], "held CPU R changed");
+    check(!s.step().ar, "second AR accepted while first R stalled");
+  }
+  s.d.s_rready = 1; check(!s.step().ar, "second AR accepted before first R consumed"); s.d.s_rready = 0;
+  for (unsigned n = 0;; ++n) { check(n < 100000, "held MMIO AR timeout"); if (s.step().ar) break; }
+  s.d.s_arvalid = 0;
+  for (unsigned n = 0; !s.d.s_rvalid; ++n) { check(n < 100000, "held MMIO R timeout"); s.step(); }
+  check(s.d.s_rid == 47 && s.d.s_rresp == 0 && s.d.s_rlast, "second MMIO response ID/control");
+  const uint32_t value = s.d.s_rdata[0];
+  for (unsigned n = 0; n < 3; ++n) { s.step(); check(s.d.s_rvalid && s.d.s_rid == 47 && s.d.s_rdata[0] == value, "held MMIO R changed"); }
+  s.d.s_rready = 1; s.step(); s.d.s_rready = 0;
+  s.opt.latency = old_latency;
+}
+
 static void protocol_tests(Sim &s, const Fixture &fixture) {
   s.set_fixture(fixture); s.configure(fixture);
   check(s.read(Sim::M + 0x280) == fixture.activation_scale, "activation scale readback");
@@ -259,6 +301,14 @@ static void protocol_tests(Sim &s, const Fixture &fixture) {
   s.wait_done(); s.verify(fixture);
   check(s.counts.requests > recovery_requests && s.read(Sim::M + 16) > 0,
         "fault recovery must execute a new command");
+  // Guarantee that a depth>=2 requester presents its second request stalled
+  // when the first response fails; preserve valid/address through that fault.
+  s.fail_request = s.counts.requests + 1; s.hold_requests_until_error = true;
+  check(s.write(Sim::M + 4, 1) == 0, "held-request error dispatch");
+  s.wait_done(true);
+  check(s.pending.empty() && !s.request_held, "held request or queued reply leaked across fault completion");
+  s.fail_request = 0;
+  check(s.read(Sim::R + 4096) == expected_cpu, "CPU reuse after held-request error");
   // CPU ROM must also recover, with the original response ID and no stale beat.
   s.fail_request = s.counts.requests + 1;
   s.read(Sim::R + 4096, 2); s.fail_request = 0;
@@ -275,6 +325,7 @@ static void protocol_tests(Sim &s, const Fixture &fixture) {
   s.wait_done(); s.verify(fixture);
   check(s.counts.requests > reset_requests && s.read(Sim::M + 16) > 0, "post-reset command must execute");
   s.opt.latency = old_latency;
+  if (s.opt.cpu_overlap) cpu_overlap_test(s);
 }
 
 int main(int argc, char **argv) {
@@ -292,6 +343,7 @@ int main(int argc, char **argv) {
       else if (arg == "--latency-jitter") options.jitter = std::stoul(value);
       else if (arg == "--seed") options.seed = std::stoul(value);
       else if (arg == "--mmio-stall-max") options.mmio_stall_max = std::stoul(value);
+      else if (arg == "--cpu-overlap") options.cpu_overlap = std::stoul(value) != 0;
       else throw std::runtime_error("unknown option " + arg);
     }
     check(!options.fixtures.empty(), "--fixtures is required");
@@ -348,6 +400,8 @@ int main(int argc, char **argv) {
               << ",\"clock_cycles\":" << sim.ticks << ",\"simulation_wall_seconds\":" << seconds
               << ",\"simulated_cycles_per_second\":" << sim.ticks / seconds
               << ",\"protocol_tests\":\"PASS\",\"storage_requests_including_protocol\":" << sim.counts.requests
+              << ",\"held_request_error_seen\":" << (sim.held_request_error_seen ? "true" : "false")
+              << ",\"cpu_overlap\":\"" << (options.cpu_overlap ? "PASS" : "SKIPPED_known_baseline_limitation_or_not_requested") << "\""
               << ",\"scope\":\"engine RTL simulation; no full token or hardware timing claim\"}\n";
     return 0;
   } catch (const std::exception &error) {
