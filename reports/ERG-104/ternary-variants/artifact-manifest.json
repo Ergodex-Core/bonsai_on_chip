@@ -79,6 +79,14 @@
     "bytes": 1969,
     "sha256": "8ba6ce887e1f6d8b0228c07f02da33333062f40ccef5340ad48e20d77d527cac"
   },
+  "final/publication-text-check.json": {
+    "bytes": 972,
+    "sha256": "081dbd8f2735a359b12d8d89f7014a3721dced4884a399d9a7de6e09abfb2bd5"
+  },
+  "final/publication-source-verification.json": {
+    "bytes": 3501,
+    "sha256": "2cb5627135428438d4003bf863da382b030e6d9ddc550d914e05a2a8c1c1d261"
+  },
   "final/histogram.log": {
     "bytes": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -90,6 +98,10 @@
   "final/repository-linters.json": {
     "bytes": 130,
     "sha256": "588668cef65fd13cd948f44e78b62306f4227bb85e7f5efaf4a1cb931583352e"
+  },
+  "final/publication-text-check.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   "final/down-format-counter-equivalence.json": {
     "bytes": 172,
