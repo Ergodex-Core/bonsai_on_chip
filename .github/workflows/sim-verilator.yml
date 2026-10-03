@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-verilator:
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     timeout-minutes: 30
@@ -41,7 +41,7 @@ jobs:
           path: |
             ${{ env.CI_VERILATOR_INSTALL_DIR }}
   coralnpu-sim-verilator:
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     timeout-minutes: 120
@@ -54,7 +54,7 @@ jobs:
       CI_TMPDIR: /tmp
       CI_CORALNPU_MPACT_COMMIT: e2a26e6d983f13d4c10875e4e5878a6171c04a06
     steps:
-      - uses: actions/checkout@v5
+      - uses: useblacksmith/checkout@v1
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -96,7 +96,7 @@ jobs:
           path: |
             ${{ github.workspace }}/uvm_regression_*.zip
   coralnpu-sim-verilator-bazel:
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     timeout-minutes: 120
@@ -106,7 +106,7 @@ jobs:
       CI_OS_NAME: linux
       CI_TMPDIR: /tmp
     steps:
-      - uses: actions/checkout@v5
+      - uses: useblacksmith/checkout@v1
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
