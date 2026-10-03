@@ -6,6 +6,14 @@ latency, depth 8 reduced one native DOT128 tile's engine busy time from 7,904 to
 the same test went from 8,880 to 2,117 cycles (4.19×). These are operator simulation
 results, not measured firmware or model-token speedups.
 
+## Published draft PRs
+
+| Branch | Draft PR | Scope |
+| --- | --- | --- |
+| `codex/ternary-e1-benchmark` | [#6](https://github.com/Ergodex-Core/bonsai_on_chip/pull/6) | Common oracle, harness and evidence; base main |
+| `codex/ternary-e1-fetch` | [#7](https://github.com/Ergodex-Core/bonsai_on_chip/pull/7) | Queued fetch and read-only AXI adapter; base benchmark |
+| `codex/ternary-spatial-l` | [#8](https://github.com/Ergodex-Core/bonsai_on_chip/pull/8) | Parameterized spatial reductions; base benchmark |
+
 ## Scope and correctness
 
 The matrix compares E1 serial32, E1-fetch depths 1/4/8, and spatial-L widths
@@ -170,7 +178,8 @@ rerun. [Formatter receipt](format/repository-linters.json),
 [before/after provenance](format/format-provenance.json) identify the changes.
 All measured sources were rebuilt and both tensor matrices rerun after formatting.
 All 22,400 per-case counter rows also match the original pre-format runs exactly.
-The final publication Markdown is checked separately after report assembly.
+The final publication Markdown is checked separately after report assembly;
+its exact file hashes and result are in [the text check receipt](final/publication-text-check.json).
 
 LUT/FF/BRAM/URAM/DSP utilization, synthesized and post-route timing, actual HBM
 bandwidth, compiled firmware overhead, full ordered FP32 inference, complete model
