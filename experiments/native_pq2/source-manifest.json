@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-03T18:38:28.417042+00:00",
+  "repository": "https://github.com/Ergodex-Core/bonsai_on_chip",
+  "publication_base": "26bded5bf809267506058df6bf0b296dddeeaf25",
+  "historical_remote_simulator_base": "81036e734e80bf14862de3d4259a65b5427832a4",
+  "historical_local_first_slice_base": "c04bdb4c",
+  "baseline_status": "Isolated E1 sources imported; historical first-layer passes are not this PR validation. Full-token gate pending.",
+  "baseline_files": {
+    "baseline/coral_weight.h": "e9e5332e60545813b458dbac8610c6f5c34941f970d021f91e2e9b26c43f8b9e",
+    "baseline/coral_weight_axi.sv": "086f91c0adb555c4e2c2def921369c82eed67a86373f4cc616ecaaaf364b6319"
+  },
+  "upstream_references": {
+    "TerEffic": "https://arxiv.org/html/2502.16473v2",
+    "ternaryLLM": "68d384425261d60bfbde5ff079c33a474c1eb28e"
+  },
+  "model": {
+    "name": "Ternary-Bonsai-1.7B-PQ2_0.gguf",
+    "bytes": 463290464,
+    "sha256": "de68ba48a8dacb21979915991e7741b917869d71410a370df951c0c3a237ae50",
+    "included": false
+  },
+  "noL0": {
+    "supported_emitter_sha256": "1d62cc42c94c589ab98cacf84b921d61aaa8c557a3737ca6706297ba16dd37be",
+    "engine_generated_core_sha256": "a26c916676a857447e41f403d7c69babeedaa8f5910a864e1d2c28314f68e7cf",
+    "full_core_rebuilt_in_this_experiment": false
+  }
+}
