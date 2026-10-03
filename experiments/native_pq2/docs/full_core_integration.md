@@ -47,3 +47,23 @@ Full-core re-emission/build, compiled firmware overhead, complete-model token
 comparison, native F2 resource/timing and physical execution are pending gates.
 The allocated short operator slot does not authorize long full-model or physical
 F2 jobs. No earlier partial-layer result is presented as a completed token.
+
+## Approved FPGA model storage contract
+
+The user approved HBM-backed read-only model storage as the FPGA equivalent of ROM
+on 2026-10-03. Physical ASIC ROM remains a separate implementation target.
+
+Before inference, the host loads the complete native GGUF into the selected model
+aperture, verifies its byte count and SHA256 against the pinned manifest, and seals
+it. The shell must reject writes to that model aperture while inference is active;
+a software promise alone is insufficient. Activations, KV state, mailbox and
+outputs occupy separately bounded writable intervals. The queued read adapter
+exposes no write channel and does not itself implement the shell's seal or loader.
+These controls belong to the FPGA integration owner, with no duplicate shell here.
+
+All storage addresses below the leaf are native file-relative byte offsets. Bind
+`HBM_BASE` to the shell's model aperture, enforce bounds there, and preserve
+single-ID ordered reads, error propagation and backpressure. Reset requires a
+coordinated flush of outstanding AXI responses. The current latency/II/capacity
+sweep exercises realistic constraints as explicit scenarios, not calibrated HBM
+measurements; board measurements remain required before a hardware speed claim.
