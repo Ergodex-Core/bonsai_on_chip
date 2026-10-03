@@ -1,0 +1,60 @@
+name: Verilator PCH correctness
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'rules/**'
+      - 'third_party/verilator/**'
+      - 'tests/ci/pch/**'
+      - 'MODULE.bazel*'
+      - '.bazelrc'
+      - '.github/workflows/verilator-pch.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verilator-pch-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Install compiler and Verilator build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y clang-18 autoconf bison flex g++ make help2man libfl-dev liblz4-dev zlib1g-dev
+          sudo ln -sf /usr/bin/clang-18 /usr/local/bin/clang
+      - name: Install checksum-pinned Bazel 8.6.0
+        run: |
+          curl --fail --location --retry 3 https://github.com/bazelbuild/bazel/releases/download/8.6.0/bazel-8.6.0-linux-x86_64 -o "$RUNNER_TEMP/bazel"
+          echo "9860da9c9386bbc023feed8f43af3105d338727d77b644fa6aeca45a4a11957c  $RUNNER_TEMP/bazel" | sha256sum --check
+          chmod +x "$RUNNER_TEMP/bazel"
+          mkdir -p .ci-evidence/pch
+          "$RUNNER_TEMP/bazel" --version > .ci-evidence/pch/tool-versions.log
+          clang-18 --version >> .ci-evidence/pch/tool-versions.log
+          sha256sum "$RUNNER_TEMP/bazel" /usr/bin/clang-18 > .ci-evidence/pch/tool-sha256.txt
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .ci-bazel-downloads
+          key: verilator-pch-bazel-8.6.0-${{ runner.os }}-${{ hashFiles('MODULE.bazel.lock', 'rules/repos.bzl') }}
+      - name: Verify consumption, oracle parity and sandbox/cache relocation
+        env:
+          CC: /usr/bin/clang-18
+        run: |
+          python3 tests/ci/pch/run_regression.py --bazel "$RUNNER_TEMP/bazel" --repository-cache "$GITHUB_WORKSPACE/.ci-bazel-downloads" --evidence-dir "$GITHUB_WORKSPACE/.ci-evidence/pch" --timeout 1200 --jobs 2
+          echo 'PASS: generated model, PIC modes, corrupt-PCH rejection and relocated disk-cache reuse.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: verilator-pch-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ci-evidence/pch
+          retention-days: 14
+          include-hidden-files: true

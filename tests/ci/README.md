@@ -95,3 +95,33 @@ compiler cycle blocker; the six-cell full-inference comparison is separate work.
 No full-core, full-repository, model token, performance or hardware pass is
 implied. Run those long jobs explicitly under the simulation owner's coordinated
 compute ledger and retain matched-source/fixture/tool evidence.
+
+## Generated C++ PCH regression
+
+The UVM Bazel rule now builds a declared Clang PCH action and explicitly passes
+`-include-pch` to generated C++ compilation. It shares compiler options, defines,
+include paths and the selected PIC variants with the normal compile actions.
+Global C++ options are explicitly forwarded for generated source trees so both
+compiler actions receive them.
+Creation errors fail the build. Relocatable paths and omitted PCH timestamps
+allow sandbox cleanup and disk-cache reuse without disabling Clang validation.
+Linux Clang without a custom sysroot uses this path; other toolchains retain
+ordinary compilation. `--features=-verilator_pch` provides a diagnostic baseline.
+Optimization, simulator coverage and existing UVM time limits are unchanged.
+
+The separate `verilator-pch.yml` workflow runs on relevant PR changes. Its small
+actual Verilator model checks 16,384 oracle samples with PCH enabled and disabled
+in fastbuild, opt and forced-PIC configurations. It verifies unchanged object
+counts, declared PCH inputs, corrupted-PCH rejection, and reuse in an independent
+Bazel output base. Bazel 8.6.0 and Verilator 5.052 are checksum pinned; Clang 18
+comes from Ubuntu 24.04. Repository-download caching contains no test results.
+Partial logs and action evidence are downloadable even on failure.
+
+Reproduce from the repository root on Linux with Clang and Bazel 8.6.0:
+
+```bash
+python3 tests/ci/pch/run_regression.py --evidence-dir /tmp/pch-evidence --timeout 1200 --jobs 2
+```
+
+This fixture validates the compilation mechanism. Full UVM test results are
+reported separately; it does not establish full-model Arcilator support.
