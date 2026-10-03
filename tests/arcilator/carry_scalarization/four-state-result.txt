@@ -1,0 +1,2 @@
+PASS 16384 four-state directed cases, 262144 output bits
+arc-profile-work/carry-fix/four_state_tb.sv:22: $finish called at 16384 (1s)
