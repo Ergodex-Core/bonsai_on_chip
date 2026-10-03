@@ -1,0 +1,145 @@
+Native PQ2 spatial-L parallel reduction tile
+===========================================
+
+Status and identity
+-------------------
+This experiment changes the integer compute width of the pinned E1 peripheral
+in ../baseline/coral_weight_axi.sv (baseline commit d3eaf060), with the read
+backpressure correctness adjustment described below.
+It is named spatial-L to distinguish it from the separate proposal for a
+fully spatial 32-output by DOT128 engine. It is a parallel reduction tile,
+not a neighbor-to-neighbor systolic array. Its default is L=8.
+
+This file records design analysis, not measured performance. RTL simulation,
+synthesis, post-route timing, board execution, and full-token validation must
+be reported separately by the shared benchmark harness. Mac is the controller;
+builds and simulation require the coordinated EC2 allocation. No build,
+simulation, synthesis, or new compute allocation was performed for this note.
+
+Sources and adaptation decision
+-------------------------------
+TerEffic, arXiv:2502.16473v2, section III-D, motivates sharing activation
+inversions across output dot units and reducing multiple products in parallel.
+Section IV-C motivates measuring batch-1 memory supply before scaling compute.
+The article is CC BY 4.0. This RTL is independently written for native PQ2;
+no article pseudocode, figure, or external implementation is copied.
+https://arxiv.org/html/2502.16473v2
+
+The fpgasystems/ternaryLLM repository was inspected at commit
+68d384425261d60bfbde5ff079c33a474c1eb28e, including LICENSE, FPGA README,
+and ternaryLLM_FPGA/hw/spinal/gemmacc/src/design/PE.scala. Its MIT-licensed
+FPGA design accumulates activations selected by index streams and subtracts
+paired accumulators. That sparse input contract is not adopted here: native
+PQ2 also represents +2, and this variant preserves its original packed bytes.
+No files or implementation fragments from that repository are incorporated.
+https://github.com/fpgasystems/ternaryLLM/tree/68d384425261d60bfbde5ff079c33a474c1eb28e
+
+Numerical and interface contract
+--------------------------------
+- Original module name, ports, MMIO layout, single outstanding storage request,
+  byte-addressed weight offsets, and error paths are retained.
+  DOT_LANES is appended as an elaboration parameter, preserving the positions
+  of all existing parameters. Use this source instead of the baseline source;
+  do not compile both modules into the same design.
+- Read-address backpressure is tightened for an inherited baseline hazard:
+  while a CPU ROM read awaits storage, a second MMIO AR must not overwrite
+  the saved response ID/data slot. MMIO polling is accepted only during IDLE
+  or explicit engine states, never CPU_REQ/CPU_WAIT. Existing R-channel
+  backpressure also holds off new reads. This does not change arithmetic or
+  the MMIO register map. A one-outstanding CPU wrapper can mask the original
+  hazard; the peripheral regression must exercise multiple offered requests.
+- DOT_LANES supports exactly 1, 2, 4, 8, 16, or 32. Unsupported settings issue
+  a fatal configuration error. The default is 8; the benchmark must record
+  the actual elaborated setting rather than inferring it from a variant name.
+- Every unit consumes its unchanged 34-byte PQ2 block: two FP16 scale bytes
+  followed by 32 packed code bytes. Codes 00,01,10,11 mean -1,0,+1,+2.
+  There is no compression, quantization, zero skipping, or code remapping.
+- One 128-byte signed INT8 activation vector is shared across the 32 outputs.
+  x, -x, and 2x are formed once per spatial lane in signed 10-bit signals.
+  In particular x=-128 produces -x=128 and 2x=-256 without overflow.
+- Per-output trees use signed 10-bit leaves and add one bit at every tree
+  level. The final tile sum has 10+log2(L) bits and is explicitly sign-extended
+  to INT32 before accumulation. A 32-product subgroup lies in [-8192,8128].
+- L divides 32. Each cycle remains inside one native 32-product subgroup,
+  so each active unit updates exactly one subgroup accumulator exactly once.
+  All four subgroup results are retained as INT32; inactive units remain zero
+  after command start. Changing integer association is exact within these
+  bounds and does not reassociate the firmware FP32 epilogue.
+- Weight-scale FP16 bits and activation-scale FP32 bits pass through unchanged.
+  Native Q8_K still shares d across 256 activation values. The same ordered
+  firmware FP32 epilogue combines the subgroups and scales. The hardware does
+  no floating-point model work, and this experiment adds no host model work.
+
+Datapath and analytical compute schedule
+---------------------------------------
+The tile has 32 output units and L product selectors per unit. Each tree has
+log2(L) unregistered adder levels followed by the existing INT32 accumulator.
+The seven-bit mac_lane register starts at zero after the final weight response,
+advances by L each ENG_MAC cycle, and finishes at 128-L. There are no internal
+pipeline bubbles or reduction drain cycles in this implementation.
+
+ L  Product selectors  Tree levels  ENG_MAC cycles per 32-output DOT128 command
+ 1          32              0                         128
+ 2          64              1                          64
+ 4         128              2                          32
+ 8         256              3                          16
+16         512              4                           8
+32        1024              5                           4
+
+These are analytical state-occupancy counts, not latency or throughput
+measurements. The tile accepts one reduction per active output per ENG_MAC
+cycle, but commands remain serialized through loading, compute, and firmware
+readback. An ENG_MAC initiation interval of one is not a command II of one.
+For unit_count U, only U outputs accumulate; the compute body still takes
+128/L cycles. Output-lane arithmetic utilization is U/32 before load stalls
+or firmware overhead are included.
+
+Memory and physical limits
+--------------------------
+The existing 1088-byte weight staging and 128-byte activation array are retained.
+The implementation requests enough read ports for the parallel selectors;
+BRAM/URAM inference, register/mux cost, fanout replication, LUT/FF use, and
+routed frequency are tool results, not guarantees from the source structure.
+Sharing transforms in RTL does not guarantee one physical driver per transform.
+The unregistered tree gets deeper as L grows; 32 lanes may lose clock frequency
+or increase routing cost enough to offset its lower cycle count.
+
+At DATA_BITS=128, 32 contiguous 34-byte blocks contain 1088 useful bytes, or
+68 distinct aligned beats when the contiguous tile begins at a 16-byte-aligned address (otherwise up to 69). This variant keeps the baseline per-block fetch,
+which issues 96 requests for those even-aligned contiguous offsets: overlapping
+boundary beats are fetched again. Arbitrary offsets may require four requests
+per block. ENG_REQ and ENG_WAIT serialize each request and response, imposing
+at least two busy cycles per request before any backend stalls.
+
+For the contiguous example, the analytical minimum busy-cycle count is thus
+192+128/L: 320,256,224,208,200,196 cycles for the six settings above. Add backend
+request/response stall cycles. This excludes MMIO programming, result readback,
+the FP32 firmware epilogue, and all other model operators. It is not an HBM
+benchmark, and a count of 16 compute cycles does not mean 16 command cycles.
+
+For a future coalesced, pipelined 128-bit fetcher, even the ideal 68-beat supply
+already takes at least 68 transfer cycles. L=2's 64-cycle compute body is a
+useful bandwidth comparison point. Bigger L values must earn their resource
+cost in measured end-to-end execution. This file does not compose that fetcher;
+doing so would change a second variable in the isolated compute-width sweep.
+
+Required next gates
+-------------------
+Run the common native-PQ2 harness on the coordinated EC2 allocation for every
+supported L. Include all 256 INT8 values against all four codes, directed
+all--128/+2 and +127/+2 cases, subgroup boundaries, randomized packed blocks,
+unit_count 1..32, unaligned offsets, storage stalls/faults, AXI backpressure,
+and scale-bit pass-through. Reject an unsupported parameter value explicitly.
+For read interleaving, delay a CPU ROM response, offer MMIO AR with a different
+ID, and stall RREADY: verify that the ROM RID/data remain intact and the MMIO
+request is accepted only after the first response is consumed.
+Use original model bytes for a separate private checkpoint correctness gate;
+never publish checkpoint payloads.
+
+Record source revision, parameters, exact tool versions, memory timing model,
+clock constraint, operator target cycles, measured simulator cycles/second,
+and firmware overhead. Keep synthesis and post-route reports distinct. Run
+CONTRIBUTING.md's utils/run_linters.sh and utils/check_macro_signatures.py
+before publishing. Full-hardware firmware integration and the original-model
+full-token run remain separate gates; an operator pass alone does not establish
+model or token correctness.
