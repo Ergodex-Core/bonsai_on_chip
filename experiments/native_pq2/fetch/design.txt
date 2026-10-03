@@ -1,0 +1,133 @@
+E1-fetch: bounded in-order PQ2 fetch pipeline
+
+Scope
+  This is a separately compiled replacement for the native PQ2 baseline module
+  coral_weight_axi. The same module name and storage/AXI ports make selection a
+  source-list decision. Never compile it alongside another implementation of
+  coral_weight_axi. FETCH_DEPTH is an added elaboration parameter, default 4,
+  supported range 1..32. DATA_BITS must be 128; unsupported settings fail at
+  elaboration/simulation startup instead of truncating descriptors silently.
+
+  Memory/compute decoupling is a conceptual adaptation inspired by TerEffic
+  (https://arxiv.org/html/2502.16473v2) and the accompanying ternaryLLM project
+  (https://github.com/fpgasystems/ternaryLLM). This fetch implementation is
+  independently authored from the repository's E1 baseline; it copies no RTL
+  from those sources. Paper throughput is not an estimate for this engine.
+
+Preserved numerical and firmware interface
+  The existing MMIO map and address units are unchanged. Each output unit loads
+  its independently addressed native 34-byte PQ2 block: two FP16 scale bytes and
+  32 packed code bytes, encoding -1, 0, +1, +2. All four codes retain the baseline
+  semantics, including +2 and signed INT8 activation -128. The engine performs
+  one product per output unit per cycle for 128 MAC cycles, yielding four INT32
+  subgroup sums per unit. It exposes the original scale bytes unchanged. The
+  existing CPU ordered FP32 epilogue and Q8_K FP32 activation scale are unchanged.
+
+  This variant changes only the loading phase. It does not overlap MAC execution
+  with loading, deduplicate overlapping beats, cache data across invocations,
+  compress weights, skip zeros, or claim to be a spatial DOT128 array. Every
+  invocation rereads all required bytes for the configured 1..32 units.
+
+Storage contract
+  coral_storage_axi_read.sv is the accompanying queued read-only AXI adapter.
+  It preserves the original adapter's ports, adds FETCH_DEPTH (default 4), and
+  accepts a storage request exactly when its AXI AR is accepted. It has no
+  hidden request or data buffer. Every request has ID 0, ARLEN 0, ARSIZE 4, and
+  INCR burst type; the AXI fabric/slave must preserve same-ID response order.
+  ARADDR is HBM_BASE plus the zero-extended storage byte offset. The adapter's
+  credit counter bounds accepted-but-unconsumed AXI requests at FETCH_DEPTH;
+  both RRESP != OKAY and missing RLAST are returned as response errors. The
+  legal integration contract is one R beat per AR. Unexpected extra beats or
+  reordered responses violate this contract and are not recoverable without
+  identifiers/flush support. Reset must also flush the backing AXI channel.
+  Matching engine/adapter depths is recommended; a smaller adapter depth is
+  functionally safe and backpressures the engine. The original single-outstanding
+  adapter is also functionally safe but cannot exploit this engine's queue.
+
+  storage_addr is a 32-bit byte offset into the backing weight store, aligned to
+  16 bytes, not a CPU ROM_BASE-relative bus address with ROM_BASE added. A request
+  is accepted on storage_valid && storage_ready. Each accepted request produces
+  exactly one 128-bit response, in request order, including error responses.
+  A response is consumed on storage_rsp_valid && storage_rsp_ready; its data,
+  error flag, and valid must be held until that handshake. Responses have no IDs.
+  A producer that can respond combinationally to a new request must hold that
+  response until the following cycle because a new descriptor is registered
+  before the response can be consumed. Reordering is unsupported.
+
+  At most FETCH_DEPTH accepted engine requests are outstanding. One additional
+  presented-but-not-accepted request is allowed only when an outstanding slot
+  has been reserved, so accepted plus presented requests also never exceeds
+  FETCH_DEPTH. A valid request and its aligned address remain stable under
+  backpressure. CPU ROM reads retain the baseline single-outstanding behavior.
+  MMIO status reads remain available while the engine owns storage. Firmware
+  writes are rejected while busy, preserving the current request's address.
+  CPU reads are strictly single-outstanding: MMIO AR is backpressured while a
+  CPU ROM response is pending, preventing a second read from overwriting its
+  saved RID or data (an inherited baseline arbitration hazard).
+
+  Requests traverse units in index order and each 34-byte block in byte order.
+  Up to four aligned beats may be needed per block, depending on byte alignment.
+  The destination descriptor records unit index (5 bits), block byte index
+  (6 bits), source beat offset (4 bits), and copy length (5 bits). Thus the new
+  descriptor payload is 20 * FETCH_DEPTH bits, plus queue/cursor/control state.
+  The existing 1088-byte packed-weight staging and 128-byte activation array
+  remain the sole data staging. There is no second beat buffer or extra block
+  data cache. These are logical storage amounts, not synthesized resource counts.
+
+Errors, reset, and reuse
+  On a consumed engine error response, error becomes 1 and done stays 0. The
+  engine stops creating new requests. A request already presented before the
+  error must still be accepted even if it was stalled; its response and every
+  outstanding response are discarded in a drain state. busy stays 1 until the
+  accepted response count is zero and no presented request remains. Only then
+  may CPU ROM access or a new engine start reuse the storage port. This prevents
+  old responses from becoming CPU data or a later invocation's packed weights.
+  Results/scale bytes after a failed operation are invalid; no successful done
+  is raised for the failed invocation. New valid starts clear errors/results.
+
+  Reset cancels internal descriptors and request state. Integration MUST reset
+  or flush the external storage request/response queue simultaneously. Without
+  response IDs, independent engine reset while storage retains old responses
+  cannot be recovered safely. Storage must eventually accept a held request and
+  respond to every accepted request for drain completion; there is no timeout.
+
+Evaluation and verification gates
+  All simulation, substantial builds, and synthesis run on the allocated EC2
+  resource. This worktree was edited/reviewed on the controller only. No local
+  simulation, synthesis, resource, timing, full-layer, or token pass is claimed.
+
+  The shared harness must compare against the same native PQ2 scalar oracle and
+  baseline source revision with identical tensors and storage model. Required
+  cases: FETCH_DEPTH 1, 2, 3, 4, 8; units 1, 2, 31, 32; all 16 byte alignments;
+  contiguous and strided/overlapping block addresses; first and final valid
+  ROM offsets; all four codes; INT8 -128/127; positive/negative subgroup sums;
+  scale-byte preservation; repeated successful invocations; invalid addresses;
+  CPU ROM reads before/after runs; MMIO polling and rejected writes while busy.
+  Present a MMIO AR while a CPU ROM read is pending and verify backpressure,
+  then check both returned RIDs/data after accepting the requests in sequence.
+
+  Vary response latency, acceptance stalls, response throughput, and single- and
+  multi-outstanding storage limits. Assert accepted/presented request bounds,
+  request address stability through stalls, aligned addresses, descriptor order,
+  exact required-byte coverage, and output equality. Inject errors with multiple
+  outstanding requests, on the first/final response, simultaneously with request
+  acceptance, and while the next request is held under backpressure. Immediately
+  attempt CPU ROM reads and a restart; they must wait for drain. After release,
+  prove CPU data and a fresh successful invocation contain no stale response.
+  Exercise simultaneous enqueue/dequeue and pointer wrap for non-power-of-two
+  FETCH_DEPTH=3. For reset tests, reset the storage queue with the engine.
+
+  Adapter-specific tests must verify request and AR acceptance are identical,
+  every AR control/address field, stable ARVALID/ARADDR through ARREADY stalls,
+  no more than FETCH_DEPTH accepted AXI reads, simultaneous AR/R handshakes,
+  downstream response stalls, HBM_BASE addition, one response per request,
+  RRESP and RLAST error forwarding, and reset with the backing AXI queue reset.
+  Exercise the engine and queued adapter together under finite AXI response
+  bandwidth; a leaf-only ideal queue test is not evidence for physical supply.
+
+  Compare operator cycles and end-to-end firmware overhead separately. Record
+  the storage latency, bandwidth/acceptance policy, depth, exact workload, clock
+  constraint, toolchain, and source manifest. Report simulator wall throughput
+  separately from target cycles. Route-derived frequency/resource measurements,
+  board results, and full-token results require their own explicit evidence.
+  There is no performance claim until the identical shared remote tests pass.
