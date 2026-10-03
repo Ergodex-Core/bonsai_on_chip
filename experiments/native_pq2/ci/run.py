@@ -22,6 +22,28 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def run(command, log):
+    with log.open('w') as stream:
+        try:
+            subprocess.run([str(x) for x in command],
+                           stdout=stream,
+                           stderr=subprocess.STDOUT,
+                           check=True,
+                           timeout=900)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            stream.flush()
+            print(log.read_text(), file=sys.stderr, flush=True)
+            raise
+
+
+def export_llvm(binpath, build):
+    # Arcilator's early-stop modes print MLIR even with --emit-llvm.
+    run([
+        binpath / 'mlir-translate', '--mlir-to-llvmir', build / 'llvm.mlir',
+        '-o', build / 'model.ll'
+    ], build / 'translate.log')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -107,18 +129,12 @@ def main():
                                     text=True).splitlines()[0]
         },
         'arc_pipeline':
-        'allocated state; hw-convert-bitcasts; arc-infer-context; lower-arc-to-llvm; cse; arc-canonicalizer; LLVM export; arrays remain aggregates',
+        'allocated state; hw-convert-bitcasts; arc-infer-context; '
+        'lower-arc-to-llvm; cse; arc-canonicalizer; mlir-to-llvmir; '
+        'arrays remain aggregates',
         'runs': []
     }
     rows = []
-
-    def run(command, log):
-        with log.open('w') as stream:
-            subprocess.run([str(x) for x in command],
-                           stdout=stream,
-                           stderr=subprocess.STDOUT,
-                           check=True,
-                           timeout=900)
 
     try:
         for name, parameters in VARIANTS.items():
@@ -165,13 +181,7 @@ def main():
                     '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
                     build / 'allocated.mlir', '-o', build / 'llvm.mlir'
                 ], build / 'lowering.log')
-                # The input is already LLVM dialect. Stop before hardware
-                # preprocessing and use arcilator's LLVM IR exporter only.
-                run([
-                    binpath / 'arcilator', '--until-before=preproc',
-                    '--emit-llvm', build / 'llvm.mlir', '-o',
-                    build / 'model.ll'
-                ], build / 'translate.log')
+                export_llvm(binpath, build)
                 run([
                     binpath / 'opt', '--strip-debug', '-O2', '-S',
                     build / 'model.ll', '-o', build / 'optimized.ll'

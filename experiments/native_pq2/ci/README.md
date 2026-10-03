@@ -32,8 +32,9 @@ The default CIRCT 1.161.0 path reached LLVM lowering but failed to legalize a
 coroutine `cf.switch` with aggregate block arguments. Failed artifacts are kept
 in Actions runs 37154630724 and 37155220000. The compatibility path exports
 allocated-state MLIR, runs the official Arc-to-LLVM passes with arrays retained
-as aggregates, then uses Arcilator's LLVM IR exporter. It omits the optional
-array bufferization pass; it does not rewrite RTL, clocks, reset, or the oracle.
+as aggregates, then exports LLVM IR with the bundled `mlir-translate`. It omits
+the optional array bufferization pass; it does not rewrite RTL, clocks, reset,
+or the oracle.
 The exact pipeline is recorded in benchmark evidence and full parity remains
 required. This follows the pinned [Arc-to-LLVM pipeline](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/lib/Tools/arcilator/pipelines.cpp)
 and its [bufferize-arrays option](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/include/circt/Tools/arcilator/pipelines.h).
