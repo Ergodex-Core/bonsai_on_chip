@@ -121,7 +121,8 @@ module coral_weight_axi #(
   endfunction
 
   always_ff @(posedge clk) begin : sequential
-    integer i,j,code,prod,beat_offset,copy_bytes,dest_unit,dest_byte;
+    integer i,j,code,prod,beat_offset,copy_bytes,dest_byte;
+    logic [4:0] dest_unit;
     logic valid_addresses;
     if(reset) begin
       state<=IDLE; aw_hold<=0;w_hold<=0;s_bvalid<=0;s_rvalid<=0;
@@ -233,7 +234,7 @@ module coral_weight_axi #(
             end else if(!eng_req_valid && fetch_more && int'(fetch_outstanding)<FETCH_DEPTH)
               eng_req_valid<=1;
             if(eng_rsp_fire) begin
-              dest_unit=int'(fetch_desc[fetch_head].unit_index);
+              dest_unit=fetch_desc[fetch_head].unit_index;
               dest_byte=int'(fetch_desc[fetch_head].byte_index);
               beat_offset=int'(fetch_desc[fetch_head].beat_offset);
               copy_bytes=int'(fetch_desc[fetch_head].copy_bytes);
