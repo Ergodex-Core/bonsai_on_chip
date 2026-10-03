@@ -467,7 +467,8 @@ class RunnerTests(unittest.TestCase):
 
     def setUp(self):
         spec = importlib.util.spec_from_file_location(
-            "native_pq2_ci_run", Path(__file__).with_name("run.py")
+            "native_pq2_ci_run",
+            Path(__file__).with_name("run.py")
         )
         self.runner = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.runner)
@@ -505,7 +506,8 @@ class RunnerTests(unittest.TestCase):
                     with self.assertRaises(error_type):
                         self.runner.run(["compiler"], log)
                 output.assert_called_once_with(
-                    "compiler diagnostic\n", file=self.runner.sys.stderr,
+                    "compiler diagnostic\n",
+                    file=self.runner.sys.stderr,
                     flush=True
                 )
                 self.assertEqual(log.read_text(), "compiler diagnostic\n")
