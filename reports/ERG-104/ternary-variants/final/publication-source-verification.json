@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "scope": "final formatted code and reproduction script in their publication worktrees",
+  "status": "PASS",
+  "files": {
+    "e1-benchmark/experiments/native_pq2/baseline/coral_weight.h": {
+      "expected_sha256": "980329133213ab500198052c5ef3b68358ac22ebabdf087595ce0bde65ef981c",
+      "actual_sha256": "980329133213ab500198052c5ef3b68358ac22ebabdf087595ce0bde65ef981c",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/baseline/coral_weight_axi.sv": {
+      "expected_sha256": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca",
+      "actual_sha256": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca",
+      "match": true
+    },
+    "e2-fetch/experiments/native_pq2/fetch/coral_storage_axi_read.sv": {
+      "expected_sha256": "f2f7df0dcb9260feda6ef37a592198eecb1a8d991fc1654079bb65f35313ee10",
+      "actual_sha256": "f2f7df0dcb9260feda6ef37a592198eecb1a8d991fc1654079bb65f35313ee10",
+      "match": true
+    },
+    "e2-fetch/experiments/native_pq2/fetch/coral_weight_axi.sv": {
+      "expected_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "actual_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/inspect_model.py": {
+      "expected_sha256": "553c1e37e920eddcd312aeb8919232bdaf479f50d980a80352c1032244f4298c",
+      "actual_sha256": "553c1e37e920eddcd312aeb8919232bdaf479f50d980a80352c1032244f4298c",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/native_reference.py": {
+      "expected_sha256": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9",
+      "actual_sha256": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/run_benchmark.py": {
+      "expected_sha256": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3",
+      "actual_sha256": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3",
+      "match": true
+    },
+    "e3-spatial/experiments/native_pq2/spatial/coral_weight_axi.sv": {
+      "expected_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "actual_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/tests/test_baseline.cpp": {
+      "expected_sha256": "fa96b1788c9641a3ade5a48c465742966403e8aad8e47c7158cc6ecd792a10e9",
+      "actual_sha256": "fa96b1788c9641a3ade5a48c465742966403e8aad8e47c7158cc6ecd792a10e9",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/tests/test_engine.cpp": {
+      "expected_sha256": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c",
+      "actual_sha256": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/tests/test_storage_queue.cpp": {
+      "expected_sha256": "51a126e8753948210062ed9a319567b200d92876e1c824c4e83a043b1d21659f",
+      "actual_sha256": "51a126e8753948210062ed9a319567b200d92876e1c824c4e83a043b1d21659f",
+      "match": true
+    },
+    "e1-benchmark/experiments/native_pq2/tools/reproduce_matrix.sh": {
+      "expected_sha256": "5dc8f3b2fc3050c68c41195843ad1c75510f88218c6929523cfd7ff2bf94ea4a",
+      "actual_sha256": "5dc8f3b2fc3050c68c41195843ad1c75510f88218c6929523cfd7ff2bf94ea4a",
+      "match": true
+    }
+  }
+}

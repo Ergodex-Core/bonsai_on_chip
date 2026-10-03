@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "scope": "exact final publication README and report text with repository Markdown configuration",
+  "completed_utc": "2026-10-03T19:41:19.356898+00:00",
+  "command": [
+    "mdl",
+    "--no-verbose",
+    "experiments/native_pq2/README.md",
+    "reports/ERG-104/ternary-variants/README.md"
+  ],
+  "tool_version": "0.13.0",
+  "exit_code": 0,
+  "source_hashes": {
+    "experiments/native_pq2/README.md": "6a7e6eb2d76d02ce115ee9aab8d57d9e5fa726797b5cb124b36db90ea3b31cb1",
+    "reports/ERG-104/ternary-variants/README.md": "7939c94da92c9e7807a5ea925910038ea2cc81cac365a6dd3c157e1800d613cb",
+    ".mdlrc": "a227e050ad68c9aa2bbc052c17c609030f8ef6100415585f3df714e420544ece",
+    ".markdown_style.rb": "209eeb6375ba30fe1c11cb305bc80ff5acb1c2b2b017649098e38480d8665384"
+  },
+  "source_hashes_unchanged": true,
+  "allocation": {
+    "cpus": [
+      4
+    ],
+    "nice": 10,
+    "memory_limit_bytes": 6442450944,
+    "runtime_limit_seconds": 45
+  },
+  "log": ""
+}
