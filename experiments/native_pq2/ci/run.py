@@ -142,7 +142,7 @@ def main():
                                     text=True).splitlines()[0]
         },
         'arc_pipeline':
-        'pinned LLHD process-loop unroller; official structural LLHD passes; Arc allocated state; aggregate LLVM lowering; mlir-to-llvmir',
+        'pinned LLHD process-loop unroller; official structural LLHD passes; Arc allocated state; official bufferized-array LLVM lowering; mlir-to-llvmir',
         'runs': []
     }
     rows = []
@@ -201,7 +201,7 @@ def main():
                 ], build / 'arc.log')
                 run([
                     binpath / 'circt-opt',
-                    '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
+                    '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-lower-arrays,arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
                     build / 'allocated.mlir', '-o', build / 'llvm.mlir'
                 ], build / 'lowering.log')
                 export_llvm(binpath, build)

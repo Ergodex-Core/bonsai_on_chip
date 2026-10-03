@@ -45,13 +45,19 @@ The current compatibility pass adapts the pinned upstream LLHD loop unroller
 to visit processes. It retains all original loop-bound matching and rejects
 loops containing `llhd.wait` or `llhd.halt`, preserving the outer event loop.
 It runs before the official Deseq and structural LLHD passes. Allocated
-Arc state then uses aggregate LLVM lowering and the bundled
+Arc state then uses the official LLVM pipeline's array-bufferization pass and the bundled
 `mlir-translate --mlir-to-llvmir` exporter; early-stop Arc output is MLIR. Remaining
 processes or signal/event operations fail before simulation. The original RTL,
 clock, reset, fixtures and C++ oracle remain unchanged; full cycle parity is
 required. This compiler adaptation is source-built on Linux CI against the
 checksum-verified official native shared development package, not a private
 binary. Compiler source and installer hashes are part of the evidence.
+
+Aggregate-array lowering first passed all 25 E1 trials and 18 depth-one trials
+in run 37157905401, before that redundant run was cancelled for the current
+revision. The original coroutine switch is eliminated by structural lowering,
+so the current pipeline restores upstream `arc-lower-arrays` instead of keeping
+the slower aggregate workaround. It must pass the same complete gate.
 
 Upstream [UnrollLoops.cpp](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/lib/Dialect/LLHD/Transforms/UnrollLoops.cpp)
 is Apache 2.0 with the LLVM exception, preserved in `LLVM-LICENSE.txt` and the
