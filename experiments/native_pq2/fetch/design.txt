@@ -9,7 +9,7 @@ Scope
   elaboration/simulation startup instead of truncating descriptors silently.
 
   Memory/compute decoupling is a conceptual adaptation inspired by TerEffic
-  (https://arxiv.org/html/2502.16473v2) and the accompanying ternaryLLM project
+  (https://arxiv.org/html/2502.16473v2) and the separate ternaryLLM project
   (https://github.com/fpgasystems/ternaryLLM). This fetch implementation is
   independently authored from the repository's E1 baseline; it copies no RTL
   from those sources. Paper throughput is not an estimate for this engine.
@@ -29,7 +29,7 @@ Preserved numerical and firmware interface
   invocation rereads all required bytes for the configured 1..32 units.
 
 Storage contract
-  coral_storage_axi_read.sv is the accompanying queued read-only AXI adapter.
+  coral_storage_axi_read.sv is the separate queued read-only AXI adapter.
   It preserves the original adapter's ports, adds FETCH_DEPTH (default 4), and
   accepts a storage request exactly when its AXI AR is accepted. It has no
   hidden request or data buffer. Every request has ID 0, ARLEN 0, ARSIZE 4, and
