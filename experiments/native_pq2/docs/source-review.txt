@@ -17,7 +17,7 @@ Cloned public main read-only for inspection; checked-out exact revision:
 68d384425261d60bfbde5ff079c33a474c1eb28e
 Commit timestamp: 2026-04-17 23:01:33 +0200
 Commit subject: upload sparsity analysis of pre-trained ternary LLMs
-Local inspection copy: task-7/third-party-review/ternaryLLM
+Inspection used a clean read-only checkout of the pinned revision.
 Working tree verified clean at review.
 Root LICENSE: MIT; copyright (c) 2025 FPGA @ Systems Group, ETH Zurich.
 https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/LICENSE

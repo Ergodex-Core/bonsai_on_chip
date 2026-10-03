@@ -201,20 +201,28 @@ def make_cases(seed=7193, random_cases=32, model=None, offset=None,
         if offset is None or pq2_type_id is None:
             raise ValueError("--model requires explicit --offset and --pq2-type-id")
         model_info = inspect_gguf(model, offset, pq2_type_id)
-        needed = model_cases * 32 * BLOCK_BYTES
+        row_bytes = model_info["tensor_shape_gguf_order"][0] // BLOCK_LANES * BLOCK_BYTES
+        if (offset - model_info["tensor_start"]) % row_bytes + model_cases * BLOCK_BYTES > row_bytes:
+            raise ValueError("Requested model cases cross a native row boundary")
+        needed = 31 * row_bytes + model_cases * BLOCK_BYTES
         if offset + needed > model_info["tensor_end"]:
             raise ValueError("Requested model fixture crosses the validated tensor boundary")
         with Path(model).open("rb") as stream:
-            stream.seek(offset)
             for index in range(model_cases):
-                blocks = [_read_exact(stream, BLOCK_BYTES) for _ in range(32)]
-                create(f"model_{index:03}", 32, index % 16, 544, 5, blocks)
+                blocks = []
+                for unit in range(32):
+                    stream.seek(offset + unit * row_bytes + index * BLOCK_BYTES)
+                    blocks.append(_read_exact(stream, BLOCK_BYTES))
+                create(f"model_{index:03}", 32, index % 16, row_bytes, 5, blocks)
         with Path(model).open("rb") as stream:
             digest = hashlib.sha256()
             for chunk in iter(lambda: stream.read(1024 * 1024), b""):
                 digest.update(chunk)
         model_info.update(sha256=digest.hexdigest(), bytes=Path(model).stat().st_size,
-                          sampled_blocks=model_cases * 32)
+                          sampled_blocks=model_cases * 32, sampled_rows=32,
+                          native_row_bytes=row_bytes,
+                          sampling="same K block across 32 consecutive native rows; unmodified bytes relocated into test ROM",
+                          activations="seeded synthetic INT8 operands and FP32 scale bits")
     return cases, model_info
 
 
