@@ -107,7 +107,7 @@ def main():
                                     text=True).splitlines()[0]
         },
         'arc_pipeline':
-        'allocated state; hw-convert-bitcasts; arc-infer-context; lower-arc-to-llvm; cse; arc-canonicalizer; LLVM export; arrays remain aggregates',
+        'pinned LLHD process-loop unroller; official structural LLHD passes; stock Arc LLVM pipeline',
         'runs': []
     }
     rows = []
@@ -151,27 +151,27 @@ def main():
                     sources[kind], build / 'coral_weight_ci_top.sv', '-o',
                     build / 'design.mlir'
                 ], build / 'frontend.log')
-                # Keep HW arrays as aggregates. The default bufferization
-                # path fails to legalize coroutine cf.switch block operands.
-                # Use the official Arc-to-LLVM passes with bufferization off.
                 run([
-                    binpath / 'arcilator', '--no-runtime',
-                    '--no-generate-driver', '--until-before=llvm-lowering',
-                    '--emit-mlir', '--state-file=' + str(build / 'state.json'),
-                    build / 'design.mlir', '-o', build / 'allocated.mlir'
-                ], build / 'arc.log')
+                    binpath / 'native-pq2-unroll', build / 'design.mlir',
+                    build / 'unrolled.mlir'
+                ], build / 'unroll.log')
                 run([
                     binpath / 'circt-opt',
-                    '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
-                    build / 'allocated.mlir', '-o', build / 'llvm.mlir'
-                ], build / 'lowering.log')
-                # The input is already LLVM dialect. Stop before hardware
-                # preprocessing and use arcilator's LLVM IR exporter only.
+                    '--pass-pipeline=builtin.module(hw.module(llhd-deseq,llhd-lower-processes,cse,canonicalize,llhd-unroll-loops,cse,canonicalize,llhd-remove-control-flow,cse,canonicalize,llhd-combine-drives,llhd-sig2reg,cse,canonicalize))',
+                    build / 'unrolled.mlir', '-o', build / 'structural.mlir'
+                ], build / 'structural.log')
+                structural = (build / 'structural.mlir').read_text()
+                if any(('llhd.' + name) in structural
+                       for name in ('process', 'drv', 'prb', 'wait', 'sig ')):
+                    raise RuntimeError(
+                        'Structural lowering retained event-driven LLHD operations'
+                    )
                 run([
-                    binpath / 'arcilator', '--until-before=preproc',
-                    '--emit-llvm', build / 'llvm.mlir', '-o',
-                    build / 'model.ll'
-                ], build / 'translate.log')
+                    binpath / 'arcilator', '--no-runtime',
+                    '--no-generate-driver', '--emit-llvm',
+                    '--state-file=' + str(build / 'state.json'),
+                    build / 'structural.mlir', '-o', build / 'model.ll'
+                ], build / 'arc.log')
                 run([
                     binpath / 'opt', '--strip-debug', '-O2', '-S',
                     build / 'model.ll', '-o', build / 'optimized.ll'

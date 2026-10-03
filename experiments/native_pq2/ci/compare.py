@@ -117,6 +117,8 @@ HARNESS_PATHS = {
     "native_reference.py": HERE.parent / "native_reference.py",
     "ci/run.py": HERE / "run.py",
     "ci/generate_adapter.py": HERE / "generate_adapter.py",
+    "ci/unroll_processes.cpp": HERE / "unroll_processes.cpp",
+    "ci/install_tools.sh": HERE / "install_tools.sh",
 }
 
 

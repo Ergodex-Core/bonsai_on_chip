@@ -40,6 +40,34 @@ case "${backend}" in
       52e4e00fd5a949c2e00e19e747054492ea9163dcb577fb095f0b9eea3e42f952 "${root}/circt/runtime/arcilator-runtime.h"
     download "${upstream}/arcilator-header-cpp.py" \
       aea73f31cb8786f4af09dea014e044a3061455d63eecb9d1754c15ebfae38a24 "${root}/circt/runtime/arcilator-header-cpp.py"
+    # Source-build the bounded process-loop compatibility pass against the
+    # official native shared development package, never a private binary.
+    dev="${root}/circt-dev"
+    if [[ ! -f "${dev}/include/circt/Dialect/LLHD/LLHDOps.h" ]]; then
+      archive="${root}/circt-dev.tar.gz"
+      download https://github.com/llvm/circt/releases/download/firtool-1.161.0/circt-full-shared-linux-x64.tar.gz \
+        b9ae9472d8cd6c67f6508807a6d03bb9e1917bee3227ed4ee0732008dd12afb0 "${archive}"
+      mkdir -p "${dev}"
+      tar -xzf "${archive}" --strip-components=1 -C "${dev}"
+      rm "${archive}"
+    fi
+    export LD_LIBRARY_PATH="${dev}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+    if [[ -n "${GITHUB_ENV:-}" ]]; then
+      echo "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}" >> "${GITHUB_ENV}"
+    fi
+    source_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+    source_sha=$(sha256sum "${source_dir}/unroll_processes.cpp" | cut -d ' ' -f1)
+    saved_sha=$(cat "${root}/circt/unroll-source.sha256" 2>/dev/null || true)
+    if [[ ! -x "${root}/circt/bin/native-pq2-unroll" || "${saved_sha}" != "${source_sha}" ]]; then
+      clang++-18 -std=c++17 -O2 -fno-rtti -I"${dev}/include" \
+        "${source_dir}/unroll_processes.cpp" -L"${dev}/lib" \
+        -lCIRCTLLHD -lCIRCTComb -lCIRCTHW -lCIRCTSeq -lCIRCTSV -lCIRCTSim \
+        -lCIRCTSupport -lMLIRControlFlowDialect -lMLIRArithDialect \
+        -lMLIRFuncDialect -lMLIRSCFDialect -lMLIRParser -lMLIRPass \
+        -lMLIRAnalysis -lMLIRIR -lMLIRSupport -lLLVMSupport \
+        -Wl,-rpath,"${dev}/lib" -o "${root}/circt/bin/native-pq2-unroll"
+      echo "${source_sha}" > "${root}/circt/unroll-source.sha256"
+    fi
     "${root}/circt/bin/arcilator" --version
     ;;
   *) echo "Unknown backend: ${backend}" >&2; exit 2 ;;

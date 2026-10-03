@@ -28,12 +28,24 @@ Before/after refers to the pinned E1 baseline and the candidate engines in the
 same CI run. Run artifacts include source manifests, fixtures, logs and partial
 failure evidence. No model checkpoint or private cloud data is included.
 
-The default CIRCT 1.161.0 path reached LLVM lowering but failed to legalize a
-coroutine `cf.switch` with aggregate block arguments. Failed artifacts are kept
-in Actions runs 37154630724 and 37155220000. The compatibility path exports
-allocated-state MLIR, runs the official Arc-to-LLVM passes with arrays retained
-as aggregates, then uses Arcilator's LLVM IR exporter. It omits the optional
-array bufferization pass; it does not rewrite RTL, clocks, reset, or the oracle.
-The exact pipeline is recorded in benchmark evidence and full parity remains
-required. This follows the pinned [Arc-to-LLVM pipeline](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/lib/Tools/arcilator/pipelines.cpp)
-and its [bufferize-arrays option](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/include/circt/Tools/arcilator/pipelines.h).
+The stock CIRCT 1.161.0 frontend leaves a synchronous LLHD process containing
+static loops. The default Arc path fails at coroutine switch legalization;
+keeping arrays as aggregates reaches an unsupported delta-time operation.
+Failed artifacts remain in runs 37154630724, 37155220000 and 37156040181.
+
+The current compatibility pass adapts the pinned upstream LLHD loop unroller
+to visit processes. It retains all original loop-bound matching and rejects
+loops containing `llhd.wait` or `llhd.halt`, preserving the outer event loop.
+It runs before the official Deseq and structural LLHD passes. Remaining
+processes or signal/event operations fail before simulation. The original RTL,
+clock, reset, fixtures and C++ oracle remain unchanged; full cycle parity is
+required. This compiler adaptation is source-built on Linux CI against the
+checksum-verified official native shared development package, not a private
+binary. Compiler source and installer hashes are part of the evidence.
+
+Upstream [UnrollLoops.cpp](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/lib/Dialect/LLHD/Transforms/UnrollLoops.cpp)
+is Apache 2.0 with the LLVM exception, preserved in `LLVM-LICENSE.txt` and the
+source notice. [The stock LLHD pipeline](https://github.com/llvm/circt/blob/0d63c41c9121106b01372aca2b60eb44ed4a6e87/lib/Conversion/ImportVerilog/ImportVerilog.cpp)
+already runs Deseq before its combinational-only loop unroller, motivating
+this bounded process-loop adaptation. Successful lowering is still subject
+to the complete CI gate; no timing operation is discarded to bypass a failure.
