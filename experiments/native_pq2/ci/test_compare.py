@@ -463,5 +463,53 @@ class CompareTests(unittest.TestCase):
                 self.assertNotIn(str(self.root), report["failure"])
 
 
+class RunnerTests(unittest.TestCase):
+
+    def setUp(self):
+        spec = importlib.util.spec_from_file_location(
+            "native_pq2_ci_run", Path(__file__).with_name("run.py")
+        )
+        self.runner = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(self.runner)
+        temporary = tempfile.TemporaryDirectory(prefix="pq2-runner-tests-")
+        self.addCleanup(temporary.cleanup)
+        self.build = Path(temporary.name)
+
+    def test_llvm_export_uses_translator_not_arcilator_early_stop(self):
+        binpath = self.build / "tools"
+        with mock.patch.object(self.runner, "run") as run:
+            self.runner.export_llvm(binpath, self.build)
+        run.assert_called_once_with([
+            binpath / "mlir-translate", "--mlir-to-llvmir",
+            self.build / "llvm.mlir", "-o", self.build / "model.ll"
+        ], self.build / "translate.log")
+        self.assertNotIn("--until-before=preproc", str(run.call_args))
+
+    def test_failed_commands_surface_compiler_diagnostics(self):
+        for error_type in (self.runner.subprocess.CalledProcessError,
+                           self.runner.subprocess.TimeoutExpired):
+            with self.subTest(error_type=error_type):
+                if error_type is self.runner.subprocess.CalledProcessError:
+                    error = error_type(1, ["compiler"])
+                else:
+                    error = error_type(["compiler"], 1)
+                log = self.build / "compile.log"
+
+                def fail(command, **kwargs):
+                    kwargs["stdout"].write("compiler diagnostic\n")
+                    raise error
+
+                with mock.patch.object(self.runner.subprocess, "run",
+                                       side_effect=fail), mock.patch(
+                                           "builtins.print") as output:
+                    with self.assertRaises(error_type):
+                        self.runner.run(["compiler"], log)
+                output.assert_called_once_with(
+                    "compiler diagnostic\n", file=self.runner.sys.stderr,
+                    flush=True
+                )
+                self.assertEqual(log.read_text(), "compiler diagnostic\n")
+
+
 if __name__ == "__main__":
     unittest.main()

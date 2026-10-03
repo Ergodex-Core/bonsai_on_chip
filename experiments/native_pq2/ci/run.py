@@ -22,6 +22,28 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def run(command, log):
+    with log.open('w') as stream:
+        try:
+            subprocess.run([str(x) for x in command],
+                           stdout=stream,
+                           stderr=subprocess.STDOUT,
+                           check=True,
+                           timeout=900)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            stream.flush()
+            print(log.read_text(), file=sys.stderr, flush=True)
+            raise
+
+
+def export_llvm(binpath, build):
+    # Arcilator's early-stop modes print MLIR even with --emit-llvm.
+    run([
+        binpath / 'mlir-translate', '--mlir-to-llvmir', build / 'llvm.mlir',
+        '-o', build / 'model.ll'
+    ], build / 'translate.log')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -107,18 +129,10 @@ def main():
                                     text=True).splitlines()[0]
         },
         'arc_pipeline':
-        'pinned LLHD process-loop unroller; official structural LLHD passes; stock Arc LLVM pipeline',
+        'pinned LLHD process-loop unroller; official structural LLHD passes; Arc allocated state; aggregate LLVM lowering; mlir-to-llvmir',
         'runs': []
     }
     rows = []
-
-    def run(command, log):
-        with log.open('w') as stream:
-            subprocess.run([str(x) for x in command],
-                           stdout=stream,
-                           stderr=subprocess.STDOUT,
-                           check=True,
-                           timeout=900)
 
     try:
         for name, parameters in VARIANTS.items():
@@ -168,10 +182,16 @@ def main():
                     )
                 run([
                     binpath / 'arcilator', '--no-runtime',
-                    '--no-generate-driver', '--emit-llvm',
-                    '--state-file=' + str(build / 'state.json'),
-                    build / 'structural.mlir', '-o', build / 'model.ll'
+                    '--no-generate-driver', '--until-before=llvm-lowering',
+                    '--emit-mlir', '--state-file=' + str(build / 'state.json'),
+                    build / 'structural.mlir', '-o', build / 'allocated.mlir'
                 ], build / 'arc.log')
+                run([
+                    binpath / 'circt-opt',
+                    '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
+                    build / 'allocated.mlir', '-o', build / 'llvm.mlir'
+                ], build / 'lowering.log')
+                export_llvm(binpath, build)
                 run([
                     binpath / 'opt', '--strip-debug', '-O2', '-S',
                     build / 'model.ll', '-o', build / 'optimized.ll'

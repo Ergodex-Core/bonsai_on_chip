@@ -36,7 +36,9 @@ Failed artifacts remain in runs 37154630724, 37155220000 and 37156040181.
 The current compatibility pass adapts the pinned upstream LLHD loop unroller
 to visit processes. It retains all original loop-bound matching and rejects
 loops containing `llhd.wait` or `llhd.halt`, preserving the outer event loop.
-It runs before the official Deseq and structural LLHD passes. Remaining
+It runs before the official Deseq and structural LLHD passes. Allocated
+Arc state then uses aggregate LLVM lowering and the bundled
+`mlir-translate --mlir-to-llvmir` exporter; early-stop Arc output is MLIR. Remaining
 processes or signal/event operations fail before simulation. The original RTL,
 clock, reset, fixtures and C++ oracle remain unchanged; full cycle parity is
 required. This compiler adaptation is source-built on Linux CI against the
