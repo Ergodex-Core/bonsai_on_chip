@@ -249,10 +249,33 @@ def build_verilator() -> Optional[str]:
     cmd = ["bazel", "build", "@verilator//:verilator_bin"]
     try:
         subprocess.run(cmd, check=True)
-        # Return the absolute path to the binary
-        return os.path.abspath("bazel-bin/external/verilator/verilator_bin")
-    except subprocess.CalledProcessError as e:
-        logging.error(f"Verilator build failed: {e}")
+        # Bzlmod canonical repository names are implementation details. Ask
+        # Bazel for this target's outputs instead of guessing bazel-bin paths.
+        outputs = subprocess.run([
+            "bazel", "cquery", "@verilator//:verilator_bin", "--output=files"
+        ],
+                                 capture_output=True,
+                                 text=True,
+                                 check=True)
+        candidates = {
+            os.path.abspath(path.strip())
+            for path in outputs.stdout.splitlines()
+            if path.strip()
+            and os.path.basename(path.strip()) == "verilator_bin"
+        }
+        executables = [
+            path for path in candidates
+            if os.path.isfile(path) and os.access(path, os.X_OK)
+        ]
+        if len(executables) != 1:
+            logging.error(
+                "Bazel did not return exactly one existing executable for "
+                "@verilator//:verilator_bin: %s", sorted(candidates)
+            )
+            return None
+        return executables[0]
+    except (OSError, subprocess.CalledProcessError) as e:
+        logging.error(f"Verilator build/output query failed: {e}")
         return None
 
 
@@ -391,31 +414,36 @@ def resolve_default_mpact_root() -> str:
 
 
 def resolve_verilator_root(verilator_bin: str) -> str:
-    # verilator_bin is at .../bazel-bin/external/verilator/verilator_bin
-    # runfiles are at .../bazel-bin/external/verilator/verilator_bin.runfiles/verilator
-    runfiles_dir = verilator_bin + ".runfiles"
-    verilator_root = os.path.join(runfiles_dir, "verilator")
-    if os.path.isdir(verilator_root):
-        return verilator_root
-    try:
-        logging.info("Dynamically resolving @verilator path via Bazel...")
-        output_base = subprocess.check_output(["bazel", "info", "output_base"]
-                                              ).decode("utf-8").strip()
-        default_path = os.path.join(output_base, "external", "verilator")
-        if os.path.isdir(default_path):
-            return default_path
+    # The queried binary is in the external target's root package. Its parent
+    # names the canonical repository, regardless of the module-extension name.
+    repository_name = os.path.basename(os.path.dirname(verilator_bin))
 
-        external_dir = os.path.join(output_base, "external")
-        if os.path.isdir(external_dir):
-            for entry in os.listdir(external_dir):
-                if entry.startswith("verilator"):
-                    candidate = os.path.join(external_dir, entry)
-                    if os.path.isdir(candidate):
-                        return candidate
-        return default_path
-    except Exception as e:
-        logging.warning(f"Failed to resolve VERILATOR_ROOT dynamically: {e}")
-        return ""
+    def has_runtime(path: str) -> bool:
+        return all(
+            os.path.isfile(os.path.join(path, relative)) for relative in (
+                "include/verilated.mk", "include/verilated_config.h",
+                "bin/verilator_includer"
+            )
+        )
+
+    runfiles_dir = verilator_bin + ".runfiles"
+    for name in dict.fromkeys((repository_name, "verilator")):
+        candidate = os.path.join(runfiles_dir, name)
+        if has_runtime(candidate):
+            return candidate
+    try:
+        logging.info(
+            "Resolving Verilator runtime from its queried repository..."
+        )
+        output_base = subprocess.check_output(["bazel", "info", "output_base"],
+                                              text=True).strip()
+        candidate = os.path.join(output_base, "external", repository_name)
+        if has_runtime(candidate):
+            return candidate
+    except (OSError, subprocess.CalledProcessError) as error:
+        logging.warning("Failed to resolve VERILATOR_ROOT: %s", error)
+    logging.error("No complete Verilator runtime found for %s", verilator_bin)
+    return ""
 
 
 def resolve_uvm_root() -> str:
@@ -909,6 +937,11 @@ def main():
                 )
                 sys.exit(1)
             verilator_root = resolve_verilator_root(verilator_bin)
+            if not verilator_root:
+                logging.critical(
+                    "ERROR: Verilator runtime not found. Aborting."
+                )
+                sys.exit(1)
             logging.info(f"Using VERILATOR_ROOT: {verilator_root}")
 
         run_full_regression(

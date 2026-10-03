@@ -1,0 +1,2 @@
+# Match the repository's pyelftools wheel pin.
+pyelftools==0.29 --hash=sha256:519f38cf412f073b2d7393aa4682b0190fa901f7c3fa0bff2b82d537690c7fc1

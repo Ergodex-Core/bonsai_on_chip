@@ -1,0 +1,124 @@
+name: Simulator smoke and parity
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: simulator-smoke-${{ github.event.action == 'edited' && !github.event.changes.base.ref.from && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  uvm-launcher:
+    if: github.event.action != 'edited' || github.event.changes.base.ref.from
+    name: UVM launcher path regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Run canonical Bazel path and failure regressions
+        run: |
+          python3 -m venv "$RUNNER_TEMP/uvm-path-python"
+          "$RUNNER_TEMP/uvm-path-python/bin/pip" install --require-hashes -r tests/ci/uvm-path-requirements.txt
+          "$RUNNER_TEMP/uvm-path-python/bin/python" -m unittest -v utils.run_uvm_regression_test 2>&1 | tee uvm-path-tests.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: uvm-launcher-${{ github.run_id }}-${{ github.run_attempt }}
+          path: uvm-path-tests.log
+          retention-days: 14
+
+  simulator:
+    if: github.event.action != 'edited' || github.event.changes.base.ref.from
+    name: Smoke (${{ matrix.backend }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [verilator, arcilator]
+    env:
+      TOOLS: ${{ github.workspace }}/.ci-tools
+      EVIDENCE: ${{ github.workspace }}/.ci-evidence/${{ matrix.backend }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Install host dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y autoconf bison flex g++ make help2man clang-18 python3-venv libfl-dev zlib1g-dev libtinfo6
+          sudo ln -sf /usr/bin/clang++-18 /usr/local/bin/clang++
+          python3 -m venv "$RUNNER_TEMP/simulator-python"
+          "$RUNNER_TEMP/simulator-python/bin/pip" install Jinja2==3.1.6 MarkupSafe==3.0.3
+          echo "$RUNNER_TEMP/simulator-python/bin" >> "$GITHUB_PATH"
+      - name: Cache pinned simulator installation
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: .ci-tools/${{ matrix.backend == 'arcilator' && 'circt' || 'verilator' }}
+          key: simulator-ubuntu24-x64-${{ matrix.backend }}-${{ hashFiles('tests/ci/install_tools.sh') }}
+      - name: Install and verify pinned tools
+        run: timeout --kill-after=10s 900 bash tests/ci/install_tools.sh '${{ matrix.backend }}' "$TOOLS"
+      - name: Run oracle regressions
+        id: smoke
+        run: bash tests/ci/run_smoke.sh '${{ matrix.backend }}' "$GITHUB_WORKSPACE" "$EVIDENCE" "$TOOLS"
+      - name: Report outcome
+        if: always()
+        env:
+          OUTCOME: ${{ steps.smoke.outcome }}
+          BACKEND: ${{ matrix.backend }}
+        run: |
+          echo "### $BACKEND: $OUTCOME" >> "$GITHUB_STEP_SUMMARY"
+          echo 'Arithmetic oracle: adder, compressor and barrel shifter; 151552 samples, 1060864 outputs.' >> "$GITHUB_STEP_SUMMARY"
+          if [ "$BACKEND" = verilator ]; then echo 'Also runs four handshake configurations with reset, stall and flush checks.' >> "$GITHUB_STEP_SUMMARY"; fi
+          echo 'Download the evidence artifact for source/tool hashes, traces and compiler failure logs. Full-core and model inference are outside this gate.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: simulator-${{ matrix.backend }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .ci-evidence/${{ matrix.backend }}/**/*.json
+            .ci-evidence/${{ matrix.backend }}/**/*.csv
+            .ci-evidence/${{ matrix.backend }}/**/*.log
+            .ci-evidence/${{ matrix.backend }}/**/*.txt
+            .ci-evidence/${{ matrix.backend }}/**/*.mlir
+          if-no-files-found: warn
+          retention-days: 14
+          include-hidden-files: true
+
+  parity:
+    name: Differential trace parity
+    needs: simulator
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: simulator-verilator-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ci-evidence/verilator
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: simulator-arcilator-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ci-evidence/arcilator
+      - name: Require matching completed traces and source identities
+        run: |
+          python3 tests/ci/evidence.py compare both "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE/.ci-evidence" "$GITHUB_WORKSPACE/.ci-tools"
+          python3 tests/ci/test_evidence.py "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE/.ci-evidence"
+          echo 'PASS: both simulator traces agree and independently match the arithmetic oracle.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: simulator-parity-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .ci-evidence/results.json
+          retention-days: 14
+          include-hidden-files: true

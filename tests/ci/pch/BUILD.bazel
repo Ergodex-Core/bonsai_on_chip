@@ -1,0 +1,53 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+load(":fixture.bzl", "pch_fixture_library")
+
+package(default_visibility = ["//visibility:private"])
+
+# Explicitly requested only: keep the compiler regression out of broad RTL
+# test queries, which already build large UVM models.
+cc_library(
+    name = "policy",
+    hdrs = ["fixture_policy.h"],
+    defines = ["PCH_DEPENDENCY_BIAS=5"],
+    tags = ["manual"],
+)
+
+[
+    pch_fixture_library(
+        name = variant + "_model",
+        src = "pch_fixture.sv",
+        tags = ["manual"],
+        use_pch = variant == "enabled",
+        deps = [":policy"],
+    )
+    for variant in [
+        "enabled",
+        "disabled",
+    ]
+]
+
+[
+    cc_binary(
+        name = variant,
+        srcs = ["main.cpp"],
+        copts = [
+            "-std=c++20",
+            "-DVL_TIME_CONTEXT",
+            "-DVM_TIMING=1",
+            "-DVM_VPI=1",
+            "-DVM_COVERAGE=0",
+            "-DVM_SC=0",
+            "-DVM_TRACE=0",
+            "-DVM_TRACE_FST=0",
+            "-DVM_TRACE_VCD=0",
+            "-DVM_TRACE_SAIF=0",
+            "-faligned-new",
+        ],
+        tags = ["manual"],
+        deps = [":" + variant + "_model"],
+    )
+    for variant in [
+        "enabled",
+        "disabled",
+    ]
+]

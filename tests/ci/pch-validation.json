@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "scope": "small actual Verilator generated-model PCH correctness; full UVM not run on this unpublished change",
+  "execution_environment": "existing local Linux/amd64 Docker image, Clang 19.1.7, Bazel 8.6.0, Verilator 5.052",
+  "tested_source_sha256": {
+    "rules/verilator.bzl": "70fb62dcb9121a514e0cbef77c89a1e93175c68563f450aa7e304f8907a3c01f",
+    "rules/verilator_pch.bzl": "3227b5cbefa10eb468d7b6e948c09d2cfaa005625a09a465c9acd917773111d6",
+    "tests/ci/pch/BUILD.bazel": "dada3f9d4beb9550c278c23c937e234a05f8bcf80b69a80fa37ae4922f244841",
+    "tests/ci/pch/fixture.bzl": "61ac0418c6bc6ba3fadd7039a7926e165929718916f2798454580782b313c705",
+    "tests/ci/pch/fixture_flags.cpp": "4dada819522f67493d242337d014c5eda1eae6cdeffab66788a273a21dab9278",
+    "tests/ci/pch/fixture_policy.h": "4f49c84f9fc2ce7875c5fbdd6ef3b180f066789b91931868d9ce2859f7daaed7",
+    "tests/ci/pch/main.cpp": "101f28a0709ac42bc46cba6eb8b6220b46b4d4465ea138ec7f9cdc2cb4f7d9ae",
+    "tests/ci/pch/pch_fixture.sv": "490e3b6670dd887cb3bc35a3c397d72b6c7f3e8aa2b8f596890ed887488ef33c",
+    "tests/ci/pch/run_regression.py": "77dad17322a6975f394c0ce12d821e068c20b9f4e0ea92ebdb3d26865c5a8350",
+    "tests/ci/pch/split_codegen.py": "b56d7d3bf17854e2896d609b53d6cd7447eca1bf694f3f1f7cb63ba0ea6d2319"
+  },
+  "source_note": "Pre-commit worktree validation. All listed hashes independently matched the worktree before commit; container Git snapshot revision is not the PR head.",
+  "samples_per_executable": 16384,
+  "configurations": [
+    "fastbuild",
+    "opt",
+    "opt with force_pic",
+    "disk-cache relocation with producer bases unavailable"
+  ],
+  "results": {
+    "status": "passed",
+    "default_output": "PASS samples=16384 checksum=d701051d7839e29f flags=42",
+    "default_consumption": {
+      "compile_actions": 6,
+      "baseline_compile_actions": 6,
+      "variants": [
+        "pic"
+      ]
+    },
+    "opt_output": "PASS samples=16384 checksum=d701051d7839e29f flags=42",
+    "opt_consumption": {
+      "compile_actions": 6,
+      "baseline_compile_actions": 6,
+      "variants": [
+        "nopic"
+      ]
+    },
+    "pic_output": "PASS samples=16384 checksum=d701051d7839e29f flags=42",
+    "pic_consumption": {
+      "compile_actions": 6,
+      "baseline_compile_actions": 6,
+      "variants": [
+        "pic"
+      ]
+    },
+    "relocated_output": "PASS samples=16384 checksum=d701051d7839e29f flags=42",
+    "relocated_consumption": {
+      "compile_actions": 6,
+      "baseline_compile_actions": 6,
+      "variants": [
+        "pic"
+      ]
+    },
+    "relocated_pch_cache_hits": 1
+  },
+  "production_codegen_script": "passed; preserved all four fixed arguments and generated five C++ files",
+  "uvm_launcher_tests": 19,
+  "hosted_checks_for_this_change": "not run; current GitHub OAuth credential lacks workflow scope",
+  "existing_pr_head": "5a13d4ef1adf917d6d2481db708646f3c915e196"
+}

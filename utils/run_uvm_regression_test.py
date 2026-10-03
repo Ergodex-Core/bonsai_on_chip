@@ -13,6 +13,9 @@
 # limitations under the License.
 
 import fnmatch
+import os
+from pathlib import Path
+import tempfile
 import subprocess
 import unittest
 from unittest import mock
@@ -151,6 +154,157 @@ class RunUvmRegressionTest(unittest.TestCase):
                 if call.args
             )
             self.assertIn("SPIKE", written)
+
+
+class VerilatorPathTest(unittest.TestCase):
+
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory(prefix="uvm paths ")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+
+    def executable(self, relative):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("#!/bin/sh\nexit 0\n")
+        path.chmod(0o755)
+        return path
+
+    def runtime(self, root):
+        for relative in ("include/verilated.mk", "include/verilated_config.h",
+                         "bin/verilator_includer"):
+            path = root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("runtime fixture\n")
+        return root
+
+    def queried_build(self, outputs):
+        with mock.patch("utils.run_uvm_regression.subprocess.run") as run:
+            run.side_effect = [
+                subprocess.CompletedProcess(["bazel"], 0),
+                subprocess.CompletedProcess(["bazel"], 0, stdout=outputs)
+            ]
+            result = run_uvm_regression.build_verilator()
+            self.assertEqual(
+                run.call_args_list[1].args[0], [
+                    "bazel", "cquery", "@verilator//:verilator_bin",
+                    "--output=files"
+                ]
+            )
+            return result
+
+    def test_queries_canonical_and_legacy_outputs(self):
+        for name in ("+coralnpu_deps_ext+verilator", "verilator~5.052",
+                     "verilator"):
+            with self.subTest(repository=name):
+                path = self.executable(
+                    "bazel-out/k8/bin/external/" + name + "/verilator_bin"
+                )
+                self.assertEqual(
+                    self.queried_build(str(path) + "\n"), str(path)
+                )
+
+    def test_accepts_relative_paths_and_ignores_non_executable_debug_output(
+        self
+    ):
+        path = self.executable("out/external/+extension+tool/verilator_bin")
+        relative = os.path.relpath(path)
+        self.assertEqual(
+            self.queried_build(relative + "\n" + relative + ".dwp\n"),
+            str(path)
+        )
+
+    def test_rejects_missing_executable(self):
+        path = self.root / "missing/verilator_bin"
+        self.assertIsNone(self.queried_build(str(path) + "\n"))
+
+    def test_rejects_non_executable_file(self):
+        path = self.executable("nonexec/verilator_bin")
+        path.chmod(0o644)
+        self.assertIsNone(self.queried_build(str(path) + "\n"))
+
+    def test_rejects_ambiguous_executables(self):
+        first = self.executable("one/verilator_bin")
+        second = self.executable("two/verilator_bin")
+        self.assertIsNone(
+            self.queried_build(str(first) + "\n" + str(second) + "\n")
+        )
+
+    def test_rejects_empty_or_wrong_target_outputs(self):
+        wrong = self.executable("wrong/other_binary")
+        for outputs in ("", str(wrong) + "\n"):
+            with self.subTest(outputs=outputs):
+                self.assertIsNone(self.queried_build(outputs))
+
+    def test_build_failure_does_not_query(self):
+        with mock.patch("utils.run_uvm_regression.subprocess.run",
+                        side_effect=subprocess.CalledProcessError(
+                            1, ["bazel", "build"])) as run:
+            self.assertIsNone(run_uvm_regression.build_verilator())
+            self.assertEqual(run.call_count, 1)
+
+    def test_query_failure_does_not_guess_old_path(self):
+        with mock.patch("utils.run_uvm_regression.subprocess.run") as run:
+            run.side_effect = [
+                subprocess.CompletedProcess(["bazel"], 0),
+                subprocess.CalledProcessError(1, ["bazel", "cquery"])
+            ]
+            self.assertIsNone(run_uvm_regression.build_verilator())
+
+    def test_canonical_runfiles_contains_complete_runtime(self):
+        binary = self.executable("external/+any_extension+tool/verilator_bin")
+        runtime = self.runtime(
+            Path(str(binary) + ".runfiles") / binary.parent.name
+        )
+        with mock.patch("utils.run_uvm_regression.subprocess.check_output"
+                        ) as query:
+            self.assertEqual(
+                run_uvm_regression.resolve_verilator_root(str(binary)),
+                str(runtime)
+            )
+            query.assert_not_called()
+
+    def test_legacy_runfiles_alias(self):
+        binary = self.executable("external/+extension+tool/verilator_bin")
+        runtime = self.runtime(Path(str(binary) + ".runfiles") / "verilator")
+        self.assertEqual(
+            run_uvm_regression.resolve_verilator_root(str(binary)),
+            str(runtime)
+        )
+
+    def test_source_fallback_uses_queried_repository(self):
+        binary = self.executable("external/+extension+verilator/verilator_bin")
+        base = self.root / "output_base"
+        runtime = self.runtime(base / "external" / binary.parent.name)
+        self.runtime(base / "external" / "verilator_unrelated_version")
+        with mock.patch("utils.run_uvm_regression.subprocess.check_output",
+                        return_value=str(base)):
+            self.assertEqual(
+                run_uvm_regression.resolve_verilator_root(str(binary)),
+                str(runtime)
+            )
+
+    def test_rejects_partial_runtime_and_unrelated_repositories(self):
+        binary = self.executable("external/+extension+verilator/verilator_bin")
+        partial = Path(str(binary) + ".runfiles") / binary.parent.name
+        (partial / "include").mkdir(parents=True)
+        (partial / "include/verilated.mk").write_text("incomplete\n")
+        base = self.root / "output_base"
+        self.runtime(base / "external" / "verilator_unrelated_version")
+        with mock.patch("utils.run_uvm_regression.subprocess.check_output",
+                        return_value=str(base)):
+            self.assertEqual(
+                run_uvm_regression.resolve_verilator_root(str(binary)), ""
+            )
+
+    def test_runtime_query_failure_returns_empty(self):
+        binary = self.executable("external/+extension+tool/verilator_bin")
+        with mock.patch("utils.run_uvm_regression.subprocess.check_output",
+                        side_effect=subprocess.CalledProcessError(
+                            1, ["bazel", "info"])):
+            self.assertEqual(
+                run_uvm_regression.resolve_verilator_root(str(binary)), ""
+            )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,116 @@
+{
+  "status": "complete",
+  "scope": "production adder (8/32 bit), barrel shifter (32 bit), compressor (32 bit); Verilator handshake separately",
+  "samples_per_backend": 151552,
+  "checked_outputs_per_backend": 1060864,
+  "backends": {
+    "verilator": {
+      "status": "complete",
+      "backend": "verilator",
+      "source_sha256": {
+        "hdl/verilog/rvv/common/adder.sv": "aebc1dad0d2e1aac2496c9f7cf8358252c43f07f2eaa9e4c18eec61fb0744479",
+        "hdl/verilog/rvv/common/barrel_shifter.sv": "7a3bdd8192588c7a6aa84e1d32fea2e536b4373990b1a9a6ca6cc6f4cf45ab5a",
+        "hdl/verilog/rvv/common/compressor_3to2.sv": "4111e2c4718ce640956eaaf1eb03e41ca8ae4700c7c24be1437891bdbf9323ec",
+        "tests/ci/arithmetic_top.sv": "862f1100c064fd2305c7c2fc6a809a3142f0ae214114dabf8bfcb07ecb257b46",
+        "tests/ci/arithmetic.cpp": "b47992d89fc0a18e45a293ddfc7135f130c72bfeb0924d8d1c677c42676a878c",
+        "tests/ci/run_smoke.sh": "9fd2a3134f742d27f91a9a3f4beea02330f7943143b78328fe686991ed201d86",
+        "tests/ci/evidence.py": "2c5421b111b22194901fa7026d933648af582e238cf399ed2df0f841857af8a3",
+        "tests/ci/install_tools.sh": "1fd9903e21be7d7f0d1280224d711f0ebb77a49f9086d60875a7596cad13b59c",
+        "tests/ci/test_evidence.py": "36ed824d6535c8bd6b7d714c3389a89e2418ebabd21c5958384dd72ffe334a47"
+      },
+      "revision": "b95bb2528659e15f2ea9b84b443f8627b969c147",
+      "tool_sha256": {
+        "verilator/bin/verilator": "5dc86ac069b22f055d72a02284f45ddacc1e7237491c128e8f0729b3525bd568",
+        "verilator/bin/verilator_bin": "405bfdc9c4e59721d94102904b01cccf2bbf311b4a520e56bb681c197ad828fd"
+      },
+      "samples": 151552,
+      "checked_outputs": 1060864,
+      "trace_sha256": "ac296a7b12b4c6d82644dc8fed968e1512f81a6fdedd210dee70736c485cb972"
+    },
+    "arcilator": {
+      "status": "complete",
+      "backend": "arcilator",
+      "source_sha256": {
+        "hdl/verilog/rvv/common/adder.sv": "aebc1dad0d2e1aac2496c9f7cf8358252c43f07f2eaa9e4c18eec61fb0744479",
+        "hdl/verilog/rvv/common/barrel_shifter.sv": "7a3bdd8192588c7a6aa84e1d32fea2e536b4373990b1a9a6ca6cc6f4cf45ab5a",
+        "hdl/verilog/rvv/common/compressor_3to2.sv": "4111e2c4718ce640956eaaf1eb03e41ca8ae4700c7c24be1437891bdbf9323ec",
+        "tests/ci/arithmetic_top.sv": "862f1100c064fd2305c7c2fc6a809a3142f0ae214114dabf8bfcb07ecb257b46",
+        "tests/ci/arithmetic.cpp": "b47992d89fc0a18e45a293ddfc7135f130c72bfeb0924d8d1c677c42676a878c",
+        "tests/ci/run_smoke.sh": "9fd2a3134f742d27f91a9a3f4beea02330f7943143b78328fe686991ed201d86",
+        "tests/ci/evidence.py": "2c5421b111b22194901fa7026d933648af582e238cf399ed2df0f841857af8a3",
+        "tests/ci/install_tools.sh": "1fd9903e21be7d7f0d1280224d711f0ebb77a49f9086d60875a7596cad13b59c",
+        "tests/ci/test_evidence.py": "36ed824d6535c8bd6b7d714c3389a89e2418ebabd21c5958384dd72ffe334a47"
+      },
+      "revision": "b95bb2528659e15f2ea9b84b443f8627b969c147",
+      "tool_sha256": {
+        "circt/bin/arcilator": "7161ee89a94c019753363636b1e1bc6cc45b32c7145a2069b2f59d5d6c905e67",
+        "circt/bin/circt-verilog": "fa9bba87a341228caaaec1f16a95d6a34af4515a169c1a1ea496d86d9a587edc",
+        "circt/bin/opt": "6563dadf277f4d666dcb376e25ebaa4e1ec003b38246aa701aafd1073cea05b2",
+        "circt/bin/llc": "2cbc098b758d737914879985527c4c6c58964c2a50f3a8b84061fce98a4c85af",
+        "circt/runtime/arcilator-header-cpp.py": "aea73f31cb8786f4af09dea014e044a3061455d63eecb9d1754c15ebfae38a24",
+        "circt/runtime/arcilator-runtime.h": "52e4e00fd5a949c2e00e19e747054492ea9163dcb577fb095f0b9eea3e42f952"
+      },
+      "samples": 151552,
+      "checked_outputs": 1060864,
+      "trace_sha256": "ac296a7b12b4c6d82644dc8fed968e1512f81a6fdedd210dee70736c485cb972"
+    }
+  },
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "execution_environment": "Local Docker Linux/amd64 emulated on macOS; whisper-arcilator:portable sha256:75ff5522c3b54b1c3802f8d8ea201198e14a5a22e7932e5d0d96b93b0a1061ac",
+  "tested_worktree_note": "Tests ran before commit, on b95bb252 plus amended sources committed as b589591e. source_sha256 binds exact test inputs. Local evidence is separate from hosted checks.",
+  "handshake": {
+    "schema_version": 1,
+    "status": "complete",
+    "backend": "verilator",
+    "source_sha256": {
+      "hdl/verilog/rvv/common/cdffr.sv": "f537eb36051570b8df2edfde25122b2df0a3c020808043a6e6ed9bf658b66d16",
+      "hdl/verilog/rvv/common/handshake_multistage_ctrl.sv": "0f60609635ef0ca084340495be83ba39002b97f7a3514111b2246daffb2a4463",
+      "tests/arcilator/handshake_parity.cpp": "4e5810e685bfac43506711ab91e8d165be5ccc15944a7d8d6eeb7bd3991c87b9",
+      "tests/arcilator/run_parity.sh": "2d4a76428a2a0757f5f41af6a5a2304e9331c1aca873515b7957c05353c2cf2f"
+    },
+    "host_platform": "Linux-6.10.14-linuxkit-x86_64-with-glibc2.39",
+    "repository_revision": "b95bb2528659e15f2ea9b84b443f8627b969c147",
+    "dut_source_changes": "",
+    "versions": {
+      "verilator": "Verilator v5.052 rev v5.052",
+      "c++": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+    },
+    "trace_sha256": {
+      "n1_b0": "7292aaa1910269f4d3ebefbc8f9d5e350acfc4f4c42f77cabb9e5e2f17a789cd",
+      "n1_b1": "be47eb5715906e5a449e9efbfe3f1ef564d423c9788847ece9ccc8174a335cb8",
+      "n3_b0": "731645133e259f72d3e8869ff1d64c60170b727d0cb1c7f8079927cc7c35a843",
+      "n3_b1": "96d3a1b9935712c895c6ed5937ca2a5cacc1dd455094bb790cf6d7718b2095d8"
+    },
+    "result_lines": {
+      "n1_b0": "PASS stages=1 remove_bubbles=0 rising_edges=2110 samples=10430 checked_outputs=52150",
+      "n1_b1": "PASS stages=1 remove_bubbles=1 rising_edges=2110 samples=10430 checked_outputs=52150",
+      "n3_b0": "PASS stages=3 remove_bubbles=0 rising_edges=2122 samples=10466 checked_outputs=52330",
+      "n3_b1": "PASS stages=3 remove_bubbles=1 rising_edges=2122 samples=10466 checked_outputs=52330"
+    }
+  },
+  "evidence_negative_regressions": {
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      "completed matched evidence accepted",
+      "altered trace rejected and prior PASS invalidated",
+      "incomplete backend rejected",
+      "stale source rejected"
+    ]
+  },
+  "workflow_lint": "actionlint 1.7.7 PASS; established clang-format-19, verible, yapf, shellcheck and markdown linters PASS",
+  "prior_hosted_validation": {
+    "head_sha": "b95bb2528659e15f2ea9b84b443f8627b969c147",
+    "tested_merge_sha": "1ea93258e4147827a76c319c6a4798d019421510",
+    "run": "https://github.com/Ergodex-Core/bonsai_on_chip/actions/runs/37122552310",
+    "conclusion": "success",
+    "checks": [
+      "Smoke (arcilator)",
+      "Smoke (verilator)",
+      "Differential trace parity"
+    ],
+    "note": "Earlier revision before formatting/metadata-event amendment; final SHA must be checked separately."
+  }
+}

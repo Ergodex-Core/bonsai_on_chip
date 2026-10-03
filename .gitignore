@@ -32,3 +32,8 @@ dispatch.log
 
 # Reproducible run logs and Bazel event streams are attached as artifacts.
 reports/**/raw/
+
+# PR simulator tools and evidence stay in Actions artifacts.
+.ci-tools/
+.ci-evidence/
+.ci-bazel-downloads/
