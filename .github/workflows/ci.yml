@@ -14,11 +14,11 @@ concurrency:
 
 jobs:
   build-docker:
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: useblacksmith/checkout@v1 # v5
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -44,11 +44,11 @@ jobs:
 
   macro-signatures:
     needs: build-docker
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: useblacksmith/checkout@v1 # v5
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -82,11 +82,11 @@ jobs:
 
   lint:
     needs: build-docker
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: useblacksmith/checkout@v1 # v5
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -123,12 +123,12 @@ jobs:
 
   bazel-test-exclusive:
     needs: build-docker
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     timeout-minutes: 360
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: useblacksmith/checkout@v1 # v5
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
@@ -187,12 +187,12 @@ jobs:
 
   bazel-test-parallel:
     needs: build-docker
-    runs-on: ubuntu-24.04
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
     timeout-minutes: 360
     steps:
-      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: useblacksmith/checkout@v1 # v5
         with:
           fetch-depth: 1
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
