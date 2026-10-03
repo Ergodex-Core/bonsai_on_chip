@@ -248,12 +248,17 @@ static void protocol_tests(Sim &s, const Fixture &fixture) {
   check(s.write(Sim::M + 4, 1) == 0, "start fault test");
   check(s.write(Sim::M + 0x200, 0) == 2, "busy mutation must be rejected");
   s.wait_done(true);
-  for (unsigned n = 0; !s.pending.empty(); ++n) {
-    check(n < 100000, "accepted replies not drained following engine fault"); s.step();
-  }
+  check(s.pending.empty() && !s.request_held, "engine released busy before failed-command replies drained");
   s.fail_request = 0;
+  uint32_t expected_cpu = 0;
+  for (unsigned j = 0; j < 4; ++j) expected_cpu |= uint32_t(s.rom[4096 + j]) << (8 * j);
+  check(s.read(Sim::R + 4096) == expected_cpu, "immediate CPU reuse following queued engine error");
+  const uint64_t recovery_requests = s.counts.requests;
   s.configure(fixture); check(s.write(Sim::M + 4, 1) == 0, "fault recovery dispatch");
+  check(s.read(Sim::M) == 1, "start must clear old DONE/ERROR and assert busy");
   s.wait_done(); s.verify(fixture);
+  check(s.counts.requests > recovery_requests && s.read(Sim::M + 16) > 0,
+        "fault recovery must execute a new command");
   // CPU ROM must also recover, with the original response ID and no stale beat.
   s.fail_request = s.counts.requests + 1;
   s.read(Sim::R + 4096, 2); s.fail_request = 0;
@@ -265,8 +270,10 @@ static void protocol_tests(Sim &s, const Fixture &fixture) {
   s.reset();
   check(s.read(Sim::M) == 0 && s.read(Sim::M + 16) == 0, "reset status/cycle counter");
   check(s.read(Sim::M + 8) == 32, "reset default unit count");
+  const uint64_t reset_requests = s.counts.requests;
   s.configure(fixture); check(s.write(Sim::M + 4, 1) == 0, "post-reset dispatch");
   s.wait_done(); s.verify(fixture);
+  check(s.counts.requests > reset_requests && s.read(Sim::M + 16) > 0, "post-reset command must execute");
   s.opt.latency = old_latency;
 }
 
