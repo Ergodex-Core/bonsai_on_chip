@@ -37,6 +37,12 @@ rolling GitHub host image. Caches contain installations only; DUT models and
 results are rebuilt on every PR. CIRCT cold download is about 1.1 GB; only four
 binaries and two runtime files remain cached.
 
+The independent five-minute UVM launcher regression runs 19 focused tests. The
+legacy UVM launcher now queries Bazel for the Verilator executable and resolves
+its complete runtime from that same repository, covering canonical Bzlmod names
+and rejecting missing, ambiguous or incomplete outputs. Its test log is retained
+as a separate artifact. The existing broader UVM workflow validates integration.
+
 ## Reproduce on Linux x86-64
 
 Install the host dependencies listed in the workflow, then from the root:

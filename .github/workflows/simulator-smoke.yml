@@ -13,6 +13,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  uvm-launcher:
+    if: github.event.action != 'edited' || github.event.changes.base.ref.from
+    name: UVM launcher path regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Run canonical Bazel path and failure regressions
+        run: |
+          python3 -m venv "$RUNNER_TEMP/uvm-path-python"
+          "$RUNNER_TEMP/uvm-path-python/bin/pip" install --require-hashes -r tests/ci/uvm-path-requirements.txt
+          "$RUNNER_TEMP/uvm-path-python/bin/python" -m unittest -v utils.run_uvm_regression_test 2>&1 | tee uvm-path-tests.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: uvm-launcher-${{ github.run_id }}-${{ github.run_attempt }}
+          path: uvm-path-tests.log
+          retention-days: 14
+
   simulator:
     if: github.event.action != 'edited' || github.event.changes.base.ref.from
     name: Smoke (${{ matrix.backend }})
