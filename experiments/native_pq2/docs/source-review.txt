@@ -1,0 +1,188 @@
+Bonsai PQ2 engine variants: original-source review
+Reviewed 2026-10-03. Read-only source inspection; no builds, simulation, synthesis,
+instances, model access, or publication performed by this review task.
+
+1. Source provenance and licensing
+
+Paper: Chenyang Yin et al., TerEffic: Highly Efficient Ternary LLM Inference on FPGA,
+arXiv:2502.16473v2, dated 2025-05-01.
+https://arxiv.org/html/2502.16473v2
+The HTML explicitly identifies CC BY 4.0. Cite the authors, title, version and URL
+for an adaptation; retain attribution/license and indicate changes if reproducing
+paper material. No TerEffic implementation repository is identified in the paper
+HTML inspected. The repository below is a separate ETH project, NOT TerEffic code.
+
+Repository: https://github.com/fpgasystems/ternaryLLM
+Cloned public main read-only for inspection; checked-out exact revision:
+68d384425261d60bfbde5ff079c33a474c1eb28e
+Commit timestamp: 2026-04-17 23:01:33 +0200
+Commit subject: upload sparsity analysis of pre-trained ternary LLMs
+Inspection used a clean read-only checkout of the pinned revision.
+Working tree verified clean at review.
+Root LICENSE: MIT; copyright (c) 2025 FPGA @ Systems Group, ETH Zurich.
+https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/LICENSE
+Retain the full copyright and permission notice in copies/substantial portions.
+No narrower license headers were found in inspected FPGA/CPU/SSR code. GPU files
+csrc/utils.cuh, csrc/ter_spmm_kernel.cuh, csrc/ter_spmm_wrapper.cu and
+TernaryLLM/__init__.py contain a short "Copyrights reserved" header; avoid copying
+these irrelevant GPU files. Imported Coyote wrappers, SpinalHDL dependencies,
+prebuilt bitstreams and any separate model weights require their own provenance;
+none is needed for an independently implemented Bonsai RTL adaptation.
+
+SHA256 source manifest:
+4d1be0da97ef17a703ed5fc66766e05d0cc61ed65f7941901d8f3e18c47ebf6d LICENSE
+ece4da75fcabf6060a930916de604e3314f15c33e49b1fe0c820da634d47da39 ternaryLLM_FPGA/hw/spinal/gemmacc/src/Config.scala
+1780bb9d5f343533e6b034b56065c655258a7f5df2beeb9bdbe753eebf69df4c ternaryLLM_FPGA/hw/spinal/gemmacc/src/design/PE.scala
+5e26c5c4752da521c85de13d327f9b6f93ee9537a8881a905bcf550dd4516ed9 ternaryLLM_FPGA/hw/spinal/gemmacc/src/design/DataFSM.scala
+6f9d9f90ff820909c8536d274633f020479275dc89f3c70b397e6c0f04090754 ternaryLLM_CPU/src/TCSC.hpp
+6b771a3385f733692c12482fcfeba7f5214546693768a4d6af7a5bd34ed9a0e8 SSR/SSR/ssr.cpp
+
+2. What the original sources support
+
+Paper, sections III-B/D and IV (summary): TerEffic packs five three-valued weights
+into one byte. Its 256-output TMat contains 256-way dot products, with shared
+activation negation and parallel reductions. Tiling extends matrix dimensions.
+The HBM configuration separates memory and computation with a dual-clock FIFO,
+uses activation buffers, and reuses weights across batches. The paper explicitly
+recognizes batch-one HBM bandwidth limits. Its demonstrated models use MatMul-free
+LM/HGRN, distinct from Bonsai. Reported implementation frequency is 150 MHz on
+U280 using Vivado 2023.2; the paper's power comes from Vivado reports. The paper
+states decoder-layer coverage for its accelerator, unlike its full-model GPU
+baseline, and labels the 7B discussion a projection. These model, coverage,
+platform and measurement differences prevent transferring its token rates or
+power claims to Bonsai. Its broadly useful ideas are activation reuse, cheap
+low-bit arithmetic, banked storage, and matching compute rate to supplied data.
+
+Repository code observations (paths are relative to the pinned revision):
+- ternaryLLM_FPGA/hw/spinal/gemmacc/src/Config.scala:9-21,31-58 sets a 512-bit
+  interface, 8-bit X, 16-bit Y/accumulator, 8-bit indices, K_slice=128, S=64,
+  UNROLL_M=4. These are not Bonsai's four INT32 subgroup outputs.
+- design/PE.scala:26-37 holds 128 activations, uses each incoming byte as an
+  activation index, accumulates 64 lanes, then subtracts odd from even lanes to
+  yield 32 outputs. This is paired positive/negative index arithmetic, not a
+  native two-bit dense decoder. design/TopLevel.scala:85-94 replicates this PE
+  over four activation rows and broadcasts the weight stream to all four.
+- design/DataFSM.scala:92-103 buffers X. Lines 359-407 issue one 64-byte weight
+  request, wait for its response, accumulate, then request the next. Therefore
+  this reference itself is not evidence of a multiple-outstanding fetch engine.
+  A decoupled Bonsai fetcher is a new adaptation of the paper's memory separation.
+- ternaryLLM_CPU/src/TCSC.hpp:13-32 classifies any weight >=1 as a positive unit
+  entry and any <=-1 as a negative unit entry; 414-427 then adds/subtracts X once.
+  Direct use with Bonsai +2 silently changes the result. Merged/grouped formats
+  align the positive/negative streams and track leftovers; they inherit this
+  three-valued assumption.
+- SSR/SSR/ssr.cpp splits positive/negative binary planes, groups columns into
+  L-bit signatures and allocates 2^L segments. original_rsr/utils.cpp:9-17
+  assembles binary signatures with shifts/OR. +2 is not a legal binary plane bit;
+  this preprocessing cannot be reused on four-valued PQ2 without redesign.
+- FPGA sw/gemmacc/main.cpp:53-98 synthesizes alternating X={5,1}, and fixed
+  positive/negative indices={0,1}. Lines 182-195 choose uniform entry counts from
+  a requested sparsity. This does not demonstrate arbitrary native-model weights
+  or their sparsity. Do not use its benchmark as the Bonsai correctness oracle.
+- That software reference also uses malloc for Y and += without initialization
+  in naiveGEMM (115-166), and truncates global positions to uint8_t (153-154).
+  These are source-inspection concerns, not runtime-verified bug claims. Use the
+  existing independent Bonsai native scalar contract as the test oracle.
+
+Pinned useful code links:
+https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/ternaryLLM_FPGA/hw/spinal/gemmacc/src/design/PE.scala
+https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/ternaryLLM_FPGA/hw/spinal/gemmacc/src/design/DataFSM.scala
+https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/ternaryLLM_CPU/src/TCSC.hpp
+https://github.com/fpgasystems/ternaryLLM/blob/68d384425261d60bfbde5ff079c33a474c1eb28e/SSR/SSR/ssr.cpp
+
+3. Recommended bounded design matrix (our adaptations, not source claims)
+
+B0: Existing E1 baseline. Preserve actual 32 outputs, one product/output/cycle
+for 128 compute cycles, serial single-outstanding 128-bit native-weight loading.
+Do not call it a 32xDOT128 spatial array.
+
+F1: Pipelined native fetch. Keep the exact arithmetic/command/result contract.
+Separate request/response/control from compute; stage the next native weight
+tile in an alternate bank where legal. Begin with one response stream in order;
+use multiple outstanding requests only if the real upstream interface guarantees
+response order or provides tags and backpressure. Count useful bytes, beats,
+request stalls, response stalls, compute waits and buffer high-water marks.
+Do not promise overlap if the firmware supplies only one independent operation.
+
+P1: Parameterized spatial native PQ2 tile. Keep 32 output lanes and introduce
+K-parallelism P (a small sweep such as 1,2,4,8 is enough; larger P only if supplied
+bandwidth warrants it). Compute shared sign-extended x, -x and 2*x for each of
+P activation positions, then select the correct value for each output's native
+code and reduce within each preserved 32-element subgroup. Broadcast/reuse the
+activations across output lanes, bank the 34-byte weight blocks, pipeline the
+reduction if timing requires it, and expose fill/drain/II. This is a tiled
+spatial dot-product engine; call it systolic only if data actually propagates
+through registered neighbor stages. A full 32x128 combinational fabric is not
+justified by the present load interface.
+
+S1 (conditional): Addition/zero-skip native variant. Sharing x/-x/2x already
+preserves all codes with addition/selection. For a distinct sparse experiment,
+prefer a per-subgroup zero bitmap plus explicit two-bit nonzero categories
+{-1,+1,+2}, and a dense fallback, over the reference's paired unit-index format.
+First measure the entire native model's zero/+2 distribution, compressed bytes
+INCLUDING metadata/alignment, per-output imbalance and decoder cycles. Skip
+only weights whose decoded numerical value is zero. Per-lane index queues need
+valid masks, independent completion, boundary tracking and load balancing.
+Sparse compression is not worthwhile merely because a zero multiplier is cheap.
+If the histogram fails the cost gate, record the result and do not add a fourth
+large hardware variant just for variety.
+
+4. Exactness and sizing rules
+
+The supplied Bonsai contract is native PQ2 {-1,0,+1,+2}; 34 bytes per128 includes
+the unchanged FP16 weight scale. Q8_K X is signed INT8; its FP32 d is shared per
+256 values. Preserve four separate INT32 subgroup results/channel and the
+existing ordered FP32 epilogue. These are requirements from task context, not
+inferred from either external source.
+
+Sign-extend X BEFORE negation or left shift. Nine signed bits cover -x=128 when
+x=-128, and 2*x in [-256,254]. Tests must cover x=-128,127 with all four codes.
+Even if some local accumulations can mathematically use fewer bits, retain the
+contract's INT32 output and avoid truncation/overflow in intermediate reductions.
+Do not merge subgroup FP32 additions or reorder weight/activation scaling merely
+because the integer dot product is algebraically equivalent.
+
+Five true trits have 3^5=243 states; five Bonsai four-valued codes have 4^5=1024.
+Thus TerEffic's one-byte five-weight encoding is invalid for arbitrary PQ2.
+An exception scheme must encode +2 exactly and be round-trip tested over every
+possible input code; otherwise explicitly reject such data. No requantization,
+silent +2-to-+1 remap, clipping, model substitution or sparsity pruning is allowed.
+
+5. Bandwidth bounds and comparison gates (analytical, not measurements)
+
+For 32 output blocks of 128 values, native weights occupy 32*34=1088 bytes,
+or 68 aligned 128-bit beats if read as one contiguous tile. At P products/output
+per cycle the compute-only body is ceil(128/P) cycles, plus implementation
+pipeline cost. With an ideal sustained single 128-bit beat/cycle, 68 cycles is
+already the minimum weight supply interval. P=1 is 128 compute cycles; P=2 is64;
+P=4 is32; P=8 is16. So after loading/compute overlap, larger P may mostly increase
+idle time with this port. Real memory latency and firmware add further time.
+If block loads are separately aligned or reads overlap, actual beats can exceed
+68; measure, do not presume the lower bound is reached.
+
+For 32 output lanes at P=4, raw code consumption is 32*4*2=256 bits/cycle,
+before scales. At P=8 it is512 bits/cycle. Model actual memory bandwidth and
+queue depths before calling these wider variants faster for batch-one GEMV.
+Activation reuse reduces repeated X traffic and duplicated negate/shift logic,
+but weights still stream per output at batch one. Four-way batch replication
+does not increase utilization when only one independent sequence is available.
+
+Sparse byte gate: a 128-bit occupancy mask plus two bits/nonzero costs
+16+ceil(nnz/4) bytes, before scale and metadata, versus32 dense code bytes.
+It needs nnz<64 (over50% zeros) even in this favorable comparison; headers,
+alignment and padding raise the necessary sparsity. Index+category encoding
+with seven index bits and two category bits needs9*nnz bits, so its ideal
+break-even is nnz<256/9, about78% zeros. This is why a full-model histogram
+and actual packed byte count must precede any compression claim.
+
+Correctness first: compare every subgroup exactly using same native tensors,
+shapes, prompts, source hashes and FP contract. Include all-zero/all-+2, extreme
+INT8, random four-code, uneven sparsity, tile tails, randomized latency and
+backpressure, and repeated commands with changing scales. Then evaluate operator
+cycles/II and memory stalls; then full firmware overhead; then full native-model
+token outputs. Keep simulator wall cycles/s separate from target cycles or
+clock-derived estimates. Report synthesis resources and achieved post-route
+clock only when actually obtained; do not relabel RTL tests as board inference.
+
+No EC2 spending or workload changes were made. Existing full-token baseline runs
+retain priority. This review adds no build allocation and no performance result.

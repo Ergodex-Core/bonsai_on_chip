@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "completed_utc": "2026-10-03T19:32:55.227026+00:00",
+  "formatted_sources_unchanged_during_tests": true,
+  "scope": "formatted r3 exact q/down matrices, adapter depths 1/4/7, all-scope repository lint, macro signatures, fresh full-model histogram",
+  "allocation": {
+    "cpus": [
+      4,
+      5
+    ],
+    "memory_limit_bytes": 6442450944,
+    "max_build_jobs": 2,
+    "deadline_utc": "2026-10-03T19:45:00Z"
+  },
+  "matrix": {
+    "q": {
+      "status": "PASS",
+      "runs": 50,
+      "integer_subgroup_checks": 811000
+    },
+    "down": {
+      "status": "PASS",
+      "runs": 50,
+      "integer_subgroup_checks": 1015800
+    }
+  }
+}

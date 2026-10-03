@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "comparison": "original r2 vs formatted r3 q per-case CSV",
+  "original_rows": 10400,
+  "formatted_rows": 10400,
+  "all_csv_fields_identical": true
+}

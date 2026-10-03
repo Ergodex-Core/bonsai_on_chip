@@ -1,0 +1,42 @@
+{
+  "benchmark.json": {
+    "bytes": 51265,
+    "sha256": "dc5824384fd1f4be125a78cc47ba8e760e2b7bc5565c15b86a012834949ecace"
+  },
+  "fixture-manifest.json": {
+    "bytes": 1392,
+    "sha256": "dee1dcc52b2a235793d1b2f57217682578c97846a6a57dc59339a45d753a3454"
+  },
+  "source-manifest.json": {
+    "bytes": 1990,
+    "sha256": "6874d20d7c2ac765a3afffdfedbaf814961e00d7e5c6aaa937abb54f782c1e86"
+  },
+  "cases.csv.gz": {
+    "bytes": 147565,
+    "sha256": "f34f0dc4364e3ca6c698b4512a457ead855ddd34ebc9d1414226d156584529d8"
+  },
+  "adapter-result-1.json": {
+    "bytes": 293,
+    "sha256": "c1a00db677a1be6ff87a9b03854c90e3fc59cfeedf8c2bf9c37473cd9803628c"
+  },
+  "adapter-result-4.json": {
+    "bytes": 294,
+    "sha256": "f39decfe55707dc2e2c8e5d530941957aa393d4d368ef403e339b049413455be"
+  },
+  "adapter-result-7.json": {
+    "bytes": 293,
+    "sha256": "31f373e4ae3d41512c43e51384f1a7ffccab1d803e4f0963e18e76c1b71fc369"
+  },
+  "repository-linters.json": {
+    "bytes": 75,
+    "sha256": "afce139a191d40447cd66e89a0758c8dbaf0e8bd43bdc782080c8e096e07b888"
+  },
+  "repository-linters.log": {
+    "bytes": 348,
+    "sha256": "69233110eb1c1faeedeb6ecb083f2722d5eacb51f694916fcd458bb4090308de"
+  },
+  "macro-check.log": {
+    "bytes": 36,
+    "sha256": "d322f7bc3ba68dadc9ea515e3f03f650ef68d3d9e6827af05fc557b801bf492a"
+  }
+}

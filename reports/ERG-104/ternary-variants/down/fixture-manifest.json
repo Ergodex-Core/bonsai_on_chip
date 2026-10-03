@@ -1,0 +1,66 @@
+{
+  "schema": 2,
+  "seed": 7193,
+  "cases": 240,
+  "rom_bytes": 1048576,
+  "fixture_sha256": "f81e327265ade9950207da61f137d7c66bcd2f96da314bb0d866b5d2f3a36737",
+  "code_counts_minus1_zero_plus1_plus2": [
+    170069,
+    183468,
+    175286,
+    121289
+  ],
+  "unit_counts": [
+    1,
+    7,
+    21,
+    31,
+    32
+  ],
+  "alignments": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "strides": [
+    34,
+    544,
+    1088,
+    1632
+  ],
+  "model": {
+    "tensor": "blk.0.ffn_down.weight",
+    "tensor_type_id": 142,
+    "tensor_shape_gguf_order": [
+      6144,
+      2048
+    ],
+    "offset": 91812960,
+    "tensor_start": 91812960,
+    "tensor_end": 95155296,
+    "gguf_version": 3,
+    "type_validation": "explicit_pinned_type_id_matches_metadata",
+    "sha256": "de68ba48a8dacb21979915991e7741b917869d71410a370df951c0c3a237ae50",
+    "bytes": 463290464,
+    "sampled_blocks": 1536,
+    "sampled_rows": 32,
+    "native_row_bytes": 1632,
+    "sampling": "same K block across 32 consecutive native rows; unmodified bytes relocated into test ROM",
+    "activations": "seeded synthetic INT8 operands and FP32 scale bits"
+  },
+  "oracle": "independent Python decode(code)-1; exact four INT32 sums; raw FP16/FP32 scale bits",
+  "scope": "DOT128 engine only; no full token, board, timing, or FP32 epilogue execution claim"
+}

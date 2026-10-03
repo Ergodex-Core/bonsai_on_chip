@@ -1,0 +1,89 @@
+Native PQ2 common engine benchmark, fixture schema PQ2FX002
+
+Scope
+The same Python-generated binary fixtures and independent Python INT32 oracle
+feed every RTL variant. The C++ driver does not recalculate the dot product.
+Native blocks are exactly 34 bytes: untouched FP16 scale plus 32 packed bytes,
+128 consecutive 2-bit codes interpreted as code-1. Code3 is +2, including when
+the operand is -128. Four independent sums cover lanes0..31,32..63,64..95,96..127.
+FP32 Q8_K activation scale bits are stored unchanged; a real Q8_K scale is shared
+by two successive DOT128 calls. No arithmetic scale operation runs in this RTL.
+Python ordered_epilogue is a helper, not evidence of firmware execution.
+
+Coverage
+Directed fixtures cover each block-start alignment modulo16, units1/7/21/31/32,
+contiguous34-byte blocks and native width2048 row-stride544. Random fixtures
+also cover wider row strides and arbitrary codes. Raw scales include signed
+zero, finite extremes, subnormal, Inf, and NaN to check transport, not numeric
+evaluation. Every native code and INT8 extremes are explicitly exercised.
+Optional model fixtures require explicit absolute GGUF offset and pinned
+PQ2_0 GGML tensor type ID142; the parser verifies metadata ID, shape, native
+block boundary, and available range. A model case takes the same K block from
+32 consecutive native rows with row stride derived from the tensor dimensions;
+native bytes are relocated into the test ROM with synthetic INT8 activations.
+The full model is hashed, not copied.
+Generated fixtures can contain sampled model bytes and MUST remain private.
+
+Storage model
+128-bit aligned beats, in-order bounded responses, minimum request-to-response
+latency, nonnegative seeded latency jitter, response beat initiation interval,
+bounded outstanding capacity, and independently seeded request-ready stalls.
+Ready/valid transactions retain address or data until accepted. The test checks
+request address stability and CPU response data/control under backpressure.
+Read response timing is scheduled from each accepted request. Responses may be
+presented one clock after an accepted request at minimum. Capacity is checked
+before response retirement, so a full queue introduces one acceptance bubble.
+This is an explicit controllable scenario model, not calibrated HBM hardware.
+The ideal profile uses default --latency-jitter 0 for a strict one-cycle source.
+
+Fault and reset contract
+The first engine response can fail while other requests remain outstanding.
+An engine must drain already accepted requests and any request it has already
+presented under backpressure before allowing a later command to consume replies.
+The test requires complete queue drainage at the first observed terminal error,
+immediately reuses CPU ROM, then reconfigures and verifies successful arithmetic,
+a CPU ROM error/recovery, and reset/restart. It never drains replies on the DUT's
+behalf after observing terminal error.
+Reset synchronously resets DUT and storage adapter and flushes pending replies.
+Reset-only-DUT with old external replies is not supported without an epoch tag.
+Out-of-range blocks, capacity boundaries, invalid unit counts, ROM writes,
+partial writes, and busy configuration writes are checked.
+
+Measurements
+busy_cycles reads the public cycle register after completion. AXI testbench command
+cycles measure unit/address/activation/scale writes, start, status polling,
+all subgroup result reads, and repeated packed weight-scale reads, matching
+the public helper's transaction structure. Synthetic AXI-master delays are
+explicit. This is not an executed CPU firmware or end-to-end token measurement.
+Configuration, dispatch-to-observed-done, and result readback cycles are separate.
+Storage requests/physical bytes include redundant aligned beats; useful bytes
+are units*34. All variants receive identical fixtures and timing parameters.
+Seeded random schedules are reproducible per run; different engine schedules
+can encounter different ready stalls. Zero-jitter/no-stall profiles permit
+cycle-exact deterministic comparisons. Wall-time simulated cycles/second is
+reported separately from target-engine cycles and never converted into Fmax.
+
+Run only in the coordinated EC2 allocation; the runner refuses non-Linux or a
+missing BENCHMARK_EC2_AUTHORIZED=1 attestation. No instance launch/spend happens.
+Example on worker (substitute real paths, coordinate CPUs/memory with owner):
+  BENCHMARK_EC2_AUTHORIZED=1 python3 experiments/native_pq2/run_benchmark.py \
+    --allocation approved-shared-cpu --output /tmp/pq2-run \
+    --variant e1=experiments/native_pq2/baseline/coral_weight_axi.sv \
+    --variant e2d4=experiments/native_pq2/fetch/coral_weight_axi.sv \
+    --parameter e2d4:FETCH_DEPTH=4 \
+    --variant e3l8=experiments/native_pq2/spatial/coral_weight_axi.sv \
+    --parameter e3l8:DOT_LANES=8 --jobs 1
+Verilator5.020 uses --unroll-count 4096 --unroll-stmts 100000, with no warning
+suppression. Pass additional tool flags with --verilator-arg=FLAG.
+Default profiles: ideal1cycle,20cycle,80cycle and constrained80cycle. The runner
+prints per-run summaries and writes benchmark.json/cases.csv/source-manifest.json
+and fixture-manifest.json. Only those sanitized evidence files are publishable;
+private/ contains build products/logs and possibly model samples. Never publish
+private/, checkpoints, absolute local paths, AWS identifiers, or credentials.
+No full token, board result, post-route timing, or synthesis resource claim is
+made by this benchmark. Preserve the original baseline's source hash/provenance.
+
+The historical tests/test_baseline.cpp is retained only for historical E1 diagnostic
+reproduction. Its optional hard-coded model slice is not the validated native-row
+sampler for this comparison. Use native_reference.py plus tests/test_engine.cpp,
+which validate the GGUF tensor type and sample the same K block across native rows.

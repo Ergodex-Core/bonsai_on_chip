@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-03T18:38:28.417042+00:00",
+  "repository": "https://github.com/Ergodex-Core/bonsai_on_chip",
+  "publication_base": "26bded5bf809267506058df6bf0b296dddeeaf25",
+  "historical_remote_simulator_base": "81036e734e80bf14862de3d4259a65b5427832a4",
+  "historical_local_first_slice_base": "c04bdb4c",
+  "baseline_status": "Isolated E1 sources imported; historical first-layer passes are not this PR validation. Full-token gate pending.",
+  "upstream_references": {
+    "TerEffic": "https://arxiv.org/html/2502.16473v2",
+    "ternaryLLM": "68d384425261d60bfbde5ff079c33a474c1eb28e"
+  },
+  "model": {
+    "name": "Ternary-Bonsai-1.7B-PQ2_0.gguf",
+    "bytes": 463290464,
+    "sha256": "de68ba48a8dacb21979915991e7741b917869d71410a370df951c0c3a237ae50",
+    "included": false
+  },
+  "noL0": {
+    "supported_emitter_sha256": "1d62cc42c94c589ab98cacf84b921d61aaa8c557a3737ca6706297ba16dd37be",
+    "engine_generated_core_sha256": "a26c916676a857447e41f403d7c69babeedaa8f5910a864e1d2c28314f68e7cf",
+    "full_core_rebuilt_in_this_experiment": false
+  },
+  "storage_adapter": {
+    "rtl_sha256": "f2f7df0dcb9260feda6ef37a592198eecb1a8d991fc1654079bb65f35313ee10",
+    "test_sha256": "51a126e8753948210062ed9a319567b200d92876e1c824c4e83a043b1d21659f",
+    "depths_validated": [
+      1,
+      4,
+      7
+    ],
+    "requests_accepted": 3000,
+    "responses_checked": 2991,
+    "paired_reset_cancellations": 9,
+    "rtl_source_commit": "3fa50a9f148270ea69fdc4adc2c2a06287226b1c",
+    "build_command_template": [
+      "verilator",
+      "--cc",
+      "--exe",
+      "--build",
+      "-j",
+      "2",
+      "--Wall",
+      "--top-module",
+      "coral_storage_axi_read",
+      "-GFETCH_DEPTH={depth}",
+      "-GHBM_BASE=64'h130000000",
+      "--Mdir",
+      "{output_directory}",
+      "{fetch_worktree}/experiments/native_pq2/fetch/coral_storage_axi_read.sv",
+      "{benchmark_worktree}/experiments/native_pq2/tests/test_storage_queue.cpp"
+    ],
+    "run_command_template": [
+      "{output_directory}/Vcoral_storage_axi_read",
+      "--depth",
+      "{depth}",
+      "--hbm-base",
+      "0x130000000"
+    ],
+    "toolchain": {
+      "verilator": "5.020",
+      "compiler": "GCC 13.3.0",
+      "platform": "Linux x86_64"
+    },
+    "historical_preformat_rtl_sha256": "6a601e9b576d59af022d6f8b4ed30a39af59a0e78d5b0863f87b9066941d61c4",
+    "historical_preformat_test_sha256": "db2ddd84c49e887f71b41a61cd25a2ca0d27bda6cb92ccc6438a4ca4ce644349",
+    "seed": 7193,
+    "test_source_commit": "f337bf23958c629e195c63e476baf3c396862779",
+    "build_artifact_provenance": "../../reports/ERG-104/ternary-variants/final/build-provenance.json"
+  },
+  "original_imported_baseline_files": {
+    "baseline/coral_weight.h": "e9e5332e60545813b458dbac8610c6f5c34941f970d021f91e2e9b26c43f8b9e",
+    "baseline/coral_weight_axi.sv": "086f91c0adb555c4e2c2def921369c82eed67a86373f4cc616ecaaaf364b6319"
+  },
+  "baseline_files": {
+    "baseline/coral_weight.h": "980329133213ab500198052c5ef3b68358ac22ebabdf087595ce0bde65ef981c",
+    "baseline/coral_weight_axi.sv": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca"
+  },
+  "historical_preformat_leaf_sources": {
+    "E1": {
+      "rtl_sha256": "086f91c0adb555c4e2c2def921369c82eed67a86373f4cc616ecaaaf364b6319",
+      "source_commit": "d3eaf0608fb1e3ad7c8c6d6646d86ae5a7202e46"
+    },
+    "E1-fetch": {
+      "rtl_sha256": "9b4bedd08315508a17957c23e3e8799a312bfca545875203918a97ec201c63bd",
+      "source_commit": "6011c59bf0ef8bcb0b62389ae5857676a4ffdca8"
+    },
+    "spatial-L": {
+      "rtl_sha256": "cf62552c5213874cc3ce1f42e468948c6a01be28605245e930be5fde154ad8ec",
+      "source_commit": "898d936b256a55d46b677f7ed164700abc8978ba"
+    }
+  },
+  "validated_leaf_sources": {
+    "E1": {
+      "rtl_sha256": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca",
+      "source_commit": "f337bf23958c629e195c63e476baf3c396862779"
+    },
+    "E1-fetch": {
+      "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "source_commit": "3fa50a9f148270ea69fdc4adc2c2a06287226b1c"
+    },
+    "spatial-L": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "source_commit": "24388bfbb7716de08e84e1a8f54f5fb361536416"
+    }
+  },
+  "historical_preformat_harness_commit": "ca284a73bca65bb6a864d821893bdc71f57fa31f",
+  "validated_harness_commit": "f337bf23958c629e195c63e476baf3c396862779",
+  "validated_harness_files": {
+    "run_benchmark.py": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3",
+    "native_reference.py": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9",
+    "inspect_model.py": "553c1e37e920eddcd312aeb8919232bdaf479f50d980a80352c1032244f4298c",
+    "tests/test_engine.cpp": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c",
+    "tools/reproduce_matrix.sh": "5dc8f3b2fc3050c68c41195843ad1c75510f88218c6929523cfd7ff2bf94ea4a"
+  },
+  "formatting": {
+    "scope": "Automatic C/C++/SV/Python formatting plus shell expansion braces; no intentional numerical or interface change",
+    "provenance": "../../reports/ERG-104/ternary-variants/format/format-provenance.json",
+    "source_snapshot_archive_sha256": "df8f17df9a04b8185cd2000436342eab72f6a1d86ad5f8dac9aeef123f324e41",
+    "python_ast_equivalence": true,
+    "full_matched_matrix_rerun": true
+  },
+  "final_validation_receipt": "../../reports/ERG-104/ternary-variants/final/final-result.json",
+  "final_formatted_sources_unchanged_during_tests": true
+}

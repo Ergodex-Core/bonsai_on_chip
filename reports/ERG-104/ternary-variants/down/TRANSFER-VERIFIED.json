@@ -1,0 +1,11 @@
+{
+  "artifact_manifest_entries_verified": 4,
+  "archive_sha256": "ea04f0e6c2a3fd2073426ead89a8ff399b0528fc9b96fc1b39e2d60fb4b1b03a",
+  "status": "PASS",
+  "runs": 50,
+  "rows": 12000,
+  "row_statuses": {
+    "PASS": 12000
+  },
+  "variant_profile_pairs": 50
+}
