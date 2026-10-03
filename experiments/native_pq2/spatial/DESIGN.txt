@@ -3,8 +3,9 @@ Native PQ2 spatial-L parallel reduction tile
 
 Status and identity
 -------------------
-This experiment changes only the integer compute width of the pinned E1
-peripheral in ../baseline/coral_weight_axi.sv (baseline commit d3eaf060).
+This experiment changes the integer compute width of the pinned E1 peripheral
+in ../baseline/coral_weight_axi.sv (baseline commit d3eaf060), with the read
+backpressure correctness adjustment described below.
 It is named spatial-L to distinguish it from the separate proposal for a
 fully spatial 32-output by DOT128 engine. It is a parallel reduction tile,
 not a neighbor-to-neighbor systolic array. Its default is L=8.
@@ -36,10 +37,17 @@ https://github.com/fpgasystems/ternaryLLM/tree/68d384425261d60bfbde5ff079c33a474
 Numerical and interface contract
 --------------------------------
 - Original module name, ports, MMIO layout, single outstanding storage request,
-  byte-addressed weight offsets, AXI backpressure, and error paths are retained.
+  byte-addressed weight offsets, and error paths are retained.
   DOT_LANES is appended as an elaboration parameter, preserving the positions
   of all existing parameters. Use this source instead of the baseline source;
   do not compile both modules into the same design.
+- Read-address backpressure is tightened for an inherited baseline hazard:
+  while a CPU ROM read awaits storage, a second MMIO AR must not overwrite
+  the saved response ID/data slot. MMIO polling is accepted only during IDLE
+  or explicit engine states, never CPU_REQ/CPU_WAIT. Existing R-channel
+  backpressure also holds off new reads. This does not change arithmetic or
+  the MMIO register map. A one-outstanding CPU wrapper can mask the original
+  hazard; the peripheral regression must exercise multiple offered requests.
 - DOT_LANES supports exactly 1, 2, 4, 8, 16, or 32. Unsupported settings issue
   a fatal configuration error. The default is 8; the benchmark must record
   the actual elaborated setting rather than inferring it from a variant name.
@@ -122,6 +130,9 @@ supported L. Include all 256 INT8 values against all four codes, directed
 all--128/+2 and +127/+2 cases, subgroup boundaries, randomized packed blocks,
 unit_count 1..32, unaligned offsets, storage stalls/faults, AXI backpressure,
 and scale-bit pass-through. Reject an unsupported parameter value explicitly.
+For read interleaving, delay a CPU ROM response, offer MMIO AR with a different
+ID, and stall RREADY: verify that the ROM RID/data remain intact and the MMIO
+request is accepted only after the first response is consumed.
 Use original model bytes for a separate private checkpoint correctness gate;
 never publish checkpoint payloads.
 

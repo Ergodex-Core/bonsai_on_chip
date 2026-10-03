@@ -70,8 +70,11 @@ module coral_weight_axi #(
   logic [3:0] write_mask;
   assign s_awready=!aw_hold&&!s_bvalid;
   assign s_wready=!w_hold&&!s_bvalid;
+  // A pending CPU ROM read owns the single saved response ID/data slot.
+  // Engine MMIO polling is safe because it does not use that CPU read slot.
   assign s_arready=!s_rvalid && (state==IDLE ||
-    (ENGINE_ENABLE && s_araddr>=MMIO_BASE && s_araddr<MMIO_BASE+32'h1000));
+    (ENGINE_ENABLE && (state==ENG_REQ || state==ENG_WAIT || state==ENG_MAC) &&
+     s_araddr>=MMIO_BASE && s_araddr<MMIO_BASE+32'h1000));
   assign s_rlast=1'b1;
   assign storage_valid=state==CPU_REQ || state==ENG_REQ;
   assign storage_addr=state==CPU_REQ ? cpu_base :
