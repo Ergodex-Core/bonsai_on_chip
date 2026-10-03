@@ -1,0 +1,1 @@
+{"status":"PASS","fetch_depth":4,"hbm_base":"0x130000000","seed":7193,"requests":1000,"completed":998,"reset_canceled":2,"peak_outstanding":4,"simultaneous_transfers":316,"full_credit_stalls":1993,"ar_stalls":293,"response_stalls":546,"rresp_errors":134,"missing_rlast":59,"clock_cycles":4056}

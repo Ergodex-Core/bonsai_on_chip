@@ -1,0 +1,10 @@
+Ubuntu clang-format version 19.1.1 (1ubuntu1~24.04.2)
+0.13.0
+Version	v0.0-4051-g9fdb4057
+Commit-Timestamp	2025-12-22T08:55:10Z
+Built	2025-12-22T08:59:31Z
+yapf 0.33.0
+ShellCheck - shell script analysis tool
+version: 0.9.0
+license: GNU General Public License, version 3
+website: https://www.shellcheck.net
