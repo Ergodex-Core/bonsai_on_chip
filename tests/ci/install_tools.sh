@@ -3,44 +3,44 @@
 set -euo pipefail
 backend=${1:?verilator or arcilator}
 root=${2:?external installation directory}
-mkdir -p "$root"
-root=$(cd "$root" && pwd)
+mkdir -p "${root}"
+root=$(cd "${root}" && pwd)
 download() {
   local url=$1 sha=$2 destination=$3
-  curl --fail --location --retry 3 --connect-timeout 30 --max-time 600 --silent --show-error "$url" -o "$destination"
-  echo "$sha  $destination" | sha256sum --check --strict
+  curl --fail --location --retry 3 --connect-timeout 30 --max-time 600 --silent --show-error "${url}" -o "${destination}"
+  echo "${sha}  ${destination}" | sha256sum --check --strict
 }
-case "$backend" in
+case "${backend}" in
   verilator)
-    if [[ ! -x "$root/verilator/bin/verilator" ]]; then
-      archive="$root/verilator.tar.gz"
+    if [[ ! -x "${root}/verilator/bin/verilator" ]]; then
+      archive="${root}/verilator.tar.gz"
       download https://github.com/verilator/verilator/archive/refs/tags/v5.052.tar.gz \
-        8c8d2e11e6ad32f641dd250742a94195ddecb912e2e2dabe2f42ddbbb99c1092 "$archive"
-      mkdir -p "$root/verilator-source"
-      tar -xzf "$archive" --strip-components=1 -C "$root/verilator-source"
-      (cd "$root/verilator-source"; autoconf; ./configure --prefix="$root/verilator"; make -j2; make install)
-      rm -rf "$root/verilator-source" "$archive"
+        8c8d2e11e6ad32f641dd250742a94195ddecb912e2e2dabe2f42ddbbb99c1092 "${archive}"
+      mkdir -p "${root}/verilator-source"
+      tar -xzf "${archive}" --strip-components=1 -C "${root}/verilator-source"
+      (cd "${root}/verilator-source"; autoconf; ./configure --prefix="${root}/verilator"; make -j2; make install)
+      rm -rf "${root}/verilator-source" "${archive}"
     fi
-    "$root/verilator/bin/verilator" --version | grep -E '^Verilator v?5[.]052 '
+    "${root}/verilator/bin/verilator" --version | grep -E '^Verilator v?5[.]052 '
     ;;
   arcilator)
-    if [[ ! -x "$root/circt/bin/arcilator" ]]; then
-      archive="$root/circt.tar.gz"
+    if [[ ! -x "${root}/circt/bin/arcilator" ]]; then
+      archive="${root}/circt.tar.gz"
       download https://github.com/llvm/circt/releases/download/firtool-1.161.0/circt-full-static-linux-x64.tar.gz \
-        a844279a0e3eeb598e00957cbe8cd3d61abf0bf9dc6d3ec582192ec913ea7f18 "$archive"
-      mkdir -p "$root/circt"
+        a844279a0e3eeb598e00957cbe8cd3d61abf0bf9dc6d3ec582192ec913ea7f18 "${archive}"
+      mkdir -p "${root}/circt"
       # Keep only the four executables; model uses the generated public eval API.
-      tar -xzf "$archive" --strip-components=1 -C "$root/circt" \
+      tar -xzf "${archive}" --strip-components=1 -C "${root}/circt" \
         firtool-1.161.0/bin/arcilator firtool-1.161.0/bin/circt-verilog firtool-1.161.0/bin/opt firtool-1.161.0/bin/llc
-      rm "$archive"
+      rm "${archive}"
     fi
-    mkdir -p "$root/circt/runtime"
+    mkdir -p "${root}/circt/runtime"
     upstream=https://raw.githubusercontent.com/llvm/circt/0d63c41c9121106b01372aca2b60eb44ed4a6e87/tools/arcilator
-    download "$upstream/arcilator-runtime.h" \
-      52e4e00fd5a949c2e00e19e747054492ea9163dcb577fb095f0b9eea3e42f952 "$root/circt/runtime/arcilator-runtime.h"
-    download "$upstream/arcilator-header-cpp.py" \
-      aea73f31cb8786f4af09dea014e044a3061455d63eecb9d1754c15ebfae38a24 "$root/circt/runtime/arcilator-header-cpp.py"
-    "$root/circt/bin/arcilator" --version
+    download "${upstream}/arcilator-runtime.h" \
+      52e4e00fd5a949c2e00e19e747054492ea9163dcb577fb095f0b9eea3e42f952 "${root}/circt/runtime/arcilator-runtime.h"
+    download "${upstream}/arcilator-header-cpp.py" \
+      aea73f31cb8786f4af09dea014e044a3061455d63eecb9d1754c15ebfae38a24 "${root}/circt/runtime/arcilator-header-cpp.py"
+    "${root}/circt/bin/arcilator" --version
     ;;
-  *) echo "Unknown backend: $backend" >&2; exit 2 ;;
+  *) echo "Unknown backend: ${backend}" >&2; exit 2 ;;
 esac

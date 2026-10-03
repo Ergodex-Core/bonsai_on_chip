@@ -1,7 +1,8 @@
 # Bounded PR simulator checks
 
 `Simulator smoke and parity` runs on PR creation, pushes to the PR, reopening,
-ready-for-review and metadata/base edits. Drafts also run. Each independent
+ready-for-review and base-branch edits. Title/description-only edits are ignored
+without cancelling active tests. Drafts also run. Each independent
 Ubuntu 24.04 job has a 25-minute ceiling; a backend failure does not cancel the
 other backend. Superseded PR runs are cancelled. The comparison job has a
 5-minute ceiling. No model download, full-model inference, AWS or FPGA access

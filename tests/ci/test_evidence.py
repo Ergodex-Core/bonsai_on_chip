@@ -24,12 +24,21 @@ with tempfile.TemporaryDirectory(prefix='bonsai-evidence-') as temporary:
             shutil.copyfile(evidence / backend / name, target / name)
 
     def check(label, expected_pass):
-        result = subprocess.run([sys.executable, str(repo / 'tests/ci/evidence.py'), 'compare',
-                                 'both', str(source), str(output), str(root / 'tools')],
-                                capture_output=True, text=True)
+        result = subprocess.run([
+            sys.executable,
+            str(repo / 'tests/ci/evidence.py'), 'compare', 'both',
+            str(source),
+            str(output),
+            str(root / 'tools')
+        ],
+                                capture_output=True,
+                                text=True)
         if (result.returncode == 0) != expected_pass:
-            raise RuntimeError(label + ': unexpected status\n' + result.stdout + result.stderr)
-        if not expected_pass and json.loads((output / 'results.json').read_text())['status'] == 'complete':
+            raise RuntimeError(
+                label + ': unexpected status\n' + result.stdout + result.stderr
+            )
+        if not expected_pass and json.loads(
+            (output / 'results.json').read_text())['status'] == 'complete':
             raise RuntimeError(label + ': failure retained a passing report')
         print('PASS evidence regression: ' + label)
 

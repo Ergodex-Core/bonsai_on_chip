@@ -9,11 +9,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: simulator-smoke-${{ github.event.pull_request.number || github.ref }}
+  group: simulator-smoke-${{ github.event.action == 'edited' && !github.event.changes.base.ref.from && github.run_id || github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
   simulator:
+    if: github.event.action != 'edited' || github.event.changes.base.ref.from
     name: Smoke (${{ matrix.backend }})
     runs-on: ubuntu-24.04
     timeout-minutes: 25

@@ -247,8 +247,8 @@ int main(int argc, char **argv) {
     for (int k = 0; k < PIPE_STAGES + 2; ++k)
       cycle(true, false, false);
     input.reset_n = false;
-    input.flush = true;
-    input.clock = true;
+    input.flush   = true;
+    input.clock   = true;
     sample("reset-flush-stalled-rise");
     sample("reset-flush-repeat-no-edge");
     input.reset_n = true;
