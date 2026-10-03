@@ -23,6 +23,8 @@ def digest(path):
 
 
 def run(command, log):
+    start = time.monotonic()
+    print('START ' + str(log), flush=True)
     with log.open('w') as stream:
         try:
             subprocess.run([str(x) for x in command],
@@ -34,6 +36,7 @@ def run(command, log):
             stream.flush()
             print(log.read_text(), file=sys.stderr, flush=True)
             raise
+    print(f'DONE {log} {time.monotonic() - start:.3f}s', flush=True)
 
 
 def export_llvm(binpath, build):
@@ -124,6 +127,16 @@ def main():
             os.cpu_count(),
             'affinity':
             len(os.sched_getaffinity(0)),
+            'cpu_model':
+            next((
+                line.split(':', 1)[1].strip()
+                for line in Path('/proc/cpuinfo').read_text().splitlines()
+                if line.startswith('model name')
+            ), 'unknown'),
+            'physical_memory_bytes':
+            os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES'),
+            'optimization':
+            '-O2',
             'compiler':
             subprocess.check_output(['clang++-18', '--version'],
                                     text=True).splitlines()[0]
@@ -151,8 +164,8 @@ def main():
                     'Vcoral_weight_axi', '--unroll-count', '4096',
                     '--unroll-stmts', '100000', '--Mdir', build / 'obj',
                     '-CFLAGS', '-std=c++17 -O2', '-MAKEFLAGS',
-                    'CXX=clang++-18', sources[kind],
-                    build / 'coral_weight_ci_top.sv',
+                    'CXX=clang++-18 OPT_FAST=-O2 OPT_SLOW=-O2 OPT_GLOBAL=-O2',
+                    sources[kind], build / 'coral_weight_ci_top.sv',
                     HERE.parent / 'tests/test_engine.cpp'
                 ], build / 'compile.log')
                 binary = build / 'obj/Vcoral_weight_axi'

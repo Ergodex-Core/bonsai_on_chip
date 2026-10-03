@@ -15,6 +15,9 @@ Tool pins: Verilator 5.052; CIRCT firtool 1.161.0; runtime generator commit
 0d63c41c9121106b01372aca2b60eb44ed4a6e87; Clang 18. Source archives and runtime
 files are checksum verified. Both jobs use standard public ubuntu-24.04 hosted
 runners, two compile processes and identical compiler optimization settings.
+Verilator make variables `OPT_FAST`, `OPT_SLOW` and `OPT_GLOBAL` are explicitly
+set to `-O2`, including the unchanged C++ driver. Environment records include
+CPU model, CPU affinity, memory size and compiler version for wall-time review.
 No EC2 instances or paid runner service are provisioned.
 
 `comparison.json` separates operator cycle changes from five-trial simulator
@@ -27,6 +30,8 @@ than replacing the workload with an arithmetic smoke test.
 Before/after refers to the pinned E1 baseline and the candidate engines in the
 same CI run. Run artifacts include source manifests, fixtures, logs and partial
 failure evidence. No model checkpoint or private cloud data is included.
+Each command reports its start, completion and elapsed time in the job log;
+individual commands have a 15-minute timeout and retain failure diagnostics.
 
 The stock CIRCT 1.161.0 frontend leaves a synchronous LLHD process containing
 static loops. The default Arc path fails at coroutine switch legalization;

@@ -639,6 +639,10 @@ def compare(verilator, arcilator, expected_head):
         operator_comparisons,
         "simulation_wall_timings":
         wall_timings,
+        "environments": {
+            "verilator": left["benchmark"].get("environment"),
+            "arcilator": right["benchmark"].get("environment"),
+        },
         "limitations": [
             "Operator cycles are functional simulation counts, not a hardware clock or Fmax claim.",
             "Simulator wall times depend on the CI host; ratios are reported, not performance gates.",

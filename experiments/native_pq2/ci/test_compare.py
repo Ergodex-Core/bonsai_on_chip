@@ -505,7 +505,7 @@ class RunnerTests(unittest.TestCase):
                                            "builtins.print") as output:
                     with self.assertRaises(error_type):
                         self.runner.run(["compiler"], log)
-                output.assert_called_once_with(
+                output.assert_any_call(
                     "compiler diagnostic\n",
                     file=self.runner.sys.stderr,
                     flush=True
