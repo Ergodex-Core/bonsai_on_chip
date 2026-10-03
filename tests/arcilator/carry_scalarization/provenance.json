@@ -1,0 +1,7 @@
+{
+  "source": "/tmp/erg103-timing-fix-20261002/wt-arcilator/hdl/verilog/rvv/design/rvv_backend_pmtrdt_unit_reduction.sv",
+  "source_sha256": "ab96e11720d51fe5ef7b137b269098311655aa3a2fa2a9c45926f22a9ec93976",
+  "patched_sha256": "6ff5411fedc0d634cc4c7009fe8b80dc26dc7cdea45bba347d3f598c8a7e7b88",
+  "mapping": "j0=0; EEW32:j%4!=0 carries j-1; EEW16:j%2!=0 carries j-1; default 0; case equality keeps unknown EEW default semantics",
+  "full_core_compiler_validated": false
+}

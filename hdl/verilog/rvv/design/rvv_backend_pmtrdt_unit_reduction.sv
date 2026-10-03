@@ -919,7 +919,20 @@ endgenerate
 
   // viota_dst
   assign viota_src1 = f_rdtsum2src1(rdt_vs1, alu_ctrl.vd_eew);
-  assign viota_cin  = f_cout2cin(viota_cout, alu_ctrl.vd_eew);
+  // Scalarize the original carry mapping; no aggregate function return.
+  for (genvar arc_word = 0; arc_word < `VLEN/ALU_WIDTH; arc_word++) begin : arc_carry_word
+    for (genvar arc_byte = 0; arc_byte < ALU_BYTE; arc_byte++) begin : arc_carry_byte
+      if (arc_byte == 0) begin : first_byte
+        assign viota_cin[arc_word][arc_byte] = 1'b0;
+      end else begin : following_byte
+        // Case equality preserves case/default behavior for unknown EEW bits.
+        assign viota_cin[arc_word][arc_byte] =
+          (((alu_ctrl.vd_eew === EEW32) && ((arc_byte % 4) != 0)) ||
+           ((alu_ctrl.vd_eew === EEW16) && ((arc_byte % 2) != 0)))
+          ? viota_cout[arc_word][arc_byte-1] : 1'b0;
+      end
+    end
+  end
   generate
     for (i=0; i<`VLEN/ALU_WIDTH; i++) begin : gen_viota_res
       adder #(.ADD_NUM(ALU_BYTE), .ADD_WIDTH(8)) u_adder (.a(viota_src1), .b(viota_src2[i]), .cin(viota_cin[i]), .sum(viota_dst[i]), .cout(viota_cout[i]));
@@ -1036,18 +1049,6 @@ endgenerate
     end
   endfunction
 
-  function [`VLEN/ALU_WIDTH-1:0][ALU_BYTE-1:0] f_cout2cin;
-    input [`VLEN/ALU_WIDTH-1:0][ALU_BYTE-1:0] cout;
-    input EEW_e eew;
-
-    for (int i=0; i<`VLEN/ALU_WIDTH; i++) begin
-      f_cout2cin[i][0] = 1'b0;
-      case (eew)
-        EEW32: for (int j=1; j<ALU_BYTE; j++) f_cout2cin[i][j] = j%4==0 ? 1'b0 : cout[i][j-1];
-        EEW16: for (int j=1; j<ALU_BYTE; j++) f_cout2cin[i][j] = j%2==0 ? 1'b0 : cout[i][j-1];
-        default: for (int j=1; j<ALU_BYTE; j++) f_cout2cin[i][j] = 1'b0; //EEW8
-      endcase
-    end
-  endfunction
+  // f_cout2cin eliminated; its exact mapping is expanded above.
 
 endmodule
