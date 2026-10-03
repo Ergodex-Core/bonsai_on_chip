@@ -106,6 +106,8 @@ def main():
             subprocess.check_output(['clang++-18', '--version'],
                                     text=True).splitlines()[0]
         },
+        'arc_pipeline':
+        'allocated state; hw-convert-bitcasts; arc-infer-context; lower-arc-to-llvm; cse; arc-canonicalizer; LLVM export; arrays remain aggregates',
         'runs': []
     }
     rows = []
@@ -149,12 +151,27 @@ def main():
                     sources[kind], build / 'coral_weight_ci_top.sv', '-o',
                     build / 'design.mlir'
                 ], build / 'frontend.log')
+                # Keep HW arrays as aggregates. The default bufferization
+                # path fails to legalize coroutine cf.switch block operands.
+                # Use the official Arc-to-LLVM passes with bufferization off.
                 run([
                     binpath / 'arcilator', '--no-runtime',
-                    '--no-generate-driver', '--emit-llvm',
-                    '--state-file=' + str(build / 'state.json'),
-                    build / 'design.mlir', '-o', build / 'model.ll'
+                    '--no-generate-driver', '--until-before=llvm-lowering',
+                    '--emit-mlir', '--state-file=' + str(build / 'state.json'),
+                    build / 'design.mlir', '-o', build / 'allocated.mlir'
                 ], build / 'arc.log')
+                run([
+                    binpath / 'circt-opt',
+                    '--pass-pipeline=builtin.module(hw-convert-bitcasts{allow-partial-conversion=false},arc-infer-context,lower-arc-to-llvm,cse,arc-canonicalizer)',
+                    build / 'allocated.mlir', '-o', build / 'llvm.mlir'
+                ], build / 'lowering.log')
+                # The input is already LLVM dialect. Stop before hardware
+                # preprocessing and use arcilator's LLVM IR exporter only.
+                run([
+                    binpath / 'arcilator', '--until-before=preproc',
+                    '--emit-llvm', build / 'llvm.mlir', '-o',
+                    build / 'model.ll'
+                ], build / 'translate.log')
                 run([
                     binpath / 'opt', '--strip-debug', '-O2', '-S',
                     build / 'model.ll', '-o', build / 'optimized.ll'

@@ -24,14 +24,14 @@ case "${backend}" in
     "${root}/verilator/bin/verilator" --version | grep -E '^Verilator v?5[.]052 '
     ;;
   arcilator)
-    if [[ ! -x "${root}/circt/bin/arcilator" ]]; then
+    if [[ ! -x "${root}/circt/bin/arcilator" || ! -x "${root}/circt/bin/circt-opt" ]]; then
       archive="${root}/circt.tar.gz"
       download https://github.com/llvm/circt/releases/download/firtool-1.161.0/circt-full-static-linux-x64.tar.gz \
         a844279a0e3eeb598e00957cbe8cd3d61abf0bf9dc6d3ec582192ec913ea7f18 "${archive}"
       mkdir -p "${root}/circt"
-      # Keep only the four executables; model uses the generated public eval API.
+      # Keep the compiler tools; model uses the generated public eval API.
       tar -xzf "${archive}" --strip-components=1 -C "${root}/circt" \
-        firtool-1.161.0/bin/arcilator firtool-1.161.0/bin/circt-verilog firtool-1.161.0/bin/opt firtool-1.161.0/bin/llc
+        firtool-1.161.0/bin/arcilator firtool-1.161.0/bin/circt-verilog firtool-1.161.0/bin/circt-opt firtool-1.161.0/bin/opt firtool-1.161.0/bin/llc
       rm "${archive}"
     fi
     mkdir -p "${root}/circt/runtime"
