@@ -35,12 +35,18 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/venv"
           "$RUNNER_TEMP/venv/bin/pip" install Jinja2==3.1.6 MarkupSafe==3.0.3
           echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
-      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: tools
         with:
           path: ${{ runner.temp }}/ternary-tools
           key: ternary-sim-ubuntu24-v1-${{ matrix.backend }}-verilator5.052-circt1.161.0
       - name: Install pinned tools
         run: bash experiments/native_pq2/ci/install_tools.sh '${{ matrix.backend }}' "$RUNNER_TEMP/ternary-tools"
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        if: steps.tools.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/ternary-tools
+          key: ternary-sim-ubuntu24-v1-${{ matrix.backend }}-verilator5.052-circt1.161.0
       - name: Complete repeated native engine matrix
         run: python3 experiments/native_pq2/ci/run.py --backend '${{ matrix.backend }}' --snapshots snapshots --tools "$RUNNER_TEMP/ternary-tools" --output "evidence/${{ matrix.backend }}"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
