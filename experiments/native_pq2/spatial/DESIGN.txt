@@ -105,7 +105,7 @@ The unregistered tree gets deeper as L grows; 32 lanes may lose clock frequency
 or increase routing cost enough to offset its lower cycle count.
 
 At DATA_BITS=128, 32 contiguous 34-byte blocks contain 1088 useful bytes, or
-68 distinct aligned beats. This variant keeps the baseline per-block fetch,
+68 distinct aligned beats when the contiguous tile begins at a 16-byte-aligned address (otherwise up to 69). This variant keeps the baseline per-block fetch,
 which issues 96 requests for those even-aligned contiguous offsets: overlapping
 boundary beats are fetched again. Arbitrary offsets may require four requests
 per block. ENG_REQ and ENG_WAIT serialize each request and response, imposing
