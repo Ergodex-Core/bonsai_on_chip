@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "role": "formatted down rerun, fresh histogram, final provenance",
+  "status": "Success",
+  "exit_code": 0,
+  "started_utc": "2026-10-03T19:30:23.216Z",
+  "elapsed": "PT2M32.062S",
+  "resource_summary": [
+    "Service runtime: 2min 32.034s",
+    "CPU time consumed: 3min 40.954s",
+    "Memory peak: 3.4M",
+    "Memory swap peak: 0B"
+  ],
+  "allocation": {
+    "cpus": [
+      4,
+      5
+    ],
+    "memory_limit_bytes": 6442450944,
+    "maximum_build_jobs": 2,
+    "deadline_utc": "2026-10-03T19:45:00Z"
+  }
+}

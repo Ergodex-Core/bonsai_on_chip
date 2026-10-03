@@ -1,0 +1,1629 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "allocation": "shared-operator-slot",
+  "started_utc": "2026-10-03T19:25:53.253342+00:00",
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "verilator": "Verilator 5.020 2024-01-01 rev (Debian 5.020-1)",
+    "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+    "jobs": 2
+  },
+  "fixture": {
+    "schema": 2,
+    "seed": 7193,
+    "cases": 208,
+    "rom_bytes": 1048576,
+    "fixture_sha256": "3c1ab6c67ce99033203d2d9bf7594400a613621433962ba8a90dd1e454bdf0c9",
+    "code_counts_minus1_zero_plus1_plus2": [
+      130650,
+      131953,
+      135148,
+      121289
+    ],
+    "unit_counts": [
+      1,
+      7,
+      21,
+      31,
+      32
+    ],
+    "alignments": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "strides": [
+      34,
+      544,
+      1088,
+      1632
+    ],
+    "model": {
+      "tensor": "blk.0.attn_q.weight",
+      "tensor_type_id": 142,
+      "tensor_shape_gguf_order": [
+        2048,
+        2048
+      ],
+      "offset": 90141280,
+      "tensor_start": 90141280,
+      "tensor_end": 91255392,
+      "gguf_version": 3,
+      "type_validation": "explicit_pinned_type_id_matches_metadata",
+      "sha256": "de68ba48a8dacb21979915991e7741b917869d71410a370df951c0c3a237ae50",
+      "bytes": 463290464,
+      "sampled_blocks": 512,
+      "sampled_rows": 32,
+      "native_row_bytes": 544,
+      "sampling": "same K block across 32 consecutive native rows; unmodified bytes relocated into test ROM",
+      "activations": "seeded synthetic INT8 operands and FP32 scale bits"
+    },
+    "oracle": "independent Python decode(code)-1; exact four INT32 sums; raw FP16/FP32 scale bits",
+    "scope": "DOT128 engine only; no full token, board, timing, or FP32 epilogue execution claim"
+  },
+  "source_manifest": {
+    "schema": 1,
+    "harness": {
+      "run_benchmark.py": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3",
+      "native_reference.py": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9",
+      "test_engine.cpp": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c"
+    },
+    "variants": {
+      "E1": {
+        "rtl_sha256": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca",
+        "parameters": {}
+      },
+      "E1-fetch-D1": {
+        "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+        "parameters": {
+          "FETCH_DEPTH": 1
+        }
+      },
+      "E1-fetch-D4": {
+        "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+        "parameters": {
+          "FETCH_DEPTH": 4
+        }
+      },
+      "E1-fetch-D8": {
+        "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+        "parameters": {
+          "FETCH_DEPTH": 8
+        }
+      },
+      "spatial-L1": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 1
+        }
+      },
+      "spatial-L2": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 2
+        }
+      },
+      "spatial-L4": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 4
+        }
+      },
+      "spatial-L8": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 8
+        }
+      },
+      "spatial-L16": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 16
+        }
+      },
+      "spatial-L32": {
+        "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+        "parameters": {
+          "DOT_LANES": 32
+        }
+      }
+    }
+  },
+  "profiles": [
+    {
+      "name": "ideal",
+      "latency": 1,
+      "beat_ii": 1,
+      "capacity": 8,
+      "stall_percent": 0
+    },
+    {
+      "name": "lat20",
+      "latency": 20,
+      "beat_ii": 1,
+      "capacity": 8,
+      "stall_percent": 0
+    },
+    {
+      "name": "lat80",
+      "latency": 80,
+      "beat_ii": 4,
+      "capacity": 8,
+      "stall_percent": 0
+    },
+    {
+      "name": "limited",
+      "latency": 80,
+      "beat_ii": 8,
+      "capacity": 2,
+      "stall_percent": 0
+    },
+    {
+      "name": "stress",
+      "latency": 20,
+      "beat_ii": 4,
+      "capacity": 2,
+      "stall_percent": 25
+    }
+  ],
+  "clock_constraint": "none; functional cycle simulation, no Fmax claim",
+  "reset_contract": "DUT and storage adapter reset together; pending replies are flushed",
+  "timing": {
+    "latency_jitter": 0,
+    "mmio_stall_max": 3
+  },
+  "cpu_overlap_variants": [
+    "E1-fetch-D1",
+    "E1-fetch-D4",
+    "E1-fetch-D8",
+    "spatial-L1",
+    "spatial-L2",
+    "spatial-L4",
+    "spatial-L8",
+    "spatial-L16",
+    "spatial-L32"
+  ],
+  "limitations": [
+    "No board measurement or synthesis utilization",
+    "No full-model token or firmware CPU execution",
+    "AXI testbench command latency uses a synthetic master, not compiled firmware",
+    "Latency/bandwidth profiles are explicit scenarios, not calibrated HBM measurements",
+    "Random stall sequence is seeded per profile and variant; cycle timing changes which requests encounter stalls"
+  ],
+  "runs": [
+    {
+      "variant": "E1",
+      "profile": "ideal",
+      "build_wall_seconds": 3.9242352649998793,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 206138,
+        "simulation_wall_seconds": 0.112731,
+        "simulated_cycles_per_second": 1828580.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12600,
+        "held_request_error_seen": false,
+        "cpu_overlap": "SKIPPED_known_baseline_limitation_or_not_requested",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 51394,
+        "axi_testbench_command_cycles": 194827,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 254.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1",
+      "profile": "lat20",
+      "build_wall_seconds": 3.9242352649998793,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 441532,
+        "simulation_wall_seconds": 0.161037,
+        "simulated_cycles_per_second": 2741800.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12600,
+        "held_request_error_seen": false,
+        "cpu_overlap": "SKIPPED_known_baseline_limitation_or_not_requested",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 286709,
+        "axi_testbench_command_cycles": 429987,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1451.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1",
+      "profile": "lat80",
+      "build_wall_seconds": 3.9242352649998793,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1195332,
+        "simulation_wall_seconds": 0.315926,
+        "simulated_cycles_per_second": 3783580.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12600,
+        "held_request_error_seen": false,
+        "cpu_overlap": "SKIPPED_known_baseline_limitation_or_not_requested",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1029809,
+        "axi_testbench_command_cycles": 1173306,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5231.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1",
+      "profile": "limited",
+      "build_wall_seconds": 3.9242352649998793,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1195332,
+        "simulation_wall_seconds": 0.315486,
+        "simulated_cycles_per_second": 3788860.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12600,
+        "held_request_error_seen": false,
+        "cpu_overlap": "SKIPPED_known_baseline_limitation_or_not_requested",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1029809,
+        "axi_testbench_command_cycles": 1173306,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5231.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1",
+      "profile": "stress",
+      "build_wall_seconds": 3.9242352649998793,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 446041,
+        "simulation_wall_seconds": 0.162836,
+        "simulated_cycles_per_second": 2739200.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12600,
+        "held_request_error_seen": false,
+        "cpu_overlap": "SKIPPED_known_baseline_limitation_or_not_requested",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 290752,
+        "axi_testbench_command_cycles": 434404,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1477.5,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D1",
+      "profile": "ideal",
+      "build_wall_seconds": 5.6312490759992215,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 218596,
+        "simulation_wall_seconds": 0.190925,
+        "simulated_cycles_per_second": 1144930.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 63571,
+        "axi_testbench_command_cycles": 207149,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 316.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D1",
+      "profile": "lat20",
+      "build_wall_seconds": 5.6312490759992215,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 454179,
+        "simulation_wall_seconds": 0.245419,
+        "simulated_cycles_per_second": 1850620.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 298886,
+        "axi_testbench_command_cycles": 442434,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1513.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D1",
+      "profile": "lat80",
+      "build_wall_seconds": 5.6312490759992215,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1207848,
+        "simulation_wall_seconds": 0.425071,
+        "simulated_cycles_per_second": 2841520.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1041986,
+        "axi_testbench_command_cycles": 1185492,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5293.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D1",
+      "profile": "limited",
+      "build_wall_seconds": 5.6312490759992215,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1207848,
+        "simulation_wall_seconds": 0.427528,
+        "simulated_cycles_per_second": 2825190.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1041986,
+        "axi_testbench_command_cycles": 1185492,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5293.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D1",
+      "profile": "stress",
+      "build_wall_seconds": 5.6312490759992215,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 457972,
+        "simulation_wall_seconds": 0.24839,
+        "simulated_cycles_per_second": 1843760.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 302925,
+        "axi_testbench_command_cycles": 446110,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1539.5,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D4",
+      "profile": "ideal",
+      "build_wall_seconds": 5.479064344002836,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 189273,
+        "simulation_wall_seconds": 0.115449,
+        "simulated_cycles_per_second": 1639460.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12608,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 39217,
+        "axi_testbench_command_cycles": 182619,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 192.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D4",
+      "profile": "lat20",
+      "build_wall_seconds": 5.479064344002836,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 246740,
+        "simulation_wall_seconds": 0.128772,
+        "simulated_cycles_per_second": 1916100.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12608,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 96521,
+        "axi_testbench_command_cycles": 239766,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 481.0,
+      "peak_outstanding": 4
+    },
+    {
+      "variant": "E1-fetch-D4",
+      "profile": "lat80",
+      "build_wall_seconds": 5.479064344002836,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 441600,
+        "simulation_wall_seconds": 0.17472,
+        "simulated_cycles_per_second": 2527470.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12608,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 287804,
+        "axi_testbench_command_cycles": 431014,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1447.0,
+      "peak_outstanding": 4
+    },
+    {
+      "variant": "E1-fetch-D4",
+      "profile": "limited",
+      "build_wall_seconds": 5.479064344002836,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 692352,
+        "simulation_wall_seconds": 0.240435,
+        "simulated_cycles_per_second": 2879580.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12605,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 534333,
+        "axi_testbench_command_cycles": 677847,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 2720.0,
+      "peak_outstanding": 2
+    },
+    {
+      "variant": "E1-fetch-D4",
+      "profile": "stress",
+      "build_wall_seconds": 5.479064344002836,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 312930,
+        "simulation_wall_seconds": 0.146815,
+        "simulated_cycles_per_second": 2131460.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12605,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 160788,
+        "axi_testbench_command_cycles": 304368,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 817.5,
+      "peak_outstanding": 2
+    },
+    {
+      "variant": "E1-fetch-D8",
+      "profile": "ideal",
+      "build_wall_seconds": 5.580805833997147,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 188479,
+        "simulation_wall_seconds": 0.114984,
+        "simulated_cycles_per_second": 1639170.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12616,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 39217,
+        "axi_testbench_command_cycles": 182619,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 192.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "E1-fetch-D8",
+      "profile": "lat20",
+      "build_wall_seconds": 5.580805833997147,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 212609,
+        "simulation_wall_seconds": 0.120839,
+        "simulated_cycles_per_second": 1759440.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12616,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 62909,
+        "axi_testbench_command_cycles": 206463,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 309.0,
+      "peak_outstanding": 8
+    },
+    {
+      "variant": "E1-fetch-D8",
+      "profile": "lat80",
+      "build_wall_seconds": 5.580805833997147,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 314811,
+        "simulation_wall_seconds": 0.144053,
+        "simulated_cycles_per_second": 2185380.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12616,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 162680,
+        "axi_testbench_command_cycles": 306142,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 807.0,
+      "peak_outstanding": 8
+    },
+    {
+      "variant": "E1-fetch-D8",
+      "profile": "limited",
+      "build_wall_seconds": 5.580805833997147,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 692352,
+        "simulation_wall_seconds": 0.240235,
+        "simulated_cycles_per_second": 2881980.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12605,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 534333,
+        "axi_testbench_command_cycles": 677847,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 2720.0,
+      "peak_outstanding": 2
+    },
+    {
+      "variant": "E1-fetch-D8",
+      "profile": "stress",
+      "build_wall_seconds": 5.580805833997147,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 312930,
+        "simulation_wall_seconds": 0.146328,
+        "simulated_cycles_per_second": 2138560.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12605,
+        "held_request_error_seen": true,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 160788,
+        "axi_testbench_command_cycles": 304368,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 817.5,
+      "peak_outstanding": 2
+    },
+    {
+      "variant": "spatial-L1",
+      "profile": "ideal",
+      "build_wall_seconds": 4.2264255869995395,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 206183,
+        "simulation_wall_seconds": 0.121125,
+        "simulated_cycles_per_second": 1702240.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 51394,
+        "axi_testbench_command_cycles": 194827,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 254.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L1",
+      "profile": "lat20",
+      "build_wall_seconds": 4.2264255869995395,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 441577,
+        "simulation_wall_seconds": 0.178553,
+        "simulated_cycles_per_second": 2473080.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 286709,
+        "axi_testbench_command_cycles": 429987,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1451.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L1",
+      "profile": "lat80",
+      "build_wall_seconds": 4.2264255869995395,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1195425,
+        "simulation_wall_seconds": 0.361808,
+        "simulated_cycles_per_second": 3304030.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1029809,
+        "axi_testbench_command_cycles": 1173306,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5231.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L1",
+      "profile": "limited",
+      "build_wall_seconds": 4.2264255869995395,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1195425,
+        "simulation_wall_seconds": 0.3623,
+        "simulated_cycles_per_second": 3299550.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1029809,
+        "axi_testbench_command_cycles": 1173306,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5231.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L1",
+      "profile": "stress",
+      "build_wall_seconds": 4.2264255869995395,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 446088,
+        "simulation_wall_seconds": 0.180217,
+        "simulated_cycles_per_second": 2475280.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 290752,
+        "axi_testbench_command_cycles": 434404,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1477.5,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L2",
+      "profile": "ideal",
+      "build_wall_seconds": 5.980914353996923,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 192562,
+        "simulation_wall_seconds": 0.143443,
+        "simulated_cycles_per_second": 1342420.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 38082,
+        "axi_testbench_command_cycles": 181327,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 190.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L2",
+      "profile": "lat20",
+      "build_wall_seconds": 5.980914353996923,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 428132,
+        "simulation_wall_seconds": 0.228372,
+        "simulated_cycles_per_second": 1874720.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 273397,
+        "axi_testbench_command_cycles": 416665,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1387.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L2",
+      "profile": "lat80",
+      "build_wall_seconds": 5.980914353996923,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1181921,
+        "simulation_wall_seconds": 0.501069,
+        "simulated_cycles_per_second": 2358800.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1016497,
+        "axi_testbench_command_cycles": 1159945,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5167.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L2",
+      "profile": "limited",
+      "build_wall_seconds": 5.980914353996923,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1181921,
+        "simulation_wall_seconds": 0.500239,
+        "simulated_cycles_per_second": 2362710.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1016497,
+        "axi_testbench_command_cycles": 1159945,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5167.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L2",
+      "profile": "stress",
+      "build_wall_seconds": 5.980914353996923,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 432272,
+        "simulation_wall_seconds": 0.230824,
+        "simulated_cycles_per_second": 1872740.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 277459,
+        "axi_testbench_command_cycles": 420726,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1412.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L4",
+      "profile": "ideal",
+      "build_wall_seconds": 7.083709752998402,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 186201,
+        "simulation_wall_seconds": 0.190842,
+        "simulated_cycles_per_second": 975680,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 31426,
+        "axi_testbench_command_cycles": 175037,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 158.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L4",
+      "profile": "lat20",
+      "build_wall_seconds": 7.083709752998402,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 421707,
+        "simulation_wall_seconds": 0.336935,
+        "simulated_cycles_per_second": 1251600.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 266741,
+        "axi_testbench_command_cycles": 410282,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1355.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L4",
+      "profile": "lat80",
+      "build_wall_seconds": 7.083709752998402,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1175239,
+        "simulation_wall_seconds": 0.803991,
+        "simulated_cycles_per_second": 1461760.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1009841,
+        "axi_testbench_command_cycles": 1153274,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5135.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L4",
+      "profile": "limited",
+      "build_wall_seconds": 7.083709752998402,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1175239,
+        "simulation_wall_seconds": 0.804116,
+        "simulated_cycles_per_second": 1461530.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1009841,
+        "axi_testbench_command_cycles": 1153274,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5135.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L4",
+      "profile": "stress",
+      "build_wall_seconds": 7.083709752998402,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 425677,
+        "simulation_wall_seconds": 0.34003,
+        "simulated_cycles_per_second": 1251880.0,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 270987,
+        "axi_testbench_command_cycles": 414193,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1381.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L8",
+      "profile": "ideal",
+      "build_wall_seconds": 10.343423714999517,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 182564,
+        "simulation_wall_seconds": 0.407057,
+        "simulated_cycles_per_second": 448497,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 28098,
+        "axi_testbench_command_cycles": 171463,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 142.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L8",
+      "profile": "lat20",
+      "build_wall_seconds": 10.343423714999517,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 418401,
+        "simulation_wall_seconds": 0.752746,
+        "simulated_cycles_per_second": 555833,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 263413,
+        "axi_testbench_command_cycles": 407031,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1339.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L8",
+      "profile": "lat80",
+      "build_wall_seconds": 10.343423714999517,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1171396,
+        "simulation_wall_seconds": 1.85992,
+        "simulated_cycles_per_second": 629811,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1006513,
+        "axi_testbench_command_cycles": 1149527,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5119.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L8",
+      "profile": "limited",
+      "build_wall_seconds": 10.343423714999517,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1171396,
+        "simulation_wall_seconds": 1.86013,
+        "simulated_cycles_per_second": 629739,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1006513,
+        "axi_testbench_command_cycles": 1149527,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5119.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L8",
+      "profile": "stress",
+      "build_wall_seconds": 10.343423714999517,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 422506,
+        "simulation_wall_seconds": 0.772473,
+        "simulated_cycles_per_second": 546953,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 267488,
+        "axi_testbench_command_cycles": 411063,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1367.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L16",
+      "profile": "ideal",
+      "build_wall_seconds": 12.448407530999248,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 180878,
+        "simulation_wall_seconds": 0.574961,
+        "simulated_cycles_per_second": 314592,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 26434,
+        "axi_testbench_command_cycles": 169874,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 134.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L16",
+      "profile": "lat20",
+      "build_wall_seconds": 12.448407530999248,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 416402,
+        "simulation_wall_seconds": 1.15033,
+        "simulated_cycles_per_second": 361983,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 261749,
+        "axi_testbench_command_cycles": 404985,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1331.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L16",
+      "profile": "lat80",
+      "build_wall_seconds": 12.448407530999248,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1169891,
+        "simulation_wall_seconds": 2.98074,
+        "simulated_cycles_per_second": 392483,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1004849,
+        "axi_testbench_command_cycles": 1148028,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5111.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L16",
+      "profile": "limited",
+      "build_wall_seconds": 12.448407530999248,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1169891,
+        "simulation_wall_seconds": 2.97991,
+        "simulated_cycles_per_second": 392592,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1004849,
+        "axi_testbench_command_cycles": 1148028,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5111.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L16",
+      "profile": "stress",
+      "build_wall_seconds": 12.448407530999248,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 420676,
+        "simulation_wall_seconds": 1.16026,
+        "simulated_cycles_per_second": 362571,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 265896,
+        "axi_testbench_command_cycles": 409243,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1359.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L32",
+      "profile": "ideal",
+      "build_wall_seconds": 22.122274000001198,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 180181,
+        "simulation_wall_seconds": 0.985138,
+        "simulated_cycles_per_second": 182899,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 25602,
+        "axi_testbench_command_cycles": 169137,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 130.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L32",
+      "profile": "lat20",
+      "build_wall_seconds": 22.122274000001198,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 415654,
+        "simulation_wall_seconds": 2.15939,
+        "simulated_cycles_per_second": 192487,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 260917,
+        "axi_testbench_command_cycles": 404285,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1327.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L32",
+      "profile": "lat80",
+      "build_wall_seconds": 22.122274000001198,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1169062,
+        "simulation_wall_seconds": 5.92382,
+        "simulated_cycles_per_second": 197349,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1004017,
+        "axi_testbench_command_cycles": 1147156,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5107.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L32",
+      "profile": "limited",
+      "build_wall_seconds": 22.122274000001198,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 1169062,
+        "simulation_wall_seconds": 5.92516,
+        "simulated_cycles_per_second": 197305,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 1004017,
+        "axi_testbench_command_cycles": 1147156,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 5107.0,
+      "peak_outstanding": 1
+    },
+    {
+      "variant": "spatial-L32",
+      "profile": "stress",
+      "build_wall_seconds": 22.122274000001198,
+      "summary": {
+        "kind": "summary",
+        "status": "PASS",
+        "cases": 208,
+        "integer_subgroup_checks": 16220,
+        "clock_cycles": 419931,
+        "simulation_wall_seconds": 2.18469,
+        "simulated_cycles_per_second": 192215,
+        "protocol_tests": "PASS",
+        "storage_requests_including_protocol": 12601,
+        "held_request_error_seen": false,
+        "cpu_overlap": "PASS",
+        "scope": "engine RTL simulation; no full token or hardware timing claim"
+      },
+      "totals": {
+        "busy_cycles": 265100,
+        "axi_testbench_command_cycles": 408522,
+        "storage_requests": 12385,
+        "storage_bytes": 198160,
+        "native_products": 519040
+      },
+      "median_busy_cycles": 1359.0,
+      "peak_outstanding": 1
+    }
+  ],
+  "verilator_flags": [
+    "--Wall",
+    "--cc",
+    "--exe",
+    "--build",
+    "-j",
+    "2",
+    "--top-module",
+    "coral_weight_axi",
+    "--unroll-count",
+    "4096",
+    "--unroll-stmts",
+    "100000",
+    "-GROM_BYTES=1048576",
+    "-CFLAGS",
+    "-std=c++17 -O2"
+  ],
+  "finished_utc": "2026-10-03T19:27:58.850277+00:00"
+}

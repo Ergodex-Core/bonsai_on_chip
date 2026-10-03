@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "harness": {
+    "run_benchmark.py": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3",
+    "native_reference.py": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9",
+    "test_engine.cpp": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c"
+  },
+  "variants": {
+    "E1": {
+      "rtl_sha256": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca",
+      "parameters": {}
+    },
+    "E1-fetch-D1": {
+      "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "parameters": {
+        "FETCH_DEPTH": 1
+      }
+    },
+    "E1-fetch-D4": {
+      "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "parameters": {
+        "FETCH_DEPTH": 4
+      }
+    },
+    "E1-fetch-D8": {
+      "rtl_sha256": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9",
+      "parameters": {
+        "FETCH_DEPTH": 8
+      }
+    },
+    "spatial-L1": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 1
+      }
+    },
+    "spatial-L2": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 2
+      }
+    },
+    "spatial-L4": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 4
+      }
+    },
+    "spatial-L8": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 8
+      }
+    },
+    "spatial-L16": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 16
+      }
+    },
+    "spatial-L32": {
+      "rtl_sha256": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf",
+      "parameters": {
+        "DOT_LANES": 32
+      }
+    }
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "scope": "exact formatted matched-r3 q/down matrix and adapter builds",
+  "compiler_version": "g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "files": {
+    "results-q/private/build-E1/Vcoral_weight_axi": {
+      "sha256": "b820ae9b1f411cc99eb05ec72167abb079a9d100e95a20e4be75d8e4e17c08ad",
+      "bytes": 297648
+    },
+    "results-q/private/build-E1-fetch-D1/Vcoral_weight_axi": {
+      "sha256": "286028bcee873a8961ddc05d866319d0b495db92a5daa19705e78e89b9b04015",
+      "bytes": 322664
+    },
+    "results-q/private/build-E1-fetch-D4/Vcoral_weight_axi": {
+      "sha256": "4346c4017094fdaa259164ef3364b2ea195b64d235c33249c373885ca7b55622",
+      "bytes": 322664
+    },
+    "results-q/private/build-E1-fetch-D8/Vcoral_weight_axi": {
+      "sha256": "c9eeecc7139d4eb7275f7cb69208e79f6c080996724f727c440d74a210f7e8ad",
+      "bytes": 322664
+    },
+    "results-q/private/build-spatial-L1/Vcoral_weight_axi": {
+      "sha256": "a1ce4781ba2d8c17877b3d67983efe28a7622356845a3069b786aa256bc18443",
+      "bytes": 305840
+    },
+    "results-q/private/build-spatial-L16/Vcoral_weight_axi": {
+      "sha256": "a91f16f6683b3b136fcd3e3103dd8b9811e9055869d4c096c12d4f4e9ae5485b",
+      "bytes": 475080
+    },
+    "results-q/private/build-spatial-L2/Vcoral_weight_axi": {
+      "sha256": "0081c46e1a0136c070bd6968a709f80651558521e67e6e43d13117488ea71bb3",
+      "bytes": 318568
+    },
+    "results-q/private/build-spatial-L32/Vcoral_weight_axi": {
+      "sha256": "76be818977d86eecbbd06c3df42d00228a3593f5bd377da46a83db351b4b0753",
+      "bytes": 635656
+    },
+    "results-q/private/build-spatial-L4/Vcoral_weight_axi": {
+      "sha256": "d256a9bd628a8bfcf05f192e95ae2a09c68da1123baaa3ae478af2303fdd43b8",
+      "bytes": 343256
+    },
+    "results-q/private/build-spatial-L8/Vcoral_weight_axi": {
+      "sha256": "f5874027cf44e5b4ae717bfb12d31395a458a956c0e6ead747816eed09a4eee1",
+      "bytes": 384480
+    },
+    "results-q/private/build-E1-fetch-D1.log": {
+      "sha256": "d82f1a789fd2cd33f359bad2ed52049d486db10b81d20fc2e72b2c5826fb170b",
+      "bytes": 7698
+    },
+    "results-q/private/build-E1-fetch-D4.log": {
+      "sha256": "17b2fc410ed645c8d6d6c78a035c1079d4716520d4ac2f774d63eb9f475e0f69",
+      "bytes": 7698
+    },
+    "results-q/private/build-E1-fetch-D8.log": {
+      "sha256": "dad6ab63b43c9784a96645eb30b7873cc002bfaf4165ba1f4fb10f46a9c9bba0",
+      "bytes": 7698
+    },
+    "results-q/private/build-E1.log": {
+      "sha256": "b7c246bb7c0ebc409d00f54ccbfc4048fd639d69826e9d8eb7d1760f1bf9655d",
+      "bytes": 2922
+    },
+    "results-q/private/build-spatial-L1.log": {
+      "sha256": "9d057cd4370fd553e4040f2e0e25a3ec7b8f7128535b0ca58c6df8f0135c1c03",
+      "bytes": 2938
+    },
+    "results-q/private/build-spatial-L16.log": {
+      "sha256": "cf1aa0e29f1c063d2f41b064fea485ec385c0aabf2cda37737213147aa223993",
+      "bytes": 10176
+    },
+    "results-q/private/build-spatial-L2.log": {
+      "sha256": "e54c9b5cfa6176dbb946ec16545ffb69442a99fbe217ffec29ab025f0e25fdac",
+      "bytes": 7696
+    },
+    "results-q/private/build-spatial-L32.log": {
+      "sha256": "56bfc5f41814f8f6091914dca38432c3e48d7a937de73a52cf5d0d288ae35fcb",
+      "bytes": 13281
+    },
+    "results-q/private/build-spatial-L4.log": {
+      "sha256": "e1c531a8cfaa806df0a0dd29465b8e67ffd9f552d5110632d3a5fd32c6372f97",
+      "bytes": 7696
+    },
+    "results-q/private/build-spatial-L8.log": {
+      "sha256": "0621d8cc466eea6b789936e8a0e662a8c9259385891a31b90b235238a1001622",
+      "bytes": 8935
+    },
+    "results-down/private/build-E1/Vcoral_weight_axi": {
+      "sha256": "b820ae9b1f411cc99eb05ec72167abb079a9d100e95a20e4be75d8e4e17c08ad",
+      "bytes": 297648
+    },
+    "results-down/private/build-E1-fetch-D1/Vcoral_weight_axi": {
+      "sha256": "286028bcee873a8961ddc05d866319d0b495db92a5daa19705e78e89b9b04015",
+      "bytes": 322664
+    },
+    "results-down/private/build-E1-fetch-D4/Vcoral_weight_axi": {
+      "sha256": "4346c4017094fdaa259164ef3364b2ea195b64d235c33249c373885ca7b55622",
+      "bytes": 322664
+    },
+    "results-down/private/build-E1-fetch-D8/Vcoral_weight_axi": {
+      "sha256": "c9eeecc7139d4eb7275f7cb69208e79f6c080996724f727c440d74a210f7e8ad",
+      "bytes": 322664
+    },
+    "results-down/private/build-spatial-L1/Vcoral_weight_axi": {
+      "sha256": "a1ce4781ba2d8c17877b3d67983efe28a7622356845a3069b786aa256bc18443",
+      "bytes": 305840
+    },
+    "results-down/private/build-spatial-L16/Vcoral_weight_axi": {
+      "sha256": "a91f16f6683b3b136fcd3e3103dd8b9811e9055869d4c096c12d4f4e9ae5485b",
+      "bytes": 475080
+    },
+    "results-down/private/build-spatial-L2/Vcoral_weight_axi": {
+      "sha256": "0081c46e1a0136c070bd6968a709f80651558521e67e6e43d13117488ea71bb3",
+      "bytes": 318568
+    },
+    "results-down/private/build-spatial-L32/Vcoral_weight_axi": {
+      "sha256": "76be818977d86eecbbd06c3df42d00228a3593f5bd377da46a83db351b4b0753",
+      "bytes": 635656
+    },
+    "results-down/private/build-spatial-L4/Vcoral_weight_axi": {
+      "sha256": "d256a9bd628a8bfcf05f192e95ae2a09c68da1123baaa3ae478af2303fdd43b8",
+      "bytes": 343256
+    },
+    "results-down/private/build-spatial-L8/Vcoral_weight_axi": {
+      "sha256": "f5874027cf44e5b4ae717bfb12d31395a458a956c0e6ead747816eed09a4eee1",
+      "bytes": 384480
+    },
+    "results-down/private/build-E1-fetch-D1.log": {
+      "sha256": "669bf54d0da309ecf6ebb82f80b3c5d97897b342487c8f0bf6721970359362f7",
+      "bytes": 7704
+    },
+    "results-down/private/build-E1-fetch-D4.log": {
+      "sha256": "481546801624c7095a7343d5de389fac2340870911b536f41c0724768805aa88",
+      "bytes": 7704
+    },
+    "results-down/private/build-E1-fetch-D8.log": {
+      "sha256": "65bb2a1bda5641dddb85782180d270cddb3d2ac5bb66064ea22039129071e257",
+      "bytes": 7704
+    },
+    "results-down/private/build-E1.log": {
+      "sha256": "a5f7cf290dd4a7b0cf0c8378c1081cf930dfa244d2787a0c748817133c55d935",
+      "bytes": 2928
+    },
+    "results-down/private/build-spatial-L1.log": {
+      "sha256": "fb3237514c38f9ff875ab43bf3acc449c5634159276a05399efd11bc73312e0d",
+      "bytes": 2944
+    },
+    "results-down/private/build-spatial-L16.log": {
+      "sha256": "0d5d50c0c382caf7ed6435ebd520b0a89b46b1f10ab89016a31674f094ac238a",
+      "bytes": 10182
+    },
+    "results-down/private/build-spatial-L2.log": {
+      "sha256": "bbfc07b2e687a8faeeacd61cbf92f402083be18689bff25e294c4dff1332933d",
+      "bytes": 7702
+    },
+    "results-down/private/build-spatial-L32.log": {
+      "sha256": "1133d215f252789fbce7ee58b1b6b406dbb2820a74ede76412af97c89382bb00",
+      "bytes": 13287
+    },
+    "results-down/private/build-spatial-L4.log": {
+      "sha256": "06296b2876338a3ede8da9ef710221a66c47303b310951c7c101df566ec35c4c",
+      "bytes": 7702
+    },
+    "results-down/private/build-spatial-L8.log": {
+      "sha256": "e20cba8b5f3fef99ba32ffd156a0414db98761846f356cdda0b178d3a917e413",
+      "bytes": 8941
+    },
+    "adapter-1/Vcoral_storage_axi_read": {
+      "sha256": "0254b7b3428d280d6238a0851ef58daef34f2eda0cd4703f133d985c05d8743a",
+      "bytes": 183080
+    },
+    "adapter-build-1.log": {
+      "sha256": "9044554d85d0c7e871548f4bad5fbf8602500cb31e0e9ac1c8b7718c28da0e10",
+      "bytes": 2945
+    },
+    "adapter-4/Vcoral_storage_axi_read": {
+      "sha256": "7326ff60ef4ae8fe744718d2f64348fcb2318ee58bec968fc3d93b3aee8cedaa",
+      "bytes": 183080
+    },
+    "adapter-build-4.log": {
+      "sha256": "0cffb446a9251d920ca17e28e2efc5a037648b661b591b1631865561aa0bf6fa",
+      "bytes": 2945
+    },
+    "adapter-7/Vcoral_storage_axi_read": {
+      "sha256": "22c3984c4db7f602865a40a0d6eba8ac9458889c4b417a828bbf86d36770b1b8",
+      "bytes": 183080
+    },
+    "adapter-build-7.log": {
+      "sha256": "c5bcd096dcd6806f717ede5ddaaf64cc17390823f7c0d6b845d5351b4f3198f8",
+      "bytes": 2945
+    }
+  }
+}

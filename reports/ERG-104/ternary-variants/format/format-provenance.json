@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "change": "Automatic formatting only; r2 originals retained",
+  "changed_files": {
+    "experiments/native_pq2/baseline/coral_weight.h": {
+      "before": "e9e5332e60545813b458dbac8610c6f5c34941f970d021f91e2e9b26c43f8b9e",
+      "after": "980329133213ab500198052c5ef3b68358ac22ebabdf087595ce0bde65ef981c"
+    },
+    "experiments/native_pq2/baseline/coral_weight_axi.sv": {
+      "before": "086f91c0adb555c4e2c2def921369c82eed67a86373f4cc616ecaaaf364b6319",
+      "after": "51d7d9001bc6a222f24b45d8118af1a4df201a84fcf1f7352cb713085f2746ca"
+    },
+    "experiments/native_pq2/fetch/coral_storage_axi_read.sv": {
+      "before": "6a601e9b576d59af022d6f8b4ed30a39af59a0e78d5b0863f87b9066941d61c4",
+      "after": "f2f7df0dcb9260feda6ef37a592198eecb1a8d991fc1654079bb65f35313ee10"
+    },
+    "experiments/native_pq2/fetch/coral_weight_axi.sv": {
+      "before": "9b4bedd08315508a17957c23e3e8799a312bfca545875203918a97ec201c63bd",
+      "after": "da807e820e65b156ee78db49664638cd55130c0af10a66383f53ce8bc6f27de9"
+    },
+    "experiments/native_pq2/inspect_model.py": {
+      "before": "dc0d9112d074538f057a9e3f772bdd1cf38f4f85d73b193c16135847d560b05c",
+      "after": "553c1e37e920eddcd312aeb8919232bdaf479f50d980a80352c1032244f4298c"
+    },
+    "experiments/native_pq2/native_reference.py": {
+      "before": "b054dd19bad78ff9d518838a8bcff039ac31147d6aea8739778024beef968c5d",
+      "after": "027628bec7fbc402a2c59ef9cc8b58f20f7519d7fecedf5450113e6036fa17a9"
+    },
+    "experiments/native_pq2/run_benchmark.py": {
+      "before": "33fc0713c5354ecb7d8d268c8a261f54f9f1986ed39229132cbbc72f1f993712",
+      "after": "5952f951060d4829c78de14d48021cf4bc676b049db83560f65f1acd6e5910e3"
+    },
+    "experiments/native_pq2/spatial/coral_weight_axi.sv": {
+      "before": "cf62552c5213874cc3ce1f42e468948c6a01be28605245e930be5fde154ad8ec",
+      "after": "a4ce49ef900ce3c0f393b27bbd76ae1fd27fa23243ec8230b0e748694b68ffbf"
+    },
+    "experiments/native_pq2/tests/test_baseline.cpp": {
+      "before": "9d15f41ccec902ca82f44c47c24341fb351eea31818cf4de804a63a27bc6e59e",
+      "after": "fa96b1788c9641a3ade5a48c465742966403e8aad8e47c7158cc6ecd792a10e9"
+    },
+    "experiments/native_pq2/tests/test_engine.cpp": {
+      "before": "46ea77accef1010b06b4c742d2373e78381fd234c063842a7d15d8df8a1824b9",
+      "after": "c772e28e2b6b7318306c88eb4be71609089e3e8904ec646fee93d51e7fff9f0c"
+    },
+    "experiments/native_pq2/tests/test_storage_queue.cpp": {
+      "before": "db2ddd84c49e887f71b41a61cd25a2ca0d27bda6cb92ccc6438a4ca4ce644349",
+      "after": "51a126e8753948210062ed9a319567b200d92876e1c824c4e83a043b1d21659f"
+    },
+    "experiments/native_pq2/tools/reproduce_matrix.sh": {
+      "before": "466baf8d4decda9249afa1c2ce202ce17186b28e06c57d427a36445d7b22a5da",
+      "after": "5dc8f3b2fc3050c68c41195843ad1c75510f88218c6929523cfd7ff2bf94ea4a"
+    }
+  },
+  "python_ast_equal": {
+    "experiments/native_pq2/inspect_model.py": true,
+    "experiments/native_pq2/native_reference.py": true,
+    "experiments/native_pq2/run_benchmark.py": true
+  },
+  "shell_change": "Brace-only variable expansion style for ShellCheck SC2250"
+}

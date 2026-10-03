@@ -1,0 +1,62 @@
+{
+  "build-provenance.json": {
+    "bytes": 8002,
+    "sha256": "66581ab457e4ed54e983376a0198f75f7ba604be45c87af4c7258eeccd716fbd"
+  },
+  "final-result.json": {
+    "bytes": 678,
+    "sha256": "40336434c995ceebfddd86e02677e9fb108366be0bae127f166d98dc92cdd31b"
+  },
+  "format-provenance.json": {
+    "bytes": 3130,
+    "sha256": "29bbf94f842fd822c06f7779564b1e441f642512995d20c48b83c272d207ee63"
+  },
+  "histogram.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "macro-check.log": {
+    "bytes": 36,
+    "sha256": "d322f7bc3ba68dadc9ea515e3f03f650ef68d3d9e6827af05fc557b801bf492a"
+  },
+  "model-histogram.json": {
+    "bytes": 227971,
+    "sha256": "b2703287c2fbfeb1156cda1fe84acc50d5c6ffe2d19d066b8a2792fa378d6384"
+  },
+  "repository-linters.json": {
+    "bytes": 130,
+    "sha256": "588668cef65fd13cd948f44e78b62306f4227bb85e7f5efaf4a1cb931583352e"
+  },
+  "repository-linters.log": {
+    "bytes": 348,
+    "sha256": "50f929745a70f0ee0ceb8e2f8bd081828934a1d2bdb643f46f93a90c0b7839bc"
+  },
+  "shellcheck-setup.log": {
+    "bytes": 143,
+    "sha256": "346d2423d275a05c04e53a1bec6538d5e59faf97f101cda4087f640fa5f2911f"
+  },
+  "source-after.json": {
+    "bytes": 2607,
+    "sha256": "d94cd169bebf304d02a0955fba2b2a1809bbfdad3f6e5e7ad50d512be5307ee2"
+  },
+  "source-before.json": {
+    "bytes": 2607,
+    "sha256": "d88951e68e89c6b9acab633674459709211def048bac80e32e401ba2fea85ace"
+  },
+  "source-final.json": {
+    "bytes": 2607,
+    "sha256": "d94cd169bebf304d02a0955fba2b2a1809bbfdad3f6e5e7ad50d512be5307ee2"
+  },
+  "tool-versions.txt": {
+    "bytes": 304,
+    "sha256": "1b3d96ee7600f9e7423a7d2f91d3814c136513ebfc77d2d18fc3c13a60641c0c"
+  },
+  "package-versions.txt": {
+    "bytes": 644,
+    "sha256": "174d4ffd5bf7e31174738661073cc30ccf2596d487253a454ca069fff7df7ad1"
+  },
+  "package-sha256.txt": {
+    "bytes": 2566,
+    "sha256": "cc3ea110d65bbb43c199e24c7473d4722df8bb1d6160c10dc38acb385aa9ff8c"
+  }
+}

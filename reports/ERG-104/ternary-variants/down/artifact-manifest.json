@@ -1,0 +1,18 @@
+{
+  "benchmark.json": {
+    "bytes": 51264,
+    "sha256": "813d631b38a3db0fbd1f96487a3f70acc4b1d9295cc1fe479c0ac14e1c718008"
+  },
+  "fixture-manifest.json": {
+    "bytes": 1396,
+    "sha256": "6a7574c9e91f15c26598dfe64f552a12094f35a82fed40a6480a96a144e8970b"
+  },
+  "source-manifest.json": {
+    "bytes": 1990,
+    "sha256": "6874d20d7c2ac765a3afffdfedbaf814961e00d7e5c6aaa937abb54f782c1e86"
+  },
+  "cases.csv.gz": {
+    "bytes": 167531,
+    "sha256": "151c70106d72d51dd80e310e8dc3e766cd68b2cc619c0e8ad1077c07e0ba85a4"
+  }
+}
