@@ -61,7 +61,7 @@ case "${backend}" in
     if [[ ! -x "${root}/circt/bin/native-pq2-unroll" || "${saved_sha}" != "${source_sha}" ]]; then
       clang++-18 -std=c++17 -O2 -fno-rtti -I"${dev}/include" \
         "${source_dir}/unroll_processes.cpp" -L"${dev}/lib" \
-        -lCIRCTLLHD -lCIRCTComb -lCIRCTHW -lCIRCTSeq -lCIRCTSV -lCIRCTSim \
+        -Wl,--copy-dt-needed-entries -lMLIRSideEffectInterfaces -lCIRCTLLHD -lCIRCTComb -lCIRCTHW -lCIRCTSeq -lCIRCTSV -lCIRCTSim \
         -lCIRCTSupport -lMLIRControlFlowDialect -lMLIRArithDialect \
         -lMLIRFuncDialect -lMLIRSCFDialect -lMLIRParser -lMLIRPass \
         -lMLIRAnalysis -lMLIRIR -lMLIRSupport -lLLVMSupport \
