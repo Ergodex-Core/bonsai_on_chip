@@ -242,6 +242,20 @@ int main(int argc, char **argv) {
     sample("release-reset-high");
     input.clock = false;
     sample("fall-after-reset");
+    // Reset dominates flush and valid under backpressure. Repeated evaluation
+    // at an unchanged clock must not clock data into the just-cleared pipeline.
+    for (int k = 0; k < PIPE_STAGES + 2; ++k)
+      cycle(true, false, false);
+    input.reset_n = false;
+    input.flush = true;
+    input.clock = true;
+    sample("reset-flush-stalled-rise");
+    sample("reset-flush-repeat-no-edge");
+    input.reset_n = true;
+    sample("release-reset-flush-no-edge");
+    input.clock = false;
+    sample("reset-flush-fall");
+    cycle(true, false, true);
     // Deterministic stimuli, including input toggles without a clock edge.
     uint32_t random = 0x5eed1234u;
     for (int k = 0; k < 2048; ++k) {
