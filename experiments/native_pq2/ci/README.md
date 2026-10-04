@@ -32,9 +32,12 @@ same CI run. Run artifacts include source manifests, fixtures, logs and partial
 failure evidence. No model checkpoint or private cloud data is included.
 Each command reports its start, completion and elapsed time in the job log;
 individual commands have a 15-minute timeout and retain failure diagnostics.
-The complete repeated matrix has a three-hour job limit: measured Arcilator
-baseline and depth-one memory-stalled trials each take about 50 seconds on
-hosted runners. This accommodates all trials without weakening coverage.
+The complete repeated matrix has a 330-minute job limit, below the six-hour
+hosted maximum. In run 37159561136 each Arcilator variant spent about 10.5
+minutes building (`opt -O2` about 4.7 minutes, `llc -O2` about 5.7 minutes)
+plus 8 to 16 minutes on its 25 trials; the first eight variants took 177
+minutes, so all ten need roughly 225 minutes. This accommodates all trials
+without weakening coverage.
 
 The stock CIRCT 1.161.0 frontend leaves a synchronous LLHD process containing
 static loops. The default Arc path fails at coroutine switch legalization;
