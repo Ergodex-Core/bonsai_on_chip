@@ -1,0 +1,119 @@
+{
+  "schema": "coralnpu.native_f2.correction_test_setup.v1",
+  "status": "PASS checker setup only",
+  "base_commit": "26bded5bf809267506058df6bf0b296dddeeaf25",
+  "execution": "existing allocated EC2; source hashes verified",
+  "tests": {
+    "utc": "2026-10-04T17:17:42.534992+00:00",
+    "cases": 21,
+    "returncode": 0,
+    "log_sha256": "2084c57c8575e0e6fe34bc2dea0d1d9d282f89913ef49d84d7303edec9c6ae47",
+    "source_files": [
+      {
+        "name": "check_store_trace.py",
+        "bytes": 4809,
+        "sha256": "b229680d30885095071be03cc0ea9124129ecebeb38f68c20dc8b8dfb0909315"
+      },
+      {
+        "name": "test_store_trace.py",
+        "bytes": 6628,
+        "sha256": "45652ae71bbc80aecbb0e3b028f68f116fe40fb5ae37486de65230199903f4ad"
+      }
+    ],
+    "cpu_limit": 1,
+    "memory_limit_MiB": 512,
+    "runtime_limit_seconds": 30
+  },
+  "lint": {
+    "utc": "2026-10-04T18:38:53.787395+00:00",
+    "checks": {
+      "yapf": {
+        "returncode": 0,
+        "output": "",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "markdown": {
+        "returncode": 0,
+        "output": "",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "macros": {
+        "returncode": 0,
+        "output": "PASS: Macro signatures are in sync.\n",
+        "log_sha256": "d322f7bc3ba68dadc9ea515e3f03f650ef68d3d9e6827af05fc557b801bf492a"
+      }
+    },
+    "sources": [
+      {
+        "name": "tests/fpga/native_timing/check_store_trace.py",
+        "bytes": 4809,
+        "sha256": "b229680d30885095071be03cc0ea9124129ecebeb38f68c20dc8b8dfb0909315"
+      },
+      {
+        "name": "tests/fpga/native_timing/test_store_trace.py",
+        "bytes": 6628,
+        "sha256": "45652ae71bbc80aecbb0e3b028f68f116fe40fb5ae37486de65230199903f4ad"
+      },
+      {
+        "name": "doc/fpga/native_f2_correction_plan.md",
+        "bytes": 13182,
+        "sha256": "98b36f5ae4952462a7aac8247dcba14580882b767c2b29678dd13f6daabc5ad9"
+      },
+      {
+        "name": ".style.yapf",
+        "bytes": 501,
+        "sha256": "afc2997f251848bde207c44b629918f01c452b7392174208f6695c65fa572fd5"
+      },
+      {
+        "name": ".markdown_style.rb",
+        "bytes": 452,
+        "sha256": "209eeb6375ba30fe1c11cb305bc80ff5acb1c2b2b017649098e38480d8665384"
+      },
+      {
+        "name": "utils/check_macro_signatures.py",
+        "bytes": 4930,
+        "sha256": "ad48781aba4a258c15f145c1011814ffe1192f4b2258b332e7fec365e68dd239"
+      },
+      {
+        "name": "rules/coco_tb.bzl",
+        "bytes": 59932,
+        "sha256": "e0a679875112d5bf21b7b54bf07a7921e2918d8ba63f0f2663b491e9a0216b78"
+      }
+    ]
+  },
+  "limits": {
+    "synthetic_checker_tests": true,
+    "actual_RTL_simulation": false,
+    "full_model_inference": false,
+    "physical_fpga_tokens": 0,
+    "routed_timing_accepted": false,
+    "AFI_created": false,
+    "RTL_correction_implemented": false
+  },
+  "remaining_gates": [
+    "Fresh50MHz synthesis, actualDCP clock/twoAXI/resetCDC and physical qualification",
+    "Source-bound complete final physical reports and diagnostic robustness",
+    "Exact noL0 emitter/source/parameter provenance",
+    "Independent realDUT observer and fullCore regression",
+    "Corrected full-model source/toolchain/ELF/raw numerical reference",
+    "Fresh routed timing/DRC/CDC and physical board acceptance"
+  ],
+  "separate_candidate_component_evidence": {
+    "scope": "Separate privatehardwarecandidate RTLnotincludedinthisPR; scalar actualfullCorefixture PASS, noRVV/FPU/fullmodel/physicalproof",
+    "vendor": "InstalledVivado2025.2models onallocatedEC2",
+    "AXI_channel_payload_checks": 3200,
+    "two_bridge_orientations": true,
+    "actual_MMCM_period_ns": 20,
+    "period_checks": 60,
+    "clock_loss": "Digitalinjection/pairedresetrecoveryPASS",
+    "full_Core_runtime_tests_passed": true,
+    "full_Core_runtime_scope": "scalar fixture only",
+    "scalar_epochs": 2,
+    "scalar_checks": 2500,
+    "scalar_data_reads": 4,
+    "scalar_instruction_fetches": 17,
+    "scalar_stores": 2,
+    "queued_reset_discards": 1
+  },
+  "performance_phase": "After correct full-model FPGA inference/demo, measure fixed-condition device/end-to-end TPS/TTFT before measured bottleneck optimization"
+}
