@@ -1,7 +1,9 @@
 # Native Coral F2 correction plan
 
 This is a correction plan and regression-checker setup. The approved first correction is a
-50 MHz Core island with complete interface CDC; it is not implemented yet. No routed timing pass, AFI,
+50 MHz Core island with complete interface CDC. Its hardware implementation
+and component evidence are tracked in a separate source candidate. This PR
+contains the plan and checker setup, not that RTL. No routed timing pass, AFI,
 physical full-model token, or live FPGA demo is established by this PR.
 
 ## Measured problem and comparison
@@ -183,8 +185,10 @@ test or synthetic trace pass for that full target regression.
 
 The matched placement is bounded on the existing F2 host. Its stop deadlines
 remain **2026-10-04 20:58:42 UTC** (guest) and **21:08:42 UTC** (independent
-backup). The combined project cap remains $500. Do not create duplicate jobs,
-extend timers or allocate resources from this test setup.
+backup). The user subsequently withdrew the $500 project cap and prioritized a
+correct working demo. Existing concrete allocations and guards remain binding
+until replacement controls and the next allocation are verified. Do not create
+duplicate jobs, extend timers or allocate resources from this test setup.
 
 Previous observed vendor durations: synthesis approximately 23 minutes,
 fresh clock/CDC/budget approximately 12 minutes, placement approximately
@@ -220,3 +224,11 @@ Python formatting, Markdown lint and repository macro checks run on EC2;
 see the PR validation record for their results. Matched placement, the new
 actual-DUT trace adapter, full-Core correctness, routed signoff, complete
 corrected firmware binding and physical tokens remain pending.
+
+Separate continuation evidence on EC2: both vendor-XPM bridge orientations
+passed 3,200 exact channel-payload comparisons, with full/wrapped queues,
+independent stalls, error response bits and stopped-Core-clock paired reset.
+The actual installed vendor MMCM model passed 60 consecutive 20 ns periods,
+paired reset and injected digital lock-loss recovery. These component checks
+do not validate full AXI memory behavior, Coral firmware, routed DFX legality
+or physical tokens. Their RTL is not included in this plan/checker PR.

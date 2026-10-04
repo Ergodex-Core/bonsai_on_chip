@@ -25,7 +25,7 @@
     "runtime_limit_seconds": 30
   },
   "lint": {
-    "utc": "2026-10-04T17:38:51.925941+00:00",
+    "utc": "2026-10-04T17:54:56.958678+00:00",
     "checks": {
       "yapf": {
         "returncode": 0,
@@ -56,8 +56,8 @@
       },
       {
         "name": "doc/fpga/native_f2_correction_plan.md",
-        "bytes": 12862,
-        "sha256": "a76f257750cc011f743b79c06d1ee90243011f9fc048490d49eabd884ea35102"
+        "bytes": 13692,
+        "sha256": "c2b7b9e1b7d02b9d8632bd8507273cda9509d295605ed2e64e9d783c0b6ed210"
       },
       {
         "name": ".style.yapf",
@@ -97,5 +97,15 @@
     "Independent realDUT observer and fullCore regression",
     "Corrected full-model source/toolchain/ELF/raw numerical reference",
     "Fresh routed timing/DRC/CDC and physical board acceptance"
-  ]
+  ],
+  "separate_candidate_component_evidence": {
+    "scope": "Separate privatehardwarecandidate, RTLnotincludedinthisPR, noCorefunctional/inference/physicalproof",
+    "vendor": "InstalledVivado2025.2models onallocatedEC2",
+    "AXI_channel_payload_checks": 3200,
+    "two_bridge_orientations": true,
+    "actual_MMCM_period_ns": 20,
+    "period_checks": 60,
+    "clock_loss": "Digitalinjection/pairedresetrecoveryPASS",
+    "full_Core_runtime_tests_passed": false
+  }
 }
