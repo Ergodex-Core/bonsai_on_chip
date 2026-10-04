@@ -25,7 +25,7 @@
     "runtime_limit_seconds": 30
   },
   "lint": {
-    "utc": "2026-10-04T17:54:56.958678+00:00",
+    "utc": "2026-10-04T18:38:53.787395+00:00",
     "checks": {
       "yapf": {
         "returncode": 0,
@@ -56,8 +56,8 @@
       },
       {
         "name": "doc/fpga/native_f2_correction_plan.md",
-        "bytes": 13692,
-        "sha256": "c2b7b9e1b7d02b9d8632bd8507273cda9509d295605ed2e64e9d783c0b6ed210"
+        "bytes": 13182,
+        "sha256": "98b36f5ae4952462a7aac8247dcba14580882b767c2b29678dd13f6daabc5ad9"
       },
       {
         "name": ".style.yapf",
@@ -91,21 +91,29 @@
     "RTL_correction_implemented": false
   },
   "remaining_gates": [
-    "Approved50MHz wrapper with two completeAXI CDC paths and vendor reset/backpressure tests",
-    "Matched placement comparison",
+    "Fresh50MHz synthesis, actualDCP clock/twoAXI/resetCDC and physical qualification",
+    "Source-bound complete final physical reports and diagnostic robustness",
     "Exact noL0 emitter/source/parameter provenance",
     "Independent realDUT observer and fullCore regression",
     "Corrected full-model source/toolchain/ELF/raw numerical reference",
     "Fresh routed timing/DRC/CDC and physical board acceptance"
   ],
   "separate_candidate_component_evidence": {
-    "scope": "Separate privatehardwarecandidate, RTLnotincludedinthisPR, noCorefunctional/inference/physicalproof",
+    "scope": "Separate privatehardwarecandidate RTLnotincludedinthisPR; scalar actualfullCorefixture PASS, noRVV/FPU/fullmodel/physicalproof",
     "vendor": "InstalledVivado2025.2models onallocatedEC2",
     "AXI_channel_payload_checks": 3200,
     "two_bridge_orientations": true,
     "actual_MMCM_period_ns": 20,
     "period_checks": 60,
     "clock_loss": "Digitalinjection/pairedresetrecoveryPASS",
-    "full_Core_runtime_tests_passed": false
-  }
+    "full_Core_runtime_tests_passed": true,
+    "full_Core_runtime_scope": "scalar fixture only",
+    "scalar_epochs": 2,
+    "scalar_checks": 2500,
+    "scalar_data_reads": 4,
+    "scalar_instruction_fetches": 17,
+    "scalar_stores": 2,
+    "queued_reset_discards": 1
+  },
+  "performance_phase": "After correct full-model FPGA inference/demo, measure fixed-condition device/end-to-end TPS/TTFT before measured bottleneck optimization"
 }

@@ -6,63 +6,21 @@ and component evidence are tracked in a separate source candidate. This PR
 contains the plan and checker setup, not that RTL. No routed timing pass, AFI,
 physical full-model token, or live FPGA demo is established by this PR.
 
-## Measured problem and comparison
+## Problem and target
 
-The full Coral/HBM hard-locality placement completed on 2026-10-04, with
-zero placement errors and zero escapes from the requested child region.
-Nevertheless, setup WNS was **-12.575 ns**, hold WHS **-1.883 ns**, and peak
-Global/Long congestion levels **6/7**. The worst same-Core-clock path was:
+The correction targets a long same-Core-clock control path from the registered
+Regfile output to the retirement store-completion enable. The cone includes
+branch/fault control, fetch and reorder control, LSU instruction-bus valid,
+AXI readiness/response handling and slot completion detection. Existing
+retirement valid and PC are already pipelined.
 
-```text
-score/regfile/readDataBits_6_reg[8]/C
-  -> score/retirement_buffer/storeComplete_pipe_b_reg[11]/CE
-```
-
-Its 4 ns requirement contrasts with a 16.182 ns estimated placed data path:
-2.047 ns logic, 14.135 ns estimated wire delay (87.350%), 33 logic levels.
-These are placement estimates, not routed timing. The candidate was rejected
-for automatic routing and its instance stopped after preserving evidence.
-
-| Diagnostic | Source | Status |
-| --- | --- | --- |
-| Hard locality | `6f12d0173120da46eb70b419b727b50c1d1187ee` | Placed; timing/congestion fail |
-| Same-clock, no-child baseline | `53c6f8ba5d0241b037306a92b51e3bbb0ba98440` | Placement started 17:03 UTC; result pending |
-
-All 182 staged source hashes were compared: 181 match exactly. Only
-`build/scripts/native_lsu_locality.tcl` differs. RTL, clock XDC, generated
-Core (`0901d091592b03c43d933357907f30087abb2bc4d90bf55ec4f1889e1603c937`),
-HBM inputs, vendor Shell and placement recipe match. Both use
-`SSI_SpreadLogic_high` and the same 250 MHz MMCM configuration.
-
-Fresh baseline qualification passed three vendor commands: Core clock,
-native-wrapper CDC, and legal linked-shell CL resource budgeting. All 66,568
-Core FFs use `generated_clk` with master `clk_main_a0`; eight reset FFs have
-the intended synchronizer attributes. Four native reset/fault paths each
-report zero Critical/Warning CDC findings. Legal CL LUT use is 436,294 of
-1,137,720 (38.35%). Capacity is not physical fit or timing closure.
-
-Global synthesis audit still retains 16 Critical/1,282 Warning CDC findings,
-13 unconstrained internal endpoints, 918 missing input delays, 811 missing
-output delays, OOC HDOOC-3 and unrouted RTSTAT-12. They remain unwaived and
-must be reviewed in the appropriate linked/routed context before promotion.
-
-## Source and path attribution
-
-The immutable generated Core inventory records source-tree commit
-`81036e734e80bf14862de3d4259a65b5427832a4` and an exact previously emitted
-stock-no-L0 snapshot. That tree contained untracked generated files: the Git
-commit alone cannot reproduce this inventory. The exact official upstream
-revision and original emission command remain unproven. Preserve the emitted
-Core SHA above for the initial clock-wrapper correction; do not silently
-replace it with current upstream RTL.
-
-The ordered placed STA cone includes registered Regfile read port 6,
-branch/fault control, fetch/reorder/instruction-buffer control, LSU slot and
-instruction-bus valid, instruction/external AXI ready/response logic, slot
-completion detection, and the existing pipelined retirement-PC enable.
-It is not evidence of an enqueue-to-output reservation-station data bypass.
-The retirement completion valid and PC are already pipelined. Current Chisel
-alone cannot establish the ancestry of these exact synthesized cells.
+Preserve the exact generated Core for the first wrapper correction. The
+available inventory includes generated files that are not reproducible from
+the recorded source-tree commit alone. Recover the original emitter command,
+parameters and upstream ancestry before making generated-Core RTL changes.
+Keep source/checkpoint identities and detailed physical reports in the private
+execution evidence. Capacity alone does not establish physical fit or timing
+closure, and placement estimates do not establish routed timing.
 
 Upstream [Nexus FPGA configuration](https://github.com/google-coral/coralnpu/blob/main/fpga/chip_nexus.core)
 uses a 50 MHz starting point on a different FPGA; its DDR clock does not
@@ -71,10 +29,10 @@ experiment, but establishes neither AWS F2 clock legality nor routed closure.
 
 ## Correction sequence
 
-1. **Preserve and complete the matched placement.** Compare setup/hold endpoint
+1. **Compare source-matched physical experiments.** Compare setup/hold endpoint
    counts, ordered worst-path cone, estimated wire share, local congestion,
    SLR crossings and clock distribution. Keep the vendor parent floorplan
-   unchanged. Do not restart the rejected hard candidate unchanged.
+   unchanged. Preserve terminal reports and reject incomplete diagnostics.
 2. **Build an isolated 50 MHz Core wrapper first.** Keep Shell
    `clk_main_a0` at 250 MHz and existing DDR/HBM clocks and IP recipes unchanged.
    Preserve the exact generated Core. Evaluate MMCM input 250 MHz, multiplier
@@ -181,37 +139,42 @@ no-L0 testbench binding and new trace observer remain to be implemented after
 the emitter/parameter provenance is recovered. Do not substitute a mini-Core
 test or synthetic trace pass for that full target regression.
 
-## Time, resources and dependencies
+## Resources and dependencies
 
-The matched placement is bounded on the existing F2 host. Its stop deadlines
-remain **2026-10-04 20:58:42 UTC** (guest) and **21:08:42 UTC** (independent
-backup). The user subsequently withdrew the $500 project cap and prioritized a
-correct working demo. Existing concrete allocations and guards remain binding
-until replacement controls and the next allocation are verified. Do not create
-duplicate jobs, extend timers or allocate resources from this test setup.
+Use the existing allocated EC2 execution route for tests and vendor tools.
+Keep allocation, deadlines, resource identity and detailed build history in
+private execution records. Verify both guest and independent stop safeguards
+before replacing prior controls. Do not create duplicate jobs or silently
+extend runtime. A fresh physical iteration must fit its concrete allocation.
 
-Previous observed vendor durations: synthesis approximately 23 minutes,
-fresh clock/CDC/budget approximately 12 minutes, placement approximately
-49–54 minutes, physical optimization plus routing approximately 5 hours
-40 minutes in one failed attempt. Those are planning anchors, not a promise
-of closure. A full fresh vendor iteration is about seven hours before RTL
-debug, numerical checks, report review or board work, and does not fit this
-remaining window. Image generation and first full-model board execution do
-not have project-specific successful duration measurements.
+Corrected full-model firmware and transformer/helper sources were recovered
+and hash-verified privately. Exact first-layer comparisons passed for stock
+and ROM variants; complete corrected token/logit comparison remains pending.
+The historical loader deliberately rejects changed firmware source hashes.
+Prepare and test a coherent new runtime profile with complete build, toolchain,
+source and numerical-reference binding. Verify compiler/runtime availability
+on EC2 and coordinate with the existing firmware owner to avoid duplicate
+full-model jobs.
 
-The firmware owner must provide the complete corrected source/toolchain/ELF
-binding and raw full-model reference. Corrected first-layer results were
-relayed (stock and ROM 2,048 exact outputs), but those do not qualify complete
-inference. The existing loader's historical source hashes deliberately reject
-changed firmware; prepare a coherent new runtime profile and EC2 validation
-once those inputs arrive. No duplicate CPU full-model job is started here.
+## Diagnostic robustness
+
+Vendor driver exit status alone is insufficient to accept a diagnostic.
+Require the exact completion marker, placed checkpoint and complete report
+set, and explicitly reject abnormal termination or segmentation-fault text.
+Save the diagnostic checkpoint immediately after placement, before report
+queries; a checkpoint alone is still insufficient for acceptance.
+
+Preserve plain hierarchy names across placement and reacquire current cell
+collections before site/utilization queries. Do not retain netlist object
+handles through transformations. Test missing/changed hierarchy rejection,
+checkpoint-before-report ordering and injected reporting failure. Control-flow
+mocks do not prove vendor placement recovery; verify the actual fresh vendor
+run and retain every physical finding.
 
 ## Validation recorded for this PR
 
-Final EC2 checker attempt002 passed **21/21 synthetic cases** on 2026-10-04
-at 17:17:42 UTC (0.136 seconds in unittest; 193 ms bounded service runtime).
-The unit used one CPU and 512 MiB limits alongside the independently running
-placement. No RTL simulation or model inference ran in that unit.
+EC2 checker validation passed **21/21 synthetic cases**.
+No RTL simulation or model inference ran in that checker unit.
 
 Test log SHA256:
 `2084c57c8575e0e6fe34bc2dea0d1d9d282f89913ef49d84d7303edec9c6ae47`.
@@ -221,9 +184,10 @@ Test source SHA256:
 `45652ae71bbc80aecbb0e3b028f68f116fe40fb5ae37486de65230199903f4ad`.
 
 Python formatting, Markdown lint and repository macro checks run on EC2;
-see the PR validation record for their results. Matched placement, the new
-actual-DUT trace adapter, full-Core correctness, routed signoff, complete
-corrected firmware binding and physical tokens remain pending.
+see the PR validation record for their results. Incomplete physical diagnostics
+remain rejected. The actual-DUT store trace adapter, broad full-Core ISA regression,
+routed signoff, complete corrected model comparison and physical tokens remain
+pending.
 
 Separate continuation evidence on EC2: both vendor-XPM bridge orientations
 passed 3,200 exact channel-payload comparisons, with full/wrapped queues,
@@ -232,3 +196,31 @@ The actual installed vendor MMCM model passed 60 consecutive 20 ns periods,
 paired reset and injected digital lock-loss recovery. These component checks
 do not validate full AXI memory behavior, Coral firmware, routed DFX legality
 or physical tokens. Their RTL is not included in this plan/checker PR.
+
+A separate continuation test executed the unchanged complete Coral Core at
+50 MHz with actual vendor clock/FIFO models: two scalar fixture epochs passed
+2,500 checks, four data reads, 17 instruction fetches, two stores and one queued
+response discard across paired reset. The taken branch suppressed the wrong
+path store. This establishes that bounded scalar fixture, not RVV/FPU numerical
+coverage, complete model inference or physical FPGA execution.
+
+## Performance after correctness
+
+First qualify correct full-model FPGA inference and the working prompt demo.
+Then measure device and end-to-end tokens per second and time to first token
+under a pinned model, prompt/context, generation length, sampling policy and
+precision. Count generated tokens separately from prompt tokens and padding.
+Separate prefill, decode, model loading and host delivery time.
+
+The current one-shot firmware ABI has no per-token streaming or device token
+timestamps. Keep those device metrics unavailable until real events/counters
+exist; simulator throughput cannot stand in for hardware throughput. Preserve
+request/source hashes and measured host durations now. Add token timestamps and
+memory/compute/stall counters after the correctness baseline without delaying
+initial closure.
+
+Optimize measured memory latency/concurrency and compute idle cycles before
+raising frequency through fresh timing/CDC/DRC gates. Preserve the model and
+exact numerical outputs. Queued-fetch operator gains are hypotheses for
+integration, not measured full-model speedups. Paid expansion still requires a
+concrete allocation; this plan does not change safeguards.
