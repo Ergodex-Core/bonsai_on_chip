@@ -1,7 +1,7 @@
 # Native Coral F2 correction plan
 
-This is a correction plan and regression-checker setup. The proposed RTL
-correction has not been selected or implemented. No routed timing pass, AFI,
+This is a correction plan and regression-checker setup. The approved first correction is a
+50 MHz Core island with complete interface CDC; it is not implemented yet. No routed timing pass, AFI,
 physical full-model token, or live FPGA demo is established by this PR.
 
 ## Measured problem and comparison
@@ -44,49 +44,79 @@ Global synthesis audit still retains 16 Critical/1,282 Warning CDC findings,
 output delays, OOC HDOOC-3 and unrouted RTSTAT-12. They remain unwaived and
 must be reviewed in the appropriate linked/routed context before promotion.
 
+## Source and path attribution
+
+The immutable generated Core inventory records source-tree commit
+`81036e734e80bf14862de3d4259a65b5427832a4` and an exact previously emitted
+stock-no-L0 snapshot. That tree contained untracked generated files: the Git
+commit alone cannot reproduce this inventory. The exact official upstream
+revision and original emission command remain unproven. Preserve the emitted
+Core SHA above for the initial clock-wrapper correction; do not silently
+replace it with current upstream RTL.
+
+The ordered placed STA cone includes registered Regfile read port 6,
+branch/fault control, fetch/reorder/instruction-buffer control, LSU slot and
+instruction-bus valid, instruction/external AXI ready/response logic, slot
+completion detection, and the existing pipelined retirement-PC enable.
+It is not evidence of an enqueue-to-output reservation-station data bypass.
+The retirement completion valid and PC are already pipelined. Current Chisel
+alone cannot establish the ancestry of these exact synthesized cells.
+
+Upstream [Nexus FPGA configuration](https://github.com/google-coral/coralnpu/blob/main/fpga/chip_nexus.core)
+uses a 50 MHz starting point on a different FPGA; its DDR clock does not
+establish a 250 MHz NPU guarantee. This reference motivates a function-first
+experiment, but establishes neither AWS F2 clock legality nor routed closure.
+
 ## Correction sequence
 
-1. **Complete the matched placement.** Compare setup/hold endpoint counts,
-   worst path cone and logic depth, estimated wire share, local congestion,
-   SLR crossings, actual clock distribution, and routed-design DRC constraints.
-   Do not compare the older different-clock build as a causal locality test.
-   Keep the vendor parent floorplan unchanged and do not restart the rejected
-   hard candidate unchanged.
-2. **Choose the smallest justified change.** If the hard region increases
-   congestion, retain the no-child profile as the next baseline. If the long
-   completion cone persists, first evaluate unconditional registration of the
-   PC payload with the existing one-cycle valid pipeline. `Pipe(io.storeComplete)`
-   currently makes the completion cone drive payload-register clock enables;
-   capturing PC every cycle may remove that fanout without adding latency.
-   Invalid-cycle payload bits may differ and must remain architecturally
-   ignored. This is an untested hypothesis: the valid-register path and LSU
-   congestion may still dominate. Then evaluate a registered completion event
-   carrying its original PC together, or an equivalent shallower completion
-   detector if needed. Replacing only valid or adding unrelated delay is
-   insufficient.
-   LSU `stateFromAction` completion, next-slot acceptance, store writebacks,
-   faults and flushes must retain their architectural behavior. Recover the
-   exact no-L0 emitter/parameters and source-to-generated-Core provenance
-   before regenerating RTL; the immutable emitted inventory alone does not
-   prove that a new Chisel emission is equivalent.
-3. **Run focused and full-Core regression on EC2.** Use an independent store
-   scoreboard and the trace contract below, then existing scalar/vector
-   store, exception and LSU flush tests. Exercise TCM and external AXI paths
-   with backpressure, repeated PCs, adjacent completions and next-slot reuse.
-   Run the corrected native PQ2/Q8_K operator, ordered FP32 layer and complete
-   token reference checks before treating the revised Core as inference-ready.
-4. **Build one fresh candidate.** Pin source, parameters, generated file
-   inventory, Shell/HDK, clock recipe and checkpoint identities. Repeat native
-   clock/reset/CDC, legal capacity and placement diagnostics. Start physical
-   optimization/routing only after the results justify it and sufficient
-   allocated time remains. Changing the Core clock alone is not a valid fix:
-   direct Core/main AXI connections require interface/CDC redesign or a
-   qualified matching system-clock change.
-5. **Require actual physical closure.** Complete route status; zero failing
-   setup, hold and pulse-width endpoints; source-bound clock/related-clock
-   coverage; legal DFX clock placement; routed DRC and documented per-finding
-   global CDC dispositions. Keep strict findings visible. A placement pass,
-   small LUT percentage or absence of HDPR-59 in one report is insufficient.
+1. **Preserve and complete the matched placement.** Compare setup/hold endpoint
+   counts, ordered worst-path cone, estimated wire share, local congestion,
+   SLR crossings and clock distribution. Keep the vendor parent floorplan
+   unchanged. Do not restart the rejected hard candidate unchanged.
+2. **Build an isolated 50 MHz Core wrapper first.** Keep Shell
+   `clk_main_a0` at 250 MHz and existing DDR/HBM clocks and IP recipes unchanged.
+   Preserve the exact generated Core. Evaluate MMCM input 250 MHz, multiplier
+   4, VCO 1,000 MHz, output divider 20, phase 0 and duty cycle 0.5, with an actual
+   20 ns generated-Core constraint. This is a proposed configuration requiring
+   vendor structural and physical qualification, not a clock-only patch.
+   Add **two complete AXI clock crossings**, both 128-bit data/32-bit address/
+   6-bit ID: host TCM/CSR MAIN-to-CORE slave, and merged instruction/data
+   CORE-to-MAIN master. Preserve independent AW/W/B/AR/R handshakes, ordering,
+   IDs, strobes, burst metadata and LAST. Use qualified vendor FIFO/converter
+   implementation and its supported CDC constraints.
+   Synchronize Core halt/fault/WFI status. Latch unsupported-lock protocol
+   faults in the Core domain before synchronizing to MAIN. Boot PC is stable
+   through reset and release; audit all remaining control crossings.
+   Paired reset must flush both bridge ends. Qualify local reset release and
+   FIFO reset-busy completion before asserting readiness. MMCM lock loss
+   blocks the old lifecycle and requires paired reset; a later re-lock cannot
+   reuse queued responses. No broad false-path or multicycle exception may
+   hide ordinary logic paths. No LSU retiming is part of this first candidate.
+3. **Run interface and Core regressions on EC2.** Exercise independent AW/W/B
+   and AR/R stalls, full/empty/wrapped queues, repeated addresses/IDs, bursts,
+   exactly-once writes and completions, RRESP/BRESP errors, reset with work
+   outstanding, stopped/restarted Core clock, lock loss and paired recovery.
+   Qualify the vendor FIFO model, not only a behavioral substitute. Then use
+   existing actual Core/DBus-to-AXI scalar/vector, fault and flush tests with
+   the pinned native configuration, independently checking results and
+   retirement order. Ordered FP32 layer and complete corrected token reference
+   checks remain mandatory before inference promotion.
+4. **Freeze and qualify the fresh candidate.** Pin source, Core inventory,
+   parameters, CDC implementation, Shell/HDK, actual MMCM and checkpoint
+   identities. Repeat synthesis, clock/reset/CDC, legal capacity and placement.
+   The existing 250 MHz linked/post-synthesis DCP is not automatically valid
+   after clock/bridge RTL changes. Reuse only technically proven matching
+   checkpoints. Start optimization/routing after evidence review and a budget
+   owner allocation with enough runtime; never silently extend current guards.
+5. **Require physical closure before frequency increases.** Complete route
+   status; zero failing setup, hold and pulse-width endpoints; actual clock
+   coverage; legal DFX clock placement; routed DRC; documented per-finding
+   global CDC dispositions. Keep strict findings visible. A placement pass or
+   resource percentage is insufficient. Increase frequency only after measured
+   closure and correctness at the preceding target. If the control cone still
+   fails, review memory mapping, placement/fanout/SLR and equivalent mux
+   factoring first. Structural LSU/completion changes need exact source
+   provenance and architecture regression; they are conditional follow-ups.
 6. **Qualify full-model execution and the demo.** After reviewed image-upload/
    AFI approval, bind actual image/transport/firmware identities, prove HBM
    geometry, full model hash and hardware read-only seal, and compare actual

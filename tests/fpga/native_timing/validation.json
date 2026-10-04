@@ -25,7 +25,7 @@
     "runtime_limit_seconds": 30
   },
   "lint": {
-    "utc": "2026-10-04T17:20:35.313514+00:00",
+    "utc": "2026-10-04T17:38:51.925941+00:00",
     "checks": {
       "yapf": {
         "returncode": 0,
@@ -56,8 +56,8 @@
       },
       {
         "name": "doc/fpga/native_f2_correction_plan.md",
-        "bytes": 10804,
-        "sha256": "8e6ee8b631ec58ff3c124281250dd54007854c2a9232d8b8d0132e5f24d20d2d"
+        "bytes": 12862,
+        "sha256": "a76f257750cc011f743b79c06d1ee90243011f9fc048490d49eabd884ea35102"
       },
       {
         "name": ".style.yapf",
@@ -91,6 +91,7 @@
     "RTL_correction_implemented": false
   },
   "remaining_gates": [
+    "Approved50MHz wrapper with two completeAXI CDC paths and vendor reset/backpressure tests",
     "Matched placement comparison",
     "Exact noL0 emitter/source/parameter provenance",
     "Independent realDUT observer and fullCore regression",
