@@ -1,0 +1,75 @@
+name: Native PQ2 simulator comparison
+on:
+  pull_request:
+    paths:
+      - experiments/native_pq2/ci/**
+      - .github/workflows/ternary-simulator-compare.yml
+permissions:
+  contents: read
+jobs:
+  benchmark:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 330
+    strategy:
+      fail-fast: false
+      matrix:
+        backend: [verilator, arcilator]
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 816432917d4ac20bdec0f5725dfacd4b3ec54e4f
+          path: snapshots/baseline
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 3d5f4cd75d06f9175720e81e53484428e09a8a09
+          path: snapshots/fetch
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: 7784c5de174b8ee18d32e20b41d2fdad254d1068
+          path: snapshots/spatial
+      - name: Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y autoconf bison flex g++ make help2man clang-18 clang-format-19 python3-venv libfl-dev zlib1g-dev libtinfo6
+          python3 -m venv "$RUNNER_TEMP/venv"
+          "$RUNNER_TEMP/venv/bin/pip" install Jinja2==3.1.6 MarkupSafe==3.0.3
+          echo "$RUNNER_TEMP/venv/bin" >> "$GITHUB_PATH"
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: tools
+        with:
+          path: ${{ runner.temp }}/ternary-tools
+          key: ternary-sim-ubuntu24-v1-${{ matrix.backend }}-verilator5.052-circt1.161.0${{ matrix.backend == 'arcilator' && format('-process-v3-{0}', hashFiles('experiments/native_pq2/ci/unroll_processes.cpp')) || '' }}
+      - name: Install pinned tools
+        run: bash experiments/native_pq2/ci/install_tools.sh '${{ matrix.backend }}' "$RUNNER_TEMP/ternary-tools"
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        if: steps.tools.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/ternary-tools
+          key: ternary-sim-ubuntu24-v1-${{ matrix.backend }}-verilator5.052-circt1.161.0${{ matrix.backend == 'arcilator' && format('-process-v3-{0}', hashFiles('experiments/native_pq2/ci/unroll_processes.cpp')) || '' }}
+      - name: Complete repeated native engine matrix
+        run: python3 experiments/native_pq2/ci/run.py --backend '${{ matrix.backend }}' --snapshots snapshots --tools "$RUNNER_TEMP/ternary-tools" --output "evidence/${{ matrix.backend }}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: native-${{ matrix.backend }}
+          path: evidence/${{ matrix.backend }}
+          retention-days: 14
+  compare:
+    needs: benchmark
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          path: artifacts
+      - run: python3 -m unittest discover -s experiments/native_pq2/ci -p 'test_*.py'
+      - name: Exact parity and performance report
+        run: python3 experiments/native_pq2/ci/compare.py --verilator artifacts/native-verilator --arcilator artifacts/native-arcilator --expected-head "$GITHUB_SHA" --output comparison.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: native-comparison
+          path: comparison.json
