@@ -1,0 +1,5 @@
+PASS hbm_line_bridge_tb: 270 checks, core=10ns HBM=6ns; no physical HBM claim
+- /workspace/bonsai_on_chip/tests/hbm_rom/hbm_line_bridge_tb.sv:480: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.048 2026-04-26
+- Verilator: $finish at 7us; walltime 0.002 s; speed 4.347 ms/s
+- Verilator: cpu 0.002 s on 1 threads; allocated 6 MB

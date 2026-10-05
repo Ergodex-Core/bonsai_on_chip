@@ -1,0 +1,345 @@
+{
+  "schema": "coralnpu.hbm_rom.validation.v1",
+  "status": "PASS",
+  "fpga_executed": false,
+  "memory_backend": "hbm",
+  "steps": [
+    {
+      "name": "prepare-fixture",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "utils/first_slice/prepare_fixture.py",
+        "--gguf",
+        "/workspace/hbm-data/Bonsai-1.7B-Q1_0.gguf",
+        "--native",
+        "/workspace/hbm-data/full-validation-01/native",
+        "--out",
+        "/workspace/hbm-data/full-validation-01/fixture"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 15.493,
+      "log_sha256": "51f582718d15dcd865a3622f7063bfbfa9e709a5e70a401cdb5bced7e2eba4f1"
+    },
+    {
+      "name": "build-hbm-store",
+      "command": [
+        "/workspace/tools/verilator-5.048/usr/bin/verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--assert",
+        "-Wall",
+        "-CFLAGS",
+        "-O3 -std=c++17",
+        "-j",
+        "4",
+        "--top-module",
+        "weight_store",
+        "-GBACKEND_ID=3",
+        "-GPHYSICAL_BYTES=64'h20000000",
+        "--Mdir",
+        "/workspace/hbm-data/full-validation-01/store-obj",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/weight_store.sv",
+        "/workspace/bonsai_on_chip/tests/first_slice/weight_store_tb.cpp"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 7.548,
+      "log_sha256": "4c631c797da3725b42071a55a824ea5b1fa985df2b12991addacbbda60d824df"
+    },
+    {
+      "name": "hbm-store",
+      "command": [
+        "/workspace/hbm-data/full-validation-01/store-obj/Vweight_store"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.009,
+      "log_sha256": "646253c6ddfc74d389b5be88000a917df85802a014e03dc78ca5b0205705287d",
+      "checks_observed": 11,
+      "checks_expected": 11
+    },
+    {
+      "name": "build-memory-bridge",
+      "command": [
+        "/workspace/tools/verilator-5.048/usr/bin/verilator",
+        "--binary",
+        "--timing",
+        "--assert",
+        "-Wno-TIMESCALEMOD",
+        "-j",
+        "4",
+        "--top-module",
+        "f2_memory_bridge_tb",
+        "--Mdir",
+        "/workspace/hbm-data/full-validation-01/bridge-obj",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/f2_memory_bridge.sv",
+        "/workspace/bonsai_on_chip/fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 7.445,
+      "log_sha256": "450cb32b2986c3f126183b6ff84af5157492f6773aebdbb9996372d162e6b5a5"
+    },
+    {
+      "name": "memory-bridge",
+      "command": [
+        "/workspace/hbm-data/full-validation-01/bridge-obj/Vf2_memory_bridge_tb"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.004,
+      "log_sha256": "9562c06190117d45a4d66fdc8e5a0b80cc5e390026171b491d602db083add17a",
+      "checks_observed": 218,
+      "checks_expected": 218
+    },
+    {
+      "name": "build-hbm-bridge",
+      "command": [
+        "/workspace/tools/verilator-5.048/usr/bin/verilator",
+        "--binary",
+        "--timing",
+        "--assert",
+        "-Wall",
+        "-Wno-TIMESCALEMOD",
+        "-j",
+        "4",
+        "--top-module",
+        "hbm_line_bridge_tb",
+        "--Mdir",
+        "/workspace/hbm-data/full-validation-01/hbm-bridge-obj",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/hbm_cdc_mailbox.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/hbm_line_bridge.sv",
+        "/workspace/bonsai_on_chip/tests/hbm_rom/hbm_line_bridge_tb.sv"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 8.944,
+      "log_sha256": "ab6e39de002f96049e8c98912899d34a350c50b1a332a812ffaaaa8abcc64bcd"
+    },
+    {
+      "name": "hbm-bridge",
+      "command": [
+        "/workspace/hbm-data/full-validation-01/hbm-bridge-obj/Vhbm_line_bridge_tb"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.008,
+      "log_sha256": "158f7789f09417fa822240f24748fc48775594e959538ae4b5b3d221af981e06",
+      "checks_observed": 270,
+      "checks_expected": 270
+    },
+    {
+      "name": "build-hbm",
+      "command": [
+        "/workspace/tools/verilator-5.048/usr/bin/verilator",
+        "--cc",
+        "--exe",
+        "--build",
+        "--assert",
+        "-Wall",
+        "-CFLAGS",
+        "-O3 -std=c++17",
+        "-j",
+        "4",
+        "--top-module",
+        "hbm_rom_sim_top",
+        "--Mdir",
+        "/workspace/hbm-data/full-validation-01/obj",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/weight_store.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/dot128.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/first_slice_top.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/f2_memory_bridge.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/hbm_cdc_mailbox.sv",
+        "/workspace/bonsai_on_chip/hdl/verilog/first_slice/hbm_line_bridge.sv",
+        "/workspace/bonsai_on_chip/tests/hbm_rom/hbm_rom_sim_top.sv",
+        "/workspace/bonsai_on_chip/tests/hbm_rom/hbm_model_server.cpp"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 6.684,
+      "log_sha256": "53f9300e41903fe8c47e0c3169b6d243bad86aec9f2a166a33fe21d62d7405c6"
+    },
+    {
+      "name": "hbm-contract",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "tests/hbm_rom/test_hbm.py",
+        "-v"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "simulation_environment": {
+        "FIRST_SLICE_MODEL_SERVER": "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "HBM_SIM_CORE_HALF_PERIOD": "9",
+        "HBM_SIM_HBM_HALF_PERIOD": "5",
+        "HBM_SIM_PHASE": "0"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.214,
+      "log_sha256": "14ce5aa2f1f9a0ace67f42d9e057642d90c86895310935eb98e9cbfbafc2083b",
+      "checks_observed": 9,
+      "checks_expected": 9
+    },
+    {
+      "name": "hbm-contract-reversed-clocks",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "tests/hbm_rom/test_hbm.py",
+        "-v"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "simulation_environment": {
+        "FIRST_SLICE_MODEL_SERVER": "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "HBM_SIM_CORE_HALF_PERIOD": "2",
+        "HBM_SIM_HBM_HALF_PERIOD": "5",
+        "HBM_SIM_PHASE": "1"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.216,
+      "log_sha256": "8c4d220a559576ce0dc48bb304458f3a500372d4ec82a8654e6bcfa1a187ea32",
+      "checks_observed": 9,
+      "checks_expected": 9
+    },
+    {
+      "name": "transport-protocol",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "tests/first_slice/test_transport_protocol.py",
+        "-v"
+      ],
+      "timeout_seconds": 600,
+      "status": "PASS",
+      "simulation_environment": {
+        "FIRST_SLICE_MODEL_SERVER": "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "HBM_SIM_CORE_HALF_PERIOD": "9",
+        "HBM_SIM_HBM_HALF_PERIOD": "5",
+        "HBM_SIM_PHASE": "0"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.114,
+      "log_sha256": "2a90b6a12556e11c8d0fa4ea7d21ae887b8d4301dc2a211ebe705de463438fcc",
+      "checks_observed": 4,
+      "checks_expected": 4
+    },
+    {
+      "name": "synthetic",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "utils/first_slice/run.py",
+        "--fixture",
+        "/workspace/hbm-data/full-validation-01/fixture/fixture.json",
+        "--image",
+        "/workspace/hbm-data/full-validation-01/fixture/synthetic-ternary2.bin",
+        "--transport",
+        "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "--suite",
+        "synthetic",
+        "--out",
+        "/workspace/hbm-data/full-validation-01/synthetic-run",
+        "--bulk-timeout",
+        "900"
+      ],
+      "timeout_seconds": 1800,
+      "status": "PASS",
+      "simulation_environment": {
+        "FIRST_SLICE_MODEL_SERVER": "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "HBM_SIM_CORE_HALF_PERIOD": "9",
+        "HBM_SIM_HBM_HALF_PERIOD": "5",
+        "HBM_SIM_PHASE": "0"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 0.114,
+      "log_sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945"
+    },
+    {
+      "name": "native",
+      "command": [
+        "/workspace/tools/hbm-python/bin/python",
+        "utils/first_slice/run.py",
+        "--fixture",
+        "/workspace/hbm-data/full-validation-01/fixture/fixture.json",
+        "--image",
+        "/workspace/hbm-data/full-validation-01/native/weights.bin",
+        "--transport",
+        "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "--suite",
+        "native",
+        "--out",
+        "/workspace/hbm-data/full-validation-01/native-run",
+        "--bulk-timeout",
+        "900"
+      ],
+      "timeout_seconds": 1800,
+      "status": "PASS",
+      "simulation_environment": {
+        "FIRST_SLICE_MODEL_SERVER": "/workspace/hbm-data/full-validation-01/obj/Vhbm_rom_sim_top",
+        "HBM_SIM_CORE_HALF_PERIOD": "9",
+        "HBM_SIM_HBM_HALF_PERIOD": "5",
+        "HBM_SIM_PHASE": "0"
+      },
+      "exit_code": 0,
+      "elapsed_seconds": 183.055,
+      "log_sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974"
+    }
+  ],
+  "started_utc": "2026-10-05T16:27:08Z",
+  "known_limits": [
+    "CPU AXI model is not the vendor HBM PHY",
+    "No synthesis, timing closure or physical FPGA run",
+    "DOT128 is not full model inference"
+  ],
+  "source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "2d9595bb1bb919a356faf593baf6438f03017493728f290f1a585c25b6af8dc0",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/first_slice_top.sv": "b9e661003b2930fefb5116c18e754810a234918319957d6ef97595a284b41952",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "175f28d15bbfe59c0b1b589451cbd0ab493111cf89e5700924383dd523c33fdf",
+    "hdl/verilog/first_slice/hbm_cdc_mailbox.sv": "24b5c62f7a8df23968dd18d7a090aff59ac4c1d0a1491c8a547a18ae50047cdf",
+    "hdl/verilog/first_slice/hbm_line_bridge.sv": "28401f9411e0a73c4d50cf81c8060aceafc0694269ba1c26857a81a608c81432",
+    "tests/hbm_rom/hbm_rom_sim_top.sv": "935a8c28f775df6ab1064a4fdb8f46eecf45ad425223fcf9551de8e44836a9c8",
+    "tests/hbm_rom/hbm_model_server.cpp": "5728d74f851d6b4e280fc0a002c22bd5592aa2d46615fd4514e891df4936cc52",
+    "tests/hbm_rom/validate.py": "6b0e191addf1a0ae1452dc6027b9bbb496a4938248a1f81650824f5e26e4376c",
+    "tests/hbm_rom/test_hbm.py": "13cf3be210721648973ba5fb913eba0edc670156069341b0b8a3b3fdac9f213c",
+    "tests/hbm_rom/hbm_line_bridge_tb.sv": "c4cdec56c6dcd985cd80209127e58c098b814135934cf5f60c18f103ff2d1e0e",
+    "utils/first_slice/run.py": "ee403ffe7ffc9f235ade1b854f2c51988f8e9010cc53fe121b8fb8d9a39ad6ab",
+    "utils/first_slice/prepare_fixture.py": "d2711843bd9d4b110b3b2a844632b9d2a1c52a1f63b1b91e5ddd07db79d511bc",
+    "utils/weightstore/pack_image.py": "1ac2c5bcd2abb55b51a252b742a6b7d921326208e94a6bd2b9bbb83371490421",
+    "tests/first_slice/weight_store_tb.cpp": "b57722d208d1a43845a876ec9b3ce71bc485f01ff329c34bcd1b2191d29cbb9a",
+    "fpga/aws_f2/first_slice/f2_memory_bridge_tb.sv": "7d9cddde58eb482fd1c5468b96867e1b23b8a22a133046ebbe8c1f8683a9f771",
+    "tests/first_slice/validate.py": "3ee09220dc3b9bfba1773b65c947d7c18b855000665b5a816a5ef999c5f9e9d0",
+    "tests/first_slice/test_mailbox.py": "f027806942af53cd7fb954d112dca1976d8b8bf4366648f30dbf655692b91ec6",
+    "tests/first_slice/test_transport_protocol.py": "4962e0786430ac67ab4b945bd25f719e3cf68ddf4d69a5fd901042233c3266d0"
+  },
+  "tested_source_directory": "tested-source",
+  "git_base": "fc8ff1b5b2e67c459fe8f61bb192c8d010b1216e",
+  "tool_version": "Verilator 5.048 2026-04-26 rev vUNKNOWN-built20260429",
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "gguf_version": "0.19.0",
+  "compiler_version": "g++ (Debian 14.2.0-19) 14.2.0",
+  "verilator_wrapper_sha256": "bbabccb9177b26cc217b4b6ca84b507f2c86bd5ac23a37b1b25e86ae2120eac8",
+  "verilator_binary_sha256": "fc92cd3e345c66a264c9f463fc3d53a85b88c0f7e07cc6f2895dd46568fba377",
+  "compiler_sha256": "6b3696e4dcb85e1c949c732a02befa50e3983ecf94ce7e8e58d9d503b954b79d",
+  "suite_results": {
+    "synthetic": {
+      "status": "PASS",
+      "passed": 6,
+      "report_sha256": "dd138e46e9b24f527cab2463da8cec7022fba94c069d66267450495d152a9dc8"
+    },
+    "native": {
+      "status": "PASS",
+      "passed": 396,
+      "report_sha256": "bf3e6e90ad57fa57f5c57461d9f34201e52e08af3090ccdeaf23e15fba9a89eb"
+    }
+  },
+  "finished_utc": "2026-10-05T16:30:58Z"
+}

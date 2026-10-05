@@ -1,0 +1,41 @@
+{
+  "scope": "CPU source and build checks; no vendor or physical execution",
+  "native_port_counts": {
+    "cl_hbm": 1102,
+    "clk_mmcm_hbm": 22
+  },
+  "declaration_lint": "PASS Verilator5.048; temporary declaration stubs only",
+  "make_target_parse": {
+    "status": "PASS",
+    "make_query_exit": 1,
+    "diagnostics": "none",
+    "simulator": "xsim",
+    "target": "test_hbm_rom",
+    "note": "GNU make -qp returns1 because target is not built; no commands executed"
+  },
+  "sdk_build": "PASS GCC14.2.0 exactHDKSDK2.3.4",
+  "source_sha256": {
+    "top.xsim.f": "be0c7801e9462d735ace37b3e56622a3fb457d0c7afc5dd0f1e178c1ae32044a",
+    "README.md": "4c05402188137b76a521c480b600bce43085e1952fa39b52a1773191e4d5e32e",
+    "small_shell_cl_pnr_user.xdc": "9755a0722fcaacce294120e6b60eb6c87baf431d24616a8777158ad476fe60c4",
+    "run_build.sh": "123ef8b138cb0799db94fe7eb5973b6cad8bddd2dde2859fb9dea22173198d82",
+    "hbm_fixed_clock.sv": "0e025f62a3db1b813052a71449fa484cdd99dad00f9585f38462325aaab9e51f",
+    "run_sim.sh": "26300d40040759bfeb98923196fc5720386cd1aff9a93fb9df0c796093438f36",
+    "cl_timing_user.xdc": "704008af270455e17cc624ab114aa5a72dfabd69b18bbd49e4a3940607417a68",
+    "Makefile": "73cc6452d97b1bdd6b71287925ccf6e96b12f0be7b139c43025de90bdd53d9c7",
+    "waves.tcl": "be62e7ee5fe10e1af434759f389276ffef06bfcb48f357e7346ac421ec2d1b56",
+    "bind_manifest.py": "dd23d3379ec33d33dd63088bfa35effe5f3deca19681f3791bec57ffcf321323",
+    "build_transport.sh": "576ad910b9835ef2c1b65c3bc636cee744114e5ba48d56c74d1d65ba75862c06",
+    "cl_bonsai_hbm_rom.sv": "21bf27e36b669a069095e99c4ae002f069db2a7e48e2bf24d7c2fa6c56b26cd6",
+    "audit_dcp.tcl": "418aab8bbc1056bcb0cc3ebd7d9eb02700a92dae3b197e0e86f97ae46ff27d71",
+    "synth_cl_bonsai_hbm_rom.tcl": "9d40d37235f948c076cdcbb834ce50cc7a8877363160f56d8836caffbc74247c",
+    "encrypt.tcl": "da05bbdfba432bf57f1d138c2b334072366ea93bde42afaa89318abb2183e2c5",
+    "hbm_rom_controller.sv": "dafb4ff52e4974d39a4689d297f91593b2f01b618de2fb1178e25604777c6560",
+    "prepare.py": "892e74d1b2e99688abdd256a27a7c3480bdae5546a8a0dfb98e7d2e6a29b86bb",
+    "test_hbm_rom.sv": "cbc977a230671d607286e8e0d6a33f2b523ce3adda7aeb8b7b820ad6624d3082",
+    "Makefile.tests": "409d8dc925b61e59cd98fe4c3e9aea852cefff6c453d18b4aa0d08d322be7976",
+    "cl_id_defines.vh": "00b46b0033b5352f9404be4ef87fa16c96dded867563bcb08c6aaf76d4fe68aa",
+    "audit_sources.py": "6b15e7fb6d23d9e254c7148983dae1895498ba78475a11cc290021612317070d",
+    "cl_synth_user.xdc": "702ea8dca35a91253f2c4c3a9bb1e99333f419af5eb84a34d81048ef1122dffc"
+  }
+}
