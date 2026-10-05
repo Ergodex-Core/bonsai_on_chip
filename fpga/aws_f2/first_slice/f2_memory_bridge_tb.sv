@@ -335,7 +335,10 @@ module f2_memory_bridge_tb;
     host_w({16{32'h89abcdef}}, '1, 1);
     host_b(0);
     @(posedge clk_i);
-    check(loader_idle_o && writes == 2, "admitted burst drained after close");
+    check(
+        loader_idle_o && writes == 2 && memory[0] == {16{32'h12345678}} &&
+          memory[1] == {16{32'h89abcdef}},
+        "admitted burst drained after close");
     engine_read(64'h1000, 0, {16{32'h12345678}});
     host_read(64'h1000, 1, 6, 0);
     // Narrow 32-bit MMIO writes are converted to aligned DDR lines with byte enables.
@@ -432,6 +435,31 @@ module f2_memory_bridge_tb;
     check(writes == before_writes, "65-bit allocation overflow rejected");
     image_base_i  = 64'h1000;
     image_bytes_i = 4096;
+    // A malformed beat poisons the whole admitted burst. Consume the declared
+    // remainder, but do not allow later well-formed beats to mutate memory.
+    before_writes = writes;
+    host_aw(64'h1200, 2, 6);
+    host_w({16{32'hbad00001}}, '1, 1);  // Early WLAST: two beats still declared.
+    host_w({16{32'hbad00002}}, '1, 0);
+    host_w({16{32'hbad00003}}, '1, 1);
+    host_b(2);
+    check(
+        loader_idle_o && writes == before_writes && memory[8] == 0 &&
+          memory[9] == 0 && memory[10] == 0,
+        "early WLAST drains all remaining beats without DDR writes");
+    check(backend_ready_o, "malformed host burst does not corrupt backend readiness");
+    host_aw(64'h1241, 1, 6);
+    host_w({16{32'hbad10001}}, '1, 0);  // Byte lane zero precedes the first address.
+    host_w({16{32'hbad10002}}, '1, 1);
+    host_b(2);
+    check(loader_idle_o && writes == before_writes && memory[9] == 0 && memory[10] == 0,
+          "invalid first-beat strobes suppress later valid burst beats");
+    // An unrelated legal burst must still make progress after a host error.
+    host_aw(64'h1200, 0, 6);
+    host_w({16{32'h13579bdf}}, '1, 1);
+    host_b(0);
+    check(writes == before_writes + 1 && memory[8] == {16{32'h13579bdf}},
+          "fresh legal burst completes after malformed burst drain");
     // Both read clients contend; each must complete without replacing the other.
     fork
       engine_read(64'h1040, 0, {16{32'h89abcdef}});
@@ -458,6 +486,37 @@ module f2_memory_bridge_tb;
     host_w('0, '1, 1);
     host_b(2);
     check(writes == before_writes, "BRESP fault denies later DDR writes");
+    coordinated_reset();
+    // Unlike a fresh AW after failure, these following beats already belong to
+    // an admitted burst. A failing DDR B must stop them too. Distinct nonzero
+    // payloads ensure write suppression is checked independently of the hash.
+    before_writes = writes;
+    inject_bresp  = 2;
+    host_aw(64'h12c0, 2, 6);
+    host_w({16{32'h2468ace0}}, '1, 0);
+    host_w({16{32'hbad20002}}, '1, 0);
+    host_w({16{32'hbad20003}}, '1, 1);
+    host_b(2);
+    inject_bresp = 0;
+    check(
+        !backend_ready_o && loader_idle_o && writes == before_writes + 1 &&
+          memory[11] == {16{32'h2468ace0}} && memory[12] == 0 && memory[13] == 0,
+        "first DDR BRESP error suppresses remaining admitted burst writes");
+    repeat (8) @(negedge clk_i);
+    check(writes == before_writes + 1 && !m_axi_awvalid && !m_axi_wvalid && !aw_seen && !w_seen,
+          "failed burst leaves no delayed DDR write");
+    coordinated_reset();
+    // Readiness can disappear between AW and W. Fail the admitted burst and
+    // retain that error even if readiness returns before its final beat.
+    before_writes = writes;
+    host_aw(64'h1380, 1, 6);
+    ddr_ready_i = 0;
+    host_w({16{32'hbad30001}}, '1, 0);
+    ddr_ready_i = 1;
+    host_w({16{32'hbad30002}}, '1, 1);
+    host_b(2);
+    check(loader_idle_o && writes == before_writes && memory[14] == 0 && memory[15] == 0,
+          "readiness loss after AW rejects all beats even after readiness returns");
     coordinated_reset();
     inject_extra = 1;
     engine_read(64'h1000, 1, 0);

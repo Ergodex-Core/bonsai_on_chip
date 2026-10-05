@@ -1,0 +1,311 @@
+// Copyright 2026 Ergodex. Licensed under the Apache License, Version 2.0.
+// Integrated HBM simulation: production mailbox, store, bridge and HBM CDC.
+// Derived from tests/first_slice/first_slice_sim_top.sv at base fc8ff1b5b2e67c459fe8f61bb192c8d010b1216e;
+// this wrapper is test-only and the HBM endpoint is modeled by hbm_model_server.cpp.
+module hbm_rom_sim_top (
+    input logic clk_i,
+    input logic rst_ni,
+    input logic clk_hbm_i,
+    input logic rst_hbm_ni,
+    input logic controller_ready_i,
+    output logic hbm_ready_o,
+    output logic hbm_fault_o,
+    input logic [31:0] ocl_awaddr,
+    input logic ocl_awvalid,
+    output logic ocl_awready,
+    input logic [31:0] ocl_wdata,
+    input logic [3:0] ocl_wstrb,
+    input logic ocl_wvalid,
+    output logic ocl_wready,
+    output logic [1:0] ocl_bresp,
+    output logic ocl_bvalid,
+    input logic ocl_bready,
+    input logic [31:0] ocl_araddr,
+    input logic ocl_arvalid,
+    output logic ocl_arready,
+    output logic [31:0] ocl_rdata,
+    output logic [1:0] ocl_rresp,
+    output logic ocl_rvalid,
+    input logic ocl_rready,
+    input logic [15:0] pcis_awid,
+    input logic [63:0] pcis_awaddr,
+    input logic [7:0] pcis_awlen,
+    input logic [2:0] pcis_awsize,
+    input logic [1:0] pcis_awburst,
+    input logic pcis_awvalid,
+    output logic pcis_awready,
+    input logic [511:0] pcis_wdata,
+    input logic [63:0] pcis_wstrb,
+    input logic pcis_wlast,
+    input logic pcis_wvalid,
+    output logic pcis_wready,
+    output logic [15:0] pcis_bid,
+    output logic [1:0] pcis_bresp,
+    output logic pcis_bvalid,
+    input logic pcis_bready,
+    input logic [15:0] pcis_arid,
+    input logic [63:0] pcis_araddr,
+    input logic [7:0] pcis_arlen,
+    input logic [2:0] pcis_arsize,
+    input logic [1:0] pcis_arburst,
+    input logic pcis_arvalid,
+    output logic pcis_arready,
+    output logic [15:0] pcis_rid,
+    output logic [511:0] pcis_rdata,
+    output logic [1:0] pcis_rresp,
+    output logic pcis_rlast,
+    output logic pcis_rvalid,
+    input logic pcis_rready,
+    output logic [5:0] hbm_awid,
+    output logic [33:0] hbm_awaddr,
+    output logic [3:0] hbm_awlen,
+    output logic [2:0] hbm_awsize,
+    output logic [1:0] hbm_awburst,
+    output logic hbm_awvalid,
+    input logic hbm_awready,
+    output logic [255:0] hbm_wdata,
+    output logic [31:0] hbm_wstrb,
+    output logic hbm_wlast,
+    output logic hbm_wvalid,
+    input logic hbm_wready,
+    input logic [5:0] hbm_bid,
+    input logic [1:0] hbm_bresp,
+    input logic hbm_bvalid,
+    output logic hbm_bready,
+    output logic [5:0] hbm_arid,
+    output logic [33:0] hbm_araddr,
+    output logic [3:0] hbm_arlen,
+    output logic [2:0] hbm_arsize,
+    output logic [1:0] hbm_arburst,
+    output logic hbm_arvalid,
+    input logic hbm_arready,
+    input logic [5:0] hbm_rid,
+    input logic [255:0] hbm_rdata,
+    input logic [1:0] hbm_rresp,
+    input logic hbm_rlast,
+    input logic hbm_rvalid,
+    output logic hbm_rready
+);
+  logic [15:0] ddr_awid;
+  logic [63:0] ddr_awaddr;
+  logic [7:0] ddr_awlen;
+  logic [2:0] ddr_awsize;
+  logic [1:0] ddr_awburst;
+  logic ddr_awvalid;
+  logic ddr_awready;
+  logic [511:0] ddr_wdata;
+  logic [63:0] ddr_wstrb;
+  logic ddr_wlast;
+  logic ddr_wvalid;
+  logic ddr_wready;
+  logic [15:0] ddr_bid;
+  logic [1:0] ddr_bresp;
+  logic ddr_bvalid;
+  logic ddr_bready;
+  logic [15:0] ddr_arid;
+  logic [63:0] ddr_araddr;
+  logic [7:0] ddr_arlen;
+  logic [2:0] ddr_arsize;
+  logic [1:0] ddr_arburst;
+  logic ddr_arvalid;
+  logic ddr_arready;
+  logic [15:0] ddr_rid;
+  logic [511:0] ddr_rdata;
+  logic [1:0] ddr_rresp;
+  logic ddr_rlast;
+  logic ddr_rvalid;
+  logic ddr_rready;
+  logic mem_req_valid;
+  logic mem_req_ready;
+  logic [63:0] mem_req_addr;
+  logic mem_rsp_valid;
+  logic mem_rsp_ready;
+  logic [511:0] mem_rsp_data;
+  logic mem_rsp_error;
+  logic loader_enable;
+  logic [63:0] image_base;
+  logic [63:0] image_bytes;
+  logic loader_idle;
+  logic backend_ready;
+  logic loader_write_rejected;
+  first_slice_top #(
+      .BACKEND_ID(3),
+      .PHYSICAL_BYTES(64'h20000000)
+  ) app (
+      .clk_i(clk_i),
+      .rst_ni(rst_ni),
+      .s_axi_awaddr(ocl_awaddr),
+      .s_axi_awvalid(ocl_awvalid),
+      .s_axi_awready(ocl_awready),
+      .s_axi_wdata(ocl_wdata),
+      .s_axi_wstrb(ocl_wstrb),
+      .s_axi_wvalid(ocl_wvalid),
+      .s_axi_wready(ocl_wready),
+      .s_axi_bresp(ocl_bresp),
+      .s_axi_bvalid(ocl_bvalid),
+      .s_axi_bready(ocl_bready),
+      .s_axi_araddr(ocl_araddr),
+      .s_axi_arvalid(ocl_arvalid),
+      .s_axi_arready(ocl_arready),
+      .s_axi_rdata(ocl_rdata),
+      .s_axi_rresp(ocl_rresp),
+      .s_axi_rvalid(ocl_rvalid),
+      .s_axi_rready(ocl_rready),
+      .mem_req_valid_o(mem_req_valid),
+      .mem_req_ready_i(mem_req_ready),
+      .mem_req_addr_o(mem_req_addr),
+      .mem_rsp_valid_i(mem_rsp_valid),
+      .mem_rsp_ready_o(mem_rsp_ready),
+      .mem_rsp_data_i(mem_rsp_data),
+      .mem_rsp_error_i(mem_rsp_error),
+      .loader_enable_o(loader_enable),
+      .image_base_o(image_base),
+      .image_bytes_o(image_bytes),
+      .loader_idle_i(loader_idle),
+      .backend_ready_i(backend_ready),
+      .loader_write_rejected_i(loader_write_rejected)
+  );
+  f2_memory_bridge bridge (
+      .clk_i(clk_i),
+      .rst_ni(rst_ni),
+      .ddr_ready_i(hbm_ready_o),
+      .loader_enable_i(loader_enable),
+      .image_base_i(image_base),
+      .image_bytes_i(image_bytes),
+      .loader_idle_o(loader_idle),
+      .backend_ready_o(backend_ready),
+      .loader_write_rejected_o(loader_write_rejected),
+      .mem_req_valid_i(mem_req_valid),
+      .mem_req_ready_o(mem_req_ready),
+      .mem_req_addr_i(mem_req_addr),
+      .mem_rsp_valid_o(mem_rsp_valid),
+      .mem_rsp_ready_i(mem_rsp_ready),
+      .mem_rsp_data_o(mem_rsp_data),
+      .mem_rsp_error_o(mem_rsp_error),
+      .s_axi_awid(pcis_awid),
+      .s_axi_awaddr(pcis_awaddr),
+      .s_axi_awlen(pcis_awlen),
+      .s_axi_awsize(pcis_awsize),
+      .s_axi_awburst(pcis_awburst),
+      .s_axi_awvalid(pcis_awvalid),
+      .s_axi_awready(pcis_awready),
+      .s_axi_wdata(pcis_wdata),
+      .s_axi_wstrb(pcis_wstrb),
+      .s_axi_wlast(pcis_wlast),
+      .s_axi_wvalid(pcis_wvalid),
+      .s_axi_wready(pcis_wready),
+      .s_axi_bid(pcis_bid),
+      .s_axi_bresp(pcis_bresp),
+      .s_axi_bvalid(pcis_bvalid),
+      .s_axi_bready(pcis_bready),
+      .s_axi_arid(pcis_arid),
+      .s_axi_araddr(pcis_araddr),
+      .s_axi_arlen(pcis_arlen),
+      .s_axi_arsize(pcis_arsize),
+      .s_axi_arburst(pcis_arburst),
+      .s_axi_arvalid(pcis_arvalid),
+      .s_axi_arready(pcis_arready),
+      .s_axi_rid(pcis_rid),
+      .s_axi_rdata(pcis_rdata),
+      .s_axi_rresp(pcis_rresp),
+      .s_axi_rlast(pcis_rlast),
+      .s_axi_rvalid(pcis_rvalid),
+      .s_axi_rready(pcis_rready),
+      .m_axi_awid(ddr_awid),
+      .m_axi_awaddr(ddr_awaddr),
+      .m_axi_awlen(ddr_awlen),
+      .m_axi_awsize(ddr_awsize),
+      .m_axi_awburst(ddr_awburst),
+      .m_axi_awvalid(ddr_awvalid),
+      .m_axi_awready(ddr_awready),
+      .m_axi_wdata(ddr_wdata),
+      .m_axi_wstrb(ddr_wstrb),
+      .m_axi_wlast(ddr_wlast),
+      .m_axi_wvalid(ddr_wvalid),
+      .m_axi_wready(ddr_wready),
+      .m_axi_bid(ddr_bid),
+      .m_axi_bresp(ddr_bresp),
+      .m_axi_bvalid(ddr_bvalid),
+      .m_axi_bready(ddr_bready),
+      .m_axi_arid(ddr_arid),
+      .m_axi_araddr(ddr_araddr),
+      .m_axi_arlen(ddr_arlen),
+      .m_axi_arsize(ddr_arsize),
+      .m_axi_arburst(ddr_arburst),
+      .m_axi_arvalid(ddr_arvalid),
+      .m_axi_arready(ddr_arready),
+      .m_axi_rid(ddr_rid),
+      .m_axi_rdata(ddr_rdata),
+      .m_axi_rresp(ddr_rresp),
+      .m_axi_rlast(ddr_rlast),
+      .m_axi_rvalid(ddr_rvalid),
+      .m_axi_rready(ddr_rready)
+  );
+  hbm_line_bridge adapter (
+      .clk_i(clk_i),
+      .rst_ni(rst_ni),
+      .clk_hbm_i(clk_hbm_i),
+      .rst_hbm_ni(rst_hbm_ni),
+      .controller_ready_i(controller_ready_i),
+      .ready_o(hbm_ready_o),
+      .fault_o(hbm_fault_o),
+      .s_axi_awid(ddr_awid),
+      .s_axi_awaddr(ddr_awaddr),
+      .s_axi_awlen(ddr_awlen),
+      .s_axi_awsize(ddr_awsize),
+      .s_axi_awburst(ddr_awburst),
+      .s_axi_awvalid(ddr_awvalid),
+      .s_axi_awready(ddr_awready),
+      .s_axi_wdata(ddr_wdata),
+      .s_axi_wstrb(ddr_wstrb),
+      .s_axi_wlast(ddr_wlast),
+      .s_axi_wvalid(ddr_wvalid),
+      .s_axi_wready(ddr_wready),
+      .s_axi_bid(ddr_bid),
+      .s_axi_bresp(ddr_bresp),
+      .s_axi_bvalid(ddr_bvalid),
+      .s_axi_bready(ddr_bready),
+      .s_axi_arid(ddr_arid),
+      .s_axi_araddr(ddr_araddr),
+      .s_axi_arlen(ddr_arlen),
+      .s_axi_arsize(ddr_arsize),
+      .s_axi_arburst(ddr_arburst),
+      .s_axi_arvalid(ddr_arvalid),
+      .s_axi_arready(ddr_arready),
+      .s_axi_rid(ddr_rid),
+      .s_axi_rdata(ddr_rdata),
+      .s_axi_rresp(ddr_rresp),
+      .s_axi_rlast(ddr_rlast),
+      .s_axi_rvalid(ddr_rvalid),
+      .s_axi_rready(ddr_rready),
+      .m_axi_awid(hbm_awid),
+      .m_axi_awaddr(hbm_awaddr),
+      .m_axi_awlen(hbm_awlen),
+      .m_axi_awsize(hbm_awsize),
+      .m_axi_awburst(hbm_awburst),
+      .m_axi_awvalid(hbm_awvalid),
+      .m_axi_awready(hbm_awready),
+      .m_axi_wdata(hbm_wdata),
+      .m_axi_wstrb(hbm_wstrb),
+      .m_axi_wlast(hbm_wlast),
+      .m_axi_wvalid(hbm_wvalid),
+      .m_axi_wready(hbm_wready),
+      .m_axi_bid(hbm_bid),
+      .m_axi_bresp(hbm_bresp),
+      .m_axi_bvalid(hbm_bvalid),
+      .m_axi_bready(hbm_bready),
+      .m_axi_arid(hbm_arid),
+      .m_axi_araddr(hbm_araddr),
+      .m_axi_arlen(hbm_arlen),
+      .m_axi_arsize(hbm_arsize),
+      .m_axi_arburst(hbm_arburst),
+      .m_axi_arvalid(hbm_arvalid),
+      .m_axi_arready(hbm_arready),
+      .m_axi_rid(hbm_rid),
+      .m_axi_rdata(hbm_rdata),
+      .m_axi_rresp(hbm_rresp),
+      .m_axi_rlast(hbm_rlast),
+      .m_axi_rvalid(hbm_rvalid),
+      .m_axi_rready(hbm_rready)
+  );
+endmodule

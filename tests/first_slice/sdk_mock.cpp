@@ -19,8 +19,11 @@ static bool fail(const char *name) {
 }
 extern "C" {
 int fpga_mgmt_init() {
-  regs[0]      = 0x10000;
-  regs[8]      = 2;
+  regs[0]                    = 0x10000;
+  const char *memory_backend = std::getenv("MOCK_MEMORY_BACKEND");
+  regs[8]                    = memory_backend && std::string(memory_backend) == "hbm" ? 3 : 2;
+  if (fail("memory_backend"))
+    regs[8] ^= 1;
   regs[0x1000] = 0x444f5431;
   regs[0x1004] = 0x10000;
   regs[0x1008] = 7;
@@ -61,6 +64,8 @@ int fpga_mgmt_describe_local_image(int slot, fpga_mgmt_image_info *info, uint32_
   info->ids.afi_device_ids = {0x1d0f, 0xf010, 0x1d0f, 0x103};
   if (fail("agfi") || (fail("final_identity") && describes >= 3))
     std::strcpy(info->ids.afi_id, "agfi-00000000000000104");
+  if (fail("final_memory_backend") && describes >= 3)
+    regs[8] ^= 1;
   auto &metrics = info->metrics.f2_metrics;
   if (fail("metrics-int-status"))
     metrics.int_status = 1;

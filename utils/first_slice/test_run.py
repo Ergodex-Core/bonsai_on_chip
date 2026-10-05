@@ -39,7 +39,11 @@ class SyntheticBus:
         change_final_backend=False,
         wrong_read_count=False,
         change_final_epoch=False,
-        lose_final_seal=False
+        lose_final_seal=False,
+        memory_backend=None,
+        hardware_backend_id=2,
+        change_final_memory_backend=False,
+        change_final_identity=None
     ):
         self.image = bytes(image)
         self.cases = cases
@@ -52,6 +56,10 @@ class SyntheticBus:
         self.wrong_read_count = wrong_read_count
         self.change_final_epoch = change_final_epoch
         self.lose_final_seal = lose_final_seal
+        self.memory_backend = memory_backend
+        self.hardware_backend_id = hardware_backend_id
+        self.change_final_memory_backend = change_final_memory_backend
+        self.change_final_identity = change_final_identity
         self.ran = False
         self.info_count = 0
         self.dump_count = 0
@@ -67,7 +75,7 @@ class SyntheticBus:
         operation, _, payload = command.partition(' ')
         if operation == 'INFO':
             self.info_count += 1
-            return {
+            info = {
                 'ok':
                 True,
                 'backend': (
@@ -77,6 +85,13 @@ class SyntheticBus:
                 'agfi':
                 'agfi-MOCK-UNIT-TEST-ONLY'
             }
+            if self.memory_backend is not None:
+                info['memory_backend'] = self.memory_backend
+            if self.change_final_memory_backend and self.info_count > 1:
+                info['memory_backend'] = (
+                    'ddr' if self.memory_backend == 'hbm' else 'hbm'
+                )
+            return info
         if operation == 'LOAD':
             if Path(json.loads(payload)).read_bytes() != self.image:
                 raise RuntimeError('mock received wrong input image')
@@ -115,12 +130,18 @@ class SyntheticBus:
 
     def read(self, address):
         self.count += 1
-        if address == 0:
-            return 0x10000
-        if address == runner.MAILBOX:
-            return 0x444f5431
-        if address == runner.MAILBOX + 4:
-            return 0x10000
+        identity = {
+            0: 0x10000,
+            8: self.hardware_backend_id,
+            runner.MAILBOX: 0x444f5431,
+            runner.MAILBOX + 4: 0x10000
+        }
+        if address in identity:
+            changed = (
+                self.change_final_identity == address and self.ran
+                and self.state == 3
+            )
+            return identity[address] ^ int(changed)
         if address == 4:
             if self.lose_final_seal and self.ran and self.state == 3:
                 return self.state
@@ -224,17 +245,18 @@ class RunFailureTests(unittest.TestCase):
         )
         self.save_fixture()
         # These tests isolate run-time failure reporting, not build attestation.
+        self.build_manifest = {
+            'schema': 1,
+            'backend': 'aws_f2',
+            'agfi': 'agfi-MOCK-UNIT-TEST-ONLY',
+            'binary_sha256': runner.sha256(self.args.transport),
+            'source_sha256': {}
+        }
         manifest_check = patch.object(
             runner,
             'verify_build_manifest',
             create=True,
-            return_value={
-                'schema': 1,
-                'backend': 'aws_f2',
-                'agfi': 'agfi-MOCK-UNIT-TEST-ONLY',
-                'binary_sha256': runner.sha256(self.args.transport),
-                'source_sha256': {}
-            }
+            return_value=self.build_manifest
         )
         manifest_check.start()
         self.addCleanup(manifest_check.stop)
@@ -379,6 +401,108 @@ class RunFailureTests(unittest.TestCase):
                 runner.run(self.args)
         self.assertEqual(self.report()['status'], 'FAIL')
 
+    def test_legacy_ddr_identity_remains_accepted(self):
+        bus = SyntheticBus(self.image, self.cases)
+        with mock_bus(bus):
+            report = runner.run(self.args)
+        self.assertEqual(report['status'], 'PASS')
+        self.assertEqual(report['memory_backend'], 'ddr')
+        self.assertEqual(report['hardware_identity']['memory_backend_id'], 2)
+        self.assertEqual(
+            report['final_hardware_identity'], report['hardware_identity']
+        )
+
+    def test_hbm_requires_explicit_matching_transport_identity(self):
+        self.build_manifest['memory_backend'] = 'hbm'
+        # A transport without the discriminator is legacy DDR, even if a
+        # different register claims HBM. Reject before issuing any writes.
+        bus = SyntheticBus(self.image, self.cases, hardware_backend_id=3)
+        with mock_bus(bus):
+            with self.assertRaisesRegex(ValueError,
+                                        'transport memory backend differs'):
+                runner.run(self.args)
+        self.assertEqual(self.report()['status'], 'FAIL')
+        self.assertFalse(bus.registers)
+
+    def test_hbm_transport_cannot_satisfy_ddr_manifest(self):
+        bus = SyntheticBus(
+            self.image,
+            self.cases,
+            memory_backend='hbm',
+            hardware_backend_id=3
+        )
+        with mock_bus(bus):
+            with self.assertRaisesRegex(ValueError,
+                                        'transport memory backend differs'):
+                runner.run(self.args)
+        self.assertFalse(bus.registers)
+
+    def test_wrong_hardware_memory_backend_fails_before_loading(self):
+        for memory_backend, wrong_id in (('ddr', 3), ('hbm', 2), ('hbm', 0)):
+            with self.subTest(memory_backend=memory_backend,
+                              wrong_id=wrong_id):
+                self.args.out = self.root / f'{memory_backend}-{wrong_id}'
+                self.build_manifest['memory_backend'] = memory_backend
+                bus = SyntheticBus(
+                    self.image,
+                    self.cases,
+                    memory_backend=memory_backend,
+                    hardware_backend_id=wrong_id
+                )
+                with mock_bus(bus):
+                    with self.assertRaisesRegex(
+                            ValueError, 'hardware memory backend differs'):
+                        runner.run(self.args)
+                self.assertEqual(self.report()['status'], 'FAIL')
+                self.assertFalse(bus.registers)
+
+    def test_matching_hbm_identity_has_hbm_scope(self):
+        self.build_manifest['memory_backend'] = 'hbm'
+        bus = SyntheticBus(
+            self.image,
+            self.cases,
+            memory_backend='hbm',
+            hardware_backend_id=3
+        )
+        with mock_bus(bus):
+            report = runner.run(self.args)
+        self.assertEqual(report['status'], 'PASS')
+        self.assertEqual(report['memory_backend'], 'hbm')
+        self.assertEqual(report['hardware_identity']['memory_backend_id'], 3)
+        self.assertEqual(
+            report['final_hardware_identity'], report['hardware_identity']
+        )
+        self.assertIn('sealed HBM image', report['scope'])
+        self.assertNotIn('DDR', report['scope'])
+
+    def test_final_transport_memory_backend_change_prevents_pass(self):
+        self.build_manifest['memory_backend'] = 'hbm'
+        bus = SyntheticBus(
+            self.image,
+            self.cases,
+            memory_backend='hbm',
+            hardware_backend_id=3,
+            change_final_memory_backend=True
+        )
+        with mock_bus(bus):
+            with self.assertRaisesRegex(RuntimeError, 'identity changed'):
+                runner.run(self.args)
+        self.assertEqual(self.report()['status'], 'FAIL')
+        self.assertEqual(len(self.report()['cases']), 6)
+
+    def test_final_hardware_identity_change_prevents_pass(self):
+        for address in (0, 8, runner.MAILBOX, runner.MAILBOX + 4):
+            with self.subTest(address=address):
+                self.args.out = self.root / f'identity-{address}'
+                bus = SyntheticBus(
+                    self.image, self.cases, change_final_identity=address
+                )
+                with mock_bus(bus):
+                    with self.assertRaisesRegex(RuntimeError,
+                                                'hardware identity changed'):
+                        runner.run(self.args)
+                self.assertEqual(self.report()['status'], 'FAIL')
+
     def test_final_epoch_change_prevents_pass(self):
         bus = SyntheticBus(self.image, self.cases, change_final_epoch=True)
         with mock_bus(bus):
@@ -404,6 +528,21 @@ class RunFailureTests(unittest.TestCase):
 
 
 class BuildManifestTests(unittest.TestCase):
+
+    HBM_SOURCES = (
+        'hdl/verilog/first_slice/hbm_line_bridge.sv',
+        'hdl/verilog/first_slice/hbm_cdc_mailbox.sv',
+        'tests/hbm_rom/hbm_model_server.cpp',
+        'tests/hbm_rom/hbm_rom_sim_top.sv'
+    )
+
+    HBM_PHYSICAL_SOURCES = (
+        'fpga/aws_f2/first_slice/transport.cpp',
+        'fpga/aws_f2/hbm_rom/cl_bonsai_hbm_rom.sv',
+        'fpga/aws_f2/hbm_rom/hbm_rom_controller.sv',
+        'fpga/aws_f2/hbm_rom/hbm_fixed_clock.sv',
+        'fpga/aws_f2/hbm_rom/cl_id_defines.vh'
+    )
 
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
@@ -440,6 +579,31 @@ class BuildManifestTests(unittest.TestCase):
             self.executable, self.path, self.root
         )
 
+    def add_sources(self, paths):
+        for name in paths:
+            source = self.root / name
+            source.parent.mkdir(parents=True, exist_ok=True)
+            source.write_text('UNIT TEST ' + name)
+            self.manifest['source_sha256'][name] = runner.sha256(source)
+
+    def hbm_manifest(self):
+        self.manifest['memory_backend'] = 'hbm'
+        self.manifest['source_sha256'] = {
+            name: digest
+            for name, digest in self.manifest['source_sha256'].items()
+            if name.startswith('hdl/')
+        }
+        self.add_sources(self.HBM_SOURCES)
+
+    def assert_required_sources(self, paths):
+        for name in paths:
+            with self.subTest(name=name):
+                digest = self.manifest['source_sha256'].pop(name)
+                with self.assertRaisesRegex(ValueError,
+                                            'misses compiled inputs'):
+                    self.verify()
+                self.manifest['source_sha256'][name] = digest
+
     def test_build_binding_rejects_changed_binary(self):
         self.verify()
         self.executable.write_bytes(b'DIFFERENT BUILD')
@@ -454,14 +618,56 @@ class BuildManifestTests(unittest.TestCase):
             self.verify()
 
     def test_build_binding_requires_transport_and_wrapper_sources(self):
-        for name in ('tests/first_slice/model_server.cpp',
-                     'tests/first_slice/first_slice_sim_top.sv'):
-            with self.subTest(name=name):
-                digest = self.manifest['source_sha256'].pop(name)
+        self.assert_required_sources((
+            'tests/first_slice/model_server.cpp',
+            'tests/first_slice/first_slice_sim_top.sv'
+        ))
+
+    def test_legacy_and_explicit_ddr_manifests_are_accepted(self):
+        self.verify()
+        self.manifest['memory_backend'] = 'ddr'
+        self.verify()
+
+    def test_hbm_cannot_relabel_ddr_compiled_inputs(self):
+        self.manifest['memory_backend'] = 'hbm'
+        with self.assertRaisesRegex(ValueError, 'misses compiled inputs'):
+            self.verify()
+
+    def test_hbm_requires_bridge_mailbox_and_hbm_simulator_sources(self):
+        self.hbm_manifest()
+        self.verify()
+        self.assert_required_sources(self.HBM_SOURCES)
+
+    def test_hbm_source_changes_invalidate_manifest(self):
+        self.hbm_manifest()
+        self.verify()
+        (self.root / self.HBM_SOURCES[0]).write_text('CHANGED HBM BRIDGE')
+        with self.assertRaisesRegex(ValueError, 'source differs'):
+            self.verify()
+
+    def test_hbm_physical_manifest_requires_actual_attachment_sources(self):
+        self.hbm_manifest()
+        self.manifest.update(
+            backend='aws_f2',
+            agfi='agfi-UNIT-TEST',
+            dcp_sha256='UNIT TEST CHECKPOINT'
+        )
+        self.manifest['source_sha256'] = {
+            name: digest
+            for name, digest in self.manifest['source_sha256'].items()
+            if name.startswith('hdl/')
+        }
+        self.add_sources(self.HBM_PHYSICAL_SOURCES)
+        self.verify()
+        self.assert_required_sources(self.HBM_PHYSICAL_SOURCES)
+
+    def test_unknown_memory_backend_is_rejected(self):
+        for value in ('native_hbm', '', None, 3):
+            with self.subTest(value=value):
+                self.manifest['memory_backend'] = value
                 with self.assertRaisesRegex(ValueError,
-                                            'misses compiled inputs'):
+                                            'unsupported memory backend'):
                     self.verify()
-                self.manifest['source_sha256'][name] = digest
 
 
 class BusResponseTests(unittest.TestCase):

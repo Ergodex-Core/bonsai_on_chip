@@ -21,7 +21,7 @@ import subprocess
 import tempfile
 
 REPO = Path(__file__).resolve().parents[2]
-EXPECTED_CHECKS = 41
+EXPECTED_CHECKS = 43
 SDK_REVISION = 'b603a81f65666e0cf7a67ee5cf18b148eb6b08c3'
 HEADER_SHA256 = {
     'fpga_mgmt.h':
@@ -65,7 +65,8 @@ def execute(args, output):
         'scope': 'Mock public SDK only; no physical FPGA or RTL execution',
         'fpga_executed': False,
         'checks': [],
-        'sdk_revision': SDK_REVISION
+        'sdk_revision': SDK_REVISION,
+        'memory_backend': args.memory_backend
     }
     report_path = output / 'report.json'
 
@@ -96,7 +97,9 @@ def execute(args, output):
                                                      text=True).splitlines()[0]
         binary = output / 'transport-mock'
         command = [
-            compiler, '-std=c++17', '-O2', '-Wall', '-Wextra', '-Werror', '-I',
+            compiler, '-std=c++17', '-O2', '-Wall', '-Wextra', '-Werror',
+            '-DMEMORY_BACKEND_HBM=' + str(int(args.memory_backend == 'hbm')),
+            '-I',
             str(include),
             str(REPO / sources[0]),
             str(REPO / sources[1]), '-o',
@@ -121,7 +124,9 @@ def execute(args, output):
         final_destination = output / 'final image.bin'
         third_destination = output / 'third image.bin'
         environment = dict(
-            os.environ, FIRST_SLICE_EXPECTED_AGFI='agfi-00000000000000103'
+            os.environ,
+            FIRST_SLICE_EXPECTED_AGFI='agfi-00000000000000103',
+            MOCK_MEMORY_BACKEND=args.memory_backend
         )
         environment.pop('MOCK_FAILURE', None)
 
@@ -209,6 +214,8 @@ def execute(args, output):
         )
         require(
             messages[0]['backend'] == 'aws_f2'
+            and messages[0]['memory_backend'] == args.memory_backend
+            and messages[-2]['memory_backend'] == args.memory_backend
             and messages[0]['clock_measured'] is False
             and replies['PEEK 0']['value'] == 0x03020100,
             'mock identity/unchanged sealed word mismatch'
@@ -231,6 +238,13 @@ def execute(args, output):
         for failure in ('init', 'describe', 'agfi', 'pci', 'abi', 'not_cold',
                         'attach', 'peek', 'final_identity', 'detach', 'close'):
             run('sdk-' + failure, ['QUIT'], failure)
+        for failure in ('memory_backend', 'final_memory_backend'):
+            run(
+                'sdk-' + failure, ['INFO'],
+                failure,
+                expected_error=
+                'hardware memory backend differs from transport build'
+            )
         health_fields = (
             'int_status', 'dma_pcis_timeout_count', 'ocl_slave_timeout_count',
             'pcim_axi_protocol_error_status', 'pcim_axi_protocol_error_count',
@@ -349,6 +363,9 @@ def main():
     parser.add_argument('--sdk', type=Path, required=True)
     parser.add_argument('--out', type=Path)
     parser.add_argument('--cxx', default='c++')
+    parser.add_argument(
+        '--memory-backend', choices=('ddr', 'hbm'), default='ddr'
+    )
     args = parser.parse_args()
     if args.out is not None:
         output = args.out.resolve()

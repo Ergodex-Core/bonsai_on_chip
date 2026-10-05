@@ -1,0 +1,2 @@
+test_hbm_rom: TEST=test_hbm_rom
+test_hbm_rom: all

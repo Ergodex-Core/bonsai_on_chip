@@ -189,10 +189,14 @@ module f2_memory_bridge (
         if (s_axi_wvalid) begin
           // Illegal byte strobes and WLAST cannot escape the admitted range.
           // Malformed transactions are failed, never "repaired" with host data.
-          if (s_axi_wlast != (wleft == 0) || (s_axi_wstrb & ~lane_mask(wa[5:0], wsize)) != 0) begin
+          if (!backend_ready_o || s_axi_wlast != (wleft == 0) || (s_axi_wstrb & ~lane_mask(
+                  wa[5:0], wsize
+              )) != 0) begin
             werror <= 1;
           end
-          if (wpermit && s_axi_wlast == (wleft == 0) && (s_axi_wstrb & ~lane_mask(
+          // Accepted writes may drain after BEGIN_VERIFY closes admission, but
+          // never continue after a bad beat or backend fault in this burst.
+          if (wpermit && !werror && backend_ready_o && s_axi_wlast == (wleft == 0) && (s_axi_wstrb & ~lane_mask(
                   wa[5:0], wsize
               )) == 0) begin
             wd <= s_axi_wdata;

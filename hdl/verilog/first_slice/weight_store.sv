@@ -1,6 +1,9 @@
 // Copyright 2026 Ergodex. Licensed under the Apache License, Version 2.0.
 // Version 1 read-only image control and 16-credit logical-line frontend.
-module weight_store (
+module weight_store #(
+    parameter logic [31:0] BACKEND_ID = 2,
+    parameter logic [63:0] PHYSICAL_BYTES = 64'h400000000
+) (
     input logic clk_i,
     rst_ni,
     input logic cfg_write_i,
@@ -70,7 +73,7 @@ module weight_store (
   logic [63:0] image_base, image_bytes;
   assign image_base_o = image_base;
   assign image_bytes_o = image_bytes;
-  assign loader_enable_o = state == LOADING;
+  assign loader_enable_o = state == LOADING && backend_ready_i;
   assign ready_o = ((state == SEALED) || (state == RUNNING)) && backend_ready_i && !stopping;
   assign fault_o = state == FAULT;
   assign req_ready_o = ready_o && free_found && !duplicate && !client_fault_i;
@@ -83,7 +86,7 @@ module weight_store (
   // Hold an already-presented memory request stable through a fault until its
   // handshake. IDs are not reused until its eventual response is drained.
   assign fatal_event = client_fault_i ||
-      (((state == SEALED) || (state == RUNNING)) && !backend_ready_i) ||
+      ((state != EMPTY && state != FAULT) && !backend_ready_i) ||
       (bus_pending && mem_rsp_valid_i && mem_rsp_error_i);
 
   always_comb begin
@@ -113,11 +116,11 @@ module weight_store (
     end
     hash_equal = expected_mask == 8'hff && readback_mask == 8'hff;
     for (int i = 0; i < 8; i++) hash_equal = hash_equal && expected_hash[i] == readback_hash[i];
-    // This first-slice adapter exposes the lower 16 GiB of F2 DDR.
-    // Restrict logical images to the agreed 256 MiB aperture.
+    // Backend capacity is a build-time bound, never a mutable address alias.
+    // Every backend retains the agreed 256 MiB logical aperture.
     valid_range=image_bytes >= 64 && image_bytes <= 64'h10000000 &&
         image_bytes[5:0] == 0 && image_base[5:0] == 0 &&
-        image_base < 64'h400000000 && image_bytes <= 64'h400000000-image_base;
+        image_base < PHYSICAL_BYTES && image_bytes <= PHYSICAL_BYTES-image_base;
     incoming_status = OK;
     if (req_offset_i[5:0] != 0) incoming_status = ALIGNMENT;
     else if (image_bytes < 64 || {16'b0, req_offset_i} > image_bytes - 64) incoming_status = RANGE;
@@ -160,7 +163,7 @@ module weight_store (
         cfg_rdata_o[11]  = fault_o;
         cfg_rdata_o[12]  = rejected_saturated;
       end
-      12'h008: cfg_rdata_o = 2;  // DDR; the behavioral backend is a verification model.
+      12'h008: cfg_rdata_o = BACKEND_ID;
       12'h00c: cfg_rdata_o = epoch_o;
       12'h010: cfg_rdata_o = image_bytes[31:0];
       12'h014: cfg_rdata_o = image_bytes[63:32];
@@ -332,7 +335,10 @@ module weight_store (
         rsp_status_o <= slot_status[complete_index];
         slot_state[complete_index] <= PRESENTED;
       end
-      if (fatal_event && state != EMPTY && state != LOADING && state != VERIFYING) begin
+      // A controller reset/loss of readiness during load or verification also
+      // invalidates the volatile image. Recovery requires coordinated reset,
+      // complete reload, full readback and fresh hashes; readiness cannot revive it.
+      if (fatal_event && state != EMPTY) begin
         state <= FAULT;
         stopping <= 0;
         if (fault_code == 0) begin
