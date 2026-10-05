@@ -1,0 +1,316 @@
+{
+  "generated_at_utc": "2026-10-05T16:17:38.025866+00:00",
+  "purpose": "Locally extracted quality tools for bonsai_on_chip; repository unchanged by provisioning.",
+  "scope": "/workspace/tools",
+  "environment_script": "/workspace/tools/quality-env.sh",
+  "path_prefix": "/workspace/tools/quality-bin",
+  "repository_tool_specification": "/workspace/bonsai_on_chip/utils/coralnpu.dockerfile",
+  "repository_tool_specification_sha256": "2108a0af4bf98505a36d36689a33be3f60e016e9756c422be07fa0d5db3bd6cc",
+  "debian_index": {
+    "url": "https://deb.debian.org/debian/dists/trixie/main/binary-amd64/Packages.xz",
+    "sha256": "7778d3e3f303b7ddb8ce0fe7c8d57473a076c6bf2e8f241f75421d2396352498",
+    "verification": "Debian packages matched SHA256 and size in this HTTPS-fetched index; no package installation or maintainer script execution."
+  },
+  "verible": {
+    "url": "https://github.com/chipsalliance/verible/releases/download/v0.0-4051-g9fdb4057/verible-v0.0-4051-g9fdb4057-linux-static-x86_64.tar.gz",
+    "sha256": "f52e5920ef63f70620a6086e09dea8bd778147cd7a9ff827bb7de5d6316b1754",
+    "repository_pinned_sha256_matched": true,
+    "version": "Version\tv0.0-4051-g9fdb4057\nCommit-Timestamp\t2025-12-22T08:55:10Z\nBuilt\t2025-12-22T08:59:31Z"
+  },
+  "debian_packages": [
+    {
+      "package": "clang-format-19",
+      "version": "1:19.1.7-3+b1",
+      "url": "https://deb.debian.org/debian/pool/main/l/llvm-toolchain-19/clang-format-19_19.1.7-3+b1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/clang-format-19_19.1.7-3+b1_amd64.deb",
+      "sha256": "25c849491d8cddc1d65e6f5f67d188a4406c5cdb8c78c490bef08c9477a4e150",
+      "bytes": 93000
+    },
+    {
+      "package": "libclang-cpp19",
+      "version": "1:19.1.7-3+b1",
+      "url": "https://deb.debian.org/debian/pool/main/l/llvm-toolchain-19/libclang-cpp19_19.1.7-3+b1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/libclang-cpp19_19.1.7-3+b1_amd64.deb",
+      "sha256": "a7d2b6df51050834f6ea5c0d5e34869c2298b0bcdaa91eff17ba3db2cd545c47",
+      "bytes": 13191148
+    },
+    {
+      "package": "shellcheck",
+      "version": "0.10.0-1",
+      "url": "https://deb.debian.org/debian/pool/main/s/shellcheck/shellcheck_0.10.0-1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/shellcheck_0.10.0-1_amd64.deb",
+      "sha256": "8b207f7d4421a46cec9e377c74d450e1717092b58ae3e7151cd5f85f639065cd",
+      "bytes": 4907584
+    },
+    {
+      "package": "markdownlint",
+      "version": "0.13.0-4",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-mdl/markdownlint_0.13.0-4_all.deb",
+      "archive": "/workspace/tools/quality-archives/markdownlint_0.13.0-4_all.deb",
+      "sha256": "e87ee3a90ee3a5c2f14e6a276e98e29f9d2a9ed9542b6f46744e721dc22a5989",
+      "bytes": 22268
+    },
+    {
+      "package": "ruby",
+      "version": "1:3.3+b1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-defaults/ruby_3.3+b1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/ruby_3.3+b1_amd64.deb",
+      "sha256": "3d67e2079ac7e1842f4abecfa2ac8263a6761daa91f06559d6d2d1f897d0576d",
+      "bytes": 6560
+    },
+    {
+      "package": "libruby",
+      "version": "1:3.3+b1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-defaults/libruby_3.3+b1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/libruby_3.3+b1_amd64.deb",
+      "sha256": "3548d8ef339f73c59c556f2c397b3222cecb56d726e61e9d6d1eb8495e2e4179",
+      "bytes": 5440
+    },
+    {
+      "package": "ruby3.3",
+      "version": "3.3.8-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby3.3/ruby3.3_3.3.8-2_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/ruby3.3_3.3.8-2_amd64.deb",
+      "sha256": "10798ffe8edc86d7f9491655a115049a7a77dfbef5dc909dc13803cbb6c47f9b",
+      "bytes": 834088
+    },
+    {
+      "package": "libruby3.3",
+      "version": "3.3.8-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby3.3/libruby3.3_3.3.8-2_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/libruby3.3_3.3.8-2_amd64.deb",
+      "sha256": "033d7f7359da6353d29e5cb87ef411357d3841c02fd7d1089897653fec665289",
+      "bytes": 6300780
+    },
+    {
+      "package": "ruby-rubygems",
+      "version": "3.6.7-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/rubygems/ruby-rubygems_3.6.7-2_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-rubygems_3.6.7-2_all.deb",
+      "sha256": "a585dd934ffc58516c468cc06fe10141d1383f96bf1113a25397f0ac043253a1",
+      "bytes": 407044
+    },
+    {
+      "package": "rubygems-integration",
+      "version": "1.19",
+      "url": "https://deb.debian.org/debian/pool/main/r/rubygems-integration/rubygems-integration_1.19_all.deb",
+      "archive": "/workspace/tools/quality-archives/rubygems-integration_1.19_all.deb",
+      "sha256": "ca8c600505bd4c5046b2c60fbf964d6f4eb08db86eb77526a3de0315f1222afe",
+      "bytes": 5488
+    },
+    {
+      "package": "ruby-json",
+      "version": "2.9.1+dfsg-1+b1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-json/ruby-json_2.9.1+dfsg-1+b1_amd64.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-json_2.9.1+dfsg-1+b1_amd64.deb",
+      "sha256": "11617291b03ab9413ffed6d36a3cc85c808dfa5027480da96f44f2b38d0eaeb8",
+      "bytes": 62208
+    },
+    {
+      "package": "ruby-mixlib-cli",
+      "version": "2.1.6-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-mixlib-cli/ruby-mixlib-cli_2.1.6-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-mixlib-cli_2.1.6-1_all.deb",
+      "sha256": "95f83adcab80a01ba9bcabd5fbb8c8fc2b7622e7c34661c61dd43a72eaa2a69f",
+      "bytes": 14224
+    },
+    {
+      "package": "ruby-mixlib-config",
+      "version": "3.0.6-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-mixlib-config/ruby-mixlib-config_3.0.6-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-mixlib-config_3.0.6-1_all.deb",
+      "sha256": "1c900b317496f572d69622f11f5224b02c40bcc335efecc407227bdb52a7e26d",
+      "bytes": 15584
+    },
+    {
+      "package": "ruby-kramdown",
+      "version": "2.5.1-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-kramdown/ruby-kramdown_2.5.1-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-kramdown_2.5.1-1_all.deb",
+      "sha256": "7cae25460748b2a6c24af285ab0c595853ecb06a6c520bb1a7a972f878853df3",
+      "bytes": 317232
+    },
+    {
+      "package": "ruby-kramdown-parser-gfm",
+      "version": "1.1.0-3",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-kramdown-parser-gfm/ruby-kramdown-parser-gfm_1.1.0-3_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-kramdown-parser-gfm_1.1.0-3_all.deb",
+      "sha256": "64efbe7e1615b10154072cb52844acf101bc7e806d65b6ceca377fd590bf6d9a",
+      "bytes": 6528
+    },
+    {
+      "package": "ruby-mixlib-shellout",
+      "version": "3.2.5-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-mixlib-shellout/ruby-mixlib-shellout_3.2.5-2_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-mixlib-shellout_3.2.5-2_all.deb",
+      "sha256": "02a98d0069c630dfd09357ddc4f128b1993121f859910848415f5756653eedbb",
+      "bytes": 25672
+    },
+    {
+      "package": "ruby-tomlrb",
+      "version": "1.3.0-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-tomlrb/ruby-tomlrb_1.3.0-2_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-tomlrb_1.3.0-2_all.deb",
+      "sha256": "11acacaa8a26d8e51f0ebf0fda93550edc93c1c445a470357748c36d57f140db",
+      "bytes": 8128
+    },
+    {
+      "package": "ruby-chef-utils",
+      "version": "16.12.3-3",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-chef-utils/ruby-chef-utils_16.12.3-3_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-chef-utils_16.12.3-3_all.deb",
+      "sha256": "edeb561c1482ad2a54e93da4a03cfe0ee1fc01a44e3ee4cae4e9a9cc530905cc",
+      "bytes": 16484
+    },
+    {
+      "package": "rake",
+      "version": "13.2.1-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/rake/rake_13.2.1-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/rake_13.2.1-1_all.deb",
+      "sha256": "6080dff69fe4fa4f1419d2326a2004e21cc696b37a03c0c96e5e8c42c3e9e477",
+      "bytes": 65228
+    },
+    {
+      "package": "ruby-csv",
+      "version": "3.3.4-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-csv/ruby-csv_3.3.4-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-csv_3.3.4-1_all.deb",
+      "sha256": "6367f942bcffb869ba78996a2be4b4f12c93ad2b345f5750a3112a1127293125",
+      "bytes": 42236
+    },
+    {
+      "package": "ruby-did-you-mean",
+      "version": "1.6.3-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-did-you-mean/ruby-did-you-mean_1.6.3-2_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-did-you-mean_1.6.3-2_all.deb",
+      "sha256": "8c193ed0b6fa3a803b7643dd840cab1a6d1e665bcc212accce8a8ea1deeee615",
+      "bytes": 20904
+    },
+    {
+      "package": "ruby-net-telnet",
+      "version": "0.2.0-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-net-telnet/ruby-net-telnet_0.2.0-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-net-telnet_0.2.0-1_all.deb",
+      "sha256": "e8a5b95e359894fbca0fa1cc70cdd349c125f43e883775491735a44ced957256",
+      "bytes": 13076
+    },
+    {
+      "package": "ruby-ruby2-keywords",
+      "version": "0.0.5-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-ruby2-keywords/ruby-ruby2-keywords_0.0.5-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-ruby2-keywords_0.0.5-1_all.deb",
+      "sha256": "a2806f226a72c5be7cfd33eb35fbcf1aa33c136d48802af7fcd5897f54417b8b",
+      "bytes": 4300
+    },
+    {
+      "package": "ruby-xmlrpc",
+      "version": "0.3.3-2",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-xmlrpc/ruby-xmlrpc_0.3.3-2_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-xmlrpc_0.3.3-2_all.deb",
+      "sha256": "c2735a4c93ea68e453108c3524506796663a74975df63fc3cffb2847e3c30b0b",
+      "bytes": 24428
+    },
+    {
+      "package": "ruby-webrick",
+      "version": "1.9.1-1",
+      "url": "https://deb.debian.org/debian/pool/main/r/ruby-webrick/ruby-webrick_1.9.1-1_all.deb",
+      "archive": "/workspace/tools/quality-archives/ruby-webrick_1.9.1-1_all.deb",
+      "sha256": "e8eff1ea6cb255ad89e4820db763c23facdad634615cab08a8fe883d9640ab7b",
+      "bytes": 59624
+    }
+  ],
+  "versions": {
+    "clang-format-19": "Debian clang-format version 19.1.7 (3+b1)",
+    "shellcheck": "ShellCheck - shell script analysis tool\nversion: 0.10.0\nlicense: GNU General Public License, version 3\nwebsite: https://www.shellcheck.net",
+    "ruby": "ruby 3.3.8 (2025-04-09 revision b200bad6cd) [x86_64-linux-gnu]",
+    "mdl": "0.13.0",
+    "yapf3": "yapf 0.43.0"
+  },
+  "yapf": {
+    "origin": "Preexisting local hbm-python virtual environment; installer source was not recorded by this provisioning task. No reinstall performed.",
+    "metadata_sha256": "b5a571db83a30e818340987e1adfc68022877c1211ccb95740f48d24d400f5e4",
+    "installed_record_sha256": "1979e43c5ca4af784aa5675e98b1d8ed600f2ffada9d0ca9064326fe8044693b",
+    "executable_sha256": "55e48116d3903eeff1c074bbabaaaeccf4868bbfe06a0142f75ef2b74feb5b8f"
+  },
+  "wrappers": {
+    "clang-format": {
+      "path": "/workspace/tools/quality-bin/clang-format",
+      "sha256": "430134bbb4d7da6950f943428cbfb221c1545e8c35863daaa24e890cf1da6274",
+      "symlink_target": null
+    },
+    "clang-format-19": {
+      "path": "/workspace/tools/quality-bin/clang-format-19",
+      "sha256": "430134bbb4d7da6950f943428cbfb221c1545e8c35863daaa24e890cf1da6274",
+      "symlink_target": null
+    },
+    "git-clang-format-19": {
+      "path": "/workspace/tools/quality-bin/git-clang-format-19",
+      "sha256": "fe45b404520f033320a1ac902831a891bbdf980f48b8cf3c43d82ea78cac6cb4",
+      "symlink_target": null
+    },
+    "mdl": {
+      "path": "/workspace/tools/quality-bin/mdl",
+      "sha256": "8512e0880b0456c67207998adf78fceda1bc7d2425a7d4b8705ea7aa24b864fa",
+      "symlink_target": null
+    },
+    "ruby": {
+      "path": "/workspace/tools/quality-bin/ruby",
+      "sha256": "366a083e4294156ca067df539fa70996977b6de4a7d987b4705868a0cb621edb",
+      "symlink_target": null
+    },
+    "shellcheck": {
+      "path": "/workspace/tools/quality-bin/shellcheck",
+      "sha256": "b6f77bb869584f96a490cbfcb0f5f3a424466f9b1f5f414cefaedce461f8d7b0",
+      "symlink_target": null
+    },
+    "verible-verilog-format": {
+      "path": "/workspace/tools/quality-bin/verible-verilog-format",
+      "sha256": "9c007f50bae684e5cb6f200ba0d6c27a1a73babd6eba037d00c7d519db6b4958",
+      "symlink_target": "/workspace/tools/verible-v0.0-4051-g9fdb4057/bin/verible-verilog-format"
+    },
+    "verible-verilog-lint": {
+      "path": "/workspace/tools/quality-bin/verible-verilog-lint",
+      "sha256": "5a57551dd2b4c447b45968b1029bf526f0137b99287998ed494a2532a7566fb9",
+      "symlink_target": "/workspace/tools/verible-v0.0-4051-g9fdb4057/bin/verible-verilog-lint"
+    },
+    "verible-verilog-syntax": {
+      "path": "/workspace/tools/quality-bin/verible-verilog-syntax",
+      "sha256": "6bd24be41c4fd201058961036b9727a38ed4c9e797f12ed5fafae14128ef3787",
+      "symlink_target": "/workspace/tools/verible-v0.0-4051-g9fdb4057/bin/verible-verilog-syntax"
+    },
+    "yapf": {
+      "path": "/workspace/tools/quality-bin/yapf",
+      "sha256": "55e48116d3903eeff1c074bbabaaaeccf4868bbfe06a0142f75ef2b74feb5b8f",
+      "symlink_target": "/workspace/tools/hbm-python/bin/yapf"
+    },
+    "yapf3": {
+      "path": "/workspace/tools/quality-bin/yapf3",
+      "sha256": "55e48116d3903eeff1c074bbabaaaeccf4868bbfe06a0142f75ef2b74feb5b8f",
+      "symlink_target": "/workspace/tools/hbm-python/bin/yapf"
+    }
+  },
+  "verification": [
+    {
+      "command": "source /workspace/tools/quality-env.sh; <tool> --version",
+      "result": "PASS for verible-verilog-format, clang-format-19, shellcheck, ruby, mdl, yapf3"
+    },
+    {
+      "command": "PATH=/workspace/tools/quality-bin:$PATH git-clang-format-19 -h",
+      "result": "PASS"
+    },
+    {
+      "command": "PATH=/workspace/tools/quality-bin:$PATH mdl --no-verbose /workspace/tools/quality-smoke.md",
+      "result": "PASS"
+    },
+    {
+      "command": "PATH=/workspace/tools/quality-bin:$PATH shellcheck /workspace/tools/quality-bin/mdl /workspace/tools/quality-bin/ruby /workspace/tools/quality-bin/clang-format-19",
+      "result": "PASS"
+    }
+  ],
+  "limitations": [
+    "No repository formatter or linter invocation was performed by this provisioning task.",
+    "Local extraction depends on the selected Debian trixie host libraries; it is not a hermetic container.",
+    "The repository Dockerfile pins Verible exactly, selects clang-format major version 19, and leaves Debian package point versions unpinned.",
+    "Preexisting yapf 0.43.0 is aliased as yapf3; it was not substituted with the Debian trixie yapf package."
+  ]
+}

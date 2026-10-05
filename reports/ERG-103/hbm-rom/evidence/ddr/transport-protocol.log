@@ -1,0 +1,9 @@
+test_dump_refuses_existing_file_without_modifying_it (__main__.TransportProtocolTests.test_dump_refuses_existing_file_without_modifying_it) ... ok
+test_second_load_refused_before_memory_resize_or_bus_write (__main__.TransportProtocolTests.test_second_load_refused_before_memory_resize_or_bus_write) ... ok
+test_unaligned_and_out_of_image_peek_fail_before_lane_access (__main__.TransportProtocolTests.test_unaligned_and_out_of_image_peek_fail_before_lane_access) ... ok
+test_unaligned_and_out_of_image_poke_fail_before_lane_access (__main__.TransportProtocolTests.test_unaligned_and_out_of_image_poke_fail_before_lane_access) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.022s
+
+OK

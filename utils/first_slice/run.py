@@ -15,6 +15,7 @@ import prepare_fixture
 
 MAILBOX = 0x1000
 PINNED_IMAGE_SHA256 = 'ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99'
+MEMORY_BACKEND_IDS = {'ddr': 2, 'hbm': 3}
 
 
 def sha256(path):
@@ -144,13 +145,18 @@ def reference(raw, inputs, native):
                ), int.from_bytes(scale_bits, 'little')
 
 
-def snapshot_sources(repo):
+def snapshot_sources(repo, memory_backend='ddr'):
     paths = list((repo / 'hdl/verilog/first_slice').glob('*.sv'))
     paths += [
         Path(__file__), repo / 'utils/first_slice/prepare_fixture.py',
         repo / 'tests/first_slice/model_server.cpp',
         repo / 'tests/first_slice/first_slice_sim_top.sv'
     ]
+    if memory_backend == 'hbm':
+        paths += [
+            repo / 'tests/hbm_rom/hbm_model_server.cpp',
+            repo / 'tests/hbm_rom/hbm_rom_sim_top.sv'
+        ]
     return {
         str(path.relative_to(repo)): sha256(path)
         for path in sorted(paths)
@@ -261,11 +267,29 @@ def validate_cases(fixture, image, native):
     return cases
 
 
+def memory_backend_identity(description):
+    # Existing DDR manifests/transports predate this explicit discriminator.
+    backend = description.get('memory_backend', 'ddr')
+    if backend not in ('ddr', 'hbm'):
+        raise ValueError('unsupported memory backend')
+    return backend
+
+
+def hardware_identity(bus):
+    return {
+        'store_abi': bus.read(0),
+        'memory_backend_id': bus.read(8),
+        'mailbox_id': bus.read(MAILBOX),
+        'mailbox_abi': bus.read(MAILBOX + 4)
+    }
+
+
 def verify_build_manifest(executable, manifest_path, repo):
     manifest = json.loads(manifest_path.read_text())
     if manifest.get('schema') != 1 or manifest.get('backend') not in (
             'verilator', 'arcilator', 'aws_f2'):
         raise ValueError('unsupported transport build manifest')
+    memory_backend = memory_backend_identity(manifest)
     if manifest.get('binary_sha256') != sha256(executable):
         raise ValueError('transport binary differs from build manifest')
     required = {
@@ -273,22 +297,41 @@ def verify_build_manifest(executable, manifest_path, repo):
         for name in
         ('weight_store', 'first_slice_top', 'dot128', 'f2_memory_bridge')
     }
-    if manifest['backend'] in ('verilator', 'arcilator'):
+    if memory_backend == 'hbm':
         required.update((
-            'tests/first_slice/model_server.cpp',
-            'tests/first_slice/first_slice_sim_top.sv'
+            'hdl/verilog/first_slice/hbm_line_bridge.sv',
+            'hdl/verilog/first_slice/hbm_cdc_mailbox.sv'
         ))
+    if manifest['backend'] in ('verilator', 'arcilator'):
+        if memory_backend == 'hbm':
+            required.update((
+                'tests/hbm_rom/hbm_model_server.cpp',
+                'tests/hbm_rom/hbm_rom_sim_top.sv'
+            ))
+        else:
+            required.update((
+                'tests/first_slice/model_server.cpp',
+                'tests/first_slice/first_slice_sim_top.sv'
+            ))
         if manifest['backend'] == 'arcilator':
             required.update((
                 'tests/first_slice/generate_arcilator_adapter.py',
                 'tests/first_slice/build_arcilator.py'
             ))
     else:
-        required.update((
-            'fpga/aws_f2/first_slice/transport.cpp',
-            'fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv',
-            'fpga/aws_f2/first_slice/cl_id_defines.vh'
-        ))
+        required.add('fpga/aws_f2/first_slice/transport.cpp')
+        if memory_backend == 'hbm':
+            required.update(
+                'fpga/aws_f2/hbm_rom/' + name for name in (
+                    'cl_bonsai_hbm_rom.sv', 'hbm_rom_controller.sv',
+                    'hbm_fixed_clock.sv', 'cl_id_defines.vh'
+                )
+            )
+        else:
+            required.update((
+                'fpga/aws_f2/first_slice/cl_bonsai_first_slice.sv',
+                'fpga/aws_f2/first_slice/cl_id_defines.vh'
+            ))
         if not manifest.get('agfi') or not manifest.get('dcp_sha256'):
             raise ValueError('physical manifest must bind AGFI and checkpoint')
     sources = manifest.get('source_sha256', {})
@@ -350,13 +393,15 @@ def run(args):
             args.transport, build_path,
             Path(__file__).resolve().parents[2]
         )
+        memory_backend = memory_backend_identity(build)
         report['build_manifest'] = build
         report.update(
+            memory_backend=memory_backend,
             image_sha256=image_hash,
             image_bytes=image_bytes,
             fixture_sha256=sha256(args.fixture),
             source_sha256=snapshot_sources(
-                Path(__file__).resolve().parents[2]
+                Path(__file__).resolve().parents[2], memory_backend
             ),
             transport_sha256=sha256(args.transport)
         )
@@ -374,9 +419,20 @@ def run(args):
             raise ValueError(
                 'running transport/image differs from build manifest'
             )
+        if memory_backend_identity(info) != memory_backend:
+            raise ValueError(
+                'running transport memory backend differs from build manifest'
+            )
         report['transport'] = info
-        if bus.read(0) != 0x10000 or bus.read(
-                MAILBOX) != 0x444f5431 or bus.read(MAILBOX + 4) != 0x10000:
+        identity = hardware_identity(bus)
+        report['hardware_identity'] = identity
+        if identity['memory_backend_id'] != MEMORY_BACKEND_IDS[memory_backend]:
+            raise ValueError(
+                'hardware memory backend differs from build manifest'
+            )
+        if identity['store_abi'] != 0x10000 or identity[
+                'mailbox_id'] != 0x444f5431 or identity['mailbox_abi'
+                                                        ] != 0x10000:
             raise ValueError('hardware identity/ABI mismatch')
         if bus.read(4) & 7:
             raise RuntimeError(
@@ -408,7 +464,9 @@ def run(args):
         )
         if readback.stat().st_size != image_bytes or sha256(readback
                                                             ) != image_hash:
-            raise RuntimeError('whole-image DDR readback failed')
+            raise RuntimeError(
+                f'whole-image {memory_backend.upper()} readback failed'
+            )
         report['readback_sha256'] = sha256(readback)
         for index, word in enumerate(hash_words):
             bus.write(0x140 + index * 4, word)
@@ -555,10 +613,15 @@ def run(args):
         report['final_readback_sha256'] = sha256(final_readback)
         final_info = bus.request('INFO')
         if any(final_info.get(key) != info.get(key)
-               for key in ('backend', 'agfi')):
+               for key in ('backend', 'agfi')
+               ) or memory_backend_identity(final_info) != memory_backend:
             raise RuntimeError(
                 'loaded image identity changed during execution'
             )
+        final_identity = hardware_identity(bus)
+        report['final_hardware_identity'] = final_identity
+        if final_identity != identity:
+            raise RuntimeError('hardware identity changed during execution')
         final_status = bus.read(4)
         if final_status & 7 != 3 or final_status & 0x300 != 0x300 or bus.read(
                 0xc) != epoch:
@@ -576,7 +639,7 @@ def run(args):
             final_transport=final_info,
             fpga_scale_stage=False,
             scope=
-            'DOT128 group arithmetic and sealed DDR image; host scales result; no full model or CoralNPU firmware execution'
+            f'DOT128 group arithmetic and sealed {memory_backend.upper()} image; host scales result; no full model or CoralNPU firmware execution'
         )
     except Exception as error:
         report.update(

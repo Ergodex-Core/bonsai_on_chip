@@ -1,0 +1,7 @@
+{
+  "status": "prepared_not_executed",
+  "real_cases": 396,
+  "synthetic_cases": 6,
+  "canonical_image_sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+  "fixture_sha256": "1fa4d0b6a9a8ea1baf43e9aad5fb60cbba407dcb6f33adc69d8a613d41f9b066"
+}

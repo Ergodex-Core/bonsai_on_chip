@@ -1,0 +1,591 @@
+// Copyright 2026 Ergodex. Licensed under the Apache License, Version 2.0.
+// HBM transport derived from tests/first_slice/model_server.cpp, base
+// fc8ff1b5b2e67c459fe8f61bb192c8d010b1216e. Host protocol/PCIS helpers are retained;
+// the memory endpoint below models two-beat HBM256 with unrelated clocks.
+// This is a CPU AXI timing model, not the vendor HBM PHY or hardware evidence.
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <algorithm>
+#include <array>
+#include <cerrno>
+#include <cstddef>
+#include <cstdint>
+#include <cstdlib>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include "Vhbm_rom_sim_top.h"
+#include "verilated.h"
+using FirstSliceModel                 = Vhbm_rom_sim_top;
+static constexpr const char *kBackend = "verilator";
+
+struct Sample {
+  bool oa, ow, ob, oar, orr, pa, pw, pb, par, pr;
+  uint32_t ov;
+  unsigned obr, orresp, pbr, prresp, pbid, prid;
+  bool prlast;
+  std::array<uint32_t, 16> pv;
+};
+
+class Simulation {
+ public:
+  FirstSliceModel d;
+  uint64_t cycles = 0, reads = 0, writes = 0, requests = 0;
+  uint32_t random_state = 103;
+  std::vector<uint8_t> memory;
+  bool load_started = false;
+  bool have_aw = false, have_w = false, b_pending = false, r_pending = false;
+  uint64_t aw_addr = 0, wstrb = 0;
+  std::array<uint32_t, 16> wdata{}, rdata{};
+  unsigned bdelay = 0, rdelay = 0, bresponse = 0, rresponse = 0;
+  uint16_t bid = 0, rid = 0;
+  unsigned wbeats = 0, rbeat = 0;
+  uint64_t hbm_ticks = 0, hbm_edges = 0, read_beats = 0, write_beats = 0;
+  uint64_t read_stall_cycles = 0, write_stall_cycles = 0;
+  std::string inject;
+  bool pause_hbm = false;
+  bool held_r = false, held_b = false;
+  uint32_t held_rdata = 0;
+  unsigned held_rresp = 0, held_bresp = 0;
+
+  unsigned core_half_period = 9, hbm_half_period = 5, clock_phase = 0;
+  static unsigned clock_setting(const char *name, unsigned fallback, bool zero_ok = false) {
+    const char *raw = std::getenv(name);
+    if (!raw)
+      return fallback;
+    char *end   = nullptr;
+    auto result = std::strtoul(raw, &end, 10);
+    require(end != raw && *end == 0 && result <= 20 && (zero_ok || result > 0),
+            "invalid clock setting (expected integer in range)");
+    return unsigned(result);
+  }
+  Simulation() {
+    core_half_period = clock_setting("HBM_SIM_CORE_HALF_PERIOD", 9);
+    hbm_half_period  = clock_setting("HBM_SIM_HBM_HALF_PERIOD", 5);
+    clock_phase      = clock_setting("HBM_SIM_PHASE", 0, true);
+    require(clock_phase < hbm_half_period, "clock phase must be below HBM half period");
+    reset();
+  }
+  void reset() {
+    d.rst_ni             = 0;
+    d.rst_hbm_ni         = 0;
+    d.clk_hbm_i          = 0;
+    hbm_ticks            = clock_phase;
+    d.controller_ready_i = 1;
+    have_aw = have_w = b_pending = r_pending = false;
+    held_r = held_b = false;
+    wbeats = rbeat = bdelay = rdelay = 0;
+    load_started                     = false;
+    inject.clear();
+    pause_hbm = false;
+    std::fill(memory.begin(), memory.end(), 0);
+    for (unsigned i = 0; i < 8; ++i)
+      step();
+    d.rst_ni = d.rst_hbm_ni = 1;
+    for (unsigned i = 0; i < 30; ++i)
+      step();
+    require(d.hbm_ready_o, "HBM adapter failed to become ready after reset");
+  }
+  uint32_t random() {
+    random_state ^= random_state << 13;
+    random_state ^= random_state >> 17;
+    random_state ^= random_state << 5;
+    return random_state;
+  }
+  static void require(bool condition, const char *message) {
+    if (!condition)
+      throw std::runtime_error(message);
+  }
+  void drive_hbm() {
+    d.hbm_awready = !have_aw && !b_pending && (random() % 5 != 0);
+    d.hbm_wready  = wbeats < 2 && !b_pending && (random() % 7 != 0);
+    d.hbm_bvalid  = b_pending && bdelay == 0;
+    d.hbm_bresp   = bresponse;
+    d.hbm_bid     = bid;
+    d.hbm_arready = !r_pending && (random() % 4 != 0);
+    d.hbm_rvalid  = r_pending && rdelay == 0;
+    d.hbm_rresp   = rresponse;
+    if (inject == "rresp_first" && rbeat == 0)
+      d.hbm_rresp = 2;
+    if (inject == "rresp_last" && rbeat == 1)
+      d.hbm_rresp = 2;
+    d.hbm_rid   = inject == "rid" ? 1 : rid;
+    d.hbm_rlast = rbeat == 1;
+    if (inject == "early_rlast")
+      d.hbm_rlast = 1;
+    for (unsigned i = 0; i < 8; ++i)
+      d.hbm_rdata[i] = rdata[8 * rbeat + i];
+  }
+  uint64_t local_address(uint64_t address) {
+    require((address >> 29) == 15, "HBM address did not select pinned pseudochannel 15");
+    return address & ((uint64_t(1) << 29) - 1);
+  }
+  void accept_hbm() {
+    ++hbm_edges;
+    if (!d.rst_ni || !d.rst_hbm_ni)
+      return;
+    if (d.hbm_arvalid && !d.hbm_arready)
+      ++read_stall_cycles;
+    if ((d.hbm_awvalid && !d.hbm_awready) || (d.hbm_wvalid && !d.hbm_wready))
+      ++write_stall_cycles;
+    bool ba = d.hbm_awvalid && d.hbm_awready;
+    bool bw = d.hbm_wvalid && d.hbm_wready;
+    bool bb = d.hbm_bvalid && d.hbm_bready;
+    bool ra = d.hbm_arvalid && d.hbm_arready;
+    bool rr = d.hbm_rvalid && d.hbm_rready;
+    if (bdelay)
+      --bdelay;
+    if (rdelay)
+      --rdelay;
+    if (ba) {
+      require(d.hbm_awlen == 1 && d.hbm_awsize == 5 && d.hbm_awburst == 1 && d.hbm_awid == 0,
+              "unexpected HBM write shape/ID");
+      have_aw = true;
+      aw_addr = local_address(d.hbm_awaddr);
+      bid     = 0;
+    }
+    if (bw) {
+      require(wbeats < 2 && bool(d.hbm_wlast) == (wbeats == 1), "HBM WLAST mismatch");
+      if (wbeats == 0)
+        wstrb = 0;
+      wstrb |= uint64_t(d.hbm_wstrb) << (32 * wbeats);
+      for (unsigned i = 0; i < 8; ++i)
+        wdata[8 * wbeats + i] = d.hbm_wdata[i];
+      ++wbeats;
+      ++write_beats;
+    }
+    if (bb)
+      b_pending = false;
+    if (rr) {
+      ++read_beats;
+      if (rbeat == 1 || inject == "early_rlast")
+        r_pending = false;
+      else {
+        rbeat  = 1;
+        rdelay = 2 + random() % 7;
+      }
+    }
+    if (have_aw && wbeats == 2 && !b_pending) {
+      bresponse = inject == "bresp" ? 2 : 0;
+      if ((aw_addr & 63) || aw_addr > memory.size() || memory.size() - aw_addr < 64)
+        bresponse = 2;
+      else
+        for (unsigned i = 0; i < 64; ++i)
+          if (wstrb & (uint64_t(1) << i))
+            memory[aw_addr + i] = uint8_t(wdata[i / 4] >> (8 * (i % 4)));
+      if (inject == "bid")
+        bid = 1;
+      have_aw   = false;
+      wbeats    = 0;
+      b_pending = true;
+      bdelay    = 3 + random() % 17;
+      ++writes;
+    }
+    if (ra) {
+      require(d.hbm_arlen == 1 && d.hbm_arsize == 5 && d.hbm_arburst == 1 && d.hbm_arid == 0,
+              "unexpected HBM read shape/ID");
+      uint64_t address = local_address(d.hbm_araddr);
+      rresponse        = 0;
+      rid              = 0;
+      rdata.fill(0);
+      if ((address & 63) || address > memory.size() || memory.size() - address < 64)
+        rresponse = 2;
+      else
+        for (unsigned i = 0; i < 64; ++i)
+          rdata[i / 4] |= uint32_t(memory[address + i]) << (8 * (i % 4));
+      r_pending = true;
+      rbeat     = 0;
+      rdelay    = 5 + random() % 19;
+      ++reads;
+    }
+  }
+  void subtick() {
+    // Default periods 18/10 represent the selected 250/450 MHz frequency ratio.
+    // Alternative periods/phase are runtime-controlled for reversed-speed CDC tests.
+    // This digital model does not model analog metastability or PHY calibration.
+    ++hbm_ticks;
+    if (!pause_hbm && (hbm_ticks % hbm_half_period) == 0) {
+      if (d.clk_hbm_i) {
+        d.clk_hbm_i = 0;
+        drive_hbm();
+        d.eval();
+      } else {
+        d.eval();
+        accept_hbm();
+        d.clk_hbm_i = 1;
+        d.eval();
+      }
+    }
+  }
+  Sample step() {
+    d.clk_i = 0;
+    d.eval();
+    for (unsigned i = 0; i < core_half_period; ++i)
+      subtick();
+    d.eval();
+    Sample s{bool(d.ocl_awvalid && d.ocl_awready),
+             bool(d.ocl_wvalid && d.ocl_wready),
+             bool(d.ocl_bvalid && d.ocl_bready),
+             bool(d.ocl_arvalid && d.ocl_arready),
+             bool(d.ocl_rvalid && d.ocl_rready),
+             bool(d.pcis_awvalid && d.pcis_awready),
+             bool(d.pcis_wvalid && d.pcis_wready),
+             bool(d.pcis_bvalid && d.pcis_bready),
+             bool(d.pcis_arvalid && d.pcis_arready),
+             bool(d.pcis_rvalid && d.pcis_rready),
+             d.ocl_rdata,
+             unsigned(d.ocl_bresp),
+             unsigned(d.ocl_rresp),
+             unsigned(d.pcis_bresp),
+             unsigned(d.pcis_rresp),
+             unsigned(d.pcis_bid),
+             unsigned(d.pcis_rid),
+             bool(d.pcis_rlast),
+             {}};
+    for (unsigned i = 0; i < 16; ++i)
+      s.pv[i] = d.pcis_rdata[i];
+    if (d.rst_ni) {
+      if (held_r)
+        require(d.ocl_rvalid && d.ocl_rdata == held_rdata && d.ocl_rresp == held_rresp,
+                "OCL read changed under stall");
+      if (held_b)
+        require(d.ocl_bvalid && d.ocl_bresp == held_bresp, "OCL write changed under stall");
+      held_r     = d.ocl_rvalid && !d.ocl_rready;
+      held_rdata = d.ocl_rdata;
+      held_rresp = d.ocl_rresp;
+      held_b     = d.ocl_bvalid && !d.ocl_bready;
+      held_bresp = d.ocl_bresp;
+    }
+    d.clk_i = 1;
+    d.eval();
+    for (unsigned i = 0; i < core_half_period; ++i)
+      subtick();
+    ++cycles;
+    return s;
+  }
+  void idle(unsigned n) {
+    while (n--)
+      step();
+  }
+  std::pair<uint32_t, unsigned> ocl_read(uint32_t addr) {
+    requests++;
+    d.ocl_araddr  = addr;
+    d.ocl_arvalid = 1;
+    d.ocl_rready  = 0;
+    bool accepted = false;
+    for (unsigned timeout = 0; timeout < 1000000; timeout++) {
+      auto s = step();
+      if (s.oar) {
+        accepted      = true;
+        d.ocl_arvalid = 0;
+        idle(2);
+        d.ocl_rready = 1;
+      }
+      if (s.orr) {
+        d.ocl_rready = 0;
+        return {s.ov, s.orresp};
+      }
+    }
+    throw std::runtime_error(accepted ? "OCL read response timeout" : "OCL read address timeout");
+  }
+  unsigned ocl_write(uint32_t addr, uint32_t value) {
+    requests++;
+    d.ocl_awaddr = addr;
+    d.ocl_wdata  = value;
+    d.ocl_wstrb  = 15;
+    bool aw = false, ww = false;
+    // Alternate address-first and data-first to exercise independent channels.
+    bool data_first = (requests % 2) == 0;
+    d.ocl_awvalid   = !data_first;
+    d.ocl_wvalid    = data_first;
+    d.ocl_bready    = 0;
+    for (unsigned timeout = 0; timeout < 1000000; timeout++) {
+      auto s = step();
+      if (s.oa) {
+        aw            = true;
+        d.ocl_awvalid = 0;
+      }
+      if (s.ow) {
+        ww           = true;
+        d.ocl_wvalid = 0;
+      }
+      if (timeout == 2) {
+        if (!aw)
+          d.ocl_awvalid = 1;
+        if (!ww)
+          d.ocl_wvalid = 1;
+      }
+      if (aw && ww && timeout > 5)
+        d.ocl_bready = 1;
+      if (s.ob) {
+        d.ocl_bready = 0;
+        return s.obr;
+      }
+    }
+    throw std::runtime_error("OCL write timeout");
+  }
+  unsigned pcis_write(uint64_t addr, const uint8_t *data, unsigned beats, unsigned size = 6) {
+    require(beats > 0 && beats <= 64 && size <= 6 && (addr & ((uint64_t(1) << size) - 1)) == 0,
+            "invalid simulator PCIS write dimensions");
+    d.pcis_awaddr  = addr;
+    d.pcis_awlen   = beats - 1;
+    d.pcis_awsize  = size;
+    d.pcis_awburst = 1;
+    d.pcis_awid    = 0x103;
+    d.pcis_awvalid = 1;
+    d.pcis_bready  = 0;
+    bool accepted  = false;
+    for (unsigned timeout = 0; timeout < 1000000; timeout++)
+      if (step().pa) {
+        accepted       = true;
+        d.pcis_awvalid = 0;
+        break;
+      }
+    require(accepted, "PCIS AW timeout");
+    for (unsigned beat = 0; beat < beats; beat++) {
+      for (unsigned i = 0; i < 16; i++)
+        d.pcis_wdata[i] = 0;
+      unsigned lane  = unsigned((addr + (uint64_t(beat) << size)) & 63);
+      unsigned bytes = 1u << size;
+      d.pcis_wstrb   = size == 6 ? ~uint64_t(0) : ((uint64_t(1) << bytes) - 1) << lane;
+      for (unsigned i = 0; i < bytes; i++)
+        d.pcis_wdata[(lane + i) / 4] |= uint32_t(data[beat * bytes + i]) << (8 * ((lane + i) % 4));
+      d.pcis_wlast  = beat + 1 == beats;
+      d.pcis_wvalid = 1;
+      accepted      = false;
+      for (unsigned timeout = 0; timeout < 1000000; timeout++)
+        if (step().pw) {
+          accepted      = true;
+          d.pcis_wvalid = 0;
+          break;
+        }
+      require(accepted, "PCIS W timeout");
+    }
+    idle(2);
+    d.pcis_bready = 1;
+    for (unsigned timeout = 0; timeout < 1000000; timeout++) {
+      auto s = step();
+      if (s.pb) {
+        require(s.pbid == 0x103, "PCIS BID mismatch");
+        d.pcis_bready = 0;
+        return s.pbr;
+      }
+    }
+    throw std::runtime_error("PCIS B timeout");
+  }
+  std::vector<uint8_t> pcis_read(uint64_t addr, unsigned beats, unsigned size = 6) {
+    require(beats > 0 && beats <= 64 && size <= 6 && (addr & ((uint64_t(1) << size) - 1)) == 0,
+            "invalid simulator PCIS read dimensions");
+    d.pcis_araddr  = addr;
+    d.pcis_arlen   = beats - 1;
+    d.pcis_arsize  = size;
+    d.pcis_arburst = 1;
+    d.pcis_arid    = 0x104;
+    d.pcis_arvalid = 1;
+    d.pcis_rready  = 0;
+    bool accepted  = false;
+    for (unsigned timeout = 0; timeout < 1000000; timeout++)
+      if (step().par) {
+        accepted       = true;
+        d.pcis_arvalid = 0;
+        break;
+      }
+    require(accepted, "PCIS AR timeout");
+    std::vector<uint8_t> result;
+    result.reserve(static_cast<std::size_t>(beats) * (std::size_t{1} << size));
+    for (unsigned beat = 0; beat < beats; beat++) {
+      idle(beat % 3);
+      d.pcis_rready = 1;
+      accepted      = false;
+      for (unsigned timeout = 0; timeout < 1000000; timeout++) {
+        auto s = step();
+        if (s.pr) {
+          require(s.prresp == 0, "PCIS RRESP error");
+          require(s.prid == 0x104, "PCIS RID mismatch");
+          require(s.prlast == (beat + 1 == beats), "PCIS RLAST mismatch");
+          unsigned lane = unsigned((addr + (uint64_t(beat) << size)) & 63);
+          for (unsigned i = 0; i < (1u << size); i++)
+            result.push_back(uint8_t(s.pv[(lane + i) / 4] >> (8 * ((lane + i) % 4))));
+          accepted      = true;
+          d.pcis_rready = 0;
+          break;
+        }
+      }
+      require(accepted, "PCIS R timeout");
+    }
+    return result;
+  }
+  void load(const std::string &path) {
+    require(!load_started, "only one LOAD is permitted per cold simulation");
+    load_started = true;
+    std::ifstream file(path, std::ios::binary | std::ios::ate);
+    require(bool(file), "cannot open image");
+    auto size = file.tellg();
+    require(size > 0 && uint64_t(size) <= 0x10000000 && (uint64_t(size) % 64) == 0,
+            "invalid image size");
+    memory.resize(size, 0);
+    file.seekg(0);
+    std::array<uint8_t, 4096> block{};
+    for (uint64_t offset = 0; offset < uint64_t(size); offset += block.size()) {
+      unsigned count = unsigned(std::min<uint64_t>(block.size(), uint64_t(size) - offset));
+      file.read(reinterpret_cast<char *>(block.data()), count);
+      require(bool(file), "short image read");
+      require(pcis_write(offset, block.data(), count / 64) == 0, "image write rejected");
+      if ((offset % (32 * 1024 * 1024)) == 0)
+        std::cerr << "LOAD_BYTES " << offset << "\n";
+    }
+  }
+  void dump(const std::string &path, uint64_t size) {
+    require(size > 0 && size <= memory.size() && size % 64 == 0, "invalid dump size");
+    int fd = ::open(path.c_str(), O_WRONLY | O_CREAT | O_EXCL, 0600);
+    require(fd >= 0, "cannot exclusively create readback file");
+    try {
+      for (uint64_t offset = 0; offset < size; offset += 4096) {
+        unsigned count = unsigned(std::min<uint64_t>(4096, size - offset));
+        auto bytes     = pcis_read(offset, count / 64);
+        size_t written = 0;
+        while (written < bytes.size()) {
+          auto n = ::write(fd, bytes.data() + written, bytes.size() - written);
+          if (n < 0 && errno == EINTR)
+            continue;
+          require(n > 0, "readback write failed");
+          written += size_t(n);
+        }
+        if ((offset % (32 * 1024 * 1024)) == 0)
+          std::cerr << "DUMP_BYTES " << offset << "\n";
+      }
+      require(::fsync(fd) == 0, "readback fsync failed");
+      int status = ::close(fd);
+      fd         = -1;
+      require(status == 0, "readback close failed");
+    } catch (...) {
+      if (fd >= 0)
+        ::close(fd);
+      throw;
+    }
+  }
+};
+
+int main(int argc, char **argv) {
+  Verilated::commandArgs(argc, argv);
+  try {
+    Simulation sim;
+    std::string line;
+    while (std::getline(std::cin, line)) {
+      std::istringstream input(line);
+      std::string op;
+      input >> op;
+      if (op == "QUIT")
+        break;
+      if (op == "INFO") {
+        std::cout << "{\"ok\":true,\"backend\":\"" << kBackend
+                  << "\",\"memory_backend\":\"hbm\",\"seed\":103,\"cycles\":" << sim.cycles
+                  << ",\"hbm_reads\":" << sim.reads << ",\"hbm_writes\":" << sim.writes
+                  << ",\"hbm_read_beats\":" << sim.read_beats
+                  << ",\"hbm_write_beats\":" << sim.write_beats
+                  << ",\"hbm_read_stalls\":" << sim.read_stall_cycles
+                  << ",\"hbm_write_stalls\":" << sim.write_stall_cycles
+                  << ",\"hbm_ready\":" << unsigned(sim.d.hbm_ready_o)
+                  << ",\"hbm_fault\":" << unsigned(sim.d.hbm_fault_o)
+                  << ",\"clock_periods\":{\"core\":" << 2 * sim.core_half_period
+                  << ",\"hbm\":" << 2 * sim.hbm_half_period << "}"
+                  << ",\"clock_phase\":" << sim.clock_phase
+                  << ",\"pseudochannel\":15,\"memory_model\":\"AXI256 two-beat lines; "
+                     "6-24 HBM-cycle initial read handshake latency, 3-9 inter-beat latency, "
+                     "4-20 write response latency, independent channel stalls; not vendor PHY\"}";
+      } else if (op == "RESET") {
+        sim.reset();
+        std::cout << "{\"ok\":true,\"volatile_contents_lost\":true}";
+      } else if (op == "PAUSE") {
+        unsigned pause;
+        input >> pause;
+        Simulation::require(bool(input) && pause <= 1, "invalid PAUSE");
+        sim.pause_hbm = pause;
+        sim.idle(30);
+        std::cout << "{\"ok\":true}";
+      } else if (op == "READY") {
+        unsigned ready;
+        input >> ready;
+        Simulation::require(bool(input) && ready <= 1, "invalid READY");
+        sim.d.controller_ready_i = ready;
+        sim.idle(30);
+        std::cout << "{\"ok\":true}";
+      } else if (op == "FAULT") {
+        input >> sim.inject;
+        Simulation::require(
+            bool(input) && (sim.inject == "rresp_first" || sim.inject == "rresp_last" ||
+                            sim.inject == "rid" || sim.inject == "early_rlast" ||
+                            sim.inject == "bresp" || sim.inject == "bid" || sim.inject == "none"),
+            "invalid FAULT");
+        if (sim.inject == "none")
+          sim.inject.clear();
+        std::cout << "{\"ok\":true}";
+      } else if (op == "READ") {
+        uint64_t addr;
+        input >> addr;
+        Simulation::require(bool(input) && addr <= 0xffffffff, "invalid READ");
+        auto r = sim.ocl_read(uint32_t(addr));
+        std::cout << "{\"ok\":true,\"value\":" << r.first << ",\"resp\":" << r.second << "}";
+      } else if (op == "WRITE") {
+        uint64_t addr, value;
+        input >> addr >> value;
+        Simulation::require(bool(input) && addr <= 0xffffffff && value <= 0xffffffff,
+                            "invalid WRITE");
+        auto r = sim.ocl_write(uint32_t(addr), uint32_t(value));
+        std::cout << "{\"ok\":true,\"resp\":" << r << "}";
+      } else if (op == "LOAD") {
+        std::string path;
+        input >> std::quoted(path);
+        Simulation::require(bool(input), "invalid LOAD");
+        sim.load(path);
+        std::cout << "{\"ok\":true,\"bytes\":" << sim.memory.size()
+                  << ",\"hbm_writes\":" << sim.writes << "}";
+      } else if (op == "DUMP") {
+        std::string path;
+        uint64_t size;
+        input >> std::quoted(path) >> size;
+        Simulation::require(bool(input), "invalid DUMP");
+        sim.dump(path, size);
+        std::cout << "{\"ok\":true,\"bytes\":" << size << ",\"hbm_reads\":" << sim.reads << "}";
+      } else if (op == "POKE") {
+        uint64_t addr, value;
+        input >> addr >> value;
+        Simulation::require(bool(input) && value <= 0xffffffff && addr % 4 == 0 &&
+                                sim.memory.size() >= 4 && addr <= sim.memory.size() - 4,
+                            "invalid POKE dimensions");
+        std::array<uint8_t, 4> bytes{};
+        for (unsigned i = 0; i < 4; i++)
+          bytes[i] = uint8_t(value >> (8 * i));
+        auto r = sim.pcis_write(addr, bytes.data(), 1, 2);
+        std::cout << "{\"ok\":true,\"resp\":" << r << "}";
+      } else if (op == "PEEK") {
+        uint64_t addr;
+        input >> addr;
+        Simulation::require(
+            bool(input) && addr % 4 == 0 && sim.memory.size() >= 4 && addr <= sim.memory.size() - 4,
+            "invalid PEEK dimensions");
+        auto bytes     = sim.pcis_read(addr, 1, 2);
+        uint32_t value = 0;
+        for (unsigned i = 0; i < 4; i++)
+          value |= uint32_t(bytes[i]) << (8 * i);
+        std::cout << "{\"ok\":true,\"resp\":0,\"value\":" << value << "}";
+      } else
+        throw std::runtime_error("unknown transport request");
+      std::cout << std::endl;
+    }
+    std::cerr << "TRANSPORT_COMPLETE cycles=" << sim.cycles << " hbm_reads=" << sim.reads
+              << " hbm_writes=" << sim.writes << "\n";
+  } catch (const std::exception &error) {
+    std::cerr << "TRANSPORT_FAIL " << error.what() << "\n";
+    std::cout << "{\"ok\":false,\"error\":\"transport failed; inspect stderr log\"}" << std::endl;
+    return 1;
+  }
+  return 0;
+}

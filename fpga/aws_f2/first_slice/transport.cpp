@@ -26,11 +26,20 @@
 #error "The AWS F2 transport requires Linux x86_64; no simulator fallback is provided."
 #endif
 
+#ifndef MEMORY_BACKEND_HBM
+#define MEMORY_BACKEND_HBM 0
+#endif
+#if MEMORY_BACKEND_HBM != 0 && MEMORY_BACKEND_HBM != 1
+#error "MEMORY_BACKEND_HBM must be 0 (DDR) or 1 (HBM)."
+#endif
+
 namespace {
-constexpr uint64_t kMaxImageBytes  = 0x10000000;
-constexpr uint64_t kOclBytes       = 0x2000;
-constexpr auto kBulkTimeout        = std::chrono::seconds(1800);
-constexpr const char *kSdkRevision = "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3";
+constexpr uint64_t kMaxImageBytes    = 0x10000000;
+constexpr uint64_t kOclBytes         = 0x2000;
+constexpr auto kBulkTimeout          = std::chrono::seconds(1800);
+constexpr const char *kSdkRevision   = "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3";
+constexpr uint32_t kMemoryBackendId  = MEMORY_BACKEND_HBM ? 3 : 2;
+constexpr const char *kMemoryBackend = MEMORY_BACKEND_HBM ? "hbm" : "ddr";
 
 void require(bool condition, const std::string &message) {
   if (!condition)
@@ -202,8 +211,8 @@ class Transport {
   void info() {
     identity(true);
     std::cout << "{\"ok\":true,\"backend\":\"aws_f2\",\"agfi\":\"" << settings.agfi
-              << "\",\"slot\":" << settings.slot << ",\"shell_version\":\"" << hex32(shell)
-              << "\",\"sdk_revision\":\"" << kSdkRevision
+              << "\",\"memory_backend\":\"" << kMemoryBackend << "\",\"slot\":" << settings.slot
+              << ",\"shell_version\":\"" << hex32(shell) << "\",\"sdk_revision\":\"" << kSdkRevision
               << "\",\"pci_vendor\":\"1d0f\",\"pci_device\":\"f010\","
                  "\"pci_subsystem_vendor\":\"1d0f\",\"pci_subsystem_device\":\"0103\","
                  "\"clock_mhz\":250,\"clock_measured\":false,"
@@ -396,8 +405,9 @@ class Transport {
 
   void check_abi() {
     require(read32(0) == 0x10000 && read32(0x1000) == 0x444f5431 && read32(0x1004) == 0x10000 &&
-                read32(8) == 2 && (read32(0x1008) & 7) == 7,
+                (read32(0x1008) & 7) == 7,
             "weight-store/DOT128 ABI mismatch");
+    require(read32(8) == kMemoryBackendId, "hardware memory backend differs from transport build");
   }
 
   uint64_t configured_base() { return read32(0x110) | (uint64_t(read32(0x114)) << 32); }

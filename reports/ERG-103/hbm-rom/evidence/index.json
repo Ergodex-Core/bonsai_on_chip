@@ -1,0 +1,259 @@
+{
+  "files": {
+    "evidence/attachment/check-summary.json": {
+      "bytes": 2559,
+      "sha256": "d942e1cd071dc0d9c4030396b28c5d6b138e08c22a2c4f6088a7216b976314bc"
+    },
+    "evidence/attachment/make-parse-stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/attachment/native-pin-lint.log": {
+      "bytes": 1568,
+      "sha256": "3032ec0c57f7a3b40ab92e9f1b82513522c648923c2f91d18d9de94bcba79adb"
+    },
+    "evidence/attachment/native-source-audit.json": {
+      "bytes": 891,
+      "sha256": "a522b5a0fe1b70ffea3345d1229246ae5f5fa11585583df641c830331314b67f"
+    },
+    "evidence/attachment/shellcheck.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/attachment/transport-build-exitcode.txt": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+    },
+    "evidence/attachment/transport-build-manifest.json": {
+      "bytes": 854,
+      "sha256": "a26fdbf23ce5b57b0314cd964ebd954d9254bcd068125b50ed527f59711ccb5d"
+    },
+    "evidence/attachment/transport-build.log": {
+      "bytes": 8780,
+      "sha256": "93ce471f258b61a1ddf7e743d34748d8540cf0b594f28fe9787efcc33873ae2d"
+    },
+    "evidence/attachment/verible-lint.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/attachment/verible-syntax.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evidence/backend-comparison.json": {
+      "bytes": 12430,
+      "sha256": "32e53311c2705925934afef5a0418116dc29646c57a4ac0d24659d5aed5bcaf8"
+    },
+    "evidence/committed-source-verification.json": {
+      "bytes": 6849,
+      "sha256": "4f1608ee3cfd1d353dfb91a715b4cf0d447430cff49dd4622df64204f6ebd600"
+    },
+    "evidence/ddr/build-dot128.log": {
+      "bytes": 3503,
+      "sha256": "619598374d523896041dce553d3783c8ea3883c7b73db855e973111b36bab708"
+    },
+    "evidence/ddr/build-f2_memory_bridge_tb.log": {
+      "bytes": 9442,
+      "sha256": "b86130e0fae85fc65648bce68f430bf6cd7fdf24fe992e60fb966011e26693a2"
+    },
+    "evidence/ddr/build-first_slice_sim_top.log": {
+      "bytes": 8559,
+      "sha256": "51315140d99c800575a8b9ed18941de420293fd76aff196cca2c7e69d6fa0a70"
+    },
+    "evidence/ddr/build-first_slice_top.log": {
+      "bytes": 8479,
+      "sha256": "56d40a66ab87dd590d7510edf587de74de6bde91e36e3510ce3a63880a8885ab"
+    },
+    "evidence/ddr/build-weight_store.log": {
+      "bytes": 3605,
+      "sha256": "d6e2bad5e369bdfad8d9b75c6b31955f67973bcf5ef0cc26fc29ff117d726419"
+    },
+    "evidence/ddr/dot128.log": {
+      "bytes": 268,
+      "sha256": "4ff5f318afbd17d7547d0f4dc7c4af7de58489cca82ba763421bc6adb4c2d208"
+    },
+    "evidence/ddr/fixture-unit.log": {
+      "bytes": 1693,
+      "sha256": "cd18a968d728bc89e1ad22453434c4ee5f4bee518205fc630dfbf51943f96c41"
+    },
+    "evidence/ddr/mailbox-faults.log": {
+      "bytes": 165,
+      "sha256": "81d97f3aa587a4b344f5ad1003ffd8a07d70fca4659ac474cab9af382c042e71"
+    },
+    "evidence/ddr/mailbox.log": {
+      "bytes": 533,
+      "sha256": "0c5af351bdb6900a02cc7d764385535b06f886fafa65d5c7f91fc9bcbe1bae1b"
+    },
+    "evidence/ddr/memory-bridge.log": {
+      "bytes": 7243,
+      "sha256": "c8669205abfe2c48fccdd6f3cf90f4ec1b46bcb6506c79a16869ca87c6cdd417"
+    },
+    "evidence/ddr/native-report.json": {
+      "bytes": 156008,
+      "sha256": "ddf5890e8eecf6020acfd301175f0e05317ec283f194a953fceeeb13f38bcc1d"
+    },
+    "evidence/ddr/native.log": {
+      "bytes": 58,
+      "sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974"
+    },
+    "evidence/ddr/prepare-fixture.log": {
+      "bytes": 269,
+      "sha256": "51f582718d15dcd865a3622f7063bfbfa9e709a5e70a401cdb5bced7e2eba4f1"
+    },
+    "evidence/ddr/runner-failure-unit.log": {
+      "bytes": 4699,
+      "sha256": "01a7430ce33cad0511a159e77f509801c7564ba8dbffc0ffb3443b2299d98f82"
+    },
+    "evidence/ddr/synthetic-report.json": {
+      "bytes": 7063,
+      "sha256": "092a7ace61a5c8d6d73fb1ebd05a2dab2d1ca0e026597af97e752fd47d0b1883"
+    },
+    "evidence/ddr/synthetic.log": {
+      "bytes": 56,
+      "sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945"
+    },
+    "evidence/ddr/transport-protocol.log": {
+      "bytes": 730,
+      "sha256": "348a406d7581f98bbff512a945c7a3f58203546cf668a378344772b4bbecdf6b"
+    },
+    "evidence/ddr/validation.json": {
+      "bytes": 14087,
+      "sha256": "7b12cbef8b481199e8ee6b2ae39a2286c07ddc4bfacafeaa9c897918ec8c02a8"
+    },
+    "evidence/ddr/weight-store.log": {
+      "bytes": 506,
+      "sha256": "646253c6ddfc74d389b5be88000a917df85802a014e03dc78ca5b0205705287d"
+    },
+    "evidence/environment.json": {
+      "bytes": 346,
+      "sha256": "4530db05a5dac1d676df1733e87f9426696b3ff6859ec9d2f490e39abc4f05ec"
+    },
+    "evidence/existing-files-lint.log": {
+      "bytes": 266,
+      "sha256": "7e79d9966816845809a5bfee2011663cd2528967fb27a036b759af9996aef1ed"
+    },
+    "evidence/hbm-files-lint.log": {
+      "bytes": 348,
+      "sha256": "c62b198f45c11c12730f021633ab04b4cf419d308858f52773ddccc99be08334"
+    },
+    "evidence/hbm-initial/README.md": {
+      "bytes": 486,
+      "sha256": "c3fc4e3ae8baff2fd093703587f8fcb41407619adebafdb9e791b03eb3ea5e33"
+    },
+    "evidence/hbm-initial/hbm_model_server.cpp.txt": {
+      "bytes": 21667,
+      "sha256": "5728d74f851d6b4e280fc0a002c22bd5592aa2d46615fd4514e891df4936cc52"
+    },
+    "evidence/hbm-initial/validation.json": {
+      "bytes": 13078,
+      "sha256": "51eb035dd711ed84c7e7cfdf0e4624caad2bd2ca6e870d85362b291c6bacabfa"
+    },
+    "evidence/hbm/build-hbm-bridge.log": {
+      "bytes": 9387,
+      "sha256": "a64e9456e94cb24d780245c2d37f389286e4df31f641c8d479a83f1fae09b046"
+    },
+    "evidence/hbm/build-hbm-store.log": {
+      "bytes": 3575,
+      "sha256": "39ef76e895a2f2eca626c1e3cfec1da124f9c811bdde0b7299bc345e17eba5b9"
+    },
+    "evidence/hbm/build-hbm.log": {
+      "bytes": 8427,
+      "sha256": "3d2efc5d4a0a6a981a0c2dabc64d2168704dc4c6e66ff9886e4eefb572773ac8"
+    },
+    "evidence/hbm/build-memory-bridge.log": {
+      "bytes": 9402,
+      "sha256": "2aaa530028ba180dc7d9e1c2b478cde2f10023f074286b515bf09cb3d1056d80"
+    },
+    "evidence/hbm/hbm-bridge.log": {
+      "bytes": 345,
+      "sha256": "884876d834fc4ab02faeab977b9e57308b4cfe2fbb31743fc353f193619d6400"
+    },
+    "evidence/hbm/hbm-contract-reversed-clocks.log": {
+      "bytes": 1337,
+      "sha256": "597ad3206b8bfa1199aa4a840c616911c7969413951a4b6c4f64261ecf03826f"
+    },
+    "evidence/hbm/hbm-contract.log": {
+      "bytes": 1337,
+      "sha256": "d5ee25b8ecb6845c982712855d3f52849bcfbb0277926f7aeb314ede8ae001f1"
+    },
+    "evidence/hbm/hbm-store.log": {
+      "bytes": 506,
+      "sha256": "646253c6ddfc74d389b5be88000a917df85802a014e03dc78ca5b0205705287d"
+    },
+    "evidence/hbm/memory-bridge.log": {
+      "bytes": 7243,
+      "sha256": "4692aa9002fd46d6beaacd0488c84d675edbc8ed62b4c40159cc26b87bada301"
+    },
+    "evidence/hbm/native-report.json": {
+      "bytes": 157848,
+      "sha256": "b2fc4f572d27ef99254ac71b7fb88c6c88312daa9ac45de5267e116e3f926e19"
+    },
+    "evidence/hbm/native-transport.log": {
+      "bytes": 547,
+      "sha256": "fbf47255fdcd5f51d6bd23b83de38af54477cca578a92301c3b8ceb50ecb2de5"
+    },
+    "evidence/hbm/native.log": {
+      "bytes": 58,
+      "sha256": "d4278dee2aaa8fa22d7e26843bf28b236bb7279c4ff5e2991dae261168e8b974"
+    },
+    "evidence/hbm/prepare-fixture.log": {
+      "bytes": 269,
+      "sha256": "51f582718d15dcd865a3622f7063bfbfa9e709a5e70a401cdb5bced7e2eba4f1"
+    },
+    "evidence/hbm/synthetic-report.json": {
+      "bytes": 8784,
+      "sha256": "21be6f1cc091e03096f9e36cb8c8dd20a1e5f3b8acaca5441967a8610fed7b01"
+    },
+    "evidence/hbm/synthetic-transport.log": {
+      "bytes": 96,
+      "sha256": "3d53fb3464ce712a58695617a1b64ece853a442f2ef674735e174e5abdebe0d8"
+    },
+    "evidence/hbm/synthetic.log": {
+      "bytes": 56,
+      "sha256": "03349317830bc3170ded6510ee92559ae2dd34e0dd3f4aa91f2ec25609e3b945"
+    },
+    "evidence/hbm/transport-protocol.log": {
+      "bytes": 730,
+      "sha256": "5752bcf8af6a2460344249b2755c7f13753fac403e07008a23e2317bad7f2dc5"
+    },
+    "evidence/hbm/validation.json": {
+      "bytes": 13080,
+      "sha256": "ad62200a0d0e4a37bd6603ac02aaa8480b80e70d9c3b4aa60aa8cee8d4205592"
+    },
+    "evidence/independent-backend-comparison.json": {
+      "bytes": 12419,
+      "sha256": "da43e47dcf627b2ee6ed066250fe2143ebcbd555dbc0efa8c3ac09701d25042f"
+    },
+    "evidence/quality-tools.json": {
+      "bytes": 15047,
+      "sha256": "fac824f9c18062aae643a503910ddd4b40833837f1ade4fa7741308ae3ba6213"
+    },
+    "evidence/real-sdk-transport-manifest.json": {
+      "bytes": 854,
+      "sha256": "a26fdbf23ce5b57b0314cd964ebd954d9254bcd068125b50ed527f59711ccb5d"
+    },
+    "evidence/sdk-ddr-mock.json": {
+      "bytes": 6985,
+      "sha256": "386a3041c778ea042d6e79cd5e818bb5d176c764495939139b659cf03033ecf7"
+    },
+    "evidence/sdk-hbm-mock-concurrent-failure.json": {
+      "bytes": 3138,
+      "sha256": "d1d0b3a50cf32d872993b12092df5d8fa1b0eb8eebeb184bf085b09c5f4671ae"
+    },
+    "evidence/sdk-hbm-mock.json": {
+      "bytes": 6994,
+      "sha256": "c7a3513cf06b5d6792c1296abd13d72b7d2515e44ca8d0130dcb56608efe2ac2"
+    },
+    "evidence/stale-source-rejection.json": {
+      "bytes": 7323,
+      "sha256": "1e9673c86e4331a575ebe9f63cb1e4f06adbac056a0dde1708aaee7b09cc296f"
+    },
+    "independent-review.md": {
+      "bytes": 13594,
+      "sha256": "15122b3c3391737114e803e9aedb8243c6240b6a04766bc7936f5a090f458929"
+    }
+  },
+  "implementation_commit": "495751c2720a8865a73b0bfbb5a5d687b1ef7d20",
+  "schema": "hbm-rom-published-evidence-v1",
+  "scope": "Published evidence and independent review; excludes this index and overview README to avoid self-reference. Payloads/readback binaries remain outside Git."
+}

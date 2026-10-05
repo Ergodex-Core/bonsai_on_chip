@@ -1,5 +1,10 @@
 # CoralNPU weight store: ASIC ROM and FPGA DDR/HBM
 
+Implementation follow-up: the separate [HBM ROM-contract candidate](../../reports/ERG-103/hbm-rom/README.md)
+implements the single-channel backend and records its own validation gates.
+The proposal and historical DDR baseline below retain their original scope;
+they do not establish the candidate's vendor or physical FPGA acceptance.
+
 Status: **HBM is the preferred proposed FPGA ROM-equivalent backend; ASIC ROM
 and CoralNPU integration remain proposed.** The implemented ERG-103 first slice
 uses sealed DDR and DOT128; this document does not relabel it as HBM or claim a

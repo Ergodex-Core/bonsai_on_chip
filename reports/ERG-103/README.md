@@ -1,5 +1,9 @@
 # ERG-103 first-slice implementation and validation report
 
+The separate [HBM ROM-contract candidate report](hbm-rom/README.md) records the
+new HBM implementation and its own source-bound tests. The DDR results and
+dated hardware status below remain historical evidence for their stated sources.
+
 Status: **In progress; Verilator and integrated Arcilator simulation passed; custom FPGA execution remains pending.**
 As of 2026-09-30 17:55 UTC, EC2 reports the designated F2 instance stopped with
 `Client.InstanceInitiatedShutdown`. The last retrieved routing status was active

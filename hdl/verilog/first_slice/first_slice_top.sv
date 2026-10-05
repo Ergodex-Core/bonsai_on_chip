@@ -1,6 +1,9 @@
 // Copyright 2026 Ergodex. Licensed under the Apache License, Version 2.0.
 // AXI-Lite BAR0: weight-store page 0, DOT128 mailbox page 1.
-module first_slice_top (
+module first_slice_top #(
+    parameter logic [31:0] BACKEND_ID = 2,
+    parameter logic [63:0] PHYSICAL_BYTES = 64'h400000000
+) (
     input logic clk_i,
     rst_ni,
     input logic [31:0] s_axi_awaddr,
@@ -66,7 +69,10 @@ module first_slice_top (
   assign wr_fire = aw_hold && w_hold && !s_axi_bvalid;
   assign store_wr = wr_fire && aw_addr[31:12] == 0;
 
-  weight_store store (
+  weight_store #(
+      .BACKEND_ID(BACKEND_ID),
+      .PHYSICAL_BYTES(PHYSICAL_BYTES)
+  ) store (
       .clk_i,
       .rst_ni,
       .cfg_write_i(store_wr),

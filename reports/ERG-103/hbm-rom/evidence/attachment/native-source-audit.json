@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "source/pin/config audit only; not IP simulation",
+  "hdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "resource_revision": "6d32be972e6da854e61a8d3d6ec0466ab491c1b3",
+  "hbm_xci_sha256": "1f8994d1ba76dc3bd81168de89b8a985fb3ab46602e60c12c25ef347231b0ac9",
+  "clock_xci_sha256": "3f236453d1655985abcb33701fa48d2910630bd20b38cda1eb508e4bb05a11c8",
+  "modules": {
+    "cl_hbm": {
+      "connected_ports": 1102,
+      "template_sha256": "55c6c794c443b73dafbe658b4dc04d94d0c6d598c7c14988c3dbbfb482486df5",
+      "wrapper_sha256": "dafb4ff52e4974d39a4689d297f91593b2f01b618de2fb1178e25604777c6560"
+    },
+    "clk_mmcm_hbm": {
+      "connected_ports": 22,
+      "template_sha256": "a8f6d9453af48772058acbfe51a858ba6547bdd807ac71fb276dda8204a9f0f1",
+      "wrapper_sha256": "0e025f62a3db1b813052a71449fa484cdd99dad00f9585f38462325aaab9e51f"
+    }
+  }
+}

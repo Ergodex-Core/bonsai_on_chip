@@ -1,5 +1,10 @@
 # ERG-103 first-slice mailbox and execution contract
 
+The separate [HBM backend candidate](../../reports/ERG-103/hbm-rom/README.md)
+preserves this mailbox/arithmetic contract and adds its own controller, CDC,
+reset and validation evidence. DDR-specific references below describe the
+original backend and do not imply that its FPGA results validate HBM.
+
 Version `0x00010000`, magic `0x444f5431` (DOT1). This interface implements the
 first executable Week 1 slice of the [Week 0 contract](week0.md), with the
 existing [weight-store control ABI](../microarch/weightstore.md) unchanged.

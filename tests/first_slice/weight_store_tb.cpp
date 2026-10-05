@@ -320,9 +320,6 @@ void SealControls() {
   b.Write(0x15c, 1);
   b.Write(0x100, 3, true);
   b.Write(0x15c, 0);
-  b.dut.backend_ready_i = 0;
-  b.Write(0x100, 3, true);
-  b.dut.backend_ready_i = 1;
   b.Write(0x100, 3);
   Require(b.dut.ready_o && b.dut.image_base_o == 0x10000 && b.dut.epoch_o == 1,
           "wrong sealed metadata");
@@ -346,6 +343,69 @@ void SealControls() {
   b.Drain();
   b.Until([&] { return (b.Read(4) & 7) == 3; }, 10, "STOP failed to return sealed");
   Require(b.Read(0x050) == 1 && b.dut.ready_o, "drained completion snapshot wrong");
+}
+
+void VolatileImageLoss(unsigned loss_state) {
+  Bench b;
+  b.Configure();
+  b.dut.backend_ready_i = 0;
+  b.Write(0x100, 1, true);
+  Require((b.Read(4) & 7) == 0, "not-ready empty backend unexpectedly loaded");
+  b.dut.backend_ready_i = 1;
+  b.Write(0x100, 1);
+  if (loss_state >= 2) {
+    b.Write(0x100, 2);
+    for (unsigned i = 0; i < 8; ++i)
+      b.Write(0x140 + 4 * i, 0);
+  }
+  if (loss_state == 3)
+    b.Write(0x100, 3);
+  b.dut.backend_ready_i = 0;
+  b.Tick();
+  Require(b.dut.fault_o && !b.dut.ready_o && !b.dut.loader_enable_o,
+          "volatile backend loss did not invalidate image");
+  b.dut.backend_ready_i = 1;
+  for (unsigned i = 0; i < 8; ++i)
+    b.Tick();
+  b.Write(0x100, 1, true);
+  b.Write(0x100, 3, true);
+  b.Write(0x110, 0, true);
+  Require(b.dut.fault_o && !b.dut.ready_o && !b.dut.loader_enable_o,
+          "backend recovery revived old image without reload");
+  b.dut.rst_ni = 0;
+  b.Tick();
+  b.dut.rst_ni = 1;
+  b.Tick();
+  b.Write(0x100, 1, true);  // Reset invalidates descriptor/hash-valid masks.
+  b.Seal();
+  Require(b.dut.ready_o, "fresh configure/verify/seal after coordinated reset failed");
+}
+
+void ImageBounds() {
+  Bench b;
+  b.Configure();
+  const uint64_t capacity = b.Read(8) == 3 ? 0x20000000ULL : 0x400000000ULL;
+  b.Write(0x118, 0x10000040);
+  b.Write(0x100, 1, true);  // A physical allocation never enlarges v0 aperture.
+  b.Write(0x118, 64);
+  b.Write(0x110, uint32_t(capacity - 32));
+  b.Write(0x114, uint32_t((capacity - 32) >> 32));
+  b.Write(0x100, 1, true);  // Unaligned and overflowing end.
+  b.Write(0x110, uint32_t(capacity));
+  b.Write(0x114, uint32_t(capacity >> 32));
+  b.Write(0x100, 1, true);  // Upper-address aliases are rejected before narrowing.
+  b.Write(0x110, uint32_t(capacity - 64));
+  b.Write(0x114, uint32_t((capacity - 64) >> 32));
+  b.Write(0x100, 1);
+  b.Write(0x100, 2);
+  for (unsigned i = 0; i < 8; ++i)
+    b.Write(0x140 + 4 * i, 0);
+  b.Write(0x100, 3);
+  b.Request(1, 0);
+  b.Request(2, 64);
+  b.Drain();
+  Require(b.physical_reads == 1 && b.dut.ready_o,
+          "last legal line or first out-of-range line behavior changed");
 }
 
 void CreditsAndBackpressure() {
@@ -482,6 +542,10 @@ int main(int argc, char **argv) {
       std::cout << "PASS " << name << '\n';
     };
     run("seal_hash_masks_write_drain_and_stop", SealControls);
+    run("backend_loss_loading_requires_reload", [] { VolatileImageLoss(1); });
+    run("backend_loss_verifying_requires_reload", [] { VolatileImageLoss(2); });
+    run("backend_loss_sealed_requires_reload", [] { VolatileImageLoss(3); });
+    run("physical_capacity_and_logical_aperture", ImageBounds);
     run("sixteen_credits_and_backpressure", CreditsAndBackpressure);
     run("invalid_request_errors", InvalidRequests);
     run("held_response_fatal_first_fault_and_late_drain", HeldResponseFatalAndLateDrain);

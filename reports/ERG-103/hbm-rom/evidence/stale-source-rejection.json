@@ -1,0 +1,148 @@
+{
+  "schema": "coralnpu.hbm_rom.backend_comparison.v1",
+  "status": "FAIL",
+  "fpga_executed": false,
+  "scope": "DDR/HBM RTL DOT128 equivalence; native binary Q1_0 and separate synthetic ternary cases; no full model or physical FPGA execution",
+  "performance_scope": "Mailbox operation counters only; simulated latency is not physical timing or throughput",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "tests/hbm_rom/compare_backends.py",
+    "--ddr",
+    "/workspace/hbm-validation/ddr-regression-final",
+    "--hbm",
+    "/workspace/hbm-data/full-validation-01",
+    "--out",
+    "/workspace/hbm-validation/backend-comparison-stale-01.json",
+    "--self-test"
+  ],
+  "started_utc": "2026-10-05T16:32:48Z",
+  "comparator_sha256": "7ed0b94a076d661da6c87009c8167a493839a2070fa36b7a242ced8a16cc067c",
+  "reference_checkpoint": {
+    "model": "prism-ml/Bonsai-1.7B-gguf",
+    "revision": "210a9e99f79cb184909d49595906526eb2b3dd9a",
+    "file": "Bonsai-1.7B-Q1_0.gguf",
+    "bytes": 248302272,
+    "sha256": "3d7c6c90dd98717a203adb22d5eacd2581850e40aa5327e144b97766cae5f7e3"
+  },
+  "shared_source_sha256": {
+    "hdl/verilog/first_slice/weight_store.sv": "2d9595bb1bb919a356faf593baf6438f03017493728f290f1a585c25b6af8dc0",
+    "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+    "hdl/verilog/first_slice/first_slice_top.sv": "b9e661003b2930fefb5116c18e754810a234918319957d6ef97595a284b41952",
+    "hdl/verilog/first_slice/f2_memory_bridge.sv": "175f28d15bbfe59c0b1b589451cbd0ab493111cf89e5700924383dd523c33fdf",
+    "utils/first_slice/prepare_fixture.py": "d2711843bd9d4b110b3b2a844632b9d2a1c52a1f63b1b91e5ddd07db79d511bc",
+    "utils/first_slice/run.py": "ee403ffe7ffc9f235ade1b854f2c51988f8e9010cc53fe121b8fb8d9a39ad6ab",
+    "utils/weightstore/pack_image.py": "1ac2c5bcd2abb55b51a252b742a6b7d921326208e94a6bd2b9bbb83371490421"
+  },
+  "inputs": {
+    "ddr": {
+      "directory": "/workspace/hbm-validation/ddr-regression-final",
+      "artifacts": {
+        "validation.json": {
+          "sha256": "7b12cbef8b481199e8ee6b2ae39a2286c07ddc4bfacafeaa9c897918ec8c02a8",
+          "bytes": 14087
+        },
+        "fixture/fixture.json": {
+          "sha256": "1fa4d0b6a9a8ea1baf43e9aad5fb60cbba407dcb6f33adc69d8a613d41f9b066",
+          "bytes": 384687
+        },
+        "native/manifest.json": {
+          "sha256": "21c664d0c029dc7f12440ad93a7fa6688c2b9e78b2143f6e9c179956793a7391",
+          "bytes": 153170
+        },
+        "first_slice_sim_top-obj/Vfirst_slice_sim_top": {
+          "sha256": "d14742939cfdc752c374daa7ca808fcc5c957cfcbfe7598a48eb2a203185fa9e",
+          "bytes": 388384
+        },
+        "native-run/report.json": {
+          "sha256": "ddf5890e8eecf6020acfd301175f0e05317ec283f194a953fceeeb13f38bcc1d",
+          "bytes": 156008
+        },
+        "native-run/readback.bin": {
+          "sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+          "bytes": 242357184
+        },
+        "native-run/readback-final.bin": {
+          "sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+          "bytes": 242357184
+        },
+        "synthetic-run/report.json": {
+          "sha256": "092a7ace61a5c8d6d73fb1ebd05a2dab2d1ca0e026597af97e752fd47d0b1883",
+          "bytes": 7063
+        },
+        "synthetic-run/readback.bin": {
+          "sha256": "966088f726e00ad969b7c7bc5ec64e9a2eee1e6734660f47fb2e222fb121ae36",
+          "bytes": 192
+        },
+        "synthetic-run/readback-final.bin": {
+          "sha256": "966088f726e00ad969b7c7bc5ec64e9a2eee1e6734660f47fb2e222fb121ae36",
+          "bytes": 192
+        }
+      },
+      "compiled_source_sha256": {
+        "hdl/verilog/first_slice/weight_store.sv": "2d9595bb1bb919a356faf593baf6438f03017493728f290f1a585c25b6af8dc0",
+        "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+        "hdl/verilog/first_slice/first_slice_top.sv": "b9e661003b2930fefb5116c18e754810a234918319957d6ef97595a284b41952",
+        "hdl/verilog/first_slice/f2_memory_bridge.sv": "175f28d15bbfe59c0b1b589451cbd0ab493111cf89e5700924383dd523c33fdf",
+        "tests/first_slice/first_slice_sim_top.sv": "4b91e79c7d6145f648b4e6e253b7eb4324c5938c8f4c8ad10a4c87b326d5c108",
+        "tests/first_slice/model_server.cpp": "c3f9a3cfb759330797e8dcbd4dd8b2edcbbcec664a73992732d126a7af4d14d6"
+      }
+    },
+    "hbm": {
+      "directory": "/workspace/hbm-data/full-validation-01",
+      "artifacts": {
+        "validation.json": {
+          "sha256": "51eb035dd711ed84c7e7cfdf0e4624caad2bd2ca6e870d85362b291c6bacabfa",
+          "bytes": 13078
+        },
+        "fixture/fixture.json": {
+          "sha256": "1fa4d0b6a9a8ea1baf43e9aad5fb60cbba407dcb6f33adc69d8a613d41f9b066",
+          "bytes": 384687
+        },
+        "native/manifest.json": {
+          "sha256": "21c664d0c029dc7f12440ad93a7fa6688c2b9e78b2143f6e9c179956793a7391",
+          "bytes": 153170
+        },
+        "obj/Vhbm_rom_sim_top": {
+          "sha256": "3a683767ecc8e286cfd2e6d282dc52a6fb9ada3aad07087bceb3b56f884fc794",
+          "bytes": 402320
+        },
+        "native-run/report.json": {
+          "sha256": "bf3e6e90ad57fa57f5c57461d9f34201e52e08af3090ccdeaf23e15fba9a89eb",
+          "bytes": 157810
+        },
+        "native-run/readback.bin": {
+          "sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+          "bytes": 242357184
+        },
+        "native-run/readback-final.bin": {
+          "sha256": "ccd70c080f8758e1b4df58c2fdbdd6d13bb65571abbc56feb6942de1f8c07d99",
+          "bytes": 242357184
+        },
+        "synthetic-run/report.json": {
+          "sha256": "dd138e46e9b24f527cab2463da8cec7022fba94c069d66267450495d152a9dc8",
+          "bytes": 8746
+        },
+        "synthetic-run/readback.bin": {
+          "sha256": "966088f726e00ad969b7c7bc5ec64e9a2eee1e6734660f47fb2e222fb121ae36",
+          "bytes": 192
+        },
+        "synthetic-run/readback-final.bin": {
+          "sha256": "966088f726e00ad969b7c7bc5ec64e9a2eee1e6734660f47fb2e222fb121ae36",
+          "bytes": 192
+        }
+      },
+      "compiled_source_sha256": {
+        "hdl/verilog/first_slice/weight_store.sv": "2d9595bb1bb919a356faf593baf6438f03017493728f290f1a585c25b6af8dc0",
+        "hdl/verilog/first_slice/dot128.sv": "cc4b54cf467d0c81d146b3c2c5997d44bd121c3d9aab04014ec307c8be58b8d5",
+        "hdl/verilog/first_slice/first_slice_top.sv": "b9e661003b2930fefb5116c18e754810a234918319957d6ef97595a284b41952",
+        "hdl/verilog/first_slice/f2_memory_bridge.sv": "175f28d15bbfe59c0b1b589451cbd0ab493111cf89e5700924383dd523c33fdf",
+        "hdl/verilog/first_slice/hbm_cdc_mailbox.sv": "24b5c62f7a8df23968dd18d7a090aff59ac4c1d0a1491c8a547a18ae50047cdf",
+        "hdl/verilog/first_slice/hbm_line_bridge.sv": "28401f9411e0a73c4d50cf81c8060aceafc0694269ba1c26857a81a608c81432",
+        "tests/hbm_rom/hbm_rom_sim_top.sv": "935a8c28f775df6ab1064a4fdb8f46eecf45ad425223fcf9551de8e44836a9c8",
+        "tests/hbm_rom/hbm_model_server.cpp": "5728d74f851d6b4e280fc0a002c22bd5592aa2d46615fd4514e891df4936cc52"
+      }
+    }
+  },
+  "error": "ValueError: compiled source changed: tests/hbm_rom/hbm_model_server.cpp",
+  "finished_utc": "2026-10-05T16:32:49Z"
+}

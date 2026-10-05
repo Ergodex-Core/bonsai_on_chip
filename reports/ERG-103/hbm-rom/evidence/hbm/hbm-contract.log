@@ -1,0 +1,14 @@
+test_busy_mutation_and_unacknowledged_resubmit_preserve_job (__main__.HbmTests.test_busy_mutation_and_unacknowledged_resubmit_preserve_job) ... ok
+test_controller_loss_with_stopped_hbm_clock_aborts_without_deadlock (__main__.HbmTests.test_controller_loss_with_stopped_hbm_clock_aborts_without_deadlock) ... ok
+test_controller_ready_loss_is_sticky_and_requires_reset (__main__.HbmTests.test_controller_ready_loss_is_sticky_and_requires_reset) ... ok
+test_every_hbm_read_error_fails_closed_with_zero_result (__main__.HbmTests.test_every_hbm_read_error_fails_closed_with_zero_result) ... ok
+test_hbm_identity_mapping_and_two_beat_transfer (__main__.HbmTests.test_hbm_identity_mapping_and_two_beat_transfer) ... ok
+test_not_ready_and_invalid_descriptors_complete_without_reads (__main__.HbmTests.test_not_ready_and_invalid_descriptors_complete_without_reads) ... ok
+test_read_errors_and_sealed_descriptor_rejection (__main__.HbmTests.test_read_errors_and_sealed_descriptor_rejection) ... ok
+test_reset_requires_reload_verify_and_reseal (__main__.HbmTests.test_reset_requires_reload_verify_and_reseal) ... ok
+test_sealed_pcis_write_cannot_change_either_half_line (__main__.HbmTests.test_sealed_pcis_write_cannot_change_either_half_line) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.151s
+
+OK

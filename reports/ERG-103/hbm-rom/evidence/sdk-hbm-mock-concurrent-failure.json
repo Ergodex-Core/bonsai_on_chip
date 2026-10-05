@@ -1,0 +1,116 @@
+{
+  "schema": "coralnpu.first_slice.sdk_mock.v1",
+  "status": "FAIL",
+  "scope": "Mock public SDK only; no physical FPGA or RTL execution",
+  "fpga_executed": false,
+  "checks": [
+    {
+      "name": "roundtrip",
+      "status": "PASS",
+      "injected_failure": null,
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-init",
+      "status": "PASS",
+      "injected_failure": "init",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-describe",
+      "status": "PASS",
+      "injected_failure": "describe",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-agfi",
+      "status": "PASS",
+      "injected_failure": "agfi",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-pci",
+      "status": "PASS",
+      "injected_failure": "pci",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-abi",
+      "status": "PASS",
+      "injected_failure": "abi",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-not_cold",
+      "status": "PASS",
+      "injected_failure": "not_cold",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-attach",
+      "status": "PASS",
+      "injected_failure": "attach",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-peek",
+      "status": "PASS",
+      "injected_failure": "peek",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-final_identity",
+      "status": "PASS",
+      "injected_failure": "final_identity",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-detach",
+      "status": "PASS",
+      "injected_failure": "detach",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-close",
+      "status": "PASS",
+      "injected_failure": "close",
+      "exit_code": 1
+    },
+    {
+      "name": "sdk-memory_backend",
+      "status": "FAIL",
+      "injected_failure": "memory_backend",
+      "exit_code": 1
+    }
+  ],
+  "sdk_revision": "b603a81f65666e0cf7a67ee5cf18b148eb6b08c3",
+  "memory_backend": "hbm",
+  "source_sha256": {
+    "fpga/aws_f2/first_slice/transport.cpp": "af187f7a89e437253580d99fa5d22fbafcb9c26c1931fb4f30c5ca5502b6c270",
+    "tests/first_slice/sdk_mock.cpp": "19c2b7356dae3c00276e2e240f95bcf60a77edaf21bc54f0a5e4ca5642e079e4",
+    "tests/first_slice/test_transport.py": "f817acf34be4ee588e21e91cc752d6229a774ddee77a7edc6445f2e24529fcfd"
+  },
+  "sdk_header_sha256": {
+    "fpga_mgmt.h": "5d553a7f9ac8a035e5fac96027631e0619c67f9936b70e275fb5af960de913a4",
+    "fpga_pci.h": "81e9c168b10d1508c775b01ab5c369d90ea82eb5adb2a7c24b942432b4f1cc8d",
+    "hal/fpga_common.h": "026c8c9d095c8c270c2fd1570169576dd7941b15c772f8853fab9331f88010c3"
+  },
+  "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+  "compile_command": [
+    "/usr/bin/c++",
+    "-std=c++17",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DMEMORY_BACKEND_HBM=1",
+    "-I",
+    "/tmp/hbm-runtime-sdk-headers",
+    "/workspace/bonsai_on_chip/fpga/aws_f2/first_slice/transport.cpp",
+    "/workspace/bonsai_on_chip/tests/first_slice/sdk_mock.cpp",
+    "-o",
+    "/workspace/hbm-validation/runtime-hbm-sdk-mock/transport-mock"
+  ],
+  "binary_sha256": "63e2d40c67e5814d16f0a4e1d0974253a6f0802fb349908877d11a30b042bb8f",
+  "error": "RuntimeError: sdk-memory_backend: missing expected diagnostic"
+}
